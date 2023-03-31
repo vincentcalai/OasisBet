@@ -1,0 +1,86 @@
+<mxfile host="Electron" modified="2023-03-31T13:37:39.649Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="2KMl1-D4BuFenoHsKJMx" version="21.1.2" type="device">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
+    <mxGraphModel dx="1434" dy="844" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="m2QLPAieHGLtr45nTU-P-6" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;endArrow=classicThin;endFill=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-0" target="m2QLPAieHGLtr45nTU-P-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="374" y="281" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=classic;endFill=1;startArrow=none;startFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-0" target="m2QLPAieHGLtr45nTU-P-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-35" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="m2QLPAieHGLtr45nTU-P-34">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="194" y="391" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-0" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="164" y="311" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-12" value="Create Account" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="254" y="161" width="86" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-14" target="m2QLPAieHGLtr45nTU-P-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-14" value="Login Account" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="254" y="231" width="86" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-16" target="m2QLPAieHGLtr45nTU-P-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-24" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-16" target="m2QLPAieHGLtr45nTU-P-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-26" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-16" target="m2QLPAieHGLtr45nTU-P-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-16" target="m2QLPAieHGLtr45nTU-P-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-16" value="View Account&amp;nbsp; Management Details" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="374" y="226" width="110" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-17" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=classic;endFill=1;startArrow=none;startFill=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="m2QLPAieHGLtr45nTU-P-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="261" as="sourcePoint" />
+            <mxPoint x="400" y="191" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-18" value="Deposit Money" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="524" y="228.5" width="90" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-23" value="Withdraw Money" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="524" y="311" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-25" value="View Account Balance" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="524" y="151" width="90" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-28" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;startArrow=none;startFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="m2QLPAieHGLtr45nTU-P-29">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="194" y="341" as="sourcePoint" />
+            <mxPoint x="254" y="331" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-31" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="m2QLPAieHGLtr45nTU-P-29" target="m2QLPAieHGLtr45nTU-P-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-29" value="View Available Sports Events and Odds" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="264" y="311" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-30" value="Place Bet" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="404" y="471" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-32" value="View Bet Transaction History" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="454" y="391" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2QLPAieHGLtr45nTU-P-34" value="View Sports Events Result" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="254" y="461" width="120" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
