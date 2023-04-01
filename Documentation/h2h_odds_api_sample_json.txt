@@ -1,0 +1,912 @@
+[
+  {
+    "id": "0ba40aad3c918f52363117a71f5de8e8",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T11:30:00Z",
+    "home_team": "Manchester City",
+    "away_team": "Liverpool",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Liverpool",
+                "price": 5.5
+              },
+              {
+                "name": "Manchester City",
+                "price": 1.6
+              },
+              {
+                "name": "Draw",
+                "price": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "762b9b90ce54ea77fe3bb92e89ad4cea",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T14:00:00Z",
+    "home_team": "Arsenal",
+    "away_team": "Leeds United",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Arsenal",
+                "price": 1.25
+              },
+              {
+                "name": "Leeds United",
+                "price": 11
+              },
+              {
+                "name": "Draw",
+                "price": 5.8
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "8bf721010bab5f6430aed01dc104c725",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T14:00:00Z",
+    "home_team": "Bournemouth",
+    "away_team": "Fulham",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Bournemouth",
+                "price": 2.5
+              },
+              {
+                "name": "Fulham",
+                "price": 2.8
+              },
+              {
+                "name": "Draw",
+                "price": 3.25
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "9b8ec12a5957a05088d54eee08899393",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T14:00:00Z",
+    "home_team": "Brighton and Hove Albion",
+    "away_team": "Brentford",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Brentford",
+                "price": 5.5
+              },
+              {
+                "name": "Brighton and Hove Albion",
+                "price": 1.6
+              },
+              {
+                "name": "Draw",
+                "price": 3.9
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4956dd9d7de87d51065aaf7bbecc236b",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T14:00:00Z",
+    "home_team": "Crystal Palace",
+    "away_team": "Leicester City",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Crystal Palace",
+                "price": 2.6
+              },
+              {
+                "name": "Leicester City",
+                "price": 2.8
+              },
+              {
+                "name": "Draw",
+                "price": 3.2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "92d51053057f8fb61fc04994615c8cdb",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T14:00:00Z",
+    "home_team": "Nottingham Forest",
+    "away_team": "Wolverhampton Wanderers",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Nottingham Forest",
+                "price": 3
+              },
+              {
+                "name": "Wolverhampton Wanderers",
+                "price": 2.45
+              },
+              {
+                "name": "Draw",
+                "price": 3.1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2dfd7461a93f86729de281cab5be8b2b",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-01T16:30:00Z",
+    "home_team": "Chelsea",
+    "away_team": "Aston Villa",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Aston Villa",
+                "price": 5.5
+              },
+              {
+                "name": "Chelsea",
+                "price": 1.65
+              },
+              {
+                "name": "Draw",
+                "price": 3.7
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ac75d6c44b32b545e90c5c97c420ec56",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-02T13:00:00Z",
+    "home_team": "West Ham United",
+    "away_team": "Southampton",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Southampton",
+                "price": 5
+              },
+              {
+                "name": "West Ham United",
+                "price": 1.73
+              },
+              {
+                "name": "Draw",
+                "price": 3.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02fa17d73cb1ded2fc84494aaba4d4fb",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-02T15:30:00Z",
+    "home_team": "Newcastle United",
+    "away_team": "Manchester United",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Manchester United",
+                "price": 2.9
+              },
+              {
+                "name": "Newcastle United",
+                "price": 2.4
+              },
+              {
+                "name": "Draw",
+                "price": 3.3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2409cf26b36e48cb0e71175396f24b31",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-03T19:00:00Z",
+    "home_team": "Everton",
+    "away_team": "Tottenham Hotspur",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Everton",
+                "price": 3.3
+              },
+              {
+                "name": "Tottenham Hotspur",
+                "price": 2.2
+              },
+              {
+                "name": "Draw",
+                "price": 3.3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "d13dd3180de59bb9a0c3721d7a045d99",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-04T18:45:00Z",
+    "home_team": "Leicester City",
+    "away_team": "Aston Villa",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Aston Villa",
+                "price": 2.88
+              },
+              {
+                "name": "Leicester City",
+                "price": 2.45
+              },
+              {
+                "name": "Draw",
+                "price": 3.3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "41d0969ada41ed8a2141512749aff40f",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-04T18:45:00Z",
+    "home_team": "Bournemouth",
+    "away_team": "Brighton and Hove Albion",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Bournemouth",
+                "price": 6
+              },
+              {
+                "name": "Brighton and Hove Albion",
+                "price": 1.57
+              },
+              {
+                "name": "Draw",
+                "price": 3.9
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2364e027712cca81ff014f5cd2683357",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-04T18:45:00Z",
+    "home_team": "Leeds United",
+    "away_team": "Nottingham Forest",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Leeds United",
+                "price": 1.8
+              },
+              {
+                "name": "Nottingham Forest",
+                "price": 4.5
+              },
+              {
+                "name": "Draw",
+                "price": 3.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "de8efd2a6b560ababca0847355014aa6",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-04T19:00:00Z",
+    "home_team": "Chelsea",
+    "away_team": "Liverpool",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Chelsea",
+                "price": 2.6
+              },
+              {
+                "name": "Liverpool",
+                "price": 2.62
+              },
+              {
+                "name": "Draw",
+                "price": 3.4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "7ccc15c080075f3428073b007e4f69e6",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-05T19:00:00Z",
+    "home_team": "Manchester United",
+    "away_team": "Brentford",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Brentford",
+                "price": 5.5
+              },
+              {
+                "name": "Manchester United",
+                "price": 1.6
+              },
+              {
+                "name": "Draw",
+                "price": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e0a78a5fc5a8526b40b1d2f50d8e2f2c",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-05T19:00:00Z",
+    "home_team": "West Ham United",
+    "away_team": "Newcastle United",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Newcastle United",
+                "price": 2.3
+              },
+              {
+                "name": "West Ham United",
+                "price": 3.1
+              },
+              {
+                "name": "Draw",
+                "price": 3.3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "84e96714b65b0f44652113c0117d3f92",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T11:30:00Z",
+    "home_team": "Manchester United",
+    "away_team": "Everton",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Everton",
+                "price": 7.5
+              },
+              {
+                "name": "Manchester United",
+                "price": 1.44
+              },
+              {
+                "name": "Draw",
+                "price": 4.33
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03ddf8ad520c9e79805c2a6b9a45457f",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T14:00:00Z",
+    "home_team": "Aston Villa",
+    "away_team": "Nottingham Forest",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Aston Villa",
+                "price": 1.67
+              },
+              {
+                "name": "Nottingham Forest",
+                "price": 5
+              },
+              {
+                "name": "Draw",
+                "price": 3.8
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "08d61ee48033edfc63996b5fd164ece7",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T14:00:00Z",
+    "home_team": "Leicester City",
+    "away_team": "Bournemouth",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Bournemouth",
+                "price": 5
+              },
+              {
+                "name": "Leicester City",
+                "price": 1.67
+              },
+              {
+                "name": "Draw",
+                "price": 3.8
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "b263ab106846ba7e2f63ffb434f29bc6",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T14:00:00Z",
+    "home_team": "Brentford",
+    "away_team": "Newcastle United",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Brentford",
+                "price": 3.2
+              },
+              {
+                "name": "Newcastle United",
+                "price": 2.25
+              },
+              {
+                "name": "Draw",
+                "price": 3.3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "721d38087a7c0bd7edd13b073df17541",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T14:00:00Z",
+    "home_team": "Tottenham Hotspur",
+    "away_team": "Brighton and Hove Albion",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Brighton and Hove Albion",
+                "price": 2.75
+              },
+              {
+                "name": "Tottenham Hotspur",
+                "price": 2.5
+              },
+              {
+                "name": "Draw",
+                "price": 3.4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c284d7e9570a30aaa0058fb9d83d4310",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T14:00:00Z",
+    "home_team": "Wolverhampton Wanderers",
+    "away_team": "Chelsea",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Chelsea",
+                "price": 1.95
+              },
+              {
+                "name": "Wolverhampton Wanderers",
+                "price": 4.2
+              },
+              {
+                "name": "Draw",
+                "price": 3.3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "83871e4cafff00847705373fb7de4b03",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T14:00:00Z",
+    "home_team": "Fulham",
+    "away_team": "West Ham United",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Fulham",
+                "price": 2.7
+              },
+              {
+                "name": "West Ham United",
+                "price": 2.7
+              },
+              {
+                "name": "Draw",
+                "price": 3.1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2b14ad163c7bf16913e06fb526c43201",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-08T16:30:00Z",
+    "home_team": "Southampton",
+    "away_team": "Manchester City",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Manchester City",
+                "price": 1.29
+              },
+              {
+                "name": "Southampton",
+                "price": 11
+              },
+              {
+                "name": "Draw",
+                "price": 5.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4d26ff343ad145cd84db116ddef51def",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-09T13:00:00Z",
+    "home_team": "Leeds United",
+    "away_team": "Crystal Palace",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Crystal Palace",
+                "price": 3.5
+              },
+              {
+                "name": "Leeds United",
+                "price": 2.05
+              },
+              {
+                "name": "Draw",
+                "price": 3.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fae365aae7507baa807a2ffb6ba98237",
+    "sport_key": "soccer_epl",
+    "sport_title": "EPL",
+    "commence_time": "2023-04-09T15:30:00Z",
+    "home_team": "Liverpool",
+    "away_team": "Arsenal",
+    "bookmakers": [
+      {
+        "key": "williamhill",
+        "title": "William Hill",
+        "last_update": "2023-04-01T07:14:06Z",
+        "markets": [
+          {
+            "key": "h2h",
+            "last_update": "2023-04-01T07:14:06Z",
+            "outcomes": [
+              {
+                "name": "Arsenal",
+                "price": 2.62
+              },
+              {
+                "name": "Liverpool",
+                "price": 2.5
+              },
+              {
+                "name": "Draw",
+                "price": 3.6
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
