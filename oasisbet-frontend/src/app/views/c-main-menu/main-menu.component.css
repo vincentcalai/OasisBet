@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #6a93b1;
+    background-color: #38749e;
 }
 
 .navbar-nav {
@@ -15,4 +15,10 @@
 
 .nav-link {
     color: white;
+}
+
+.nav-link:hover {
+    color: #38749e;
+    background-color: #ffffff;
+    cursor: pointer;
 }
