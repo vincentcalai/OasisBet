@@ -1,8 +1,12 @@
+.navbar {
+    background-color: #1f4877;
+}
+
 .navbar-brand {
-    margin-left: 3%;
+    margin-left: 20%;
     padding-top: 5px;
 }
   
 .title-nav-bar {
-    margin-left: 20px;
+    margin-left: 20%;
 }

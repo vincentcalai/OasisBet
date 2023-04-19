@@ -1,0 +1,18 @@
+.navbar {
+    background-color: #6a93b1;
+}
+
+.navbar-nav {
+    margin-left: 20%;
+    padding-top: 5px;
+}
+
+.nav-item {
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.nav-link {
+    color: white;
+}
