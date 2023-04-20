@@ -18,7 +18,12 @@
 }
 
 .nav-link:hover {
-    color: #38749e;
-    background-color: #ffffff;
+    color: white;
+    background-color: #1588ca;
     cursor: pointer;
 }
+
+.active{
+    background-color: white;
+}
+  
