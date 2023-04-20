@@ -17,13 +17,14 @@
     color: white;
 }
 
-.nav-link:hover {
+.active{
+    background-color: white;
+}
+
+.navbar-nav .nav-link:not(.active):hover {
     color: white;
     background-color: #1588ca;
     cursor: pointer;
 }
 
-.active{
-    background-color: white;
-}
   
