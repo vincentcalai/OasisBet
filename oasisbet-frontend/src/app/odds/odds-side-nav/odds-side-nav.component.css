@@ -1,0 +1,25 @@
+.sidebar {
+    position: fixed;
+  
+    width: 200px;
+    height: 100vh;
+
+    background-color:#fff;
+    overflow: hidden;
+    white-space: nowrap;
+    box-shadow: 0px 0px 20px #d4d4d4;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar .sidebar-item{
+    padding: 10px;
+}
+
+.sidebar .sidebar-item:hover{
+    background-color: #d6d6d6;
+    cursor: pointer;
+}

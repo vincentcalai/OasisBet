@@ -8,6 +8,16 @@ import { MainMenuComponent } from './views/c-main-menu/main-menu.component';
 import { OddsLandingComponent } from './odds/odds-landing/odds-landing.component';
 import { ResultsLandingComponent } from './results/results-landing/results-landing.component';
 import { AccountLandingComponent } from './account/account-landing/account-landing.component';
+import { OddsSideNavComponent } from './odds/odds-side-nav/odds-side-nav.component';
+import { ResultsSideNavComponent } from './results/results-side-nav/results-side-nav.component';
+import { AccountSideNavComponent } from './account/account-side-nav/account-side-nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -16,11 +26,20 @@ import { AccountLandingComponent } from './account/account-landing/account-landi
     MainMenuComponent,
     OddsLandingComponent,
     ResultsLandingComponent,
-    AccountLandingComponent
+    AccountLandingComponent,
+    OddsSideNavComponent,
+    ResultsSideNavComponent,
+    AccountSideNavComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
