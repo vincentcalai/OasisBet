@@ -6,13 +6,17 @@ import { AppComponent } from './views/a-main/app.component';
 import { HeaderComponent } from './views/b-header/header.component';
 import { MainMenuComponent } from './views/c-main-menu/main-menu.component';
 import { OddsLandingComponent } from './odds/odds-landing/odds-landing.component';
+import { ResultsLandingComponent } from './results/results-landing/results-landing.component';
+import { AccountLandingComponent } from './account/account-landing/account-landing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MainMenuComponent,
-    OddsLandingComponent
+    OddsLandingComponent,
+    ResultsLandingComponent,
+    AccountLandingComponent
   ],
   imports: [
     BrowserModule,
