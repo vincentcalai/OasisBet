@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-odds-side-nav',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OddsSideNavComponent implements OnInit {
 
-  constructor() { }
+  @Output() onSelectCompType : EventEmitter<string>;
+
+  constructor() { 
+    this.onSelectCompType = new EventEmitter<string>();
+  }
 
   ngOnInit(): void {
+  }
+
+  selectCompType(compType: string){
+    this.onSelectCompType.emit(compType);
   }
 
 }
