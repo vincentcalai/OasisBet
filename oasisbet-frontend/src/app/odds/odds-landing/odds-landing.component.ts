@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OddsSideNavComponent } from '../odds-side-nav/odds-side-nav.component';
 import { SharedVarService } from 'src/app/services/shared-var.service';
+import { BetEvent } from 'src/app/model/bet-event.model';
 
 @Component({
   selector: 'app-odds-landing',
@@ -10,6 +11,7 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class OddsLandingComponent implements OnInit {
 
   competitionType: string;
+  public events : BetEvent[];
 
   constructor(public sharedVar: SharedVarService) { 
     this.competitionType = this.sharedVar.COMP_HEADER_EPL;

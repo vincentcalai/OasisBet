@@ -5,8 +5,59 @@
         </div>
         
         <div class="col-md-9">
-            <h2>{{competitionType}}</h2>
-            <p>odds-landing works!</p>
+            <div class="container-fluid">
+            <br>
+                <div class="card ">
+                    <div class="text-left">
+                        <h1 class="card-header">{{competitionType}}</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <p>odds-landing works!</p>
+                            <table class="table table-striped" style="width: 100%">
+                                <thead class= "table-header">
+                                    <tr>
+                                        <th>
+                                          Time
+                                        </th>
+                                        <th>
+                                          Event ID
+                                        </th>
+                                        <th>
+                                          Event Description
+                                        </th>
+                                        <th>
+                                          Home(1)
+                                        </th>
+                                        <th>
+                                          Draw(X)
+                                        </th>
+                                        <th>
+                                          Away(2)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let event of events">
+                                        <td>{{event.startTime}}</td>
+                                        <td>{{event.eventId}}</td>
+                                        <td>{{event.eventDesc}}</td>
+                                        <td>{{event.h2hEventOdds.homeOdds }}</td>
+                                        <td>{{event.h2hEventOdds.drawOdds }}</td>
+                                        <td>{{event.h2hEventOdds.awayOdds }}</td>
+                                    </tr>
+                                    <tr *ngIf = '!events || events.length == 0'>
+                                      <td class='text-center' colspan=12>
+                                        No Event(s) Found.
+                                      </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
