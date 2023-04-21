@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OddsSideNavComponent } from '../odds-side-nav/odds-side-nav.component';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-odds-landing',
@@ -10,31 +11,33 @@ export class OddsLandingComponent implements OnInit {
 
   competitionType: string;
 
-  constructor() { }
+  constructor(public sharedVar: SharedVarService) { 
+    this.competitionType = this.sharedVar.COMP_HEADER_EPL;
+  }
 
   ngOnInit(): void {
   }
 
-  readCompType(compType: string){
+  readCompType(compType: string){ 
     switch(compType) { 
       case 'soccer-epl': { 
-         this.competitionType = 'English Premier League';
+         this.competitionType = this.sharedVar.COMP_HEADER_EPL;
          break; 
       } 
       case 'soccer-laliga': { 
-        this.competitionType = 'La Liga'; 
+        this.competitionType = this.sharedVar.COMP_HEADER_LALIGA; 
          break; 
       } 
       case 'soccer-bundesliga': { 
-        this.competitionType = 'Bundesliga';
+        this.competitionType = this.sharedVar.COMP_HEADER_BUNDESLIGA;
         break; 
       } 
       case 'soccer-serie-a': { 
-        this.competitionType = 'Serie A';
+        this.competitionType = this.sharedVar.COMP_HEADER_SERIE_A;
         break; 
       } 
       case 'soccer-ligue-one': { 
-        this.competitionType = 'Ligue One'; 
+        this.competitionType = this.sharedVar.COMP_HEADER_LIGUE_ONE;
         break; 
       } 
       default: { 
