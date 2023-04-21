@@ -13,8 +13,7 @@
                     </div>
                     <div class="card-body">
                         <div class="container-fluid">
-                            <p>odds-landing works!</p>
-                            <table class="table table-striped" style="width: 100%">
+                            <table class="table table-striped">
                                 <thead class= "table-header">
                                     <tr>
                                         <th>
@@ -39,12 +38,18 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let event of events">
-                                        <td>{{event.startTime}}</td>
+                                        <td>{{event.startTime | date:'shortTime'}}</td>
                                         <td>{{event.eventId}}</td>
                                         <td>{{event.eventDesc}}</td>
-                                        <td>{{event.h2hEventOdds.homeOdds }}</td>
-                                        <td>{{event.h2hEventOdds.drawOdds }}</td>
-                                        <td>{{event.h2hEventOdds.awayOdds }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-light">01 | &nbsp; {{ event.h2hEventOdds.homeOdds | number : '1.2-2' }}</button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-light">02 | &nbsp; {{ event.h2hEventOdds.drawOdds | number : '1.2-2' }}</button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-light">03 | &nbsp; {{ event.h2hEventOdds.awayOdds | number : '1.2-2' }}</button>
+                                        </td>
                                     </tr>
                                     <tr *ngIf = '!events || events.length == 0'>
                                       <td class='text-center' colspan=12>
@@ -57,7 +62,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
