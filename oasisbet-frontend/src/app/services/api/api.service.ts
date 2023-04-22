@@ -11,7 +11,6 @@ import { SharedVarService } from '../shared-var.service';
 })
 export class ApiService {
 
-
   public servicePrefix;
   public timeout = 200000;
 
@@ -20,8 +19,8 @@ export class ApiService {
     this.servicePrefix = environment.apiUrl;
   }
 
-  getAllTrips(page: number, itemsPerPage: number): Observable<Object> {
-    return this.http.get(this.servicePrefix + '/trip/getTrips?page=' + page + '&size=' + itemsPerPage).pipe(
+  retrieveOdds(compType: string): Observable<Object> {
+    return this.http.get(this.servicePrefix + '/odds/retrieveOdds?compType=' + compType).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

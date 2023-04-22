@@ -3,6 +3,8 @@ import { OddsSideNavComponent } from '../odds-side-nav/odds-side-nav.component';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 import { BetEvent } from 'src/app/model/bet-event.model';
 import { H2HEventOdds } from 'src/app/model/h2h-event-odds.model';
+import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-odds-landing',
@@ -11,14 +13,17 @@ import { H2HEventOdds } from 'src/app/model/h2h-event-odds.model';
 })
 export class OddsLandingComponent implements OnInit {
 
-  competitionType: string;
+  public subscriptions: Subscription = new Subscription();
+
+  competitionTypeHdr: string;
   public events : BetEvent[];
   public betEvent: BetEvent;
   public betEvent2: BetEvent;
   public betEvent3: BetEvent;
 
-  constructor(public sharedVar: SharedVarService) { 
-    this.competitionType = this.sharedVar.COMP_HEADER_EPL;
+  constructor(public sharedVar: SharedVarService,
+    public apiService: ApiService) { 
+    this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
   }
 
   ngOnInit(): void {
@@ -61,32 +66,42 @@ export class OddsLandingComponent implements OnInit {
     this.events.push(this.betEvent2);
     this.events.push(this.betEvent3);
 
+    this.subscriptions.add(
+      this.apiService.retrieveOdds('soccer-epl').subscribe((resp: any) => {
+        console.log(resp);
+      } ,
+        error => {
+        this.sharedVar.changeException(error);
+      }
+    )
+  );
+
   }
 
   readCompType(compType: string){ 
     switch(compType) { 
       case 'soccer-epl': { 
-         this.competitionType = this.sharedVar.COMP_HEADER_EPL;
+         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
          break; 
       } 
       case 'soccer-laliga': { 
-        this.competitionType = this.sharedVar.COMP_HEADER_LALIGA; 
+        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LALIGA; 
          break; 
       } 
       case 'soccer-bundesliga': { 
-        this.competitionType = this.sharedVar.COMP_HEADER_BUNDESLIGA;
+        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_BUNDESLIGA;
         break; 
       } 
       case 'soccer-serie-a': { 
-        this.competitionType = this.sharedVar.COMP_HEADER_SERIE_A;
+        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_SERIE_A;
         break; 
       } 
       case 'soccer-ligue-one': { 
-        this.competitionType = this.sharedVar.COMP_HEADER_LIGUE_ONE;
+        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LIGUE_ONE;
         break; 
       } 
       default: { 
-        this.competitionType = '';
+        this.competitionTypeHdr = '';
         break; 
       } 
     } 

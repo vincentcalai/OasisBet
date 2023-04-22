@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/odds")
 public class OddsController {
 	@GetMapping(value = "/retrieveOdds")
-	public ResponseEntity retrieveEplOdds(@RequestParam("comp") String comp) {
-		// return oddsService.findAll(comp);
+	public ResponseEntity retrieveOdds(@RequestParam("compType") String compType) {
+		// return oddsService.findAll(compType);
 		System.out.println("TESTINGGGGG");
 		return null;
 	}
