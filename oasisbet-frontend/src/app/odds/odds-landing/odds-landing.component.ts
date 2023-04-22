@@ -28,7 +28,7 @@ export class OddsLandingComponent implements OnInit {
     
     this.betEvent.competition = 'English Premier League';
     this.betEvent.eventDesc = 'Chelsea vs Manchester Utd';
-    this.betEvent.startTime = new Date(2023, 6, 4, 22, 0, 0, 0);
+    this.betEvent.startTime = new Date(2023, 6, 4, 20, 30, 0, 0);
     this.betEvent.eventId = 1002;
 
     this.betEvent2.competition = 'English Premier League';
@@ -42,7 +42,7 @@ export class OddsLandingComponent implements OnInit {
     this.betEvent3.eventId = 1004;
 
     this.betEvent.h2hEventOdds = new H2HEventOdds;
-    this.betEvent.h2hEventOdds.homeOdds = 2.20;
+    this.betEvent.h2hEventOdds.homeOdds = 2.2;
     this.betEvent.h2hEventOdds.drawOdds = 3.25;
     this.betEvent.h2hEventOdds.awayOdds = 2.75;
 
