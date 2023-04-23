@@ -67,10 +67,11 @@ export class OddsLandingComponent implements OnInit {
     this.events.push(this.betEvent3);
 
     this.subscriptions.add(
-      this.apiService.retrieveOdds('soccer-epl').subscribe((resp: any) => {
+      this.apiService.retrieveOdds('soccer_epl').subscribe((resp: any) => {
         console.log(resp);
       } ,
         error => {
+        console.log(error);
         this.sharedVar.changeException(error);
       }
     )
@@ -80,23 +81,23 @@ export class OddsLandingComponent implements OnInit {
 
   readCompType(compType: string){ 
     switch(compType) { 
-      case 'soccer-epl': { 
+      case 'soccer_epl': { 
          this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
          break; 
       } 
-      case 'soccer-laliga': { 
+      case 'soccer_laliga': { 
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LALIGA; 
          break; 
       } 
-      case 'soccer-bundesliga': { 
+      case 'soccer_bundesliga': { 
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_BUNDESLIGA;
         break; 
       } 
-      case 'soccer-serie-a': { 
+      case 'soccer_serie-a': { 
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_SERIE_A;
         break; 
       } 
-      case 'soccer-ligue-one': { 
+      case 'soccer_ligue-one': { 
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LIGUE_ONE;
         break; 
       } 
