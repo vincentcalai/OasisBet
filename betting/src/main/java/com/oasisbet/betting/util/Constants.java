@@ -21,4 +21,7 @@ public class Constants {
 	public static final String API_SOURCE_URI_ODDS_FORMAT_PARAM = "oddsFormat=";
 	public static final String API_SOURCE_URI_BOOKMKR_PARAM = "bookmakers=";
 
+	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
+	public static final String RETRIEVE_ODDS_API_EXCEPTION = "Error Retrieving Odds from source API";
+
 }

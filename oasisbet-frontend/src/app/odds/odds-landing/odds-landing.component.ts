@@ -22,53 +22,15 @@ export class OddsLandingComponent implements OnInit {
   public betEvent3: BetEvent;
 
   constructor(public sharedVar: SharedVarService,
-    public apiService: ApiService) { 
+    public apiService: ApiService) {
     this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
   }
 
   ngOnInit(): void {
-    this.betEvent = new BetEvent;
-    this.betEvent2 = new BetEvent;
-    this.betEvent3 = new BetEvent;
-    
-    this.betEvent.competition = 'English Premier League';
-    this.betEvent.eventDesc = 'Chelsea vs Manchester Utd';
-    this.betEvent.startTime = new Date(2023, 6, 4, 20, 30, 0, 0);
-    this.betEvent.eventId = 1002;
-
-    this.betEvent2.competition = 'English Premier League';
-    this.betEvent2.eventDesc = 'Arsenal vs Tottenham Hotspur';
-    this.betEvent2.startTime = new Date(2023, 6, 4, 22, 0, 0, 0);
-    this.betEvent2.eventId = 1003;
-
-    this.betEvent3.competition = 'English Premier League';
-    this.betEvent3.eventDesc = 'Everton vs Manchester City';
-    this.betEvent3.startTime = new Date(2023, 6, 4, 22, 0, 0, 0);
-    this.betEvent3.eventId = 1004;
-
-    this.betEvent.h2hEventOdds = new H2HEventOdds;
-    this.betEvent.h2hEventOdds.homeOdds = 2.2;
-    this.betEvent.h2hEventOdds.drawOdds = 3.25;
-    this.betEvent.h2hEventOdds.awayOdds = 2.75;
-
-    this.betEvent2.h2hEventOdds = new H2HEventOdds;
-    this.betEvent2.h2hEventOdds.homeOdds = 1.88;
-    this.betEvent2.h2hEventOdds.drawOdds = 3.25;
-    this.betEvent2.h2hEventOdds.awayOdds = 3.05;
-
-    this.betEvent3.h2hEventOdds = new H2HEventOdds;
-    this.betEvent3.h2hEventOdds.homeOdds = 4.15;
-    this.betEvent3.h2hEventOdds.drawOdds = 3.30;
-    this.betEvent3.h2hEventOdds.awayOdds = 1.65;
-
-    this.events = [];
-    this.events.push(this.betEvent);
-    this.events.push(this.betEvent2);
-    this.events.push(this.betEvent3);
-
     this.subscriptions.add(
       this.apiService.retrieveOdds('soccer_epl').subscribe((resp: any) => {
         console.log(resp);
+        this.events = resp.betEvent;
       } ,
         error => {
         console.log(error);
@@ -79,33 +41,33 @@ export class OddsLandingComponent implements OnInit {
 
   }
 
-  readCompType(compType: string){ 
-    switch(compType) { 
-      case 'soccer_epl': { 
+  readCompType(compType: string){
+    switch(compType) {
+      case 'soccer_epl': {
          this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
-         break; 
-      } 
-      case 'soccer_laliga': { 
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LALIGA; 
-         break; 
-      } 
-      case 'soccer_bundesliga': { 
+         break;
+      }
+      case 'soccer_laliga': {
+        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LALIGA;
+         break;
+      }
+      case 'soccer_bundesliga': {
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_BUNDESLIGA;
-        break; 
-      } 
-      case 'soccer_serie-a': { 
+        break;
+      }
+      case 'soccer_serie-a': {
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_SERIE_A;
-        break; 
-      } 
-      case 'soccer_ligue-one': { 
+        break;
+      }
+      case 'soccer_ligue-one': {
         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LIGUE_ONE;
-        break; 
-      } 
-      default: { 
+        break;
+      }
+      default: {
         this.competitionTypeHdr = '';
-        break; 
-      } 
-    } 
+        break;
+      }
+    }
   }
 
 }
