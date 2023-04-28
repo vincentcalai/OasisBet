@@ -39,7 +39,7 @@ export class OddsLandingComponent implements OnInit {
           return event.startTime.toDateString();
         })));
 
-        //save into a event map with unique event dates retrieved
+        //save into a event map with unique event dates after retrival of events -> (Date string, BetEvents[])
         this.eventDates.forEach(dateString => {
           const eventsDetails = this.events.filter(event => event.startTime.toDateString() === dateString);
           this.eventsMap.set(dateString, eventsDetails);
