@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,9 +55,9 @@ public class OddsController {
 		OddsApiResponse[] results = null;
 		BettingRestResponse response = new BettingRestResponse();
 		try {
-//			ResponseEntity<OddsApiResponse[]> response = restTemplate.getForEntity(uri, OddsApiResponse[].class);
-//			results = response.getBody();
-			results = mockOddsApiResponseArray();
+			ResponseEntity<OddsApiResponse[]> responseEntity = restTemplate.getForEntity(uri, OddsApiResponse[].class);
+			results = responseEntity.getBody();
+//			results = mockOddsApiResponseArray();
 
 			List<BetEvent> betEventList = new ArrayList<>();
 			for (OddsApiResponse result : results) {
@@ -64,9 +66,9 @@ public class OddsController {
 				List<Market> marketList = bookmaker.getMarkets();
 				Market market = marketList.get(0);
 				List<Outcome> outcomeList = market.getOutcomes();
-				Outcome homeOutcome = outcomeList.get(0).getName() == result.getHome_team() ? outcomeList.get(0)
+				Outcome homeOutcome = outcomeList.get(0).getName().equals(result.getHome_team()) ? outcomeList.get(0)
 						: outcomeList.get(1);
-				Outcome awayOutcome = outcomeList.get(1).getName() == result.getAway_team() ? outcomeList.get(1)
+				Outcome awayOutcome = outcomeList.get(1).getName().equals(result.getAway_team()) ? outcomeList.get(1)
 						: outcomeList.get(0);
 				Outcome drawOutcome = outcomeList.get(2);
 				double homeOdds = homeOutcome.getPrice();
@@ -77,6 +79,14 @@ public class OddsController {
 				String dateString = result.getCommence_time();
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 				Date startTime = dateFormat.parse(dateString);
+
+				// Convert to SG time - add 8 hours to the start time
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(startTime);
+
+				calendar.add(Calendar.HOUR_OF_DAY, 8);
+				startTime = calendar.getTime();
+
 				String eventDesc = result.getHome_team() + " vs " + result.getAway_team();
 				String competition = result.getSport_title();
 				BetEvent event = new BetEvent(competition, eventDesc, startTime, h2hEventOdds);

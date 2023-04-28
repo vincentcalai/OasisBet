@@ -5,7 +5,6 @@ import { BetEvent } from 'src/app/model/bet-event.model';
 import { H2HEventOdds } from 'src/app/model/h2h-event-odds.model';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
-import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'app-odds-landing',
