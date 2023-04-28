@@ -2,7 +2,7 @@ package com.oasisbet.result.model;
 
 import java.util.List;
 
-public class ResultRestResponse {
+public class ResultRestResponse extends StatusResponse {
 	private List<ResultEvent> resultEvent;
 
 	public List<ResultEvent> getResultEvent() {

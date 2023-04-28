@@ -15,7 +15,7 @@ export class OddsLandingComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
 
-  compType: string = 'soccer_epl';
+  compType: string = this.sharedVar.API_SOURCE_COMP_TYPE_EPL;
   competitionTypeHdr: string;
   public events : BetEvent[];
   public eventDates: string[];
@@ -43,7 +43,6 @@ export class OddsLandingComponent implements OnInit {
         this.eventDates.forEach(dateString => {
           const eventsDetails = this.events.filter(event => event.startTime.toDateString() === dateString);
           this.eventsMap.set(dateString, eventsDetails);
-          console.log(`Events for ${dateString}:`, eventsDetails);
         });
       } ,
         error => {

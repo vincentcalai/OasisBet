@@ -12,9 +12,7 @@
             <h1 class="card-header">{{competitionTypeHdr}}</h1>
           </div>
           <div class="card-body">
-            <div class="container-fluid" *ngFor="let date of eventDates">
-              <h3 class="card-subtitle">{{date | date:'EEE, dd MMM yyyy' }}
-              </h3>
+            <div class="container-fluid">
               <table class="table" style="table-layout: fixed; width: 100%;">
                 <thead class="table-header">
                   <tr>
@@ -24,10 +22,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let event of eventsMap.get(date)">
+                  <tr *ngFor="let event of events">
                     <td>{{event.startTime | date:'EEE, dd MMM yyyy, h:mm a'}}</td>
                     <td>{{event.eventDesc}}</td>
-                    <td>1-1</td>
+                    <td>{{event.score}}</td>
                   </tr>
                   <tr *ngIf='!events || events.length == 0'>
                     <td class='text-center' colspan=12>
