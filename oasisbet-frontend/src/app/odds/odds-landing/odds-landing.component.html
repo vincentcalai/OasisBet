@@ -3,7 +3,7 @@
         <div class="col-md-3">
             <app-odds-side-nav (onSelectCompType)="readCompType($event)"></app-odds-side-nav>
         </div>
-        
+
         <div class="col-md-9">
             <div class="container-fluid">
             <br>
@@ -12,32 +12,22 @@
                         <h1 class="card-header">{{competitionTypeHdr}}</h1>
                     </div>
                     <div class="card-body">
-                        <div class="container-fluid">
-                            <table class="table">
+                        <div class="container-fluid" *ngFor="let date of eventDates">
+                          <h3 class="card-subtitle">{{date | date:'EEE, dd MMM yyyy' }}
+                          </h3>
+                          <table class="table" style="table-layout: fixed; width: 100%;">
                                 <thead class= "table-header">
                                     <tr>
-                                        <th>
-                                          Time
-                                        </th>
-                                        <th>
-                                          Event ID
-                                        </th>
-                                        <th>
-                                          Event Description
-                                        </th>
-                                        <th>
-                                          Home(1)
-                                        </th>
-                                        <th>
-                                          Draw(X)
-                                        </th>
-                                        <th>
-                                          Away(2)
-                                        </th>
+                                      <th style="width: 10%;">Time</th>
+                                      <th style="width: 20%;">Event ID</th>
+                                      <th style="width: 40%;">Event Description</th>
+                                      <th style="width: 10%;">Home(1)</th>
+                                      <th style="width: 10%;">Draw(X)</th>
+                                      <th style="width: 10%;">Away(2)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let event of events">
+                                    <tr *ngFor="let event of eventsMap.get(date)">
                                         <td>{{event.startTime | date:'shortTime'}}</td>
                                         <td>{{event.eventId}}</td>
                                         <td>{{event.eventDesc}}</td>
