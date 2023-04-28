@@ -16,6 +16,7 @@ export class OddsLandingComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
 
+  compType: string = 'soccer_epl';
   competitionTypeHdr: string;
   public events : BetEvent[];
   public eventDates: string[];
@@ -28,7 +29,7 @@ export class OddsLandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.apiService.retrieveOdds('soccer_epl').subscribe((resp: any) => {
+      this.apiService.retrieveOdds(this.compType).subscribe((resp: any) => {
         this.events = resp.betEvent;
 
         //convert json response from String to Date format
@@ -55,8 +56,9 @@ export class OddsLandingComponent implements OnInit {
 
   }
 
-  readCompType(compType: string){
-    switch(compType) {
+  readCompType(competitionName: string){
+    this.compType = competitionName;
+    switch(this.compType) {
       case 'soccer_epl': {
          this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
          break;
@@ -82,6 +84,7 @@ export class OddsLandingComponent implements OnInit {
         break;
       }
     }
+    this.ngOnInit();
   }
 
 }
