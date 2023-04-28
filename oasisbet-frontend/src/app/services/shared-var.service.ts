@@ -28,4 +28,35 @@ export class SharedVarService {
   changeException(status: string) {
     this.exceptionSource.next(status);
   }
+
+
+  retrieveCompHdr(competitionName: string): string{
+    switch(competitionName) {
+      case 'soccer_epl': {
+         return this.COMP_HEADER_EPL;
+         break;
+      }
+      case 'soccer_laliga': {
+        return this.COMP_HEADER_LALIGA;
+         break;
+      }
+      case 'soccer_bundesliga': {
+        return this.COMP_HEADER_BUNDESLIGA;
+        break;
+      }
+      case 'soccer_serie-a': {
+        return this.COMP_HEADER_SERIE_A;
+        break;
+      }
+      case 'soccer_ligue-one': {
+        return this.COMP_HEADER_LIGUE_ONE;
+        break;
+      }
+      default: {
+        return '';
+        break;
+      }
+    }
+  }
+
 }

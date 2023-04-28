@@ -58,32 +58,7 @@ export class OddsLandingComponent implements OnInit {
 
   readCompType(competitionName: string){
     this.compType = competitionName;
-    switch(this.compType) {
-      case 'soccer_epl': {
-         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
-         break;
-      }
-      case 'soccer_laliga': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LALIGA;
-         break;
-      }
-      case 'soccer_bundesliga': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_BUNDESLIGA;
-        break;
-      }
-      case 'soccer_serie-a': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_SERIE_A;
-        break;
-      }
-      case 'soccer_ligue-one': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LIGUE_ONE;
-        break;
-      }
-      default: {
-        this.competitionTypeHdr = '';
-        break;
-      }
-    }
+    this.competitionTypeHdr = this.sharedVar.retrieveCompHdr(this.compType);
     this.ngOnInit();
   }
 

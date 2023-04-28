@@ -13,6 +13,7 @@ export class ResultsLandingComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
 
+  compType: string = 'soccer_epl';
   competitionTypeHdr: string;
   public events : BetEvent[];
   public eventDates: string[];
@@ -25,7 +26,7 @@ export class ResultsLandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.apiService.retrieveOdds('soccer_epl').subscribe((resp: any) => {
+      this.apiService.retrieveOdds(this.compType).subscribe((resp: any) => {
         this.events = resp.betEvent;
 
         //convert json response from String to Date format
@@ -52,33 +53,10 @@ export class ResultsLandingComponent implements OnInit {
 
   }
 
-  readCompType(compType: string){
-    switch(compType) {
-      case 'soccer_epl': {
-         this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
-         break;
-      }
-      case 'soccer_laliga': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LALIGA;
-         break;
-      }
-      case 'soccer_bundesliga': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_BUNDESLIGA;
-        break;
-      }
-      case 'soccer_serie-a': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_SERIE_A;
-        break;
-      }
-      case 'soccer_ligue-one': {
-        this.competitionTypeHdr = this.sharedVar.COMP_HEADER_LIGUE_ONE;
-        break;
-      }
-      default: {
-        this.competitionTypeHdr = '';
-        break;
-      }
-    }
+  readCompType(competitionName: string){
+    this.compType = competitionName;
+    this.competitionTypeHdr = this.sharedVar.retrieveCompHdr(this.compType);
+    this.ngOnInit();
   }
 
 }
