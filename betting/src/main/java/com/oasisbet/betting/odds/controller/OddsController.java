@@ -62,35 +62,39 @@ public class OddsController {
 			List<BetEvent> betEventList = new ArrayList<>();
 			for (OddsApiResponse result : results) {
 				List<Bookmaker> bookmakerList = result.getBookmakers();
-				Bookmaker bookmaker = bookmakerList.get(0);
-				List<Market> marketList = bookmaker.getMarkets();
-				Market market = marketList.get(0);
-				List<Outcome> outcomeList = market.getOutcomes();
-				Outcome homeOutcome = outcomeList.get(0).getName().equals(result.getHome_team()) ? outcomeList.get(0)
-						: outcomeList.get(1);
-				Outcome awayOutcome = outcomeList.get(1).getName().equals(result.getAway_team()) ? outcomeList.get(1)
-						: outcomeList.get(0);
-				Outcome drawOutcome = outcomeList.get(2);
-				double homeOdds = homeOutcome.getPrice();
-				double awayOdds = awayOutcome.getPrice();
-				double drawOdds = drawOutcome.getPrice();
-				H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
+				if (bookmakerList != null && bookmakerList.size() > 0) {
+					Bookmaker bookmaker = bookmakerList.get(0);
+					List<Market> marketList = bookmaker.getMarkets();
+					Market market = marketList.get(0);
+					List<Outcome> outcomeList = market.getOutcomes();
+					Outcome homeOutcome = outcomeList.get(0).getName().equals(result.getHome_team())
+							? outcomeList.get(0)
+							: outcomeList.get(1);
+					Outcome awayOutcome = outcomeList.get(1).getName().equals(result.getAway_team())
+							? outcomeList.get(1)
+							: outcomeList.get(0);
+					Outcome drawOutcome = outcomeList.get(2);
+					double homeOdds = homeOutcome.getPrice();
+					double awayOdds = awayOutcome.getPrice();
+					double drawOdds = drawOutcome.getPrice();
+					H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
 
-				String dateString = result.getCommence_time();
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-				Date startTime = dateFormat.parse(dateString);
+					String dateString = result.getCommence_time();
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+					Date startTime = dateFormat.parse(dateString);
 
-				// Convert to SG time - add 8 hours to the start time
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(startTime);
+					// Convert to SG time - add 8 hours to the start time
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(startTime);
 
-				calendar.add(Calendar.HOUR_OF_DAY, 8);
-				startTime = calendar.getTime();
+					calendar.add(Calendar.HOUR_OF_DAY, 8);
+					startTime = calendar.getTime();
 
-				String eventDesc = result.getHome_team() + " vs " + result.getAway_team();
-				String competition = result.getSport_title();
-				BetEvent event = new BetEvent(competition, eventDesc, startTime, h2hEventOdds);
-				betEventList.add(event);
+					String eventDesc = result.getHome_team() + " vs " + result.getAway_team();
+					String competition = result.getSport_title();
+					BetEvent event = new BetEvent(competition, eventDesc, startTime, h2hEventOdds);
+					betEventList.add(event);
+				}
 			}
 
 			betEventList = betEventList.stream().sorted(Comparator.comparing(BetEvent::getStartTime)).map(event -> {

@@ -7,6 +7,12 @@ import { ResponseModel } from '../model/response.model';
 })
 export class SharedVarService {
 
+  public readonly API_SOURCE_COMP_TYPE_EPL = "soccer_epl";
+  public readonly API_SOURCE_COMP_TYPE_LALIGA = "soccer_spain_la_liga";
+  public readonly API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
+  public readonly API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
+  public readonly API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+
   public readonly COMP_HEADER_EPL = "English Premier League";
   public readonly COMP_HEADER_LALIGA = "La Liga";
   public readonly COMP_HEADER_BUNDESLIGA = "Bundesliga";
@@ -32,23 +38,23 @@ export class SharedVarService {
 
   retrieveCompHdr(competitionName: string): string{
     switch(competitionName) {
-      case 'soccer_epl': {
+      case this.API_SOURCE_COMP_TYPE_EPL: {
          return this.COMP_HEADER_EPL;
          break;
       }
-      case 'soccer_laliga': {
+      case this.API_SOURCE_COMP_TYPE_LALIGA: {
         return this.COMP_HEADER_LALIGA;
          break;
       }
-      case 'soccer_bundesliga': {
+      case this.API_SOURCE_COMP_TYPE_BUNDESLIGA: {
         return this.COMP_HEADER_BUNDESLIGA;
         break;
       }
-      case 'soccer_serie-a': {
+      case this.API_SOURCE_COMP_TYPE_SERIE_A: {
         return this.COMP_HEADER_SERIE_A;
         break;
       }
-      case 'soccer_ligue-one': {
+      case this.API_SOURCE_COMP_TYPE_LIGUE_ONE: {
         return this.COMP_HEADER_LIGUE_ONE;
         break;
       }

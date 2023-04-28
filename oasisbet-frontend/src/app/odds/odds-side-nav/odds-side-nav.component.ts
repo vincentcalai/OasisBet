@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ export class OddsSideNavComponent implements OnInit {
 
   @Output() onSelectCompType : EventEmitter<string>;
 
-  constructor() { 
+  constructor(public sharedVar: SharedVarService) { 
     this.onSelectCompType = new EventEmitter<string>();
   }
 
