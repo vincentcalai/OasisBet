@@ -1,1 +1,46 @@
-<p>results-landing works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <app-odds-side-nav (onSelectCompType)="readCompType($event)"></app-odds-side-nav>
+    </div>
+
+    <div class="col-md-9">
+      <div class="container-fluid">
+        <br>
+        <div class="card ">
+          <div class="text-left">
+            <h1 class="card-header">{{competitionTypeHdr}}</h1>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid" *ngFor="let date of eventDates">
+              <h3 class="card-subtitle">{{date | date:'EEE, dd MMM yyyy' }}
+              </h3>
+              <table class="table" style="table-layout: fixed; width: 100%;">
+                <thead class="table-header">
+                  <tr>
+                    <th style="width: 25%;">Date & Time</th>
+                    <th style="width: 50%;">Event Description</th>
+                    <th style="width: 25%;">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let event of eventsMap.get(date)">
+                    <td>{{event.startTime | date:'EEE, dd MMM yyyy, h:mm a'}}</td>
+                    <td>{{event.eventDesc}}</td>
+                    <td>1-1</td>
+                  </tr>
+                  <tr *ngIf='!events || events.length == 0'>
+                    <td class='text-center' colspan=12>
+                      No Event(s) Found.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
