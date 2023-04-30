@@ -1,18 +1,12 @@
 package com.oasisbet.betting.odds.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +19,11 @@ import org.springframework.web.client.RestTemplate;
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.BettingRestResponse;
 import com.oasisbet.betting.odds.model.Bookmaker;
-import com.oasisbet.betting.odds.model.H2HEventOdds;
 import com.oasisbet.betting.odds.model.Market;
 import com.oasisbet.betting.odds.model.OddsApiResponse;
 import com.oasisbet.betting.odds.model.Outcome;
+import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.util.Constants;
-import com.oasisbet.betting.util.EventIdGenerator;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
@@ -38,6 +31,9 @@ import com.oasisbet.betting.util.EventIdGenerator;
 public class OddsController {
 
 	Logger logger = LoggerFactory.getLogger(OddsController.class);
+
+	@Autowired
+	public OddsService oddsService;
 
 	@GetMapping(value = "/retrieveOdds")
 	public BettingRestResponse retrieveOdds(@RequestParam("compType") String compType) {
@@ -59,52 +55,7 @@ public class OddsController {
 			results = responseEntity.getBody();
 //			results = mockOddsApiResponseArray();
 
-			List<BetEvent> betEventList = new ArrayList<>();
-			for (OddsApiResponse result : results) {
-				List<Bookmaker> bookmakerList = result.getBookmakers();
-				if (bookmakerList != null && bookmakerList.size() > 0) {
-					Bookmaker bookmaker = bookmakerList.get(0);
-					List<Market> marketList = bookmaker.getMarkets();
-					Market market = marketList.get(0);
-					List<Outcome> outcomeList = market.getOutcomes();
-					Outcome homeOutcome = outcomeList.get(0).getName().equals(result.getHome_team())
-							? outcomeList.get(0)
-							: outcomeList.get(1);
-					Outcome awayOutcome = outcomeList.get(1).getName().equals(result.getAway_team())
-							? outcomeList.get(1)
-							: outcomeList.get(0);
-					Outcome drawOutcome = outcomeList.get(2);
-					double homeOdds = homeOutcome.getPrice();
-					double awayOdds = awayOutcome.getPrice();
-					double drawOdds = drawOutcome.getPrice();
-					H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
-
-					String dateString = result.getCommence_time();
-					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-					Date startTime = dateFormat.parse(dateString);
-
-					// Convert to SG time - add 8 hours to the start time
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(startTime);
-
-					calendar.add(Calendar.HOUR_OF_DAY, 8);
-					startTime = calendar.getTime();
-
-					String eventDesc = result.getHome_team() + " vs " + result.getAway_team();
-					String competition = result.getSport_title();
-					BetEvent event = new BetEvent(competition, eventDesc, startTime, h2hEventOdds);
-					betEventList.add(event);
-				}
-			}
-
-			betEventList = betEventList.stream().sorted(Comparator.comparing(BetEvent::getStartTime)).map(event -> {
-				long eventId = EventIdGenerator.nextId();
-				event.setEventId(eventId);
-				H2HEventOdds h2hEventOdds = event.getH2hEventOdds();
-				h2hEventOdds.setEventId(eventId);
-				event.setH2hEventOdds(h2hEventOdds);
-				return event;
-			}).collect(Collectors.toList());
+			List<BetEvent> betEventList = oddsService.processMapping(results);
 
 			response.setBetEvent(betEventList);
 			return response;

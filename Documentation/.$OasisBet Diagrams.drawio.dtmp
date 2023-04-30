@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-04-29T14:58:59.115Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="kCFzQMH6uHOVEqXkCM2N" version="21.1.2" type="device" pages="4">
+<mxfile host="Electron" modified="2023-04-30T03:32:13.723Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="FlS8R9OuHCZRdc1XGUl5" version="21.1.2" type="device" pages="4">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="1418" dy="828" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -299,7 +299,7 @@
         <mxCell id="XKcWxkhbTB8Lk9FxZ0TD-1" value="event_id_map" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="75" y="538" width="130" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="XKcWxkhbTB8Lk9FxZ0TD-2" value="eventId: long&lt;br&gt;sourceId: string&lt;br&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="XKcWxkhbTB8Lk9FxZ0TD-1">
+        <mxCell id="XKcWxkhbTB8Lk9FxZ0TD-2" value="eventId: long&lt;br&gt;sourceId: string&lt;br&gt;compType: string" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="XKcWxkhbTB8Lk9FxZ0TD-1">
           <mxGeometry y="50" width="130" height="120" as="geometry" />
         </mxCell>
       </root>
