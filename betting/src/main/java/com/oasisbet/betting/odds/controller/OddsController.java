@@ -55,6 +55,9 @@ public class OddsController {
 			results = responseEntity.getBody();
 //			results = mockOddsApiResponseArray();
 
+			// sync new bet events to DB, create new event id for new bet events
+			oddsService.syncNewEvents();
+
 			List<BetEvent> betEventList = oddsService.processMapping(results);
 
 			response.setBetEvent(betEventList);

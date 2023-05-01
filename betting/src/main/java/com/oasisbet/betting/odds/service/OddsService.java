@@ -10,8 +10,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bson.Document;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.Bookmaker;
 import com.oasisbet.betting.odds.model.H2HEventOdds;
@@ -19,6 +23,7 @@ import com.oasisbet.betting.odds.model.Market;
 import com.oasisbet.betting.odds.model.OddsApiResponse;
 import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.util.EventIdGenerator;
+import com.oasisbet.betting.util.MongoDBConnection;
 
 @Service
 public class OddsService {
@@ -69,4 +74,29 @@ public class OddsService {
 		}).collect(Collectors.toList());
 		return betEventList;
 	}
+
+	public long getSequenceValue(MongoCollection<Document> collection) {
+		// Find the document with the highest _id value
+//		EventIdMap doc = collection.find().sort(new EventIdMap("_id", -1)).limit(1).first();
+//		EventIdMap eplEvents = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId")).limit(1)
+//				.first();
+		Document document = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId")).limit(1)
+				.first();
+
+		// If no documents exist yet, start the sequence at 0
+		if (document == null) {
+			return 1000;
+		}
+
+		// Get the value of the highest _id and return it
+		return document.getInteger("eventId") + 1;
+	}
+
+	public void syncNewEvents() {
+		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
+
+		long betEventSeq = getSequenceValue(collection);
+
+	}
+
 }
