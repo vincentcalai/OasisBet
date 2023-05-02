@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-account-login',
@@ -12,9 +13,27 @@ export class AccountLoginComponent implements OnInit {
   errorMsg: string = "";
   responseMsg: string = "";
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  handleJWTAuthLogin(){
+    this.authService.jwtAuthenticate(this.username,this.password)
+    .subscribe(
+      data => {
+        console.log(data);
+        console.log("login successful");
+      },
+      error => {
+        console.log("login fail");
+        this.errorMsg = "Please enter a valid credential. Login failed.";
+      }
+    )
+  }
+
+  signUpUser(){
+    console.log("signUpUser");
   }
 
 }

@@ -18,8 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { AccountLoginComponent } from './account/account-login/account-login.component';
 import { FormsModule } from '@angular/forms';
+import { AccountLoginComponent } from './account/account-login/account-login.component';
 
 
 @NgModule({

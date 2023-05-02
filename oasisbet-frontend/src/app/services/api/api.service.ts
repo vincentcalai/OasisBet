@@ -5,31 +5,50 @@ import { environment } from 'src/environments/environment';
 import { timeout, catchError, map } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { SharedVarService } from '../shared-var.service';
+import { AUTH_USER, TOKEN } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
-  public servicePrefix;
-  public servicePrefix2;
+  public oddsServicePrefix;
+  public resultServicePrefix;
+  public accountServicePrefix;
   public timeout = 200000;
 
   constructor(public http: HttpClient,
     public sharedVar: SharedVarService) {
-    this.servicePrefix = environment.apiUrl;
-    this.servicePrefix2 = environment.apiUrl2;
+    this.oddsServicePrefix = environment.apiUrl;
+    this.resultServicePrefix = environment.apiUrl2;
+    this.accountServicePrefix = environment.apiUrl3;
+  }
+
+  jwtAuthenticate(username: string, password: string) {
+    return this.http.post<any>( this.accountServicePrefix + "/authenticate",{
+      username,
+      password
+    })
+    .pipe(
+      map(
+        data => {
+          sessionStorage.setItem(AUTH_USER, username);
+          sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
+          console.log(data);
+          return data;
+        }
+      )
+    );
   }
 
   retrieveOdds(compType: string): Observable<Object> {
-    return this.http.get(this.servicePrefix + '/odds/retrieveOdds?compType=' + compType).pipe(
+    return this.http.get(this.oddsServicePrefix + '/odds/retrieveOdds?compType=' + compType).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );
   }
 
   retrieveResults(compType: string): Observable<Object> {
-    return this.http.get(this.servicePrefix2 + '/result/retrieveResults?compType=' + compType).pipe(
+    return this.http.get(this.resultServicePrefix + '/result/retrieveResults?compType=' + compType).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );
@@ -39,5 +58,6 @@ export class ApiService {
     alert('An unexpected error has occured.')
     return throwError(error.message || "Server Error has occured.");
   }
+
 
 }

@@ -12,6 +12,7 @@
 
 .card-header {
   color: #0053ac;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .form-group.password-group {
@@ -32,9 +33,10 @@
 }
 
 .btn-login {
-  background-color: #7ecf65;
+  background-color: #87be77;
   text-transform: uppercase;
-  font-family: "Franklin Gothic Medium";
+  font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
 }
 
 .btn-login:hover {
