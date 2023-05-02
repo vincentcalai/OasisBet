@@ -5,6 +5,7 @@
 .navbar-nav {
     margin-left: 20%;
     padding-top: 5px;
+      font-family: 'Roboto', sans-serif;
 }
 
 .nav-item {
@@ -15,6 +16,10 @@
 
 .nav-link {
     color: white;
+    font-size: 16px;
+      margin-right: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
 }
 
 .active{
@@ -27,4 +32,4 @@
     cursor: pointer;
 }
 
-  
+
