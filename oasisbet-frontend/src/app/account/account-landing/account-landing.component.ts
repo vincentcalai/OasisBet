@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-account-landing',

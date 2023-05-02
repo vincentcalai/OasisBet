@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <br>
+  <div class="card col-md-6 offset-md-3">
+    <div class="text-center">
+      <h1 class="card-header">LOGIN</h1>
+    </div>
+    <div class="card-body">
+      <div class="container-fluid">
+        <div id="login-row" class="row justify-content-center align-items-center">
+          <form id="login-column" class="col-md-6">
+            <div *ngIf="responseMsg" class="alert alert-success">
+              <b>Success: </b> {{responseMsg}}
+            </div>
+            <div class="alert alert-danger" *ngIf="errorMsg">{{errorMsg}}</div>
+            <div id="login-box" class="col-md-12">
+              <div id="login-form">
+                <div class="form-group username-group">
+                  <label for="username" class="username-label">Username:</label><br>
+                  <input type="text" name="username" id="username" class="form-control" [(ngModel)]="username"
+                    (ngModelChange)="username = $event.toUpperCase()">
+                </div>
+                <div class="form-group password-group">
+                  <label for="password" class="username-label">Password:</label><br>
+                  <input type="password" name="password" id="password" class="form-control" [(ngModel)]="password">
+                </div>
+                <div class="form-group btn-login-group">
+                  <button id="authBtn" class="btn btn-success btn-login">Login</button>
+                </div>
+                <hr>
+                <div class="form-group others-group">
+                  <p>Don't have an account yet? <a class="signup-link">Sign Up Here</a></p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div id="login">
+  <h1 class="text-center text-white pt-5">Welcome to Trippify</h1>
+  <div class="container">
+    <div id="login-row" class="row justify-content-center align-items-center">
+
+      <form id="login-column" class="col-md-6">
+        <div *ngIf="responseMsg" class="alert alert-success">
+          <b>Success: </b> {{responseMsg}}
+        </div>
+        <div class="alert alert-danger" *ngIf="errorMsg">{{errorMsg}}</div>
+        <div id="login-box" class="col-md-12">
+          <div id="login-form">
+
+            <h2 class="text-center text-info">Login</h2>
+            <div class="form-group">
+              <label for="username" class="text-info">Username:</label><br>
+              <input type="text" name="username" id="username" class="form-control" [(ngModel)]="username"
+                (ngModelChange)="username = $event.toUpperCase()">
+            </div>
+            <div class="form-group">
+              <label for="password" class="text-info">Password:</label><br>
+              <input type="password" name="password" id="password" class="form-control" [(ngModel)]="password">
+            </div>
+            <div class="form-group username-group">
+              <button id="authBtn" class="btn btn-success btn-login">Login</button>
+            </div>
+            <div class="form-group others-group">
+              <p class="create-user-text" (click)="createUser()">Create New User</p>
+            </div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div> -->

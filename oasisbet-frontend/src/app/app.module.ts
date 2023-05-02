@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { AccountLoginComponent } from './account/account-login/account-login.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,13 +32,15 @@ import { HttpClientModule } from '@angular/common/http';
     AccountLandingComponent,
     OddsSideNavComponent,
     ResultsSideNavComponent,
-    AccountSideNavComponent
+    AccountSideNavComponent,
+    AccountLoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
