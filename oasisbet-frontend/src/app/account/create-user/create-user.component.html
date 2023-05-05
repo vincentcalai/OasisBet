@@ -1,6 +1,6 @@
 <div class="container">
   <br>
-  <div class="card">
+  <div class="card col-md-6 offset-md-3">
     <div class="alert alert-danger" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
     <h1 class="d-inline card-header">Create New User</h1>
     <div class="card-body">
@@ -135,25 +135,3 @@
   </div>
 </div>
 
-<ng-template #confirmInputsModal>
-  <div class="modal-sm modal-dialog-centered">
-    <div class="popup_dialog">
-      <div class="form_content">
-        <div class="popup_title">
-          <h3>
-            <span id="cfm_create_usr_dialog_heading">Confirm Create User</span>
-          </h3>
-        </div>
-        <div>
-          <span id="cfm_create_usr_dialog_desc">Are you sure to create user?</span>
-        </div>
-      </div>
-      <div class="popup_btn">
-        <button id="cx_create_usr_dialog_button" class="btn btn-default"
-          (click)="confirmCreateUser()"><span>Confirm</span></button>
-        <button id="cfm_create_usr_dialog_button" class="btn btn-default"
-          (click)="modalRef.hide()"><span>Cancel</span></button>
-      </div>
-    </div>
-  </div>
-</ng-template>

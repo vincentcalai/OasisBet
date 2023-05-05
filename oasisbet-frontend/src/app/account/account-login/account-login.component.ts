@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class AccountLoginComponent implements OnInit {
   errorMsg: string = "";
   responseMsg: string = "";
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -33,7 +34,7 @@ export class AccountLoginComponent implements OnInit {
   }
 
   signUpUser(){
-    console.log("signUpUser");
+    this.router.navigate(['create-user'], {skipLocationChange: true});
   }
 
 }

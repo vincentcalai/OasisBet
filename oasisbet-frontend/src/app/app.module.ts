@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountLoginComponent } from './account/account-login/account-login.component';
 import { CreateUserComponent } from './account/create-user/create-user.component';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { CreateUserComponent } from './account/create-user/create-user.component
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
