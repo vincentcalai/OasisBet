@@ -56,7 +56,7 @@ public class OddsController {
 //			results = mockOddsApiResponseArray();
 
 			// sync new bet events to DB, create new event id for new bet events
-			oddsService.syncNewEvents();
+//			oddsService.syncNewEvents();
 
 			List<BetEvent> betEventList = oddsService.processMapping(results);
 

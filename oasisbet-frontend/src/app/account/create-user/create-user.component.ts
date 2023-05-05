@@ -9,6 +9,8 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-create-user',
@@ -29,6 +31,7 @@ export class CreateUserComponent implements OnInit {
     public apiService: ApiService,
     public modalService: BsModalService,
     public sharedMethods: SharedMethodsService,
+    public dialog: MatDialog,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -50,7 +53,19 @@ export class CreateUserComponent implements OnInit {
   }
 
   confirmClicked(){
-    this.modalRef = this.modalService.show(this.confirmInputsModal, this.sharedVar.sharedModalConfig);
+    // this.modalRef = this.modalService.show(this.confirmInputsModal, this.sharedVar.sharedModalConfig);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { message: 'Confirm Create User' }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // User confirmed, do something
+      } else {
+        // User cancelled, do something else
+      }
+    });
   }
 
   confirmCreateUser(){

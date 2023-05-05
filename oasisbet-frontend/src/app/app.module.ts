@@ -18,6 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AccountLoginComponent } from './account/account-login/account-login.component';
 import { CreateUserComponent } from './account/create-user/create-user.component';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './common/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
     ResultsSideNavComponent,
     AccountSideNavComponent,
     AccountLoginComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
     ModalModule.forRoot()
   ],
   providers: [],
