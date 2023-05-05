@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ResponseModel } from '../model/response.model';
+import { CreateUserModel } from '../model/create-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,14 @@ export class SharedVarService {
   public readonly COMP_HEADER_BUNDESLIGA = "Bundesliga";
   public readonly COMP_HEADER_SERIE_A = "Serie A";
   public readonly COMP_HEADER_LIGUE_ONE = "Ligue One";
+
+  public readonly sharedModalConfig = {
+    backdrop: true,
+    ignoreBackdropClick: true,
+    animated: false
+  };
+
+  public createUserModel: CreateUserModel = new CreateUserModel();
 
   constructor() { }
 

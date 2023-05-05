@@ -19,7 +19,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AccountLoginComponent } from './account/account-login/account-login.component';
+import { CreateUserComponent } from './account/create-user/create-user.component';
 
 
 @NgModule({
@@ -33,14 +35,16 @@ import { AccountLoginComponent } from './account/account-login/account-login.com
     OddsSideNavComponent,
     ResultsSideNavComponent,
     AccountSideNavComponent,
-    AccountLoginComponent
+    AccountLoginComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

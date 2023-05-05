@@ -54,6 +54,13 @@ export class ApiService {
     );
   }
 
+  postCreateUser(): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(this.accountServicePrefix + "/account/createUser", this.sharedVar.createUserModel).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
   handleError(error: any){
     alert('An unexpected error has occured.')
     return throwError(error.message || "Server Error has occured.");

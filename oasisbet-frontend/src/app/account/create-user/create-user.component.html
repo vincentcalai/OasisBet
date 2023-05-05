@@ -1,0 +1,159 @@
+<div class="container">
+  <br>
+  <div class="card">
+    <div class="alert alert-danger" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
+    <h1 class="d-inline card-header">Create New User</h1>
+    <div class="card-body">
+      <div class="container">
+        <form [formGroup]="createUserForm">
+          <div class="user_form_title col-md-8 align_cont_center">
+            <label for="">
+              <span id="">Sign Up</span>
+            </label>
+          </div>
+
+          <div class="form-group form-row required col-md-8 align_cont_center">
+            <label id="USERNAME_LABEL_1" for="username_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(username)}" class="control-label">
+              <span id="USERNAME">User Name</span>
+              <span class="mandatory-label"></span>&nbsp;
+            </label>
+            <input id="username_0" type="text" class="form-control allCaps" formControlName="username" name="username">
+            <label id="username_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(username)}" class="error-text"
+              for="name_0">
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(username)) == 'pattern'">Please enter only
+                alphabet characters</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(username)) == 'maxlength'">Maximum length is 20
+                characters</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(username)) == 'minlength'">Minimum length is 5
+                characters</span>
+              <span *ngIf="username.hasError('required') && !username.value && !username.pristine">This field is
+                required</span>
+            </label>
+          </div>
+
+          <br>
+
+          <div class="form-group form-row required col-md-8 align_cont_center">
+            <label id="PASSWORD_LABEL_1" for="password_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="control-label">
+              <span id="PASSWORD">Password</span>
+              <span class="mandatory-label"></span>&nbsp;
+            </label>
+            <input id="password_0" type="password" class="form-control allCaps" formControlName="password"
+              name="password">
+            <label id="password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="error-text"
+              for="password_0">
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(password)) == 'maxlength'">Maximum length is 20
+                characters</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(password)) == 'minlength'">Minimum length is 5
+                characters</span>
+              <span *ngIf="password.hasError('required') && !password.value && !password.pristine">This field is
+                required</span>
+            </label>
+          </div>
+
+          <br>
+
+          <div class="form-group form-row required col-md-8 align_cont_center">
+            <label id="CFMPASSWORD_LABEL_1" for="cfmPassword_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmPassword)}" class="control-label">
+              <span id="CFMPASSWORD">Confirm Password</span>
+              <span class="mandatory-label"></span>&nbsp;
+            </label>
+            <input id="cfmPassword_0" type="password" class="form-control allCaps" formControlName="cfmPassword"
+              name="cfmPassword">
+            <label id="cfmPassword_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmPassword)}"
+              class="error-text" for="cfmPassword_0">
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmPassword)) == 'maxlength'">Maximum length is
+                20
+                characters</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmPassword)) == 'minlength'">Minimum length is
+                5
+                characters</span>
+              <span *ngIf="cfmPassword.hasError('required') && !cfmPassword.value && !cfmPassword.pristine">This field
+                is required</span>
+              <span *ngIf="cfmPassword.hasError('passwordMismatch')">Passwords does not match</span>
+            </label>
+          </div>
+
+          <br>
+
+          <div class="form-group form-row required col-md-8 align_cont_center">
+            <label id="EMAIL_LABEL_1" for="email_0_Label" [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}"
+              class="control-label">
+              <span id="EMAIL">Email</span>
+              <span class="mandatory-label"></span>&nbsp;
+            </label>
+            <input id="email_0" type="text" class="form-control allCaps" formControlName="email" name="email">
+            <label id="email_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}" class="error-text"
+              for="email_0">
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(email)) == 'pattern'">Please enter a valid
+                email address</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(email)) == 'maxlength'">Maximum length is 100
+                characters</span>
+              <span *ngIf="email.hasError('required') && !email.value && !email.pristine">This field is required</span>
+            </label>
+          </div>
+
+          <br>
+
+          <div class="form-group form-row required col-md-8 align_cont_center">
+            <label id="CONTACTNO_LABEL_1" for="contactNo_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(contactNo)}" class="control-label">
+              <span id="CONTACTNO">Contact No</span>
+              <span class="mandatory-label"></span>&nbsp;
+            </label>
+            <input id="contactNo_0" type="text" class="form-control allCaps" formControlName="contactNo"
+              name="contactNo">
+            <label id="contactNo_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(contactNo)}" class="error-text"
+              for="contactNo_0">
+              <span *ngIf="contactNo.hasError('required') && !contactNo.value && !contactNo.pristine">This field is
+                required</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(contactNo)) == 'pattern'">Please enter only
+                numeric characters</span>
+              <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(contactNo)) == 'maxlength'">Maximum length is
+                30
+                characters</span>
+            </label>
+          </div>
+
+
+
+          <div class="text-right">
+            <button class="button_o button_back btn_text_hover" type="button" (click)="backToHomeScreen()">
+              <span id="back">Back</span>
+            </button>
+
+            <button class="button_o btn_text_hover" type="button" (click)="confirmClicked()">
+              <span id="cfm">Confirm</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #confirmInputsModal>
+  <div class="modal-sm modal-dialog-centered">
+    <div class="popup_dialog">
+      <div class="form_content">
+        <div class="popup_title">
+          <h3>
+            <span id="cfm_create_usr_dialog_heading">Confirm Create User</span>
+          </h3>
+        </div>
+        <div>
+          <span id="cfm_create_usr_dialog_desc">Are you sure to create user?</span>
+        </div>
+      </div>
+      <div class="popup_btn">
+        <button id="cx_create_usr_dialog_button" class="btn btn-default"
+          (click)="confirmCreateUser()"><span>Confirm</span></button>
+        <button id="cfm_create_usr_dialog_button" class="btn btn-default"
+          (click)="modalRef.hide()"><span>Cancel</span></button>
+      </div>
+    </div>
+  </div>
+</ng-template>

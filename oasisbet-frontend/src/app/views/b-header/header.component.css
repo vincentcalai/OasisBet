@@ -24,4 +24,5 @@ header {
       align-items: center;
       justify-content: center;
       margin-right: 10px;
+      background: linear-gradient(90deg, #38749e, #1588ca);
 }
