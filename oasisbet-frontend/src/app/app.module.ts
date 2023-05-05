@@ -12,11 +12,6 @@ import { OddsSideNavComponent } from './odds/odds-side-nav/odds-side-nav.compone
 import { ResultsSideNavComponent } from './results/results-side-nav/results-side-nav.component';
 import { AccountSideNavComponent } from './account/account-side-nav/account-side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
