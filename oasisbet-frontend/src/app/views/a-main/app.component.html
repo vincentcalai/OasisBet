@@ -1,3 +1,8 @@
 <app-header></app-header>
 <app-main-menu></app-main-menu>
+<div iclass="no-padding" *ngIf="errorMsg">
+  <div id="app_error_msg" class="alert-text notification" *ngIf="showError">
+    <div [innerHTML]="errorMsg" style="word-wrap: break-word"></div>
+  </div>
+</div>
 <router-outlet></router-outlet>

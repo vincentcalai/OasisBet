@@ -1,8 +1,8 @@
 <div class="container">
   <br>
+  <div class="alert alert-danger col-md-6 offset-md-3" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
   <div class="card col-md-6 offset-md-3">
-    <div class="alert alert-danger" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
-    <h1 class="d-inline card-header">Create New User</h1>
+    <h1 class="d-inline card-header">Create New Account</h1>
     <div class="card-body">
       <div class="container">
         <form [formGroup]="createUserForm">
@@ -60,11 +60,9 @@
             <label id="cfmPassword_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmPassword)}"
               class="error-text" for="cfmPassword_0">
               <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmPassword)) == 'maxlength'">Maximum length is
-                20
-                characters</span>
+                20 characters</span>
               <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmPassword)) == 'minlength'">Minimum length is
-                5
-                characters</span>
+                5 characters</span>
               <span *ngIf="cfmPassword.hasError('required') && !cfmPassword.value && !cfmPassword.pristine">This field
                 is required</span>
               <span *ngIf="cfmPassword.hasError('passwordMismatch')">Passwords does not match</span>

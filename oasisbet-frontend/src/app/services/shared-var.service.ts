@@ -8,6 +8,8 @@ import { CreateUserModel } from '../model/create-user.model';
 })
 export class SharedVarService {
 
+  public readonly GENERAL_SYS_DOWN_ERR_MSG = "This system is currently not available. Please try again at a later time.";
+
   public readonly API_SOURCE_COMP_TYPE_EPL = "soccer_epl";
   public readonly API_SOURCE_COMP_TYPE_LALIGA = "soccer_spain_la_liga";
   public readonly API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
