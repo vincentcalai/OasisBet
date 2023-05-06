@@ -1,0 +1,12 @@
+.mandatory-label:after {
+    color: red;
+    content: " *";
+}
+
+.highlightLabel {
+    color: red;
+}
+
+.allCaps {
+    text-transform: uppercase;
+}

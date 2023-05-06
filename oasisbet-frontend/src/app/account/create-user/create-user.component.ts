@@ -6,7 +6,6 @@ import { take, finalize } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,13 +22,11 @@ export class CreateUserComponent implements OnInit {
   public createUserForm: FormGroup;
 
   subscriptions: Subscription = new Subscription();
-  modalRef: BsModalRef;
   @ViewChild('confirmInputsModal', { static: true }) confirmInputsModal: TemplateRef<any>;
 
   constructor(public reactiveFormService: ReactiveFormService,
     public sharedVar: SharedVarService,
     public apiService: ApiService,
-    public modalService: BsModalService,
     public sharedMethods: SharedMethodsService,
     public dialog: MatDialog,
     private router: Router) { }
@@ -53,7 +50,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   confirmClicked(){
-    // this.modalRef = this.modalService.show(this.confirmInputsModal, this.sharedVar.sharedModalConfig);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: { message: 'Confirm Create User' }
@@ -61,10 +57,9 @@ export class CreateUserComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') {
-        // User confirmed, do something
-      } else {
-        // User cancelled, do something else
-      }
+        console.log("confirm create user");
+        this.confirmCreateUser();
+      } 
     });
   }
 
@@ -76,9 +71,7 @@ export class CreateUserComponent implements OnInit {
       this.sharedVar.createUserModel.user.email = this.email?.value;
       console.log("create user success!");
       this.subscriptions.add(
-        this.apiService.postCreateUser().pipe(take(1), finalize(() => {
-          this.modalRef.hide();
-        })).subscribe( (resp: ResponseModel) => {
+        this.apiService.postCreateUser().subscribe( (resp: ResponseModel) => {
           if (resp.statusCode != 0) {
             this.errorMsg = resp.resultMessage;
             resp.resultMessage = "";
@@ -91,7 +84,6 @@ export class CreateUserComponent implements OnInit {
           this.sharedVar.changeException(error);
         })
       );
-
     } else{
       console.log("create user failed!");
       this.reactiveFormService.displayValidationErrors(this.createUserForm);
