@@ -33,3 +33,45 @@
 }
 
 
+.login-user-textbox{
+    display: flex;
+    align-items: center;
+    color: rgb(194, 194, 194);
+    width: 350px;
+    margin-top: 2px;
+}
+
+.login-username-tag:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.login-username-tag {
+    text-decoration: none;
+    color: inherit;
+}
+
+.user-icon {
+    margin-right: 10px; 
+    font-size: 25px;
+    color: rgb(194, 194, 194);;
+    border: 2px solid rgb(194, 194, 194);;
+    border-radius: 50%;
+    padding: 5px;
+    transform: scaleX(1.15);
+}
+  
+.login-user-textbox span {
+    margin-right: 10px;
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+}
+  
+  
+  
+  
+  
+  
+  
+
+

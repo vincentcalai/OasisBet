@@ -57,6 +57,10 @@
     font-size: 1.1em;
 }
 
+.right-navbar {
+    margin-right: 20px;
+}
+
 .mandatory-label:after {
     color: red;
     content: " *";
