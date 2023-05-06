@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-account-side-nav',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountSideNavComponent implements OnInit {
 
-  constructor() { }
+  @Output() onSelectAccountMenu : EventEmitter<string>;
+
+  constructor(public sharedVar: SharedVarService) { 
+    this.onSelectAccountMenu = new EventEmitter<string>();
+  }
 
   ngOnInit(): void {
+  }
+
+  selectAccountMenu(accountMenuSelect: string){
+    this.onSelectAccountMenu.emit(accountMenuSelect);
   }
 
 }

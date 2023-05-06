@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedVarService } from 'src/app/services/shared-var.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-account-landing',
@@ -8,9 +8,13 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 })
 export class AccountLandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  navToAccountMenu(accountMenu: string){
+    console.log("navigating to.. " + accountMenu);
   }
 
 }
