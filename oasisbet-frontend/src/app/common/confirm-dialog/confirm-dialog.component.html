@@ -1,8 +1,12 @@
 <h2 mat-dialog-title>{{ data.message }}</h2>
 <div mat-dialog-content>
-  <p>Are you sure you want to create this user?</p>
+  <p>Are you sure to create this user?</p>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-button (click)="onCancelClick()">Back</button>
-  <button mat-button color="primary" (click)="onConfirmClick()">Confirm</button>
+  <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelClick()">
+    Cancel
+  </button>
+  <button class="btn btn-success btn-confirm" type="button" (click)="onConfirmClick()">
+    Confirm
+  </button>
 </div>

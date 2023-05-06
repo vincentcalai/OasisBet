@@ -55,7 +55,7 @@ export class CreateUserComponent implements OnInit {
   confirmClicked(){
     // this.modalRef = this.modalService.show(this.confirmInputsModal, this.sharedVar.sharedModalConfig);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: { message: 'Confirm Create User' }
     });
   

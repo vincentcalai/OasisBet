@@ -1,0 +1,27 @@
+.btn-confirm {
+    margin-top: 30px;
+    background-color: #87be77;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    width: 80px;
+}
+
+.btn-cancel {
+    margin-top: 30px;
+    background-color: red;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    width: 80px;
+    margin-right: 10px;
+}
+
+.btn-cancel:hover {
+    color: black;
+    background-color: rgb(255, 131, 131);
+}
+.btn-confirm:hover {
+    color: black;
+    background-color: #c3f7b4;
+}
