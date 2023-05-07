@@ -6,12 +6,11 @@ import { AccountLandingComponent } from './account/account-landing/account-landi
 import { CreateUserComponent } from './account/create-user/create-user.component';
 
 const routes: Routes = [
-  { path: '', component: OddsLandingComponent },
   { path: 'odds', component: OddsLandingComponent },
   { path: 'results', component: ResultsLandingComponent },
   { path: 'account', component: AccountLandingComponent },
   { path: 'create-user', component: CreateUserComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'odds', pathMatch: 'full' }
 ];
 
 @NgModule({
