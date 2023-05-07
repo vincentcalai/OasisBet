@@ -1,8 +1,8 @@
 <div class="sidebar">
     <ul>
-      <li class="sidebar-item" (click)="selectAccountMenu('account_overview')">Account Overview</li>
-      <li class="sidebar-item" (click)="selectAccountMenu('trx_hist')">Transaction History</li>
-      <li class="sidebar-item" (click)="selectAccountMenu('desposits')">Deposits</li>
-      <li class="sidebar-item" (click)="selectAccountMenu('withdrawals')">Withdrawals</li>
+      <li class="sidebar-item" (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW)">Account Overview</li>
+      <li class="sidebar-item" (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_TRX_HIST)">Transaction History</li>
+      <li class="sidebar-item" (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_DEPOSITS)">Deposits</li>
+      <li class="sidebar-item" (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_WITHDRAWALS)">Withdrawals</li>
     </ul>
 </div>

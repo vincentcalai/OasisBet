@@ -22,6 +22,12 @@ export class SharedVarService {
   public readonly COMP_HEADER_SERIE_A = "Serie A";
   public readonly COMP_HEADER_LIGUE_ONE = "Ligue One";
 
+  public readonly NAV_MENU_SELECT_ACCOUNT_OVERVIEW = "account_overview";
+  public readonly NAV_MENU_SELECT_TRX_HIST = "trx_hist";
+  public readonly NAV_MENU_SELECT_DEPOSITS = "desposits";
+  public readonly NAV_MENU_SELECT_WITHDRAWALS= "withdrawals";
+  
+
   public readonly sharedModalConfig = {
     backdrop: true,
     ignoreBackdropClick: true,
