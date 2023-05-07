@@ -19,7 +19,6 @@ export class AccountLandingComponent implements OnInit {
   navToAccountMenu(accountMenu: string){
     console.log("navigating to.. " + accountMenu);
     this.selectAccountNavMenu = accountMenu;
-    this.ngOnInit();
   }
 
 }

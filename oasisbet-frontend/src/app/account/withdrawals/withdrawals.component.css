@@ -1,0 +1,10 @@
+.card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.deposit-section-label {
+    margin-right: 10px; 
+}
