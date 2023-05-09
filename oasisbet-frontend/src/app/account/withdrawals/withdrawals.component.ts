@@ -12,4 +12,11 @@ export class WithdrawalsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onCancelWithdrawal(){
+
+  }
+
+  onConfirmWithdrawal(){
+    
+  }
 }

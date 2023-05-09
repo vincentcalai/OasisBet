@@ -3,7 +3,26 @@
         <h1 class="card-header">Withdrawals</h1>
     </div>
     <div class="card-body">
-        <label class="control-label deposit-section-label">Balance:</label>
-        <span class="control-label form-control-static">$98.48</span>
+        <label class="control-label col-xs-6 col-sm-3 col-md-3 withdraw-section-label-width">Balance:</label>
+        <span class="col-xs-6 col-sm-3 col-md-2 withdraw-section-selection-width">$98.48</span>
+        <br>
+        <br>
+        <span class="control-label check-trx-hist-note">Note: Check <a href="">transaction history</a> for more details.</span>
+        <hr>
+        <label class="control-label col-xs-6 col-sm-3 col-md-3 withdraw-section-label-width">Withdraw from OasisBet Account:</label>
+        <input type="number" class="col-xs-6 col-sm-3 col-md-2 withdraw-section-selection-width no-spinner" id="withdrawAmount" name="withdrawAmount" required>
+        <br>
+        <br>
+        <label class="control-label col-xs-6 col-sm-3 col-md-3 withdraw-section-label-width">Enter OasisBet Account password:</label>
+        <input type="number" class="col-xs-6 col-sm-3 col-md-2 withdraw-section-selection-width no-spinner" id="password" name="password" required>
+        <hr>
+        <div mat-dialog-actions align="end">
+            <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelWithdrawal()">
+                Cancel
+            </button>
+            <button class="btn btn-success btn-confirm" type="button" (click)="onConfirmWithdrawal()">
+                Confirm
+            </button>
+          </div>
     </div>
 </div>

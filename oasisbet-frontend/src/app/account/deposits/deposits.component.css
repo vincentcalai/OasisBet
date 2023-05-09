@@ -18,9 +18,6 @@
   margin: 0;
 }
 
-.no-spinner {
-  -moz-appearance: textfield;
-}
 
 .btn-confirm {
     margin-top: 30px;
