@@ -12,4 +12,11 @@ export class DepositsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onCancelDeposit(){
+
+  }
+
+  onConfirmDeposit(){
+    
+  }
 }
