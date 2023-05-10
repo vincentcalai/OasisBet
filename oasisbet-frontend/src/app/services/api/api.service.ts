@@ -55,7 +55,14 @@ export class ApiService {
   }
 
   postCreateUser(): Observable<ResponseModel> {
-    return this.http.post<ResponseModel>(this.accountServicePrefix + "/account/createUser", this.sharedVar.createUserModel).pipe(
+    return this.http.post<ResponseModel>(this.accountServicePrefix + "/user/createUser", this.sharedVar.createUserModel).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
+  retrieveAccDetails() {
+    return this.http.get(this.accountServicePrefix + '/account/retrieveAccDetails').pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

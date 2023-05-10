@@ -17,10 +17,10 @@
             <app-trx-hist></app-trx-hist>
           </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_DEPOSITS">
-            <app-deposits></app-deposits>
+            <app-deposits (onSelectTrxMenu)="navToAccountMenu($event)"></app-deposits>
           </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_WITHDRAWALS">
-            <app-withdrawals></app-withdrawals>
+            <app-withdrawals (onSelectTrxMenu)="navToAccountMenu($event)"></app-withdrawals>
           </div>
       </div>
   </div>

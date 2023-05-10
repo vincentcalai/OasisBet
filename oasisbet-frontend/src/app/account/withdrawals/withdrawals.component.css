@@ -7,6 +7,17 @@
     margin-left: 20px;
 }
 
+.check-trx-hist-note a {
+    color: rgb(0, 119, 255);
+    text-decoration: none;
+}
+  
+.check-trx-hist-note a:hover {
+    color: rgb(102, 142, 175);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .check-trx-hist-note{
     font-weight: bold;
     margin-left: 20px;

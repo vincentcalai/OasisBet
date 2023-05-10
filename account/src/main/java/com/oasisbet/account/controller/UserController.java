@@ -13,7 +13,7 @@ import com.oasisbet.account.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
-@RequestMapping(path = "/account")
+@RequestMapping(path = "/user")
 public class UserController {
 
 	@Autowired
