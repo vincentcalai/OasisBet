@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oasisbet.account.model.CreateUserRest;
 import com.oasisbet.account.model.StatusResponse;
+import com.oasisbet.account.model.request.CreateUserRest;
 import com.oasisbet.account.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")

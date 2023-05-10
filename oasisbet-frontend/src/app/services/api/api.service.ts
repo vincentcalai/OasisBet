@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { timeout, catchError, map } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { SharedVarService } from '../shared-var.service';
-import { AUTH_USER, TOKEN } from '../auth/auth.service';
+import { AUTH_USER, AuthService, TOKEN } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -61,8 +61,8 @@ export class ApiService {
     );
   }
 
-  retrieveAccDetails() {
-    return this.http.get(this.accountServicePrefix + '/account/retrieveAccDetails').pipe(
+  retrieveAccDetails(user: string) {
+    return this.http.get(this.accountServicePrefix + '/account/retrieveAccDetails?user=' + user).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

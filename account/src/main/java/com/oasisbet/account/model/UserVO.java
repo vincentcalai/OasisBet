@@ -9,7 +9,6 @@ public class UserVO {
 	private String email;
 	private String contactNo;
 	private String delInd;
-	private String createdBy;
 	private Date createdDt;
 
 	public Long getId() {
@@ -58,14 +57,6 @@ public class UserVO {
 
 	public void setDelInd(String delInd) {
 		this.delInd = delInd;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 
 	public Date getCreatedDt() {

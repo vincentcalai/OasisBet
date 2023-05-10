@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oasisbet.account.dao.IUserDao;
-import com.oasisbet.account.model.CreateUserRest;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.UserVO;
+import com.oasisbet.account.model.request.CreateUserRest;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.UserView;
 
@@ -52,4 +52,5 @@ public class UserService {
 		UserView user = userDao.findByUsername(username);
 		return (user == null);
 	}
+
 }

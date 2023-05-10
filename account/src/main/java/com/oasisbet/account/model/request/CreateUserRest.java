@@ -1,4 +1,6 @@
-package com.oasisbet.account.model;
+package com.oasisbet.account.model.request;
+
+import com.oasisbet.account.model.UserVO;
 
 public class CreateUserRest {
 	private UserVO user;
