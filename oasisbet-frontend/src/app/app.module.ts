@@ -17,14 +17,13 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountLoginComponent } from './account/account-login/account-login.component';
 import { CreateUserComponent } from './account/create-user/create-user.component';
-import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './common/confirm-dialog/confirm-dialog.component';
 import { AccountOverviewComponent } from './account/account-overview/account-overview.component';
 import { TrxHistComponent } from './account/trx-hist/trx-hist.component';
 import { DepositsComponent } from './account/deposits/deposits.component';
 import { WithdrawalsComponent } from './account/withdrawals/withdrawals.component';
-
 
 @NgModule({
   declarations: [

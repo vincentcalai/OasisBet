@@ -3,13 +3,36 @@
         <h1 class="card-header">Transaction History</h1>
     </div>
     <div class="card-body">
-        <label for="label_balance" class="control-label">Balance</label>
-        <div id="label_dashboard_balance_amount" class="dashboard-sidemenu-value">$98.48</div>
-        <label for="label_deposit" class="control-label">Deposit</label>
-        <div id="label_dashboard_deposit_amount" class="dashboard-sidemenu-value">$50</div>
-        <div id="year_to_date" class="text_year_to_date">(Year To Date)</div>
-        <label for="label_withdrawal" class="control-label">Withdrawal</label>
-        <div id="label_dashboard_withdrawal_amount" class="dashboard-sidemenu-value">$20</div>
-        <div id="year_to_date" class="text_year_to_date">(Year To Date)</div>
+        <label class="control-label trx-section-label-width">Month To Date</label>
+        <br>
+        <label class="control-label trx-section-label-width">Bet Placed:</label>
+        <span class="col-sm-3 trx-section-selection-width">$20.00</span>
+        <br>
+        <label class="control-label trx-section-label-width">Payout:</label>
+        <span class="col-sm-3 trx-section-selection-width">$98.48</span>
+        <hr>
+        <div class="row">
+            <div class="col-md-2 offset-md-1">
+                <label class="control-label trx-section-label-width">View</label>
+                <select id="trxViewDropdown" class="form-control trx-dropdown">
+                    <option value="funds">Funds In/Out</option>
+                    <option value="sportsbet">All Sports Bet</option>
+                    <option value="deposits">Deposits</option>
+                    <option value="withdrawals">Withdrawals</option>
+                </select>
+            </div>
+            <div class="col-md-2 offset-md-1">
+                <label class="control-label trx-section-label-width">Time Period</label>
+                <select id="trxTimePrdDropdown" class="form-control trx-dropdown">
+                    <option value="today">Today</option>
+                    <option value="last7days">Last 7 Days</option>
+                    <option value="last1mths">Last Month</option>
+                    <option value="last3mths">Last 3 Months</option>
+                    <option value="last6mths">Last 6 Months</option>
+                </select>
+            </div>
+        </div>
+        
+          
     </div>
 </div>

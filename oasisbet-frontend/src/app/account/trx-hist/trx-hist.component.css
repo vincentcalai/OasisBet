@@ -1,0 +1,42 @@
+label{
+    font-weight: bold;
+}
+
+.trx-section-label-width{
+    font-weight: bold;
+}
+
+.trx-section-selection-width{
+    margin-left: 10px;
+}
+
+.trx-dropdown {
+    width: 200px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    border: none;
+    color: #555;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-shadow: none;
+}
+  
+.trx-dropdown option {
+    background-color: #f2f2f2;
+    color: #555;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: none;
+}
+  
+.trx-dropdown.show {
+    border-radius: 5px 5px 0 0;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+  
+.trx-dropdown.show option:hover {
+    background-color: #ccc;
+}
