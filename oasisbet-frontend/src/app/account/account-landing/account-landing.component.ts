@@ -14,7 +14,6 @@ export class AccountLandingComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
   public accountModel: AccountModel;
-  public errorMsg: string;
 
   selectAccountNavMenu = this.sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW;
 

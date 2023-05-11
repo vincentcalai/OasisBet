@@ -1,5 +1,4 @@
 <div class="container">
-  <div class="alert alert-danger col-md-6 offset-md-3" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
   <div class="row" *ngIf="!authService.isUserLoggedIn()">
     <br>
     <app-account-login></app-account-login>
