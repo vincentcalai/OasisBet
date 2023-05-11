@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AccountModel } from 'src/app/model/account.model';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 })
 export class WithdrawalsComponent implements OnInit {
 
+  @Input() accountModelInput: AccountModel;
   @Output() onSelectTrxMenu: EventEmitter<string>;
 
   constructor(public sharedVar: SharedVarService) {

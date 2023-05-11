@@ -7,6 +7,10 @@
     margin-left: 20px;
 }
 
+.deposit-acc-label-text{
+    margin-top: 10px;
+}
+
 .check-trx-hist-note a {
     color: rgb(0, 119, 255);
     text-decoration: none;

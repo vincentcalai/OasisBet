@@ -4,17 +4,26 @@
     </div>
     <div class="card-body">
         <label class="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Balance:</label>
-        <span class="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">$98.48</span>
+        <span class="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">${{accountModelInput.balance}}</span>
         <br>
         <br>
         <label class="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Deposit Remaining Limit:</label>
-        <span class="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">$2000</span>
+        <span class="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">${{accountModelInput.depositLimit}}</span>
         <br>
         <br>
         <span class="control-label check-trx-hist-note">Note: Check <a (click)="navToTrxHistMenu()">transaction history</a> for more details.</span>
         <hr>
-        <label class="control-label col-sm-3 deposit-section-label-width">Deposit into OasisBet Account:</label>
-        <input type="number" class="col-sm-4 deposit-section-selection-width no-spinner" id="depositAmount" name="depositAmount" required>
+        <div class="form-group row">
+            <label class="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text" for="depositAmount">Deposit into OasisBet Account:</label>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="number" class="form-control deposit-section-selection-width no-spinner" id="depositAmount" name="depositAmount" required>
+              </div>
+            </div>
+        </div>
         <hr>
         <div mat-dialog-actions align="end">
             <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelDeposit()">

@@ -24,11 +24,11 @@ export class AccountLandingComponent implements OnInit {
 
     this.subscriptions.add(
       this.apiService.retrieveAccDetails(user).subscribe((resp: any) => {
-        console.log(resp);
           this.accountModel = new AccountModel();
+          this.accountModel.accId = resp.account.accId;
+          this.accountModel.usrId = resp.account.usrId;
           this.accountModel.balance = resp.account.balance;
           this.accountModel.depositLimit = resp.account.depositLimit
-          console.log("in subscription balance: " + this.accountModel.balance);
         } ,
           error => {
           console.log(error);
@@ -36,8 +36,6 @@ export class AccountLandingComponent implements OnInit {
         }
       )
     )
-
-    console.log("in ngOnInit balance: " + this.accountModel.balance);
   }
 
   navToAccountMenu(accountMenu: string){
