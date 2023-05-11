@@ -1,4 +1,5 @@
 <div class="container">
+  <div class="alert alert-danger col-md-6 offset-md-3" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
   <div class="row" *ngIf="!authService.isUserLoggedIn()">
     <br>
     <app-account-login></app-account-login>
@@ -11,16 +12,16 @@
       <div class="col-md-9">
         <br>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW">
-            <app-account-overview [accountModelInput]="accountModel"></app-account-overview>
+            <app-account-overview></app-account-overview>
           </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_TRX_HIST">
             <app-trx-hist></app-trx-hist>
           </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_DEPOSITS">
-            <app-deposits [accountModelInput]="accountModel" (onSelectTrxMenu)="navToAccountMenu($event)"></app-deposits>
+            <app-deposits (onSelectTrxMenu)="navToAccountMenu($event)"></app-deposits>
           </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_WITHDRAWALS">
-            <app-withdrawals [accountModelInput]="accountModel" (onSelectTrxMenu)="navToAccountMenu($event)"></app-withdrawals>
+            <app-withdrawals (onSelectTrxMenu)="navToAccountMenu($event)"></app-withdrawals>
           </div>
       </div>
   </div>

@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountModel } from 'src/app/model/account.model';
+import { ApiService } from 'src/app/services/api/api.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-account-overview',
@@ -8,13 +11,12 @@ import { AccountModel } from 'src/app/model/account.model';
 })
 export class AccountOverviewComponent implements OnInit {
 
-  @Input() accountModelInput: AccountModel;
+  accountModelInput: AccountModel;
 
-  constructor() { }
+  constructor(private sharedVar: SharedVarService, private authService: AuthService, private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.accountModelInput = this.authService.getRetrievedAccDetails();
   }
-
-
 
 }

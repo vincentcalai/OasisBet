@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.service.AccountService;
+import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountView;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -31,6 +32,9 @@ public class AccountController {
 			accountVo.setUsrId(accountView.getUsrId());
 			accountVo.setBalance(accountView.getBalance());
 			accountVo.setDepositLimit(accountView.getDepositLimit());
+		} else {
+			response.setStatusCode(1);
+			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 		}
 		response.setAccount(accountVo);
 		return response;

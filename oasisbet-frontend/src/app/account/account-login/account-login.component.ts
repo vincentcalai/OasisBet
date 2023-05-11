@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/services/api/api.service';
+import { ACC_DETAILS, AUTH_USER, AuthService, TOKEN } from 'src/app/services/auth/auth.service';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-account-login',
@@ -14,7 +17,10 @@ export class AccountLoginComponent implements OnInit {
   errorMsg: string = "";
   responseMsg: string = "";
 
-  constructor(private authService: AuthService, private router: Router) { }
+  public subscriptions: Subscription = new Subscription();
+
+  constructor(private sharedVar: SharedVarService, private apiService: ApiService, private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -24,7 +30,7 @@ export class AccountLoginComponent implements OnInit {
     .subscribe(
       data => {
         console.log(data);
-        console.log("login successful");
+        this.retrieveAccDetails(this.username, data);
       },
       error => {
         console.log("login fail");
@@ -35,6 +41,28 @@ export class AccountLoginComponent implements OnInit {
 
   signUpUser(){
     this.router.navigate(['create-user'], {skipLocationChange: true});
+  }
+
+  retrieveAccDetails(username: string, data: any){
+     this.subscriptions.add(
+        this.apiService.retrieveAccDetails(username).subscribe((resp: any) => {
+          console.log(resp);
+            if (resp.statusCode != 0) {
+              this.errorMsg = resp.resultMessage;
+              resp.resultMessage = "";
+            } else {
+              sessionStorage.setItem(AUTH_USER, username);
+              sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
+              sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+              console.log("login successful");
+            }
+          } ,
+            error => {
+            console.log(error);
+            this.sharedVar.changeException(error);
+          }
+         )
+    )
   }
 
 }

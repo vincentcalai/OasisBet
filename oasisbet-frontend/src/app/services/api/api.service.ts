@@ -31,8 +31,6 @@ export class ApiService {
     .pipe(
       map(
         data => {
-          sessionStorage.setItem(AUTH_USER, username);
-          sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
           console.log(data);
           return data;
         }

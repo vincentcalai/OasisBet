@@ -12,5 +12,6 @@ public class Constants {
 
 	// Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";
+	public static final String ERR_USER_ACC_NOT_FOUND = "User Betting Account not found. Please contact the administrator.";
 
 }

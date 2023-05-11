@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 export const AUTH_USER = 'authenticateUser';
 export const TOKEN = 'token';
+export const ACC_DETAILS = 'accountDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +34,16 @@ export class AuthService {
       return null;
     }
 
+    getRetrievedAccDetails(){
+      return JSON.parse(sessionStorage.getItem(ACC_DETAILS));
+    }
+
     logout(){
       if(confirm("Are you sure to logout?")) {
         console.log("logout ok");
         sessionStorage.removeItem(AUTH_USER);
         sessionStorage.removeItem(TOKEN);
+        sessionStorage.removeItem(ACC_DETAILS);
         this.router.navigate(['/']);
       }
     }
