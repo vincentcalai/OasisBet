@@ -46,7 +46,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   backToHomeScreen(){
-    this.router.navigate([''], { skipLocationChange: true });
+    this.router.navigate(['odds']);
   }
 
   confirmClicked(){

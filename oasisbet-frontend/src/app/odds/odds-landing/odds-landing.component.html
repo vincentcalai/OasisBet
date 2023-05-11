@@ -7,6 +7,9 @@
         <div class="col-md-9">
             <div class="container-fluid">
             <br>
+                <div *ngIf="responseMsg" class="alert alert-success">
+                    <b>Success: </b> {{responseMsg}}
+                </div>
                 <div class="card ">
                     <div class="text-left">
                         <h1 class="card-header">{{competitionTypeHdr}}</h1>
