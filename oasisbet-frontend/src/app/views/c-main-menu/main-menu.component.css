@@ -17,16 +17,16 @@
 .nav-link {
     color: white;
     font-size: 16px;
-      margin-right: 20px;
-      text-decoration: none;
-      transition: all 0.3s ease;
+    margin-right: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.active{
+.main-menu-link.active{
     background-color: white;
 }
 
-.navbar-nav .nav-link:not(.active):hover {
+.navbar-nav .nav-link.main-menu-link:not(.active):hover {
     color: white;
     background-color: #1588ca;
     cursor: pointer;
