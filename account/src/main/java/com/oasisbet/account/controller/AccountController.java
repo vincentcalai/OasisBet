@@ -24,11 +24,14 @@ public class AccountController {
 	public AccountRestResponse retrieveAccDetails(@RequestParam String user) {
 		AccountRestResponse response = new AccountRestResponse();
 		AccountView accountView = this.accountService.retrieveUserAccount(user);
-		AccountVO accountVo = new AccountVO();
-		accountVo.setAccId(accountView.getAccId());
-		accountVo.setUsrId(accountView.getUsrId());
-		accountVo.setBalance(accountView.getBalance());
-		accountVo.setDepositLimit(accountView.getDepositLimit());
+		AccountVO accountVo = null;
+		if (accountView != null) {
+			accountVo = new AccountVO();
+			accountVo.setAccId(accountView.getAccId());
+			accountVo.setUsrId(accountView.getUsrId());
+			accountVo.setBalance(accountView.getBalance());
+			accountVo.setDepositLimit(accountView.getDepositLimit());
+		}
 		response.setAccount(accountVo);
 		return response;
 	}
