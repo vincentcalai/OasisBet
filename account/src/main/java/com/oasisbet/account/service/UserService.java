@@ -7,11 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oasisbet.account.dao.IAccountDao;
 import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.UserVO;
 import com.oasisbet.account.model.request.CreateUserRest;
 import com.oasisbet.account.util.Constants;
+import com.oasisbet.account.view.AccountView;
 import com.oasisbet.account.view.UserView;
 
 @Transactional
@@ -20,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	private IUserDao userDao;
+
+	@Autowired
+	private IAccountDao accountDao;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -43,6 +48,14 @@ public class UserService {
 		}
 
 		this.userDao.save(user);
+
+		// create betting transaction account
+		AccountView account = new AccountView();
+		account.setUsrId(user.getId());
+		account.setBalance(Constants.INIT_BAL_AMT);
+		account.setDepositLimit(Constants.INIT_DEPOSIT_LIMIT);
+		this.accountDao.save(account);
+
 		response.setResultMessage(Constants.USER_CREATE_SUCCESS);
 
 		return response;

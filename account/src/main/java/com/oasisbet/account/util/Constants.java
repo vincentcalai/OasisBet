@@ -4,6 +4,9 @@ public class Constants {
 
 	public static final String NO = "N";
 
+	public static final Double INIT_BAL_AMT = 0.00;
+	public static final Double INIT_DEPOSIT_LIMIT = 1000.00;
+
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";
 
