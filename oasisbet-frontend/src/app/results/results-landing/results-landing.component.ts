@@ -37,7 +37,10 @@ export class ResultsLandingComponent implements OnInit {
         }
       )
     );
+  }
 
+  ngOnDestory(){
+    this.subscriptions.unsubscribe();
   }
 
   readCompType(competitionName: string){

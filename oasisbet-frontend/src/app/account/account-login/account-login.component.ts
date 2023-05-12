@@ -65,4 +65,8 @@ export class AccountLoginComponent implements OnInit {
     )
   }
 
+  ngOnDestory(){
+    this.subscriptions.unsubscribe();
+  }
+
 }

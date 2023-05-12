@@ -32,4 +32,8 @@ export class AppComponent {
           }
       }));
   }
+
+  ngOnDestory(){
+    this.subscriptions.unsubscribe();
+  }
 }
