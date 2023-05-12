@@ -16,7 +16,7 @@
         <form>
           <div class="form-group row">
             <label id="DEPOSIT_LABEL_1" for="username_0_Label"
-              [ngClass]="{'highlightLabel' : fieldIsInvalid(depositAmt)}" class="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text">
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(depositControl)}" class="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text">
               <span id="DEPOSIT">Deposit:</span>
             </label>
             <div class="col-sm-4">
@@ -24,13 +24,13 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">$</span>
                 </div>
-                <input id="depositAmt_0" type="text" maxlength="9" class="form-control allCaps" [formControl]="depositAmt" name="depositAmt">
+                <input id="depositAmt_0" type="text" maxlength="9" class="form-control allCaps" [formControl]="depositControl" name="depositAmt">
               </div>
-              <label id="depositAmt_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(depositAmt)}" class="error-text"
+              <label id="depositAmt_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(depositControl)}" class="error-text"
                 for="depositAmt_0">
-                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositAmt)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
-                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositAmt)) == 'maxAmount'">Maximum amount to deposit is $199999.99</span>
-                <span *ngIf="depositAmt.hasError('required') && !depositAmt.value && !depositAmt.pristine">This field is required</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'maxAmount'">Maximum amount to deposit is $199999.99</span>
+                <span *ngIf="depositControl.hasError('required') && !depositControl.value && !depositControl.pristine">This field is required</span>
               </label>
             </div>
           </div>

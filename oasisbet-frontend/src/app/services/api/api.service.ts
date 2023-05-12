@@ -59,7 +59,7 @@ export class ApiService {
     );
   }
 
-  retrieveAccDetails(user: string) {
+  retrieveAccDetails(user: string): Observable<Object> {
     return this.http.get(this.accountServicePrefix + '/account/retrieveAccDetails?user=' + user).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
