@@ -13,17 +13,28 @@
         <br>
         <span class="control-label check-trx-hist-note">Note: Check <a (click)="navToTrxHistMenu()">transaction history</a> for more details.</span>
         <hr>
-        <div class="form-group row">
-            <label class="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text" for="depositAmount">Deposit into OasisBet Account:</label>
+        <form>
+          <div class="form-group row">
+            <label id="DEPOSIT_LABEL_1" for="username_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(depositAmt)}" class="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text">
+              <span id="DEPOSIT">Deposit:</span>
+            </label>
             <div class="col-sm-4">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">$</span>
                 </div>
-                <input type="number" class="form-control deposit-section-selection-width no-spinner" id="depositAmount" name="depositAmount" required>
+                <input id="depositAmt_0" type="text" maxlength="9" class="form-control allCaps" [formControl]="depositAmt" name="depositAmt">
               </div>
+              <label id="depositAmt_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(depositAmt)}" class="error-text"
+                for="depositAmt_0">
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositAmt)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositAmt)) == 'maxAmount'">Maximum amount to deposit is $199999.99</span>
+                <span *ngIf="depositAmt.hasError('required') && !depositAmt.value && !depositAmt.pristine">This field is required</span>
+              </label>
             </div>
-        </div>
+          </div>
+        </form>
         <hr>
         <div mat-dialog-actions align="end">
             <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelDeposit()">

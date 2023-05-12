@@ -55,6 +55,7 @@ export class OddsLandingComponent implements OnInit {
       )
     );
 
+    //get response success message after creating user
     this.subscriptions.add(
         this.sharedVar.responseSource.pipe(take(1))
         .subscribe(resp => {
@@ -72,6 +73,10 @@ export class OddsLandingComponent implements OnInit {
     this.compType = competitionName;
     this.competitionTypeHdr = this.sharedVar.retrieveCompHdr(this.compType);
     this.ngOnInit();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

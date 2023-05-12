@@ -87,6 +87,8 @@ export class ReactiveFormService {
         return 'maxlength';
       } else if (field.hasError('minlength')) {
         return 'minlength';
+      } else if (field.hasError('max')) {
+        return 'maxAmount';
       }
     }
     return '';
