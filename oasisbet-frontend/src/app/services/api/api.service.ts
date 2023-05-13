@@ -6,6 +6,8 @@ import { timeout, catchError, map } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { SharedVarService } from '../shared-var.service';
 import { AUTH_USER, AuthService, TOKEN } from '../auth/auth.service';
+import { AccountModel } from 'src/app/model/account.model';
+import { UpdateAccountModel } from 'src/app/model/update-account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +63,13 @@ export class ApiService {
 
   retrieveAccDetails(user: string): Observable<Object> {
     return this.http.get(this.accountServicePrefix + '/account/retrieveAccDetails?user=' + user).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
+  updateAccDetails(): Observable<ResponseModel> {
+    return this.http.put<ResponseModel>(this.accountServicePrefix + '/account/updateAccDetails', this.sharedVar.updateAccountModel).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

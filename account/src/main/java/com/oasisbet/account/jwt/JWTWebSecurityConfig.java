@@ -68,7 +68,9 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity webSecurity) throws Exception {
 		webSecurity.ignoring().antMatchers(HttpMethod.POST, "/**").antMatchers(HttpMethod.OPTIONS, "/**").and()
 				.ignoring().antMatchers(HttpMethod.GET, "/**" // Other Stuff You want to Ignore
-				).and().ignoring().antMatchers(HttpMethod.DELETE, "/**").and().ignoring()
-				.antMatchers("/h2-console/**/**");// Should not be in Production!
+				).and().ignoring().antMatchers(HttpMethod.PUT, "/**").and().ignoring()
+				.antMatchers(HttpMethod.DELETE, "/**").and().ignoring().antMatchers("/h2-console/**/**");// Should not
+																											// be in
+																											// Production!
 	}
 }

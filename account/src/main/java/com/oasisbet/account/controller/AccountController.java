@@ -3,11 +3,15 @@ package com.oasisbet.account.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.StatusResponse;
+import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.service.AccountService;
 import com.oasisbet.account.util.Constants;
@@ -37,6 +41,13 @@ public class AccountController {
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 		}
 		response.setAccount(accountVo);
+		return response;
+	}
+
+	@PutMapping(value = "/updateAccDetails")
+	public StatusResponse updateAccDetails(@RequestBody AccountRest accountRest) {
+		StatusResponse response = new StatusResponse();
+
 		return response;
 	}
 

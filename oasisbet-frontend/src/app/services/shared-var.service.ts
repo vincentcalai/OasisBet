@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ResponseModel } from '../model/response.model';
 import { CreateUserModel } from '../model/create-user.model';
-import { AccountModel } from '../model/account.model';
+import { UpdateAccountModel } from '../model/update-account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class SharedVarService {
   };
 
   public createUserModel: CreateUserModel = new CreateUserModel();
-  public accountModel: AccountModel = new AccountModel();
+  public updateAccountModel: UpdateAccountModel = new UpdateAccountModel();
 
   constructor() { }
 

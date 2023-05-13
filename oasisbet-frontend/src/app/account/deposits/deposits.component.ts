@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountModel } from 'src/app/model/account.model';
 import { ResponseModel } from 'src/app/model/response.model';
+import { UpdateAccountModel } from 'src/app/model/update-account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
@@ -59,23 +60,27 @@ export class DepositsComponent implements OnInit {
 
   onConfirmDeposit(){
     if(this.depositControl.valid){
-      console.log(this.depositControl.value);
       console.log("deposit amount success!");
-      const depositAmount = this.depositControl.value;
-      // this.subscriptions.add(
-      //   this.apiService.postCreateUser().subscribe( (resp: ResponseModel) => {
-      //     if (resp.statusCode != 0) {
-      //       // this.errorMsg = resp.resultMessage;
-      //       // resp.resultMessage = "";
-      //     } else {
-      //       //his.sharedVar.changeResponse(resp);
-      //       this.navToAccOverView();
-      //     }
-      //   } ,
-      //     error => {
-      //     this.sharedVar.changeException(error);
-      //   })
-      // );
+      const depositAmount: number = parseFloat(this.depositControl.value);
+      let accountModel: AccountModel = new AccountModel();
+      accountModel = this.authService.getRetrievedAccDetails();
+      const newBalanceAmt = accountModel.balance + depositAmount
+      accountModel.balance = newBalanceAmt;
+      this.sharedVar.updateAccountModel.account = accountModel;
+      this.subscriptions.add(
+        this.apiService.updateAccDetails().subscribe( (resp: ResponseModel) => {
+          if (resp.statusCode != 0) {
+            // this.errorMsg = resp.resultMessage;
+            // resp.resultMessage = "";
+          } else {
+            //his.sharedVar.changeResponse(resp);
+            this.navToAccOverView();
+          }
+        } ,
+          error => {
+          this.sharedVar.changeException(error);
+        })
+      );
     } else{
       console.log("deposit amount failed!");
       this.reactiveFormService.displayValidationErrors(this.depositControl);
