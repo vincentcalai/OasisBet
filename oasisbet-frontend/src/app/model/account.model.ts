@@ -9,4 +9,5 @@ export class AccountModel {
     public usrId: number;
     public balance: number;
     public depositLimit: number;
+    public depositAmt: number;
 }

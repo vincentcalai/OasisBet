@@ -5,6 +5,7 @@ public class AccountVO {
 	private Long usrId;
 	private Double balance;
 	private Double depositLimit;
+	private Double depositAmt;
 
 	public Long getAccId() {
 		return accId;
@@ -36,5 +37,13 @@ public class AccountVO {
 
 	public void setDepositLimit(Double depositLimit) {
 		this.depositLimit = depositLimit;
+	}
+
+	public Double getDepositAmt() {
+		return depositAmt;
+	}
+
+	public void setDepositAmt(Double depositAmt) {
+		this.depositAmt = depositAmt;
 	}
 }

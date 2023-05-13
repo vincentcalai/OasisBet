@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.account.model.AccountVO;
-import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.service.AccountService;
@@ -45,8 +44,16 @@ public class AccountController {
 	}
 
 	@PutMapping(value = "/updateAccDetails")
-	public StatusResponse updateAccDetails(@RequestBody AccountRest accountRest) {
-		StatusResponse response = new StatusResponse();
+	public AccountRestResponse updateAccDetails(@RequestBody AccountRest accountRest) {
+		AccountRestResponse response = new AccountRestResponse();
+		AccountVO account = accountRest.getAccount();
+		double newBalanceAmt = account.getBalance() + account.getDepositAmt();
+		// perform validation - new balance cannot be more than 199999.99
+
+		// perform validation - you have reached deposit limit for this month, please
+		// make your deposit from next month onwards
+
+		// update new balance and deposit limit to database
 
 		return response;
 	}

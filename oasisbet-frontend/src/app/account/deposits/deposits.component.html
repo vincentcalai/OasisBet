@@ -30,6 +30,7 @@
                 for="depositAmt_0">
                 <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
                 <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'maxAmount'">Maximum amount to deposit is $199999.99</span>
+                <span *ngIf="depositControl.hasError('notZero')">Deposit Amount cannot be 0</span>
                 <span *ngIf="depositControl.hasError('required') && !depositControl.value && !depositControl.pristine">This field is required</span>
               </label>
             </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +79,31 @@ export class ReactiveFormService {
     };
   }
 
+  initializeDepositFormControl() {
+    return new FormControl(null, 
+      {
+        validators: [
+        Validators.required, 
+        Validators.pattern(/^\d{1,9}(\.\d{1,2})?$/),
+        Validators.max(199999.99),
+        this.notZeroValidator()
+      ],
+       updateOn: 'blur'
+      }
+    );
+  }
+
+  notZeroValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = parseFloat(control.value);
+      if (value !== 0) {
+        return null; 
+      } else {
+        return { notZero: true }; 
+      }
+    };
+  }
+
   fieldErrorPrecedence(field: FormControl): string {
     if (!field.hasError('required')) {
       if (field.hasError('pattern')) {
@@ -89,7 +114,7 @@ export class ReactiveFormService {
         return 'minlength';
       } else if (field.hasError('max')) {
         return 'maxAmount';
-      }
+      } 
     }
     return '';
   }

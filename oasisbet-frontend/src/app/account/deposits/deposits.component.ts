@@ -36,14 +36,7 @@ export class DepositsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
-    this.depositControl = new FormControl(null, 
-      {validators: [
-        Validators.required, 
-        Validators.pattern(/^\d{1,9}(\.\d{1,2})?$/),
-        Validators.max(199999.99)],
-       updateOn: 'blur'
-      }
-    );
+    this.depositControl = this.reactiveFormService.initializeDepositFormControl();
   }
 
   navToTrxHistMenu(){
@@ -64,8 +57,7 @@ export class DepositsComponent implements OnInit {
       const depositAmount: number = parseFloat(this.depositControl.value);
       let accountModel: AccountModel = new AccountModel();
       accountModel = this.authService.getRetrievedAccDetails();
-      const newBalanceAmt = accountModel.balance + depositAmount
-      accountModel.balance = newBalanceAmt;
+      accountModel.depositAmt = depositAmount;
       this.sharedVar.updateAccountModel.account = accountModel;
       this.subscriptions.add(
         this.apiService.updateAccDetails().subscribe( (resp: ResponseModel) => {
