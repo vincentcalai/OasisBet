@@ -3,8 +3,6 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountModel } from 'src/app/model/account.model';
-import { ResponseModel } from 'src/app/model/response.model';
-import { UpdateAccountModel } from 'src/app/model/update-account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
@@ -17,6 +15,8 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 })
 export class DepositsComponent implements OnInit {
 
+  public responseMsg: string = '';
+  public errorMsg: string = '';
   private subscriptions: Subscription = new Subscription();
 
   public depositControl: FormControl;
@@ -25,7 +25,6 @@ export class DepositsComponent implements OnInit {
   
   constructor(
     private sharedVar: SharedVarService, 
-    private sharedMethods: SharedMethodsService, 
     public reactiveFormService: ReactiveFormService, 
     private authService: AuthService, 
     private apiService: ApiService,
@@ -62,10 +61,11 @@ export class DepositsComponent implements OnInit {
       this.subscriptions.add(
         this.apiService.updateAccDetails().subscribe( (resp: any) => {
           if (resp.statusCode != 0) {
-            // this.errorMsg = resp.resultMessage;
-            // resp.resultMessage = "";
+            this.errorMsg = resp.resultMessage;
+            resp.resultMessage = "";
           } else {
-            //his.sharedVar.changeResponse(resp);
+            this.responseMsg = resp.resultMessage;
+            resp.resultMessage = "";
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             this.accountModelInput = this.authService.getRetrievedAccDetails();
           }

@@ -1,3 +1,5 @@
+<div class="alert alert-success col-md-6 offset-md-3" *ngIf="responseMsg" ><b>Success: </b> {{responseMsg}}</div>
+<div class="alert alert-danger col-md-6 offset-md-3" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
 <div class="card" >
     <div class="text-left">
         <h1 class="card-header">Deposits</h1>
@@ -15,7 +17,7 @@
         <hr>
         <form>
           <div class="form-group row">
-            <label id="DEPOSIT_LABEL_1" for="username_0_Label"
+            <label id="DEPOSIT_LABEL_1" for="deposit_0_Label"
               [ngClass]="{'highlightLabel' : fieldIsInvalid(depositControl)}" class="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text">
               <span id="DEPOSIT">Deposit:</span>
             </label>
@@ -24,13 +26,13 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">$</span>
                 </div>
-                <input id="depositAmt_0" type="text" maxlength="9" class="form-control allCaps" [formControl]="depositControl" name="depositAmt">
+                <input id="depositAmt_0" type="text" maxlength="9" class="form-control allCaps" [formControl]="depositControl" name="depositAmt" inputmode="numeric">
               </div>
               <label id="depositAmt_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(depositControl)}" class="error-text"
                 for="depositAmt_0">
-                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'pattern'">Please enter correct format</span>
                 <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositControl)) == 'maxAmount'">Maximum amount to deposit is $199999.99</span>
-                <span *ngIf="depositControl.hasError('notZero')">Deposit Amount cannot be 0</span>
+                <span *ngIf="depositControl.hasError('notZero')">Deposit amount cannot be 0</span>
                 <span *ngIf="depositControl.hasError('required') && !depositControl.value && !depositControl.pristine">This field is required</span>
               </label>
             </div>

@@ -5,6 +5,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
   providedIn: 'root'
 })
 export class ReactiveFormService {
+  
 
   public readonly NUMERIC = new RegExp(/^[0-9]*$/);
   public readonly ALPHABET= new RegExp(/^[A-Za-z]*$/);
@@ -79,12 +80,12 @@ export class ReactiveFormService {
     };
   }
 
-  initializeDepositFormControl() {
+  initializeDepositFormControl(): FormControl {
     return new FormControl(null, 
       {
         validators: [
         Validators.required, 
-        Validators.pattern(/^\d{1,9}(\.\d{1,2})?$/),
+        Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),
         Validators.max(199999.99),
         this.notZeroValidator()
       ],
@@ -93,10 +94,32 @@ export class ReactiveFormService {
     );
   }
 
+  initializeWithdrawalFormControl(): FormGroup {
+    return this.fb.group({
+      withdrawalAmt: this.fb.control(null, {
+        validators: [
+          Validators.required, 
+          Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),
+          Validators.max(199999.99),
+          this.notZeroValidator()
+        ],
+        updateOn: 'blur'
+      }),
+      password: this.fb.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20)
+        ],
+        updateOn: 'blur'
+      })
+    })
+  }
+
   notZeroValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = parseFloat(control.value);
-      if (value !== 0) {
+      if (control.value === '0.' || value !== 0) {
         return null; 
       } else {
         return { notZero: true }; 

@@ -14,10 +14,13 @@ public class Constants {
 	// Trip Response Message
 	public static final String TRIP_CREATE_SUCCESS = "Trip was created successfully.";
 
+	// Deposit Account Response Message
+	public static final String DEPOSIT_ACC_SUCCESS = "Deposit was successful.";
+
 	// Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";
 	public static final String ERR_USER_ACC_NOT_FOUND = "User Betting Account not found. Please contact the administrator.";
 	public static final String ERR_MAX_BAL_AMT = "The maximum balance in an account is $199999.99";
-	public static final String ERR_OVER_DEPOSIT_LIMIT = "you have reached deposit limit for this month, please make your deposit from next month onwards";
+	public static final String ERR_OVER_DEPOSIT_LIMIT = "You have reached deposit limit for this month. Please make your deposit from next month onwards";
 
 }

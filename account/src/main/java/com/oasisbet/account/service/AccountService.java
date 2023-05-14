@@ -57,6 +57,7 @@ public class AccountService {
 			// future implementation - update deposit transaction
 		}
 		response.setAccount(account);
+		response.setResultMessage(Constants.DEPOSIT_ACC_SUCCESS);
 		return response;
 	}
 

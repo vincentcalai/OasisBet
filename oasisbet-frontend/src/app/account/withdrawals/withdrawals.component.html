@@ -9,7 +9,55 @@
         <br>
         <span class="control-label check-trx-hist-note">Note: Check <a (click)="navToTrxHistMenu()">transaction history</a> for more details.</span>
         <hr>
-        <div class="form-group row">
+        <form [formGroup]="withdrawalForm">
+          <div class="form-group row">
+            <label id="WITHDRAWAL_LABEL_1" for="withdrawal_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(withdrawalAmt)}" class="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">
+              <span id="WITHDRAWAL">Withdraw from OasisBet Account:</span>
+            </label>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input id="withdrawalAmt_0" type="text" maxlength="9" class="form-control allCaps" formControlName="withdrawalAmt" name="withdrawalAmt">
+              </div>
+              <label id="withdrawalAmt_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(withdrawalAmt)}" class="error-text"
+                for="withdrawalAmt_0">
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(withdrawalAmt)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(withdrawalAmt)) == 'maxAmount'">Maximum amount to withdraw is $199999.99</span>
+                <span *ngIf="withdrawalAmt.hasError('notZero')">Withdrawal amount cannot be 0</span>
+                <span *ngIf="withdrawalAmt.hasError('required') && !withdrawalAmt.value && !withdrawalAmt.pristine">This field is required</span>
+              </label>
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="form-group row">
+            <label id="PASSWORD_LABEL_1" for="password_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">
+              <span id="PASSWORD">Enter OasisBet Account password:</span>
+            </label>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="password" class="form-control withdraw-section-selection-width no-spinner" formControlName="password" id="password_0" name="password" required>
+              </div>
+              <label id="password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="error-text"
+                for="password_0">
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(password)) == 'maxlength'">Maximum length is 20
+                  characters</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(password)) == 'minlength'">Minimum length is 5
+                  characters</span>
+                <span *ngIf="password.hasError('required') && !password.value && !password.pristine">This field is
+                  required</span>
+              </label>
+            </div>
+          </div>
+        </form>
+        <!-- <div class="form-group row">
             <label class="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">Withdraw from OasisBet Account:</label>
             <div class="col-sm-4">
               <div class="input-group">
@@ -32,7 +80,7 @@
                 <input type="password" class="form-control withdraw-section-selection-width no-spinner" id="password" name="password" required>
               </div>
             </div>
-        </div>
+        </div> -->
         <hr>
         <div mat-dialog-actions align="end">
             <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelWithdrawal()">
