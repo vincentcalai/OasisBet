@@ -34,25 +34,29 @@ public class AccountService {
 		double depositAmt = account.getDepositAmt();
 		double depositLimit = account.getDepositLimit();
 		final double newBalanceAmt = account.getBalance() + depositAmt;
+		final double newDepositLimit = depositLimit - depositAmt;
 
 		if (newBalanceAmt > Constants.MAX_BAL_AMT) { // validation failed - new balance cannot be more than 199999.99
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.ERR_MAX_BAL_AMT);
 			return response;
-		} else if (depositAmt > depositLimit) { // perform validation - reached deposit limit for the month
+		} else if (newDepositLimit < 0) { // perform validation - reached deposit limit for the month
 			response.setStatusCode(2);
 			response.setResultMessage(Constants.ERR_OVER_DEPOSIT_LIMIT);
 			return response;
 		} else { // update new balance and deposit limit to database
-			final double newDepositLimit = depositLimit - depositAmt;
+			account.setBalance(newBalanceAmt);
+			account.setDepositLimit(newDepositLimit);
+
 			AccountView accountView = new AccountView();
 			accountView.setAccId(account.getAccId());
 			accountView.setUsrId(account.getUsrId());
-			accountView.setBalance(newBalanceAmt);
-			accountView.setDepositLimit(newDepositLimit);
+			accountView.setBalance(account.getBalance());
+			accountView.setDepositLimit(account.getDepositLimit());
 			accountDao.save(accountView);
 			// future implementation - update deposit transaction
 		}
+		response.setAccount(account);
 		return response;
 	}
 

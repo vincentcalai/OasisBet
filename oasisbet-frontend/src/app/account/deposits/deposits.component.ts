@@ -6,7 +6,7 @@ import { AccountModel } from 'src/app/model/account.model';
 import { ResponseModel } from 'src/app/model/response.model';
 import { UpdateAccountModel } from 'src/app/model/update-account.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
@@ -60,13 +60,14 @@ export class DepositsComponent implements OnInit {
       accountModel.depositAmt = depositAmount;
       this.sharedVar.updateAccountModel.account = accountModel;
       this.subscriptions.add(
-        this.apiService.updateAccDetails().subscribe( (resp: ResponseModel) => {
+        this.apiService.updateAccDetails().subscribe( (resp: any) => {
           if (resp.statusCode != 0) {
             // this.errorMsg = resp.resultMessage;
             // resp.resultMessage = "";
           } else {
             //his.sharedVar.changeResponse(resp);
-            this.navToAccOverView();
+            sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+            this.accountModelInput = this.authService.getRetrievedAccDetails();
           }
         } ,
           error => {
@@ -77,9 +78,5 @@ export class DepositsComponent implements OnInit {
       console.log("deposit amount failed!");
       this.reactiveFormService.displayValidationErrors(this.depositControl);
     }
-  }
-
-  navToAccOverView() {
-    this.router.navigate(['account']);
   }
 }
