@@ -45,17 +45,8 @@ public class AccountController {
 
 	@PutMapping(value = "/updateAccDetails")
 	public AccountRestResponse updateAccDetails(@RequestBody AccountRest accountRest) {
-		AccountRestResponse response = new AccountRestResponse();
 		AccountVO account = accountRest.getAccount();
-		double newBalanceAmt = account.getBalance() + account.getDepositAmt();
-		// perform validation - new balance cannot be more than 199999.99
-
-		// perform validation - you have reached deposit limit for this month, please
-		// make your deposit from next month onwards
-
-		// update new balance and deposit limit to database
-
-		return response;
+		return accountService.setNewBalAndDepositLimit(account);
 	}
 
 }
