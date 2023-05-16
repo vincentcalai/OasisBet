@@ -46,7 +46,10 @@ public class AccountController {
 	@PutMapping(value = "/updateAccDetails")
 	public AccountRestResponse updateAccDetails(@RequestBody AccountRest accountRest) {
 		AccountVO account = accountRest.getAccount();
-		return accountService.setNewBalAndDepositLimit(account);
+		String actionType = account.getActionType();
+		return actionType.equals("D") ? accountService.processDepositAction(account)
+				: accountService.processWithdrawalAction(account);
+
 	}
 
 }

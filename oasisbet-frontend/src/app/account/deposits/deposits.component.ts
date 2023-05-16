@@ -57,6 +57,7 @@ export class DepositsComponent implements OnInit {
       let accountModel: AccountModel = new AccountModel();
       accountModel = this.authService.getRetrievedAccDetails();
       accountModel.depositAmt = depositAmount;
+      accountModel.actionType = 'D';
       this.sharedVar.updateAccountModel.account = accountModel;
       this.subscriptions.add(
         this.apiService.updateAccDetails().subscribe( (resp: any) => {

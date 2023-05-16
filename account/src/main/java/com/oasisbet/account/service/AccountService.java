@@ -29,7 +29,7 @@ public class AccountService {
 		return accountView;
 	}
 
-	public AccountRestResponse setNewBalAndDepositLimit(AccountVO account) {
+	public AccountRestResponse processDepositAction(AccountVO account) {
 		AccountRestResponse response = new AccountRestResponse();
 		double depositAmt = account.getDepositAmt();
 		double depositLimit = account.getDepositLimit();
@@ -58,6 +58,11 @@ public class AccountService {
 		}
 		response.setAccount(account);
 		response.setResultMessage(Constants.DEPOSIT_ACC_SUCCESS);
+		return response;
+	}
+
+	public AccountRestResponse processWithdrawalAction(AccountVO account) {
+		AccountRestResponse response = new AccountRestResponse();
 		return response;
 	}
 

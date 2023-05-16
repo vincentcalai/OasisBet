@@ -10,4 +10,6 @@ export class AccountModel {
     public balance: number;
     public depositLimit: number;
     public depositAmt: number;
+    public withdrawalAmt: number;
+    public actionType: string;
 }

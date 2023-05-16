@@ -6,6 +6,8 @@ public class AccountVO {
 	private Double balance;
 	private Double depositLimit;
 	private Double depositAmt;
+	private Double withdrawalAmt;
+	private String actionType;
 
 	public Long getAccId() {
 		return accId;
@@ -45,5 +47,21 @@ public class AccountVO {
 
 	public void setDepositAmt(Double depositAmt) {
 		this.depositAmt = depositAmt;
+	}
+
+	public Double getWithdrawalAmt() {
+		return withdrawalAmt;
+	}
+
+	public void setWithdrawalAmt(Double withdrawalAmt) {
+		this.withdrawalAmt = withdrawalAmt;
+	}
+
+	public String getActionType() {
+		return actionType;
+	}
+
+	public void setActionType(String actionType) {
+		this.actionType = actionType;
 	}
 }
