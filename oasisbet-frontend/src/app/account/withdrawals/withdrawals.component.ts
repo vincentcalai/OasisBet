@@ -38,7 +38,8 @@ export class WithdrawalsComponent implements OnInit {
   }
 
   onCancelWithdrawal(){
-
+    this.withdrawalAmt.setValue(null);
+    this.password.setValue(null);
   }
 
   onConfirmWithdrawal(){
