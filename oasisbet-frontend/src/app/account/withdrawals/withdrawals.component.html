@@ -24,7 +24,7 @@
               </div>
               <label id="withdrawalAmt_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(withdrawalAmt)}" class="error-text"
                 for="withdrawalAmt_0">
-                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(withdrawalAmt)) == 'pattern'">Please enter only 1 or 2 decimal places</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(withdrawalAmt)) == 'pattern'">Please enter correct format. Amount should only be 1 or 2 decimal places</span>
                 <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(withdrawalAmt)) == 'maxAmount'">Maximum amount to withdraw is $199999.99</span>
                 <span *ngIf="withdrawalAmt.hasError('notZero')">Withdrawal amount cannot be 0</span>
                 <span *ngIf="withdrawalAmt.hasError('required') && !withdrawalAmt.value && !withdrawalAmt.pristine">This field is required</span>
