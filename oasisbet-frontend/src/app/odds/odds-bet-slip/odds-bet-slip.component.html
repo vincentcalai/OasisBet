@@ -1,0 +1,19 @@
+<div class="bet-slip">
+    <h2 class="bet-slip-header">Bet Slip</h2>
+    
+    <div class="header-panel" (click)="toggleSelection('singles')">
+      <h3 class="panel-header">Singles<span class="dropdown-icon"><i class="fas fa-angle-down"></i></span></h3>
+      <div class="selections" *ngIf="showSinglesSelection">
+        <!-- Place your single bet selections here -->
+        <p>Single Bet Selection</p>
+      </div>
+    </div>
+    
+    <div class="header-panel" (click)="toggleSelection('multiples')">
+      <h3 class="panel-header">Multiples<span class="dropdown-icon"><i class="fas fa-angle-down"></i></span></h3>
+      <div class="selections" *ngIf="showMultiplesSelection">
+        <!-- Place your multiple bet selections here -->
+        <p>Multiple Bet Selection</p>
+      </div>
+    </div>
+</div>

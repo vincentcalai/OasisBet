@@ -24,6 +24,7 @@ import { AccountOverviewComponent } from './account/account-overview/account-ove
 import { TrxHistComponent } from './account/trx-hist/trx-hist.component';
 import { DepositsComponent } from './account/deposits/deposits.component';
 import { WithdrawalsComponent } from './account/withdrawals/withdrawals.component';
+import { OddsBetSlipComponent } from './odds/odds-bet-slip/odds-bet-slip.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { WithdrawalsComponent } from './account/withdrawals/withdrawals.componen
     AccountOverviewComponent,
     TrxHistComponent,
     DepositsComponent,
-    WithdrawalsComponent
+    WithdrawalsComponent,
+    OddsBetSlipComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <app-odds-side-nav (onSelectCompType)="readCompType($event)"></app-odds-side-nav>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="container-fluid">
             <br>
                 <div *ngIf="responseMsg" class="alert alert-success">
@@ -21,8 +21,8 @@
                           <table class="table" style="table-layout: fixed; width: 100%;">
                                 <thead class= "table-header">
                                     <tr>
-                                      <th style="width: 10%;">Time</th>
-                                      <th style="width: 15%;">Event ID</th>
+                                      <th style="width: 13%;">Time</th>
+                                      <th style="width: 12%;">Event ID</th>
                                       <th style="width: 39%;">Event Description</th>
                                       <th style="width: 12%;">Home(1)</th>
                                       <th style="width: 12%;">Draw(X)</th>
@@ -64,6 +64,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-2">
+            <app-odds-bet-slip></app-odds-bet-slip>
         </div>
     </div>
 </div>
