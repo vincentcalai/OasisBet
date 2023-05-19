@@ -35,19 +35,22 @@
                                         <td>{{event.eventId}}</td>
                                         <td>{{event.eventDesc}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-light">
+                                            <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.homeSelected}" 
+                                            (click)="selectBetSelection(event, 1)">
                                                 <span class="bet-selection-text">01 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.homeOdds | number : '1.2-2' }}
                                             </button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-light">
+                                            <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.drawSelected}" 
+                                            (click)="selectBetSelection(event, 2)">
                                                 <span class="bet-selection-text">02 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.drawOdds | number : '1.2-2' }}
                                             </button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-light">
+                                            <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.awaySelected}" 
+                                            (click)="selectBetSelection(event, 3)">
                                                 <span class="bet-selection-text">03 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.awayOdds | number : '1.2-2' }}
                                             </button>
@@ -66,7 +69,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <app-odds-bet-slip></app-odds-bet-slip>
+            <app-odds-bet-slip [betSelection]="betEvent"></app-odds-bet-slip>
         </div>
     </div>
 </div>

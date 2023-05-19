@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { BetEvent } from 'src/app/model/bet-event.model';
 
 @Component({
   selector: 'app-odds-bet-slip',
@@ -9,9 +10,15 @@ export class OddsBetSlipComponent implements OnInit {
   showSinglesSelection: boolean = false;
   showMultiplesSelection: boolean = false;
 
+  @Input() betSelection: BetEvent;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges() {
+    console.log('betSelection input value:', this.betSelection);
   }
 
   toggleSelection(selectionType: string): void {
