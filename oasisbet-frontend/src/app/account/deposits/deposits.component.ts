@@ -52,6 +52,8 @@ export class DepositsComponent implements OnInit {
 
   onConfirmDeposit(){
     if(this.depositControl.valid){
+      this.errorMsg = "";
+      this.responseMsg = "";
       console.log("deposit amount success!");
       const depositAmount: number = parseFloat(this.depositControl.value);
       let accountModel: AccountModel = new AccountModel();
@@ -63,10 +65,8 @@ export class DepositsComponent implements OnInit {
         this.apiService.updateAccDetails().subscribe( (resp: any) => {
           if (resp.statusCode != 0) {
             this.errorMsg = resp.resultMessage;
-            resp.resultMessage = "";
           } else {
             this.responseMsg = resp.resultMessage;
-            resp.resultMessage = "";
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             this.accountModelInput = this.authService.getRetrievedAccDetails();
           }

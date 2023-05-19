@@ -51,6 +51,8 @@ export class WithdrawalsComponent implements OnInit {
   }
 
   onConfirmWithdrawal(){
+    this.errorMsg = "";
+    this.responseMsg = "";
     const username = this.authService.getAuthenticationUser();
     
     if(this.withdrawalForm.valid){
@@ -68,10 +70,8 @@ export class WithdrawalsComponent implements OnInit {
             this.apiService.updateAccDetails().subscribe( (resp: any) => {
               if (resp.statusCode != 0) {
                 this.errorMsg = resp.resultMessage;
-                resp.resultMessage = "";
               } else {
                 this.responseMsg = resp.resultMessage;
-                resp.resultMessage = "";
                 sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
                 this.accountModelInput = this.authService.getRetrievedAccDetails();
               }

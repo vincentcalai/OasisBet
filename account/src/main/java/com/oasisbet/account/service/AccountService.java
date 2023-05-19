@@ -63,6 +63,24 @@ public class AccountService {
 
 	public AccountRestResponse processWithdrawalAction(AccountVO account) {
 		AccountRestResponse response = new AccountRestResponse();
+		double withdrawalAmt = account.getWithdrawalAmt();
+		final double newBalanceAmt = account.getBalance() - withdrawalAmt;
+		if (newBalanceAmt < Constants.INIT_BAL_AMT) { // validation failed - new balance cannot be less than 0.00
+			response.setStatusCode(3);
+			response.setResultMessage(Constants.ERR_OVERDRAFT_BAL);
+			return response;
+		} else {
+			account.setBalance(newBalanceAmt);
+
+			AccountView accountView = new AccountView();
+			accountView.setAccId(account.getAccId());
+			accountView.setUsrId(account.getUsrId());
+			accountView.setBalance(account.getBalance());
+			accountView.setDepositLimit(account.getDepositLimit());
+			accountDao.save(accountView);
+		}
+		response.setAccount(account);
+		response.setResultMessage(Constants.WITHDRAW_ACC_SUCCESS);
 		return response;
 	}
 
