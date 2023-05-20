@@ -4,6 +4,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 20px;
+    background-color: rgb(190, 190, 190);
 }
   
 .bet-slip-header {
@@ -28,17 +29,53 @@
     justify-content: space-between;
     align-items: center;
 }
-  
-.selections {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-  
-.show-selection {
-    display: block;
-}
 
 .dropdown-icon {
     margin-left: 170px; 
 }
+
+.bet-slip-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+  
+.event-description,
+.bet-type {
+    font-size: 12px;
+}
+
+.bet-selection {
+    font-weight: bold;
+    font-size: 14px;
+}
+  
+.delete-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+  
+.bet-amount-input {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    bottom: 55px;
+}
+  
+.bet-amount-input input {
+    width: 80px;
+    height: 30px;
+    margin-left: 5px;
+}
+
+  
+.potential-payout-text {
+    font-weight: bold;
+}
+
+  

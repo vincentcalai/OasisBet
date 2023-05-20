@@ -11,7 +11,7 @@ export class OddsBetSlipComponent implements OnInit {
   showSinglesSelection: boolean = false;
   showMultiplesSelection: boolean = false;
 
-  @Input() betSelection: BetSlip[];
+  @Input() betSelections: BetSlip[];
 
   constructor() { }
 
@@ -20,7 +20,7 @@ export class OddsBetSlipComponent implements OnInit {
   
   ngOnChanges() {
       // Handle changes to selectedEvents and update the displayed selection
-      console.log('betSelection input value:', this.betSelection);
+      console.log('betSelection input value:', this.betSelections);
   }
 
   toggleSelection(selectionType: string): void {
