@@ -87,19 +87,23 @@ export class OddsLandingComponent implements OnInit {
 
   selectBetSelection(event: BetEvent, selection: number){
     let addingBetSelection = false;
+    let selectedTeam = "";
     let odds: number = 0;
     if(selection === 1){
       event.betSelection.homeSelected = !event.betSelection.homeSelected;
       addingBetSelection = event.betSelection.homeSelected;
       odds = event.h2hEventOdds.homeOdds;
+      selectedTeam = event.teamsDetails.homeTeam;
     } else if(selection === 2){
       event.betSelection.drawSelected = !event.betSelection.drawSelected;
       addingBetSelection = event.betSelection.drawSelected;
       odds = event.h2hEventOdds.drawOdds;
+      selectedTeam = "Draw";
     } else {
       event.betSelection.awaySelected = !event.betSelection.awaySelected;
       addingBetSelection = event.betSelection.awaySelected;
       odds = event.h2hEventOdds.awayOdds;
+      selectedTeam = event.teamsDetails.awayTeam;
     }
 
     let betSlip = new BetSlip();
@@ -107,7 +111,7 @@ export class OddsLandingComponent implements OnInit {
     betSlip.eventDesc = event.eventDesc;
     betSlip.betTypeCd = 1;
     betSlip.betSelection = selection;
-    betSlip.betSelectionName = "Chelsea";
+    betSlip.betSelectionName = selectedTeam;
     betSlip.odds = odds;
 
     if(addingBetSelection){

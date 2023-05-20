@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BetEvent } from 'src/app/model/bet-event.model';
+import { H2HBetSelection } from 'src/app/model/h2h-bet-selection.model';
 import { ResultEvent } from 'src/app/model/result-event.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';

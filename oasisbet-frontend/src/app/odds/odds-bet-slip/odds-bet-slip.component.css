@@ -4,7 +4,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 20px;
-    background-color: rgb(190, 190, 190);
+    background-color: rgb(214, 214, 214);
 }
   
 .bet-slip-header {
@@ -64,18 +64,19 @@
     align-items: center;
     position: absolute;
     right: 0;
-    bottom: 55px;
+    bottom: 60px;
 }
   
 .bet-amount-input input {
-    width: 80px;
-    height: 30px;
+    width: 60px;
+    height: 25px;
     margin-left: 5px;
 }
 
   
 .potential-payout-text {
     font-weight: bold;
+    text-align: right;
 }
 
   

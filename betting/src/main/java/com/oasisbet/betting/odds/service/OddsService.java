@@ -22,6 +22,7 @@ import com.oasisbet.betting.odds.model.H2HEventOdds;
 import com.oasisbet.betting.odds.model.Market;
 import com.oasisbet.betting.odds.model.OddsApiResponse;
 import com.oasisbet.betting.odds.model.Outcome;
+import com.oasisbet.betting.odds.model.TeamsDetails;
 import com.oasisbet.betting.util.EventIdGenerator;
 import com.oasisbet.betting.util.MongoDBConnection;
 
@@ -57,9 +58,14 @@ public class OddsService {
 				calendar.add(Calendar.HOUR_OF_DAY, 8);
 				startTime = calendar.getTime();
 
-				String eventDesc = result.getHome_team() + " vs " + result.getAway_team();
+				String homeTeam = result.getHome_team();
+				String awayTeam = result.getAway_team();
+
+				TeamsDetails teamDetails = new TeamsDetails(homeTeam, awayTeam);
+
+				String eventDesc = homeTeam + " vs " + awayTeam;
 				String competition = result.getSport_title();
-				BetEvent event = new BetEvent(competition, eventDesc, startTime, h2hEventOdds);
+				BetEvent event = new BetEvent(competition, eventDesc, startTime, teamDetails, h2hEventOdds);
 				betEventList.add(event);
 			}
 		}

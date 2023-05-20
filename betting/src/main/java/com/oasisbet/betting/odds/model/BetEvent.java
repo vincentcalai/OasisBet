@@ -7,13 +7,16 @@ public class BetEvent {
 	public String competition;
 	public String eventDesc;
 	public Date startTime;
+	public TeamsDetails teamsDetails;
 	public H2HEventOdds h2hEventOdds;
 
-	public BetEvent(String competition, String eventDesc, Date startTime, H2HEventOdds h2hEventOdds) {
+	public BetEvent(String competition, String eventDesc, Date startTime, TeamsDetails teamsDetails,
+			H2HEventOdds h2hEventOdds) {
 		super();
 		this.competition = competition;
 		this.eventDesc = eventDesc;
 		this.startTime = startTime;
+		this.teamsDetails = teamsDetails;
 		this.h2hEventOdds = h2hEventOdds;
 	}
 
@@ -47,6 +50,14 @@ public class BetEvent {
 
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
+	}
+
+	public TeamsDetails getTeamsDetails() {
+		return teamsDetails;
+	}
+
+	public void setTeamsDetails(TeamsDetails teamsDetails) {
+		this.teamsDetails = teamsDetails;
 	}
 
 	public H2HEventOdds getH2hEventOdds() {
