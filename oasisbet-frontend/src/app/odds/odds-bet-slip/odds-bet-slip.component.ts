@@ -11,8 +11,10 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class OddsBetSlipComponent implements OnInit {
   showSinglesSelection: boolean = true;
   showMultiplesSelection: boolean = true;
+  totalStake: number = 0;
 
   @Input() betSelections: BetSlip[];
+  
 
   constructor(public sharedVar: SharedVarService) { }
 
@@ -37,7 +39,22 @@ export class OddsBetSlipComponent implements OnInit {
 
   onBetAmountChange(betSlipItem: BetSlip, betAmount: string) {
     const regex = /^(?!0\d)[1-9]\d{0,3}$/;
-    betSlipItem.potentialPayout = regex.test(betAmount) ? parseFloat((parseFloat(betAmount) * betSlipItem.odds).toFixed(2)) : 0;
+    if(regex.test(betAmount)){
+      betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
+      betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
+    } else {
+      betSlipItem.potentialPayout = 0;
+    }
+
+    this.totalStake = 0;
+    this.betSelections.forEach(selection => {
+      this.totalStake =  this.totalStake + selection.betAmount;
+    });
+  }
+
+  onPlaceBets(){
+    console.log(this.totalStake);
+    this.totalStake = 0;
   }
 
 }

@@ -31,6 +31,12 @@
 
         </div>
       </div>
+      <div class="total-stake-panel">
+        <span class="total-stake-section">Total Stake: {{totalStake}}</span>
+      </div>
+      <button class="btn btn-success btn-confirm" type="button" (click)="onPlaceBets()">
+        Place Bet
+      </button>
     </div>
 
     <div *ngIf="!betSelections || betSelections.length == 0">
