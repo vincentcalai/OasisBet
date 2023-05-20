@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { OddsSideNavComponent } from '../odds-side-nav/odds-side-nav.component';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 import { BetEvent } from 'src/app/model/bet-event.model';
 import { H2HEventOdds } from 'src/app/model/h2h-event-odds.model';
@@ -7,6 +6,7 @@ import { Subscription, forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { take } from 'rxjs/operators';
 import { H2HBetSelection } from 'src/app/model/h2h-bet-selection.model';
+import { BetSlip } from 'src/app/model/bet-slip.model';
 
 @Component({
   selector: 'app-odds-landing',
@@ -23,8 +23,8 @@ export class OddsLandingComponent implements OnInit {
   public eventDates: string[];
   public eventsMap: Map<string, BetEvent[]> = new Map();
 
-  @Output() betEventClicked = new EventEmitter<BetEvent>();
-  public betEvent: BetEvent;
+  @Output() betEventClicked = new EventEmitter<BetSlip[]>();
+  public selectedBets : BetSlip[] = new Array();
 
   public responseMsg: string = '';
 
@@ -86,15 +86,37 @@ export class OddsLandingComponent implements OnInit {
   }
 
   selectBetSelection(event: BetEvent, selection: number){
+    let addingBetSelection = false;
+    let odds: number = 0;
     if(selection === 1){
       event.betSelection.homeSelected = !event.betSelection.homeSelected;
-    } else if(selection == 2){
+      addingBetSelection = event.betSelection.homeSelected;
+      odds = event.h2hEventOdds.homeOdds;
+    } else if(selection === 2){
       event.betSelection.drawSelected = !event.betSelection.drawSelected;
+      addingBetSelection = event.betSelection.drawSelected;
+      odds = event.h2hEventOdds.drawOdds;
     } else {
       event.betSelection.awaySelected = !event.betSelection.awaySelected;
+      addingBetSelection = event.betSelection.awaySelected;
+      odds = event.h2hEventOdds.awayOdds;
     }
-    this.betEvent = event;
-    this.betEventClicked.emit(this.betEvent);
+
+    let betSlip = new BetSlip();
+    betSlip.eventId = event.eventId;
+    betSlip.eventDesc = event.eventDesc;
+    betSlip.betType = 1;
+    betSlip.betSelection = selection;
+    betSlip.betSelectionName = "Chelsea";
+    betSlip.odds = odds;
+
+    if(addingBetSelection){
+      this.selectedBets.push(betSlip);
+      this.selectedBets = [...this.selectedBets];
+    } else {
+      this.selectedBets = this.selectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
+    }
+    this.betEventClicked.emit(this.selectedBets);
   }
 
   ngOnDestroy(): void {
