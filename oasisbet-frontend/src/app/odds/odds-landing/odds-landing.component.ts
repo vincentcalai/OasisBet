@@ -105,7 +105,7 @@ export class OddsLandingComponent implements OnInit {
     let betSlip = new BetSlip();
     betSlip.eventId = event.eventId;
     betSlip.eventDesc = event.eventDesc;
-    betSlip.betType = 1;
+    betSlip.betTypeCd = 1;
     betSlip.betSelection = selection;
     betSlip.betSelectionName = "Chelsea";
     betSlip.odds = odds;

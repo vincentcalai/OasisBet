@@ -10,11 +10,11 @@
               <div class="row">
                 <div class="col-md-9">
                   <p class="event-description">{{ betSelection.eventDesc }}</p>
-                  <p class="bet-type">{{ betSelection.betType }}</p>
-                  <p class="bet-selection">{{ betSelection.betSelection }} @ {{ betSelection.odds }}</p>
+                  <p class="bet-type">{{ sharedVar.mapBetTypeCd(betSelection.betTypeCd) }}</p>
+                  <p class="bet-selection">{{ betSelection.betSelectionName }} @ {{ betSelection.odds }}</p>
                 </div>
                 <div class="col-md-3">
-                  <p class="delete-icon">&#10005;</p>
+                  <p class="delete-icon" (click)="onDeleteBetSelection(betSelection)">&#10005;</p>
                   <span class="bet-amount-input">$<input type="text" class="form-control" autocomplete="off" min="0" step="0.01" max="99999.99"></span>
                 </div>
                 <hr>

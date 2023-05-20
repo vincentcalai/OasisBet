@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { BetEvent } from 'src/app/model/bet-event.model';
 import { BetSlip } from 'src/app/model/bet-slip.model';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-odds-bet-slip',
@@ -8,12 +9,12 @@ import { BetSlip } from 'src/app/model/bet-slip.model';
   styleUrls: ['./odds-bet-slip.component.css']
 })
 export class OddsBetSlipComponent implements OnInit {
-  showSinglesSelection: boolean = false;
-  showMultiplesSelection: boolean = false;
+  showSinglesSelection: boolean = true;
+  showMultiplesSelection: boolean = true;
 
   @Input() betSelections: BetSlip[];
 
-  constructor() { }
+  constructor(public sharedVar: SharedVarService) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +30,11 @@ export class OddsBetSlipComponent implements OnInit {
     } else if (selectionType === 'multiples') {
       this.showMultiplesSelection = !this.showMultiplesSelection;
     }
+  }
+
+  onDeleteBetSelection(betSelection: BetSlip){
+    this.betSelections = this.betSelections.filter(e => !(e.eventId === betSelection.eventId && e.betSelection === betSelection.betSelection));
+    console.log(this.betSelections);
   }
 
 }

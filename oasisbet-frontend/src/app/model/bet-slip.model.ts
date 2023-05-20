@@ -10,7 +10,7 @@ export class BetSlip {
     public eventDesc: string;
     public betSelection: number;
     public betSelectionName: string;
-    public betType: number;
+    public betTypeCd: number;
     public odds: number;
     public betAmount: number;
 }

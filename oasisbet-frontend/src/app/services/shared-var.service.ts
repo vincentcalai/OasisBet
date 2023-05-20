@@ -11,6 +11,10 @@ export class SharedVarService {
 
   public readonly GENERAL_SYS_DOWN_ERR_MSG = "This system is currently not available. Please try again at a later time.";
 
+  public readonly BET_TYPE_CD_H2H = 1;
+
+  public readonly BET_TYPE_H2H_NAME = "1X2";
+
   public readonly API_SOURCE_COMP_TYPE_EPL = "soccer_epl";
   public readonly API_SOURCE_COMP_TYPE_LALIGA = "soccer_spain_la_liga";
   public readonly API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
@@ -54,32 +58,36 @@ export class SharedVarService {
     this.exceptionSource.next(status);
   }
 
+  mapBetTypeCd(betType: number){
+    switch(betType) {
+      case this.BET_TYPE_CD_H2H: {
+         return this.BET_TYPE_H2H_NAME;
+      }
+      default: {
+        return '';
+      }
+    }
+  }
 
   retrieveCompHdr(competitionName: string): string{
     switch(competitionName) {
       case this.API_SOURCE_COMP_TYPE_EPL: {
          return this.COMP_HEADER_EPL;
-         break;
       }
       case this.API_SOURCE_COMP_TYPE_LALIGA: {
         return this.COMP_HEADER_LALIGA;
-         break;
       }
       case this.API_SOURCE_COMP_TYPE_BUNDESLIGA: {
         return this.COMP_HEADER_BUNDESLIGA;
-        break;
       }
       case this.API_SOURCE_COMP_TYPE_SERIE_A: {
         return this.COMP_HEADER_SERIE_A;
-        break;
       }
       case this.API_SOURCE_COMP_TYPE_LIGUE_ONE: {
         return this.COMP_HEADER_LIGUE_ONE;
-        break;
       }
       default: {
         return '';
-        break;
       }
     }
   }
