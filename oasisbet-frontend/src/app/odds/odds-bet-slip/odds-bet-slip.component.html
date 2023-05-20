@@ -15,12 +15,15 @@
                 </div>
                 <div class="col-md-3">
                   <p class="delete-icon" (click)="onDeleteBetSelection(betSelection)">&#10005;</p>
-                  <span class="bet-amount-input">$<input type="text" class="form-control" autocomplete="off" min="0" step="0.01" max="99999.99"></span>
+                  <span class="bet-amount-input">
+                    $<input #betAmountInput type="text" class="form-control" autocomplete="off" maxlength="4" inputmode="numeric" 
+                    (input)="onBetAmountChange(betSelection, betAmountInput.value)">
+                  </span>
                 </div>
                 <hr>
               </div>
               <div class="row">
-                <p class="potential-payout-text">Potential Payout: {{ betSelection.odds * betSelection.betAmount }}</p>
+                <p class="potential-payout-text">Potential Payout: ${{ betSelection.potentialPayout | number : '1.2-2' }}</p>
               </div>
             </div>
             <br>

@@ -21,7 +21,6 @@ export class OddsBetSlipComponent implements OnInit {
   
   ngOnChanges() {
       // Handle changes to selectedEvents and update the displayed selection
-      console.log('betSelection input value:', this.betSelections);
   }
 
   toggleSelection(selectionType: string): void {
@@ -34,7 +33,11 @@ export class OddsBetSlipComponent implements OnInit {
 
   onDeleteBetSelection(betSelection: BetSlip){
     this.betSelections = this.betSelections.filter(e => !(e.eventId === betSelection.eventId && e.betSelection === betSelection.betSelection));
-    console.log(this.betSelections);
+  }
+
+  onBetAmountChange(betSlipItem: BetSlip, betAmount: string) {
+    const regex = /^(?!0\d)[1-9]\d{0,3}$/;
+    betSlipItem.potentialPayout = regex.test(betAmount) ? parseFloat((parseFloat(betAmount) * betSlipItem.odds).toFixed(2)) : 0;
   }
 
 }
