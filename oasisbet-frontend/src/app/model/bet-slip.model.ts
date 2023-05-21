@@ -12,6 +12,6 @@ export class BetSlip {
     public betSelectionName: string;
     public betTypeCd: number;
     public odds: number;
-    public betAmount: number = 0;
+    public betAmount: number = null;
     public potentialPayout: number = 0;
 }

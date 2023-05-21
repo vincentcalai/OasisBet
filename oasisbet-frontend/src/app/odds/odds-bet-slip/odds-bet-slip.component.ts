@@ -9,20 +9,26 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
   styleUrls: ['./odds-bet-slip.component.css']
 })
 export class OddsBetSlipComponent implements OnInit {
+
+  public responseMsg: string = '';
+  public errorMsg: string = '';
+
   public showSinglesSelection: boolean = true;
   public showMultiplesSelection: boolean = true;
   public totalStake: number = 0;
   public placedBetConfirmFlag: boolean = false;
 
   @Input() betSelections: BetSlip[];
+  public beforeCfmBetSelections: BetSlip[];
   
-
   constructor(public sharedVar: SharedVarService) { }
 
   ngOnInit(): void {
   }
   
   ngOnChanges() {
+    this.responseMsg = "";
+    this.errorMsg = "";
       // Handle changes to selectedEvents and update the displayed selection
   }
 
@@ -39,14 +45,18 @@ export class OddsBetSlipComponent implements OnInit {
   }
 
   onBetAmountChange(betSlipItem: BetSlip, betAmount: string) {
-    const regex = /^(?!0\d)[1-9]\d{0,3}$/;
-    if(regex.test(betAmount)){
-      betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
-      betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
-    } else {
+    const regex = /^(?!0\d*$)\d{1,4}(?:\.\d{0,2})?$/;
+    
+    if(!regex.test(betAmount)){
+      console.log("regex failed.");
       betSlipItem.betAmount = 0;
       betSlipItem.potentialPayout = 0;
+      return;
     }
+
+    console.log("regex passes!");
+    betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
+    betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
 
     console.log(this.betSelections);
     this.totalStake = 0;
@@ -54,23 +64,34 @@ export class OddsBetSlipComponent implements OnInit {
   }
 
   onPlaceBets(){
+    //store all current bet selections into beforeCfmBetSelections
+    this.beforeCfmBetSelections = this.betSelections;
+
+    //remove bet selections that does not have bet amount
     this.betSelections = this.betSelections.filter(e => e.betAmount !== 0 && e.potentialPayout !== 0);
     this.placedBetConfirmFlag = true;
   }
 
   onCancelPlaceBets(){
     this.betSelections.forEach(selection => {
-      selection.betAmount = 0;
+      selection.betAmount = null;
       selection.potentialPayout = 0;
     });
     this.totalStake = 0;
     this.placedBetConfirmFlag = false;
     
+    //restore previous bet selections (those that were selected but without bet amount) before place bet
+    this.betSelections = this.beforeCfmBetSelections;
   }
 
-  onConfirmPlaceBets(){
+  onFinalConfirmPlaceBets(){
     //call backend api here to place bet
     this.placedBetConfirmFlag = false;
+
+    //if success, clear the current bet selections
+    // this.beforeCfmBetSelections.splice(0);
+    // this.betSelections.splice(0);
+    this.responseMsg = "Bet successfully placed!";
   }
 
 }

@@ -1,12 +1,14 @@
 <div class="bet-slip">
     <h2 class="bet-slip-header">Bet Slip</h2>
     
+    <div class="alert alert-success" *ngIf="responseMsg" ><b>Success: </b> {{responseMsg}}</div>
+    <div class="alert alert-danger" *ngIf="errorMsg"><b>Fail: </b>{{errorMsg}}</div>
     <div *ngIf="betSelections && betSelections.length > 0">
       <div class="header-panel">
         <h3 class="panel-header" (click)="toggleSelection('singles')">Singles<span class="dropdown-icon" ><i class="fas fa-angle-down"></i></span></h3>
         <div class="selections" *ngIf="showSinglesSelection">
           <div class="bet-slip-container" *ngFor="let betSelection of betSelections">
-            <div class="container">
+            <div class="container" *ngIf="!placedBetConfirmFlag || (betSelection.potentialPayout != 0 && placedBetConfirmFlag)">
               <div class="row">
                 <div class="col-md-9">
                   <p class="event-description">{{ betSelection.eventDesc }}</p>
@@ -16,8 +18,11 @@
                 <div class="col-md-3">
                   <p class="delete-icon" (click)="onDeleteBetSelection(betSelection)">&#10005;</p>
                   <span class="bet-amount-input">
-                    $<input #betAmountInput type="text" class="form-control" autocomplete="off" maxlength="4" inputmode="numeric" 
+                    $<input #betAmountInput type="text" class="form-control" autocomplete="off" maxlength="7" inputmode="numeric" 
+                    [value]="betSelection.betAmount"
+                    *ngIf = "!placedBetConfirmFlag"
                     (input)="onBetAmountChange(betSelection, betAmountInput.value)">
+                    <span *ngIf = "(betSelection.potentialPayout != 0 && placedBetConfirmFlag)">{{betSelection.betAmount | number : '1.2-2'}}</span>
                   </span>
                 </div>
                 <hr>
@@ -34,7 +39,7 @@
       <div class="total-stake-panel">
         <span class="total-stake-section">Total Stake: ${{totalStake}}</span>
       </div>
-      <button class="btn btn-success btn-place-bet" *ngIf="!placedBetConfirmFlag" type="button" (click)="onPlaceBets()" [disabled]="totalStake === 0">
+      <button class="btn btn-success btn-place-bet" *ngIf="!placedBetConfirmFlag" type="button" (click)="onPlaceBets()" [disabled]="!totalStake || totalStake === 0">
         Place Bet
       </button>
       <div class="row" *ngIf="placedBetConfirmFlag">
@@ -44,7 +49,7 @@
           </button>
         </div>
         <div class="col-md-6 d-flex justify-content-center">
-          <button class="btn btn-success btn-confirm" *ngIf="placedBetConfirmFlag" type="button" (click)="onConfirmPlaceBets()">
+          <button class="btn btn-success btn-confirm" *ngIf="placedBetConfirmFlag" type="button" (click)="onFinalConfirmPlaceBets()">
             Confirm
           </button>
         </div>
