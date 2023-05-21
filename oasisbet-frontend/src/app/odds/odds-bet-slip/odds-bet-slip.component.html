@@ -32,14 +32,26 @@
         </div>
       </div>
       <div class="total-stake-panel">
-        <span class="total-stake-section">Total Stake: {{totalStake}}</span>
+        <span class="total-stake-section">Total Stake: ${{totalStake}}</span>
       </div>
-      <button class="btn btn-success btn-confirm" type="button" (click)="onPlaceBets()">
+      <button class="btn btn-success btn-place-bet" *ngIf="!placedBetConfirmFlag" type="button" (click)="onPlaceBets()" [disabled]="totalStake === 0">
         Place Bet
       </button>
+      <div class="row" *ngIf="placedBetConfirmFlag">
+        <div class="col-md-6 d-flex justify-content-center">
+          <button class="btn btn-success btn-decline" *ngIf="placedBetConfirmFlag" type="button" (click)="onCancelPlaceBets()">
+            Decline
+          </button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+          <button class="btn btn-success btn-confirm" *ngIf="placedBetConfirmFlag" type="button" (click)="onConfirmPlaceBets()">
+            Confirm
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div *ngIf="!betSelections || betSelections.length == 0">
+    <div class="empty-bet-slip" *ngIf="!betSelections || betSelections.length == 0">
         <p>Your bet slip is empty.</p>
     </div>
     

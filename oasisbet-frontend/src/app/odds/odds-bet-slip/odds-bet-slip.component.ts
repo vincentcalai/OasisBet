@@ -9,9 +9,10 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
   styleUrls: ['./odds-bet-slip.component.css']
 })
 export class OddsBetSlipComponent implements OnInit {
-  showSinglesSelection: boolean = true;
-  showMultiplesSelection: boolean = true;
-  totalStake: number = 0;
+  public showSinglesSelection: boolean = true;
+  public showMultiplesSelection: boolean = true;
+  public totalStake: number = 0;
+  public placedBetConfirmFlag: boolean = false;
 
   @Input() betSelections: BetSlip[];
   
@@ -43,18 +44,33 @@ export class OddsBetSlipComponent implements OnInit {
       betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
       betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
     } else {
+      betSlipItem.betAmount = 0;
       betSlipItem.potentialPayout = 0;
     }
 
+    console.log(this.betSelections);
     this.totalStake = 0;
-    this.betSelections.forEach(selection => {
-      this.totalStake =  this.totalStake + selection.betAmount;
-    });
+    this.betSelections.forEach(selection => this.totalStake =  this.totalStake + selection.betAmount);
   }
 
   onPlaceBets(){
-    console.log(this.totalStake);
+    this.betSelections = this.betSelections.filter(e => e.betAmount !== 0 && e.potentialPayout !== 0);
+    this.placedBetConfirmFlag = true;
+  }
+
+  onCancelPlaceBets(){
+    this.betSelections.forEach(selection => {
+      selection.betAmount = 0;
+      selection.potentialPayout = 0;
+    });
     this.totalStake = 0;
+    this.placedBetConfirmFlag = false;
+    
+  }
+
+  onConfirmPlaceBets(){
+    //call backend api here to place bet
+    this.placedBetConfirmFlag = false;
   }
 
 }
