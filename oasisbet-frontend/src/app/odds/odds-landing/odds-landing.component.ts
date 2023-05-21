@@ -1,8 +1,7 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 import { BetEvent } from 'src/app/model/bet-event.model';
-import { H2HEventOdds } from 'src/app/model/h2h-event-odds.model';
-import { Subscription, forkJoin } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { take } from 'rxjs/operators';
 import { H2HBetSelection } from 'src/app/model/h2h-bet-selection.model';
@@ -13,7 +12,7 @@ import { BetSlip } from 'src/app/model/bet-slip.model';
   templateUrl: './odds-landing.component.html',
   styleUrls: ['./odds-landing.component.css']
 })
-export class OddsLandingComponent implements OnInit {
+export class OddsLandingComponent implements OnInit  {
 
   public subscriptions: Subscription = new Subscription();
 
@@ -24,6 +23,7 @@ export class OddsLandingComponent implements OnInit {
   public eventsMap: Map<string, BetEvent[]> = new Map();
 
   @Output() betEventClicked = new EventEmitter<BetSlip[]>();
+
   public selectedBets : BetSlip[] = new Array();
 
   public responseMsg: string = '';
@@ -76,7 +76,6 @@ export class OddsLandingComponent implements OnInit {
         }
       )
     )
-
   }
 
   readCompType(competitionName: string){
@@ -121,6 +120,22 @@ export class OddsLandingComponent implements OnInit {
       this.selectedBets = this.selectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
     }
     this.betEventClicked.emit(this.selectedBets);
+  }
+
+  removeBet(removedBet: BetSlip){
+    this.selectedBets = this.selectedBets.filter(e => !(e.eventId === removedBet.eventId && e.betSelection === removedBet.betSelection));
+    const eventIdx = this.events.findIndex(e => e.eventId === removedBet.eventId);
+    if (eventIdx !== -1) {
+      const event = { ...this.events[eventIdx] };
+      if(removedBet.betSelection === 1){
+        event.betSelection.homeSelected = false;
+      } else if(removedBet.betSelection === 2){
+        event.betSelection.drawSelected = false;
+      } else if(removedBet.betSelection === 3){
+        event.betSelection.awaySelected = false;
+      }
+      this.events[eventIdx] = event;
+    }
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { BetEvent } from 'src/app/model/bet-event.model';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { BetSlip } from 'src/app/model/bet-slip.model';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -19,17 +18,18 @@ export class OddsBetSlipComponent implements OnInit {
   public placedBetConfirmFlag: boolean = false;
 
   @Input() betSelections: BetSlip[];
+  @Output() removedBetSelection: EventEmitter<BetSlip> = new EventEmitter<BetSlip>();
+
   public beforeCfmBetSelections: BetSlip[];
-  
+
   constructor(public sharedVar: SharedVarService) { }
 
   ngOnInit(): void {
   }
-  
+
   ngOnChanges() {
     this.responseMsg = "";
     this.errorMsg = "";
-      // Handle changes to selectedEvents and update the displayed selection
   }
 
   toggleSelection(selectionType: string): void {
@@ -42,23 +42,21 @@ export class OddsBetSlipComponent implements OnInit {
 
   onDeleteBetSelection(betSelection: BetSlip){
     this.betSelections = this.betSelections.filter(e => !(e.eventId === betSelection.eventId && e.betSelection === betSelection.betSelection));
+    this.removedBetSelection.emit(betSelection);
   }
 
   onBetAmountChange(betSlipItem: BetSlip, betAmount: string) {
     const regex = /^(?!0\d*$)\d{1,4}(?:\.\d{0,2})?$/;
-    
+
     if(!regex.test(betAmount)){
-      console.log("regex failed.");
       betSlipItem.betAmount = 0;
       betSlipItem.potentialPayout = 0;
       return;
     }
 
-    console.log("regex passes!");
     betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
     betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
 
-    console.log(this.betSelections);
     this.totalStake = 0;
     this.betSelections.forEach(selection => this.totalStake =  this.totalStake + selection.betAmount);
   }
@@ -79,7 +77,7 @@ export class OddsBetSlipComponent implements OnInit {
     });
     this.totalStake = 0;
     this.placedBetConfirmFlag = false;
-    
+
     //restore previous bet selections (those that were selected but without bet amount) before place bet
     this.betSelections = this.beforeCfmBetSelections;
   }
