@@ -47,16 +47,13 @@ export class OddsBetSlipComponent implements OnInit {
 
   onBetAmountChange(betSlipItem: BetSlip, betAmount: string) {
     const regex = /^(?!0\d*$)\d{1,4}(?:\.\d{0,2})?$/;
-
     if(!regex.test(betAmount)){
-      betSlipItem.betAmount = 0;
+      betSlipItem.betAmount = null;
       betSlipItem.potentialPayout = 0;
-      return;
+    } else {
+      betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
+      betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
     }
-
-    betSlipItem.betAmount = parseFloat(Number(betAmount).toFixed(2));
-    betSlipItem.potentialPayout = parseFloat((betSlipItem.betAmount * betSlipItem.odds).toFixed(2));
-
     this.totalStake = 0;
     this.betSelections.forEach(selection => this.totalStake =  this.totalStake + selection.betAmount);
   }

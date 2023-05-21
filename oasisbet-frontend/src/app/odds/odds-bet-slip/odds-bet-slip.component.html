@@ -18,7 +18,7 @@
                 <div class="col-md-3">
                   <p class="delete-icon" (click)="onDeleteBetSelection(betSelection)">&#10005;</p>
                   <span class="bet-amount-input">
-                    $<input #betAmountInput type="text" class="form-control" autocomplete="off" maxlength="7" inputmode="numeric"
+                    $<input #betAmountInput type="text" autocomplete="off" maxlength="7" inputmode="numeric"
                       [value]="betSelection.betAmount" *ngIf="!placedBetConfirmFlag"
                       (input)="onBetAmountChange(betSelection, betAmountInput.value)">
                     <span *ngIf="(betSelection.potentialPayout != 0 && placedBetConfirmFlag)">{{betSelection.betAmount |
