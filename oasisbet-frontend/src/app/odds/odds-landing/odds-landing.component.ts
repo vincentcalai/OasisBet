@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 import { BetEvent } from 'src/app/model/bet-event.model';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { take } from 'rxjs/operators';
 import { H2HBetSelection } from 'src/app/model/h2h-bet-selection.model';
@@ -14,6 +14,7 @@ import { BetSlip } from 'src/app/model/bet-slip.model';
 })
 export class OddsLandingComponent implements OnInit  {
 
+  public betSlipSubject: Subject<void> = new Subject<void>();
   public subscriptions: Subscription = new Subscription();
 
   compType: string = this.sharedVar.API_SOURCE_COMP_TYPE_EPL;
@@ -25,7 +26,6 @@ export class OddsLandingComponent implements OnInit  {
   public initStatus: number = 1;
 
   @Output() betEventClicked = new EventEmitter<BetSlip[]>();
-  @Output() initCleanBetSlip = new EventEmitter<number>();
 
   public selectedBets : BetSlip[] = new Array();
   public isBetSlipClean: boolean = true;
@@ -92,7 +92,7 @@ export class OddsLandingComponent implements OnInit  {
     //for first bet selection that was added into the bet slip after a successful bet submission, clear the existing bets from previous submission
     if(this.isBetSlipClean){
       this.selectedBets.splice(0);
-      this.initCleanBetSlip.emit(this.initStatus);
+      this.betSlipSubject.next();
     }
     this.isBetSlipClean = false;
 

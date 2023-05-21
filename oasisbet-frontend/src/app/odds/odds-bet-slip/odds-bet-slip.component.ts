@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { BetSlip } from 'src/app/model/bet-slip.model';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -16,7 +17,6 @@ export class OddsBetSlipComponent implements OnInit {
   public showMultiplesSelection: boolean = true;
   public totalStake: number = 0;
 
-  @Input()
   public placedBetStatus: number = 1; //before place bet = 1
                                       //after place bet, before confirm = 2
                                       //after confirm, bet successful = 3
@@ -25,17 +25,20 @@ export class OddsBetSlipComponent implements OnInit {
   @Output() removedBetSelection: EventEmitter<BetSlip> = new EventEmitter<BetSlip>();
   @Output() removeAllBetSelections = new EventEmitter<void>();
 
+  private betSlipSubscription: Subscription;
+
+  @Input() initBetSlip: Observable<void>;
+
   public beforeCfmBetSelections: BetSlip[];
 
   constructor(public sharedVar: SharedVarService) { }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges() {
-    console.log("betSelections after: ", this.betSelections);
-    this.responseMsg = "";
-    this.errorMsg = "";
+    this.betSlipSubscription = this.initBetSlip.subscribe(() => {
+      this.placedBetStatus = 1;
+      this.responseMsg = "";
+      this.errorMsg = "";
+    });
   }
 
   toggleSelection(selectionType: string): void {
@@ -93,6 +96,10 @@ export class OddsBetSlipComponent implements OnInit {
 
     this.responseMsg = "Bet successfully placed!";
     this.placedBetStatus = 3;
+  }
+
+  ngOnDestroy() {
+    this.betSlipSubscription.unsubscribe();
   }
 
 }
