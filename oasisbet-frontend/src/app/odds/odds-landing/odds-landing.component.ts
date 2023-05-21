@@ -22,9 +22,13 @@ export class OddsLandingComponent implements OnInit  {
   public eventDates: string[];
   public eventsMap: Map<string, BetEvent[]> = new Map();
 
+  public initStatus: number = 1;
+
   @Output() betEventClicked = new EventEmitter<BetSlip[]>();
+  @Output() initCleanBetSlip = new EventEmitter<number>();
 
   public selectedBets : BetSlip[] = new Array();
+  public isBetSlipClean: boolean = true;
 
   public responseMsg: string = '';
 
@@ -85,6 +89,13 @@ export class OddsLandingComponent implements OnInit  {
   }
 
   selectBetSelection(event: BetEvent, selection: number){
+    //for first bet selection that was added into the bet slip after a successful bet submission, clear the existing bets from previous submission
+    if(this.isBetSlipClean){
+      this.selectedBets.splice(0);
+      this.initCleanBetSlip.emit(this.initStatus);
+    }
+    this.isBetSlipClean = false;
+
     let addingBetSelection = false;
     let selectedTeam = "";
     let odds: number = 0;
@@ -108,7 +119,7 @@ export class OddsLandingComponent implements OnInit  {
     let betSlip = new BetSlip();
     betSlip.eventId = event.eventId;
     betSlip.eventDesc = event.eventDesc;
-    betSlip.betTypeCd = 1;
+    betSlip.betTypeCd = this.sharedVar.BET_TYPE_CD_H2H;
     betSlip.betSelection = selection;
     betSlip.betSelectionName = selectedTeam;
     betSlip.odds = odds;
@@ -136,6 +147,15 @@ export class OddsLandingComponent implements OnInit  {
       }
       this.events[eventIdx] = event;
     }
+  }
+
+  removeAllBets(){
+    this.events.forEach(e => {
+      e.betSelection.homeSelected = false;
+      e.betSelection.drawSelected = false;
+      e.betSelection.awaySelected = false;
+    });
+    this.isBetSlipClean = true;
   }
 
   ngOnDestroy(): void {

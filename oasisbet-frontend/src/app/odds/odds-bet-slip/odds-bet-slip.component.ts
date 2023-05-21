@@ -15,10 +15,15 @@ export class OddsBetSlipComponent implements OnInit {
   public showSinglesSelection: boolean = true;
   public showMultiplesSelection: boolean = true;
   public totalStake: number = 0;
-  public placedBetConfirmFlag: boolean = false;
+
+  @Input()
+  public placedBetStatus: number = 1; //before place bet = 1
+                                      //after place bet, before confirm = 2
+                                      //after confirm, bet successful = 3
 
   @Input() betSelections: BetSlip[];
   @Output() removedBetSelection: EventEmitter<BetSlip> = new EventEmitter<BetSlip>();
+  @Output() removeAllBetSelections = new EventEmitter<void>();
 
   public beforeCfmBetSelections: BetSlip[];
 
@@ -28,6 +33,7 @@ export class OddsBetSlipComponent implements OnInit {
   }
 
   ngOnChanges() {
+    console.log("betSelections after: ", this.betSelections);
     this.responseMsg = "";
     this.errorMsg = "";
   }
@@ -64,29 +70,29 @@ export class OddsBetSlipComponent implements OnInit {
 
     //remove bet selections that does not have bet amount
     this.betSelections = this.betSelections.filter(e => e.betAmount !== 0 && e.potentialPayout !== 0);
-    this.placedBetConfirmFlag = true;
+    this.placedBetStatus = 2;
   }
 
   onCancelPlaceBets(){
+    //restore previous bet selections (those that were selected but without bet amount) before place bet
+    this.betSelections = this.beforeCfmBetSelections;
+
     this.betSelections.forEach(selection => {
       selection.betAmount = null;
       selection.potentialPayout = 0;
     });
     this.totalStake = 0;
-    this.placedBetConfirmFlag = false;
-
-    //restore previous bet selections (those that were selected but without bet amount) before place bet
-    this.betSelections = this.beforeCfmBetSelections;
+    this.placedBetStatus = 1;
   }
 
   onFinalConfirmPlaceBets(){
     //call backend api here to place bet
-    this.placedBetConfirmFlag = false;
 
     //if success, clear the current bet selections
-    // this.beforeCfmBetSelections.splice(0);
-    // this.betSelections.splice(0);
+    this.removeAllBetSelections.emit();
+
     this.responseMsg = "Bet successfully placed!";
+    this.placedBetStatus = 3;
   }
 
 }

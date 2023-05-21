@@ -69,7 +69,9 @@
             </div>
         </div>
         <div class="col-md-2">
-            <app-odds-bet-slip [betSelections]="selectedBets" (removedBetSelection)="removeBet($event)"></app-odds-bet-slip>
+            <app-odds-bet-slip [betSelections]="selectedBets" [placedBetStatus]="initStatus"
+              (removedBetSelection)="removeBet($event)" (removeAllBetSelections)="removeAllBets()">
+            </app-odds-bet-slip>
         </div>
     </div>
 </div>
