@@ -22,14 +22,13 @@ export class OddsBetSlipComponent implements OnInit {
                                       //after confirm, bet successful = 3
 
   @Input() betSelections: BetSlip[];
+  @Output() betSelectionsChange: EventEmitter<BetSlip[]> = new EventEmitter<BetSlip[]>();
   @Output() removedBetSelection: EventEmitter<BetSlip> = new EventEmitter<BetSlip>();
   @Output() removeAllBetSelections = new EventEmitter<void>();
 
   private betSlipSubscription: Subscription;
 
   @Input() initBetSlip: Observable<void>;
-
-  public beforeCfmBetSelections: BetSlip[];
 
   constructor(public sharedVar: SharedVarService) { }
 
@@ -68,18 +67,14 @@ export class OddsBetSlipComponent implements OnInit {
   }
 
   onPlaceBets(){
-    //store all current bet selections into beforeCfmBetSelections
-    this.beforeCfmBetSelections = this.betSelections;
-
     //remove bet selections that does not have bet amount
+    const removedBetSelections = this.betSelections.filter(e => e.betAmount === 0 || e.potentialPayout === 0);
     this.betSelections = this.betSelections.filter(e => e.betAmount !== 0 && e.potentialPayout !== 0);
     this.placedBetStatus = 2;
+    this.betSelectionsChange.emit(removedBetSelections);
   }
 
   onCancelPlaceBets(){
-    //restore previous bet selections (those that were selected but without bet amount) before place bet
-    this.betSelections = this.beforeCfmBetSelections;
-
     this.betSelections.forEach(selection => {
       selection.betAmount = null;
       selection.potentialPayout = 0;

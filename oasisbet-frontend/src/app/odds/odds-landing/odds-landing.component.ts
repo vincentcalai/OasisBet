@@ -82,6 +82,11 @@ export class OddsLandingComponent implements OnInit  {
     )
   }
 
+  updateBetSlipAftPlacedBet(removedBetSlip: BetSlip[]){
+    console.log(removedBetSlip);
+    removedBetSlip.forEach(bet => this.removeBet(bet));
+  }
+
   readCompType(competitionName: string){
     this.compType = competitionName;
     this.competitionTypeHdr = this.sharedVar.retrieveCompHdr(this.compType);
