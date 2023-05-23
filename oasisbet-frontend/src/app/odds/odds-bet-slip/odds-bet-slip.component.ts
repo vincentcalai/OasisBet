@@ -11,7 +11,8 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class OddsBetSlipComponent implements OnInit {
 
   public responseMsg: string = '';
-  public errorMsg: string = '';
+  @Input() public errorMsg: string = '';
+  
 
   public showSinglesSelection: boolean = true;
   public showMultiplesSelection: boolean = true;

@@ -73,6 +73,7 @@
         </div>
         <div class="col-md-2">
             <app-odds-bet-slip [betSelections]="selectedBets" [initBetSlip]="betSlipSubject.asObservable()"
+              [errorMsg]="maxBetMsg"
               (removedBetSelection)="removeBet($event)"
               (enableBets)="onEnableBets()"
               (betSelectionsChange)="updateBetSlip($event)" (removeAllBetSelections)="removeAllBets()">

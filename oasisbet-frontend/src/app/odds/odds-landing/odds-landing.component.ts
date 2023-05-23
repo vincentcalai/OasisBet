@@ -23,6 +23,7 @@ export class OddsLandingComponent implements OnInit  {
   public eventDates: string[];
   public eventsMap: Map<string, BetEvent[]> = new Map();
 
+  public maxBetMsg: string;
   public initStatus: number = 1;
   public disableBets: boolean = false;
 
@@ -109,6 +110,16 @@ export class OddsLandingComponent implements OnInit  {
     let addingBetSelection = false;
     let selectedTeam = "";
     let odds: number = 0;
+
+    if(this.selectedBets.length >= 5 && 
+    ((selection === 1 && !event.betSelection.homeSelected) || 
+    (selection === 2 && !event.betSelection.drawSelected) || 
+    (selection === 3 &&  !event.betSelection.awaySelected))){
+      this.maxBetMsg = this.sharedVar.EXCEED_MAX_BET_MSG;
+      return;
+    }
+    this.maxBetMsg = "";
+
     if(selection === 1){
       event.betSelection.homeSelected = !event.betSelection.homeSelected;
       addingBetSelection = event.betSelection.homeSelected;
@@ -140,9 +151,10 @@ export class OddsLandingComponent implements OnInit  {
     } else {
       this.selectedBets = this.selectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
     }
+
     this.betEventClicked.emit(this.selectedBets);
   }
-
+  
   removeBet(removedBet: BetSlip){
     this.selectedBets = this.selectedBets.filter(e => !(e.eventId === removedBet.eventId && e.betSelection === removedBet.betSelection));
     const eventIdx = this.events.findIndex(e => e.eventId === removedBet.eventId);
@@ -156,6 +168,9 @@ export class OddsLandingComponent implements OnInit  {
         event.betSelection.awaySelected = false;
       }
       this.events[eventIdx] = event;
+    }
+    if(this.selectedBets.length < 5){
+      this.maxBetMsg = "";
     }
   }
 

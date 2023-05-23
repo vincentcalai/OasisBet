@@ -31,8 +31,9 @@ export class SharedVarService {
   public readonly NAV_MENU_SELECT_TRX_HIST = "trx_hist";
   public readonly NAV_MENU_SELECT_DEPOSITS = "desposits";
   public readonly NAV_MENU_SELECT_WITHDRAWALS= "withdrawals";
-  
 
+  public readonly EXCEED_MAX_BET_MSG= "Maximum bet in a bet slip is 5.";
+  
   public readonly sharedModalConfig = {
     backdrop: true,
     ignoreBackdropClick: true,
@@ -41,6 +42,7 @@ export class SharedVarService {
 
   public createUserModel: CreateUserModel = new CreateUserModel();
   public updateAccountModel: UpdateAccountModel = new UpdateAccountModel();
+  
 
   constructor() { }
 
