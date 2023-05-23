@@ -27,8 +27,6 @@ export class OddsLandingComponent implements OnInit  {
   public initStatus: number = 1;
   public disableBets: boolean = false;
 
-  @Output() betEventClicked = new EventEmitter<BetSlip[]>();
-
   public selectedBets : BetSlip[] = new Array();
   public isBetSlipClean: boolean = true;
 
@@ -152,7 +150,6 @@ export class OddsLandingComponent implements OnInit  {
       this.selectedBets = this.selectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
     }
 
-    this.betEventClicked.emit(this.selectedBets);
   }
   
   removeBet(removedBet: BetSlip){
