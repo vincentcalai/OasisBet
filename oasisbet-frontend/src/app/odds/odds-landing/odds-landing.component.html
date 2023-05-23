@@ -36,6 +36,7 @@
                                         <td>{{event.eventDesc}}</td>
                                         <td>
                                             <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.homeSelected}"
+                                            [disabled]="disableBets"
                                             (click)="selectBetSelection(event, 1)">
                                                 <span class="bet-selection-text">01 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.homeOdds | number : '1.2-2' }}
@@ -43,6 +44,7 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.drawSelected}"
+                                            [disabled]="disableBets"
                                             (click)="selectBetSelection(event, 2)">
                                                 <span class="bet-selection-text">02 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.drawOdds | number : '1.2-2' }}
@@ -50,6 +52,7 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.awaySelected}"
+                                            [disabled]="disableBets"
                                             (click)="selectBetSelection(event, 3)">
                                                 <span class="bet-selection-text">03 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.awayOdds | number : '1.2-2' }}
@@ -71,6 +74,7 @@
         <div class="col-md-2">
             <app-odds-bet-slip [betSelections]="selectedBets" [initBetSlip]="betSlipSubject.asObservable()"
               (removedBetSelection)="removeBet($event)"
+              (enableBets)="onEnableBets()"
               (betSelectionsChange)="updateBetSlipAftPlacedBet($event)" (removeAllBetSelections)="removeAllBets()">
             </app-odds-bet-slip>
         </div>

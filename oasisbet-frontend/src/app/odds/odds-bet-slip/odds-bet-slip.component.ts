@@ -22,9 +22,10 @@ export class OddsBetSlipComponent implements OnInit {
                                       //after confirm, bet successful = 3
 
   @Input() betSelections: BetSlip[];
+  @Output() enableBets: EventEmitter<void> = new EventEmitter<void>();
   @Output() betSelectionsChange: EventEmitter<BetSlip[]> = new EventEmitter<BetSlip[]>();
   @Output() removedBetSelection: EventEmitter<BetSlip> = new EventEmitter<BetSlip>();
-  @Output() removeAllBetSelections = new EventEmitter<void>();
+  @Output() removeAllBetSelections: EventEmitter<void> = new EventEmitter<void>();
 
   private betSlipSubscription: Subscription;
 
@@ -37,6 +38,7 @@ export class OddsBetSlipComponent implements OnInit {
       this.placedBetStatus = 1;
       this.responseMsg = "";
       this.errorMsg = "";
+      this.totalStake = 0;
     });
   }
 
@@ -50,7 +52,13 @@ export class OddsBetSlipComponent implements OnInit {
 
   onDeleteBetSelection(betSelection: BetSlip){
     this.betSelections = this.betSelections.filter(e => !(e.eventId === betSelection.eventId && e.betSelection === betSelection.betSelection));
+    this.totalStake = 0;
+    this.betSelections.forEach(selection => this.totalStake =  this.totalStake + selection.betAmount);
     this.removedBetSelection.emit(betSelection);
+    if(this.betSelections.length === 0){
+      this.placedBetStatus = 1;
+      this.enableBets.emit();
+    }
   }
 
   onBetAmountChange(betSlipItem: BetSlip, betAmount: string) {
@@ -81,6 +89,7 @@ export class OddsBetSlipComponent implements OnInit {
     });
     this.totalStake = 0;
     this.placedBetStatus = 1;
+    this.enableBets.emit();
   }
 
   onFinalConfirmPlaceBets(){

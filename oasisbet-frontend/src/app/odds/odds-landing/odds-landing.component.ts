@@ -24,6 +24,7 @@ export class OddsLandingComponent implements OnInit  {
   public eventsMap: Map<string, BetEvent[]> = new Map();
 
   public initStatus: number = 1;
+  public disableBets: boolean = false;
 
   @Output() betEventClicked = new EventEmitter<BetSlip[]>();
 
@@ -83,8 +84,12 @@ export class OddsLandingComponent implements OnInit  {
   }
 
   updateBetSlipAftPlacedBet(removedBetSlip: BetSlip[]){
-    console.log(removedBetSlip);
+    this.disableBets = true;
     removedBetSlip.forEach(bet => this.removeBet(bet));
+  }
+
+  onEnableBets(){
+    this.disableBets = false;
   }
 
   readCompType(competitionName: string){
@@ -161,6 +166,7 @@ export class OddsLandingComponent implements OnInit  {
       e.betSelection.awaySelected = false;
     });
     this.isBetSlipClean = true;
+    this.disableBets = false;
   }
 
   ngOnDestroy(): void {
