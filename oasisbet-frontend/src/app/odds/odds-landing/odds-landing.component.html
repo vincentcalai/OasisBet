@@ -75,7 +75,7 @@
             <app-odds-bet-slip [betSelections]="selectedBets" [initBetSlip]="betSlipSubject.asObservable()"
               (removedBetSelection)="removeBet($event)"
               (enableBets)="onEnableBets()"
-              (betSelectionsChange)="updateBetSlipAftPlacedBet($event)" (removeAllBetSelections)="removeAllBets()">
+              (betSelectionsChange)="updateBetSlip($event)" (removeAllBetSelections)="removeAllBets()">
             </app-odds-bet-slip>
         </div>
     </div>

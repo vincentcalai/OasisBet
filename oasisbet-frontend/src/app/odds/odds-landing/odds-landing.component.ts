@@ -83,7 +83,7 @@ export class OddsLandingComponent implements OnInit  {
     )
   }
 
-  updateBetSlipAftPlacedBet(removedBetSlip: BetSlip[]){
+  updateBetSlip(removedBetSlip: BetSlip[]){
     this.disableBets = true;
     removedBetSlip.forEach(bet => this.removeBet(bet));
   }
