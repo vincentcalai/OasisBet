@@ -76,6 +76,8 @@ export class OddsBetSlipComponent implements OnInit {
   }
 
   onPlaceBets(){
+    this.errorMsg = "";
+
     //remove bet selections that does not have bet amount
     const removedBetSelections = this.betSelections.filter(e => e.betAmount === 0 || e.potentialPayout === 0);
     this.betSelections = this.betSelections.filter(e => e.betAmount !== 0 && e.potentialPayout !== 0);
