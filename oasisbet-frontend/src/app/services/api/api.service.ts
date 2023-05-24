@@ -54,9 +54,8 @@ export class ApiService {
     );
   }
 
-  postSubmitBets(): Observable<ResponseModel> {
-    console.log("this.sharedVar.submitBetsModel: ", this.sharedVar.submitBetsModel);
-    return this.http.post<ResponseModel>(this.oddsServicePrefix + "/odds/bets", this.sharedVar.submitBetsModel).pipe(
+  postSubmitBets(accId: number): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(`${this.oddsServicePrefix}/odds/bets/${accId}`, this.sharedVar.submitBetsModel).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

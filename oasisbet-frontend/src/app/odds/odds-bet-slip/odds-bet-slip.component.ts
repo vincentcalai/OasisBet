@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { BetSlip } from 'src/app/model/bet-slip.model';
 import { BetsModel } from 'src/app/model/bets.model';
 import { ResponseModel } from 'src/app/model/response.model';
 import { ApiService } from 'src/app/services/api/api.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -36,7 +38,12 @@ export class OddsBetSlipComponent implements OnInit {
 
   @Input() initBetSlip: Observable<void>;
 
-  constructor(public sharedVar: SharedVarService, private apiService: ApiService, private sharedMethods: SharedMethodsService) { }
+  constructor(
+    public sharedVar: SharedVarService, 
+    private apiService: ApiService, 
+    private sharedMethods: SharedMethodsService,
+    private router: Router,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.betSlipSubscription = this.initBetSlip.subscribe(() => {
@@ -102,8 +109,13 @@ export class OddsBetSlipComponent implements OnInit {
   onFinalConfirmPlaceBets(){
     // call backend api here to place bet
     this.sharedVar.submitBetsModel.betSlip = this.betSelections;
+    const account: any = this.authService.getRetrievedAccDetails();
+    if(!account || account.accId){
+      this.router.navigate(['account']);
+      return;
+    }
     this.subscriptions.add(
-      this.apiService.postSubmitBets().subscribe( (resp: ResponseModel) => {
+      this.apiService.postSubmitBets(account.accId).subscribe( (resp: ResponseModel) => {
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
           resp.resultMessage = "";
@@ -119,7 +131,6 @@ export class OddsBetSlipComponent implements OnInit {
         this.sharedVar.changeException(error);
       })
     );
-    
   }
 
   ngOnDestroy() {
