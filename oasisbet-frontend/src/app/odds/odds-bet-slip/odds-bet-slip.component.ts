@@ -124,6 +124,7 @@ export class OddsBetSlipComponent implements OnInit {
 
   ngOnDestroy() {
     this.betSlipSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }
