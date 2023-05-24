@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ResponseModel } from '../model/response.model';
 import { CreateUserModel } from '../model/create-user.model';
 import { UpdateAccountModel } from '../model/update-account.model';
+import { SubmitBetsModel } from '../model/submit-bets.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class SharedVarService {
 
   public createUserModel: CreateUserModel = new CreateUserModel();
   public updateAccountModel: UpdateAccountModel = new UpdateAccountModel();
+  public submitBetsModel: SubmitBetsModel = new SubmitBetsModel();
   
 
   constructor() { }

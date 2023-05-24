@@ -20,9 +20,12 @@ import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.Bookmaker;
 import com.oasisbet.betting.odds.model.H2HEventOdds;
 import com.oasisbet.betting.odds.model.Market;
-import com.oasisbet.betting.odds.model.OddsApiResponse;
 import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.odds.model.TeamsDetails;
+import com.oasisbet.betting.odds.model.request.BetSlipRest;
+import com.oasisbet.betting.odds.model.response.OddsApiResponse;
+import com.oasisbet.betting.odds.model.response.StatusResponse;
+import com.oasisbet.betting.util.Constants;
 import com.oasisbet.betting.util.EventIdGenerator;
 import com.oasisbet.betting.util.MongoDBConnection;
 
@@ -103,6 +106,13 @@ public class OddsService {
 
 		long betEventSeq = getSequenceValue(collection);
 
+	}
+
+	public StatusResponse submitBet(BetSlipRest betsInput) {
+		// process bet transaction
+		StatusResponse response = new StatusResponse();
+		response.setResultMessage(Constants.BET_SUCCESS_MSG);
+		return response;
 	}
 
 }

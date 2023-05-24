@@ -40,6 +40,13 @@ export class ApiService {
     );
   }
 
+  postCreateUser(): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(this.accountServicePrefix + "/user/createUser", this.sharedVar.createUserModel).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
   retrieveOdds(compType: string): Observable<Object> {
     return this.http.get(this.oddsServicePrefix + '/odds/retrieveOdds?compType=' + compType).pipe(
       timeout(this.timeout),
@@ -47,15 +54,16 @@ export class ApiService {
     );
   }
 
-  retrieveResults(compType: string): Observable<Object> {
-    return this.http.get(this.resultServicePrefix + '/result/retrieveResults?compType=' + compType).pipe(
+  postSubmitBets(): Observable<ResponseModel> {
+    console.log("this.sharedVar.submitBetsModel: ", this.sharedVar.submitBetsModel);
+    return this.http.post<ResponseModel>(this.oddsServicePrefix + "/odds/bets", this.sharedVar.submitBetsModel).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );
   }
 
-  postCreateUser(): Observable<ResponseModel> {
-    return this.http.post<ResponseModel>(this.accountServicePrefix + "/user/createUser", this.sharedVar.createUserModel).pipe(
+  retrieveResults(compType: string): Observable<Object> {
+    return this.http.get(this.resultServicePrefix + '/result/retrieveResults?compType=' + compType).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

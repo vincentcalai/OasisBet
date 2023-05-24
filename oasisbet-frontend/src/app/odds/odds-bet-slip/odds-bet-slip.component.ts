@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { BetSlip } from 'src/app/model/bet-slip.model';
+import { BetsModel } from 'src/app/model/bets.model';
+import { ResponseModel } from 'src/app/model/response.model';
+import { ApiService } from 'src/app/services/api/api.service';
+import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
@@ -13,7 +17,6 @@ export class OddsBetSlipComponent implements OnInit {
   public responseMsg: string = '';
   @Input() public errorMsg: string = '';
   
-
   public showSinglesSelection: boolean = true;
   public showMultiplesSelection: boolean = true;
   public totalStake: number = 0;
@@ -29,10 +32,11 @@ export class OddsBetSlipComponent implements OnInit {
   @Output() removeAllBetSelections: EventEmitter<void> = new EventEmitter<void>();
 
   private betSlipSubscription: Subscription;
+  private subscriptions: Subscription = new Subscription();
 
   @Input() initBetSlip: Observable<void>;
 
-  constructor(public sharedVar: SharedVarService) { }
+  constructor(public sharedVar: SharedVarService, private apiService: ApiService, private sharedMethods: SharedMethodsService) { }
 
   ngOnInit(): void {
     this.betSlipSubscription = this.initBetSlip.subscribe(() => {
@@ -96,13 +100,26 @@ export class OddsBetSlipComponent implements OnInit {
   }
 
   onFinalConfirmPlaceBets(){
-    //call backend api here to place bet
+    // call backend api here to place bet
+    this.sharedVar.submitBetsModel.betSlip = this.betSelections;
+    this.subscriptions.add(
+      this.apiService.postSubmitBets().subscribe( (resp: ResponseModel) => {
+        if (resp.statusCode != 0) {
+          this.errorMsg = resp.resultMessage;
+          resp.resultMessage = "";
+        } else {
+          //if success, clear the current bet selections
+          this.removeAllBetSelections.emit();
 
-    //if success, clear the current bet selections
-    this.removeAllBetSelections.emit();
-
-    this.responseMsg = "Bet successfully placed!";
-    this.placedBetStatus = 3;
+          this.responseMsg = resp.resultMessage;
+          this.placedBetStatus = 3;
+        }
+      } ,
+        error => {
+        this.sharedVar.changeException(error);
+      })
+    );
+    
   }
 
   ngOnDestroy() {

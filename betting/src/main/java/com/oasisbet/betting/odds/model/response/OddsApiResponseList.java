@@ -1,4 +1,4 @@
-package com.oasisbet.betting.odds.model;
+package com.oasisbet.betting.odds.model.response;
 
 import java.util.List;
 

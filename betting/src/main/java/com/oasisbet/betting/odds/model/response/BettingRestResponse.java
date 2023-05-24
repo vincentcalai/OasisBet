@@ -1,6 +1,8 @@
-package com.oasisbet.betting.odds.model;
+package com.oasisbet.betting.odds.model.response;
 
 import java.util.List;
+
+import com.oasisbet.betting.odds.model.BetEvent;
 
 public class BettingRestResponse extends StatusResponse {
 	private List<BetEvent> betEvent;

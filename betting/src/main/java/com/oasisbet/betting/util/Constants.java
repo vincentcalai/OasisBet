@@ -21,6 +21,10 @@ public class Constants {
 	public static final String API_SOURCE_URI_ODDS_FORMAT_PARAM = "oddsFormat=";
 	public static final String API_SOURCE_URI_BOOKMKR_PARAM = "bookmakers=";
 
+	// Success Messages
+	public static final String BET_SUCCESS_MSG = "Bet successfully placed!";
+
+	// Error Messages
 	public static final String RETRIEVE_ODDS_API_EXCEPTION = "Error Retrieving Odds from source API";
 	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
 

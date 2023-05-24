@@ -1,6 +1,8 @@
-package com.oasisbet.betting.odds.model;
+package com.oasisbet.betting.odds.model.response;
 
 import java.util.List;
+
+import com.oasisbet.betting.odds.model.Bookmaker;
 
 public class OddsApiResponse {
 	private String id;
