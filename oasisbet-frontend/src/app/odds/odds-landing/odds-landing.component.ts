@@ -69,18 +69,6 @@ export class OddsLandingComponent implements OnInit  {
         }
       )
     );
-
-    //get response success message after creating user
-    this.subscriptions.add(
-        this.sharedVar.responseSource.pipe(take(1))
-        .subscribe(resp => {
-          if(resp){
-            this.responseMsg = resp.resultMessage;
-            resp.resultMessage = "";
-          }
-        }
-      )
-    )
   }
 
   updateBetSlip(removedBetSlip: BetSlip[]){

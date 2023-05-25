@@ -46,7 +46,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   backToHomeScreen(){
-    this.router.navigate(['odds']);
+    this.router.navigate(['account']);
   }
 
   confirmClicked(){
@@ -54,12 +54,12 @@ export class CreateUserComponent implements OnInit {
       width: '400px',
       data: { message: 'Confirm Create User' }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') {
         console.log("confirm create user");
         this.confirmCreateUser();
-      } 
+      }
     });
   }
 
