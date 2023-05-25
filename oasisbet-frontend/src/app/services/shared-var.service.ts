@@ -15,6 +15,7 @@ export class SharedVarService {
   public readonly BET_TYPE_CD_H2H = 1;
 
   public readonly BET_TYPE_H2H_NAME = "1X2";
+  public readonly DRAW_RESULT = "Draw";
 
   public readonly API_SOURCE_COMP_TYPE_EPL = "soccer_epl";
   public readonly API_SOURCE_COMP_TYPE_LALIGA = "soccer_spain_la_liga";

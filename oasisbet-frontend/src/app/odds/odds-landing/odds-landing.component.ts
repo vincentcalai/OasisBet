@@ -110,9 +110,9 @@ export class OddsLandingComponent implements OnInit  {
     let selectedTeam = "";
     let odds: number = 0;
 
-    if(this.selectedBets.length >= 5 && 
-    ((selection === 1 && !event.betSelection.homeSelected) || 
-    (selection === 2 && !event.betSelection.drawSelected) || 
+    if(this.selectedBets.length >= 5 &&
+    ((selection === 1 && !event.betSelection.homeSelected) ||
+    (selection === 2 && !event.betSelection.drawSelected) ||
     (selection === 3 &&  !event.betSelection.awaySelected))){
       this.maxBetMsg = this.sharedVar.EXCEED_MAX_BET_MSG;
       return;
@@ -128,7 +128,7 @@ export class OddsLandingComponent implements OnInit  {
       event.betSelection.drawSelected = !event.betSelection.drawSelected;
       addingBetSelection = event.betSelection.drawSelected;
       odds = event.h2hEventOdds.drawOdds;
-      selectedTeam = "Draw";
+      selectedTeam = this.sharedVar.DRAW_RESULT;
     } else {
       event.betSelection.awaySelected = !event.betSelection.awaySelected;
       addingBetSelection = event.betSelection.awaySelected;
@@ -151,7 +151,7 @@ export class OddsLandingComponent implements OnInit  {
       this.selectedBets = this.selectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
     }
   }
-  
+
   removeBet(removedBet: BetSlip){
     this.selectedBets = this.selectedBets.filter(e => !(e.eventId === removedBet.eventId && e.betSelection === removedBet.betSelection));
     const eventIdx = this.events.findIndex(e => e.eventId === removedBet.eventId);
