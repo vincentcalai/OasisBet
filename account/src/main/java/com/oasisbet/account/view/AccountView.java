@@ -17,7 +17,7 @@ public class AccountView {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "accId", unique = true, nullable = false, precision = 22, scale = 0)
+	@Column(name = "acc_id", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getAccId() {
 		return accId;
 	}
