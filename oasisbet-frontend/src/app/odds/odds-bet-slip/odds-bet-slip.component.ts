@@ -110,7 +110,7 @@ export class OddsBetSlipComponent implements OnInit {
     // call backend api here to place bet
     this.sharedVar.submitBetsModel.betSlip = this.betSelections;
     const account: any = this.authService.getRetrievedAccDetails();
-    if(!account || account.accId){
+    if(!account || !account.accId){
       this.sharedVar.changeShowUserNotLoginMsg(this.sharedVar.USER_NOT_LOGGED_IN);
       this.router.navigate(['account']);
       return;
