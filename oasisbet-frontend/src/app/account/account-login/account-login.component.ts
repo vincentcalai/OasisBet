@@ -23,6 +23,9 @@ export class AccountLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.sharedVar.showUserNotLoginSource.subscribe(message => this.errorMsg = message)
+    );
   }
 
   handleJWTAuthLogin(){

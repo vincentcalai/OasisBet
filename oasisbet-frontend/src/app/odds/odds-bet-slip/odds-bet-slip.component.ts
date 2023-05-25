@@ -18,7 +18,7 @@ export class OddsBetSlipComponent implements OnInit {
 
   public responseMsg: string = '';
   @Input() public errorMsg: string = '';
-  
+
   public showSinglesSelection: boolean = true;
   public showMultiplesSelection: boolean = true;
   public totalStake: number = 0;
@@ -39,8 +39,8 @@ export class OddsBetSlipComponent implements OnInit {
   @Input() initBetSlip: Observable<void>;
 
   constructor(
-    public sharedVar: SharedVarService, 
-    private apiService: ApiService, 
+    public sharedVar: SharedVarService,
+    private apiService: ApiService,
     private sharedMethods: SharedMethodsService,
     private router: Router,
     private authService: AuthService) { }
@@ -111,6 +111,7 @@ export class OddsBetSlipComponent implements OnInit {
     this.sharedVar.submitBetsModel.betSlip = this.betSelections;
     const account: any = this.authService.getRetrievedAccDetails();
     if(!account || account.accId){
+      this.sharedVar.changeShowUserNotLoginMsg(this.sharedVar.USER_NOT_LOGGED_IN);
       this.router.navigate(['account']);
       return;
     }
