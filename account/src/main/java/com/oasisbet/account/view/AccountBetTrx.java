@@ -9,12 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "tb_bet_trx")
 public class AccountBetTrx {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "trx_id", unique = true, nullable = false, precision = 22, scale = 0)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trx_sequence_generator")
+	@GenericGenerator(name = "trx_sequence_generator", strategy = "com.oasisbet.account.util.TrxIdGenerator")
+	@Column(name = "trx_id")
 	private Long trxId;
 
 	@Column(name = "acc_id", nullable = false, precision = 22, scale = 0)

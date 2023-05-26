@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_sequence")
-public class Sequence {
+public class SequenceView {
 	@Id
 	@Column(name = "seq_name")
 	private String seqName;
