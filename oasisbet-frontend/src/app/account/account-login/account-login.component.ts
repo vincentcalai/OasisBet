@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AUTH_USER, AuthService, TOKEN } from 'src/app/services/auth/auth.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
@@ -23,9 +24,25 @@ export class AccountLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.sharedVar.showUserNotLoginSource.subscribe(message => this.errorMsg = message)
+    );
+
+    //get response success message after creating user
+    this.subscriptions.add(
+      this.sharedVar.responseSource.pipe(take(1))
+      .subscribe(resp => {
+        if(resp){
+          this.responseMsg = resp.resultMessage;
+          resp.resultMessage = "";
+        }
+      }
+     )
+    )
   }
 
   handleJWTAuthLogin(){
+    this.responseMsg = "";
     this.authService.jwtAuthenticate(this.username,this.password)
     .subscribe(
       data => {

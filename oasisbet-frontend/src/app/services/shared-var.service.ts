@@ -15,6 +15,7 @@ export class SharedVarService {
   public readonly BET_TYPE_CD_H2H = 1;
 
   public readonly BET_TYPE_H2H_NAME = "1X2";
+  public readonly DRAW_RESULT = "Draw";
 
   public readonly API_SOURCE_COMP_TYPE_EPL = "soccer_epl";
   public readonly API_SOURCE_COMP_TYPE_LALIGA = "soccer_spain_la_liga";
@@ -34,7 +35,8 @@ export class SharedVarService {
   public readonly NAV_MENU_SELECT_WITHDRAWALS= "withdrawals";
 
   public readonly EXCEED_MAX_BET_MSG= "Maximum bet in a bet slip is 5.";
-  
+  public readonly USER_NOT_LOGGED_IN = "Please login to place bet.";
+
   public readonly sharedModalConfig = {
     backdrop: true,
     ignoreBackdropClick: true,
@@ -44,7 +46,7 @@ export class SharedVarService {
   public createUserModel: CreateUserModel = new CreateUserModel();
   public updateAccountModel: UpdateAccountModel = new UpdateAccountModel();
   public submitBetsModel: SubmitBetsModel = new SubmitBetsModel();
-  
+
 
   constructor() { }
 
@@ -54,12 +56,19 @@ export class SharedVarService {
   public responseSource = new BehaviorSubject<ResponseModel>(null);
   responseModel = this.exceptionSource.asObservable();
 
+  public showUserNotLoginSource = new BehaviorSubject<string>(null);
+  showUserNotLogin = this.showUserNotLoginSource.asObservable();
+
   changeResponse(resp: ResponseModel) {
     this.responseSource.next(resp);
   }
 
   changeException(status: string) {
     this.exceptionSource.next(status);
+  }
+
+  changeShowUserNotLoginMsg(msg: string) {
+    this.showUserNotLoginSource.next(msg);
   }
 
   mapBetTypeCd(betType: number){

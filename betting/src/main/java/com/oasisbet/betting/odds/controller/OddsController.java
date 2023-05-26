@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.Bookmaker;
@@ -51,7 +50,7 @@ public class OddsController {
 				+ Constants.API_SOURCE_URI_ODDS_FORMAT_PARAM + Constants.API_SOURCE_URI_ODDS_FORMAT_DEC
 				+ Constants.AMPERSAND + Constants.API_SOURCE_URI_BOOKMKR_PARAM
 				+ Constants.API_SOURCE_URI_BOOKMKR_PINNACLE;
-		RestTemplate restTemplate = new RestTemplate();
+//		RestTemplate restTemplate = new RestTemplate();
 		OddsApiResponse[] results = null;
 		BettingRestResponse response = new BettingRestResponse();
 		try {
