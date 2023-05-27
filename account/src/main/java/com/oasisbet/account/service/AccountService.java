@@ -1,5 +1,8 @@
 package com.oasisbet.account.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oasisbet.account.dao.IAccountDao;
 import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.StatusResponse;
+import com.oasisbet.account.model.request.BetSlipRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountView;
@@ -22,11 +28,10 @@ public class AccountService {
 	@Autowired
 	private IUserDao userDao;
 
-	public AccountView retrieveUserAccount(String user) {
+	public AccountView retrieveUserAccountByUsername(String user) {
 		UserView userView = userDao.findByUsername(user);
 		Long usrId = userView.getId();
-		AccountView accountView = accountDao.findByUsrId(usrId);
-		return accountView;
+		return accountDao.findByUsrId(usrId);
 	}
 
 	public AccountRestResponse processDepositAction(AccountVO account) {
@@ -81,6 +86,32 @@ public class AccountService {
 		}
 		response.setAccount(account);
 		response.setResultMessage(Constants.WITHDRAW_ACC_SUCCESS);
+		return response;
+	}
+
+	public StatusResponse processBet(BetSlipRest betsInput) {
+		StatusResponse response = new StatusResponse();
+		Long userId = betsInput.getUserId();
+		List<BetSubmissionVO> betSubmissionList = betsInput.getBetSlip();
+		Optional<AccountView> accountView = this.accountDao.findById(userId);
+		double accountBal = 0.0;
+		if (accountView.isPresent()) {
+			accountBal = accountView.get().getBalance();
+		}
+
+		double totalStake = betSubmissionList.stream().mapToDouble(BetSubmissionVO::getBetAmount).reduce(0.0,
+				Double::sum);
+		if (!accountView.isPresent()) {
+			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+			response.setStatusCode(1);
+		} else if (totalStake > accountBal) {
+			response.setResultMessage(Constants.ERR_INSUFFICIENT_BAL);
+			response.setStatusCode(2);
+		} else {
+			// process bet transactions here
+
+		}
+
 		return response;
 	}
 

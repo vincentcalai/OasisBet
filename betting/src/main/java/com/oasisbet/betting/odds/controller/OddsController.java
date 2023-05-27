@@ -25,6 +25,7 @@ import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.BettingRestResponse;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
+import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.proxy.AccountProxy;
 import com.oasisbet.betting.util.Constants;
@@ -84,19 +85,11 @@ public class OddsController {
 	}
 
 	@PostMapping(value = "/bets/{userId}")
-	public ResponseEntity<String> submitBet(@PathVariable("userId") Long userId, @RequestBody BetSlipRest betsInput) {
+	public StatusResponse submitBet(@PathVariable("userId") Long userId, @RequestBody BetSlipRest betsInput) {
 		// Make the API call to the Account microservice using the Feign Client
 		betsInput.setUserId(userId);
-		ResponseEntity<String> response = proxy.processBet(betsInput);
-
-		// Handle the response from the Account microservice
-		if (response.getStatusCode().is2xxSuccessful()) {
-			return ResponseEntity.ok("Data successfully processed in Account microservice");
-		} else {
-			return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
-		}
-
-		// return oddsService.submitBet(betsInput);
+		StatusResponse response = proxy.processBet(betsInput);
+		return response;
 	}
 
 	public static OddsApiResponse[] mockOddsApiResponseArray() {
