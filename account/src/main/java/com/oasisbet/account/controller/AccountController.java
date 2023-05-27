@@ -1,5 +1,7 @@
 package com.oasisbet.account.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.request.BetSlipRest;
@@ -56,7 +59,9 @@ public class AccountController {
 
 	@PostMapping(value = "/processBet")
 	public StatusResponse processBet(@RequestBody BetSlipRest betsInput) {
-		return accountService.processBet(betsInput);
+		List<BetSubmissionVO> betSubmissionList = betsInput.getBetSlip();
+		Long userId = betsInput.getUserId();
+		return accountService.processBet(userId, betSubmissionList);
 	}
 
 }

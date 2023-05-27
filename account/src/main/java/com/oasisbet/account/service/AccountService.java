@@ -2,6 +2,7 @@ package com.oasisbet.account.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +15,9 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.StatusResponse;
-import com.oasisbet.account.model.request.BetSlipRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.util.Constants;
+import com.oasisbet.account.view.AccountBetTrxView;
 import com.oasisbet.account.view.AccountView;
 import com.oasisbet.account.view.UserView;
 
@@ -91,10 +92,8 @@ public class AccountService {
 		return response;
 	}
 
-	public StatusResponse processBet(BetSlipRest betsInput) {
+	public StatusResponse processBet(Long userId, List<BetSubmissionVO> betSubmissionList) {
 		StatusResponse response = new StatusResponse();
-		Long userId = betsInput.getUserId();
-		List<BetSubmissionVO> betSubmissionList = betsInput.getBetSlip();
 		Optional<AccountView> accountView = this.accountDao.findById(userId);
 		double accountBal = 0.0;
 		if (accountView.isPresent()) {
@@ -103,6 +102,9 @@ public class AccountService {
 
 		double totalStake = betSubmissionList.stream().mapToDouble(BetSubmissionVO::getBetAmount).reduce(0.0,
 				Double::sum);
+
+		LocalDateTime currentTime = LocalDateTime.now();
+
 		if (!accountView.isPresent()) {
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 			response.setStatusCode(1);
@@ -111,9 +113,28 @@ public class AccountService {
 			response.setStatusCode(2);
 		} else {
 			// process bet transactions here
-
+			final Long accId = accountView.get().getAccId();
+			List<AccountBetTrxView> betTrxList = new ArrayList<>();
+			betSubmissionList.forEach(betSubmission -> {
+				AccountBetTrxView accountBetTrxView = new AccountBetTrxView();
+				accountBetTrxView.setAccId(accId);
+				accountBetTrxView.setBetAmount(betSubmission.getBetAmount());
+				accountBetTrxView.setBetSelection(betSubmission.getBetSelection());
+				accountBetTrxView.setBetType(betSubmission.getBetTypeCd());
+				accountBetTrxView.setCompType("EPL");
+				accountBetTrxView.setEventDesc(betSubmission.getEventDesc());
+				accountBetTrxView.setEventId(betSubmission.getEventId());
+				accountBetTrxView.setOdds(betSubmission.getOdds());
+				accountBetTrxView.setPotentialReturn(betSubmission.getPotentialPayout());
+				accountBetTrxView.setSettled(false);
+				accountBetTrxView.setStartTime(null);
+				accountBetTrxView.setTrxDateTime(currentTime);
+				accountBetTrxView.setTrxId(100000L);
+				betTrxList.add(accountBetTrxView);
+			});
+			// persist bet transaction list into db here
 		}
-		LocalDateTime currentTime = LocalDateTime.now();
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
 		String betPlacedDateTime = currentTime.format(formatter);
 		response.setResultMessage(Constants.BET_PLACED_SUCCESS + betPlacedDateTime);

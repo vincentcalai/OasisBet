@@ -37,7 +37,7 @@
                                         <td>
                                             <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.homeSelected}"
                                             [disabled]="disableBets"
-                                            (click)="selectBetSelection(event, 1)">
+                                            (click)="selectBetSelection(event, '01')">
                                                 <span class="bet-selection-text">01 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.homeOdds | number : '1.2-2' }}
                                             </button>
@@ -45,7 +45,7 @@
                                         <td>
                                             <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.drawSelected}"
                                             [disabled]="disableBets"
-                                            (click)="selectBetSelection(event, 2)">
+                                            (click)="selectBetSelection(event, '02')">
                                                 <span class="bet-selection-text">02 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.drawOdds | number : '1.2-2' }}
                                             </button>
@@ -53,7 +53,7 @@
                                         <td>
                                             <button type="button" class="btn btn-light" [ngClass]="{'selected': event.betSelection.awaySelected}"
                                             [disabled]="disableBets"
-                                            (click)="selectBetSelection(event, 3)">
+                                            (click)="selectBetSelection(event, '03')">
                                                 <span class="bet-selection-text">03 | </span> &nbsp;
                                                 {{ event.h2hEventOdds.awayOdds | number : '1.2-2' }}
                                             </button>

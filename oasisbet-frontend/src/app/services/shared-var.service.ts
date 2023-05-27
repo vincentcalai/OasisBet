@@ -12,7 +12,7 @@ export class SharedVarService {
 
   public readonly GENERAL_SYS_DOWN_ERR_MSG = "This system is currently not available. Please try again at a later time.";
 
-  public readonly BET_TYPE_CD_H2H = 1;
+  public readonly BET_TYPE_CD_H2H = "01";
 
   public readonly BET_TYPE_H2H_NAME = "1X2";
   public readonly DRAW_RESULT = "Draw";
@@ -71,7 +71,7 @@ export class SharedVarService {
     this.showUserNotLoginSource.next(msg);
   }
 
-  mapBetTypeCd(betType: number){
+  mapBetTypeCd(betType: string){
     switch(betType) {
       case this.BET_TYPE_CD_H2H: {
          return this.BET_TYPE_H2H_NAME;

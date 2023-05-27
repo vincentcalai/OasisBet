@@ -3,9 +3,9 @@ package com.oasisbet.account.model;
 public class BetSubmissionVO {
 	public Long eventId;
 	public String eventDesc;
-	public Integer betSelection;
+	public String betSelection;
 	public String betSelectionName;
-	public Integer betTypeCd;
+	public String betTypeCd;
 	public Double odds;
 	public Double betAmount;
 	public Double potentialPayout;
@@ -26,11 +26,11 @@ public class BetSubmissionVO {
 		this.eventDesc = eventDesc;
 	}
 
-	public Integer getBetSelection() {
+	public String getBetSelection() {
 		return betSelection;
 	}
 
-	public void setBetSelection(Integer betSelection) {
+	public void setBetSelection(String betSelection) {
 		this.betSelection = betSelection;
 	}
 
@@ -42,11 +42,11 @@ public class BetSubmissionVO {
 		this.betSelectionName = betSelectionName;
 	}
 
-	public Integer getBetTypeCd() {
+	public String getBetTypeCd() {
 		return betTypeCd;
 	}
 
-	public void setBetTypeCd(Integer betTypeCd) {
+	public void setBetTypeCd(String betTypeCd) {
 		this.betTypeCd = betTypeCd;
 	}
 

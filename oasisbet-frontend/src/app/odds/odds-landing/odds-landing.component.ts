@@ -86,7 +86,7 @@ export class OddsLandingComponent implements OnInit  {
     this.ngOnInit();
   }
 
-  selectBetSelection(event: BetEvent, selection: number){
+  selectBetSelection(event: BetEvent, selection: string){
     //for first bet selection that was added into the bet slip after a successful bet submission, clear the existing bets from previous submission
     if(this.isBetSlipClean){
       this.selectedBets.splice(0);
@@ -99,20 +99,20 @@ export class OddsLandingComponent implements OnInit  {
     let odds: number = 0;
 
     if(this.selectedBets.length >= 5 &&
-    ((selection === 1 && !event.betSelection.homeSelected) ||
-    (selection === 2 && !event.betSelection.drawSelected) ||
-    (selection === 3 &&  !event.betSelection.awaySelected))){
+    ((selection === '01' && !event.betSelection.homeSelected) ||
+    (selection === '02' && !event.betSelection.drawSelected) ||
+    (selection === '03' &&  !event.betSelection.awaySelected))){
       this.maxBetMsg = this.sharedVar.EXCEED_MAX_BET_MSG;
       return;
     }
     this.maxBetMsg = "";
 
-    if(selection === 1){
+    if(selection === '01'){
       event.betSelection.homeSelected = !event.betSelection.homeSelected;
       addingBetSelection = event.betSelection.homeSelected;
       odds = event.h2hEventOdds.homeOdds;
       selectedTeam = event.teamsDetails.homeTeam;
-    } else if(selection === 2){
+    } else if(selection === '02'){
       event.betSelection.drawSelected = !event.betSelection.drawSelected;
       addingBetSelection = event.betSelection.drawSelected;
       odds = event.h2hEventOdds.drawOdds;
@@ -145,11 +145,11 @@ export class OddsLandingComponent implements OnInit  {
     const eventIdx = this.events.findIndex(e => e.eventId === removedBet.eventId);
     if (eventIdx !== -1) {
       const event = { ...this.events[eventIdx] };
-      if(removedBet.betSelection === 1){
+      if(removedBet.betSelection === '01'){
         event.betSelection.homeSelected = false;
-      } else if(removedBet.betSelection === 2){
+      } else if(removedBet.betSelection === '02'){
         event.betSelection.drawSelected = false;
-      } else if(removedBet.betSelection === 3){
+      } else if(removedBet.betSelection === '03'){
         event.betSelection.awaySelected = false;
       }
       this.events[eventIdx] = event;

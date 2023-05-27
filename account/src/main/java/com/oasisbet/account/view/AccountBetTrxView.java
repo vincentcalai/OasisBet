@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "tb_bet_trx")
-public class AccountBetTrx {
+public class AccountBetTrxView {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trx_sequence_generator")
 	@GenericGenerator(name = "trx_sequence_generator", strategy = "com.oasisbet.account.util.TrxIdGenerator")
