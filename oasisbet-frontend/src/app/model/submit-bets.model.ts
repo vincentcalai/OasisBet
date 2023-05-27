@@ -7,5 +7,6 @@ import { BetsModel } from "./bets.model";
   providedIn: 'root'
 })
 export class SubmitBetsModel {
+  public userId: number;
   public betSlip: BetSlip[];
 }

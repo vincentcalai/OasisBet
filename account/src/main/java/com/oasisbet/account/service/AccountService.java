@@ -1,5 +1,7 @@
 package com.oasisbet.account.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,7 +113,10 @@ public class AccountService {
 			// process bet transactions here
 
 		}
-
+		LocalDateTime currentTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
+		String betPlacedDateTime = currentTime.format(formatter);
+		response.setResultMessage(Constants.BET_PLACED_SUCCESS + betPlacedDateTime);
 		return response;
 	}
 

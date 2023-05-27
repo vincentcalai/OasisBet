@@ -11,8 +11,8 @@ public class Constants {
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";
 
-	// Trip Response Message
-	public static final String TRIP_CREATE_SUCCESS = "Trip was created successfully.";
+	// Bet Response Message
+	public static final String BET_PLACED_SUCCESS = "Bet placed successfully at ";
 
 	// Deposit/Withdraw Account Response Message
 	public static final String DEPOSIT_ACC_SUCCESS = "Deposit was successful.";

@@ -115,8 +115,9 @@ export class OddsBetSlipComponent implements OnInit {
       this.router.navigate(['account']);
       return;
     }
+    this.sharedVar.submitBetsModel.userId = account.accId;
     this.subscriptions.add(
-      this.apiService.postSubmitBets(account.accId).subscribe( (resp: ResponseModel) => {
+      this.apiService.postSubmitBets().subscribe( (resp: ResponseModel) => {
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
           resp.resultMessage = "";
