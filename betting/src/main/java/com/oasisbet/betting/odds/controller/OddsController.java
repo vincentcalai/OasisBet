@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,8 @@ import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.BettingRestResponse;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
-import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.service.OddsService;
+import com.oasisbet.betting.proxy.AccountProxy;
 import com.oasisbet.betting.util.Constants;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -37,6 +38,9 @@ public class OddsController {
 
 	@Autowired
 	public OddsService oddsService;
+
+	@Autowired
+	private AccountProxy proxy;
 
 	@GetMapping(value = "/retrieveOdds")
 	public BettingRestResponse retrieveOdds(@RequestParam("compType") String compType) {
@@ -80,8 +84,19 @@ public class OddsController {
 	}
 
 	@PostMapping(value = "/bets/{userId}")
-	public StatusResponse submitBet(@PathVariable("userId") Long userId, @RequestBody BetSlipRest betsInput) {
-		return oddsService.submitBet(betsInput);
+	public ResponseEntity<String> submitBet(@PathVariable("userId") Long userId, @RequestBody BetSlipRest betsInput) {
+		// Make the API call to the Account microservice using the Feign Client
+		betsInput.setUserId(userId);
+		ResponseEntity<String> response = proxy.processBet(betsInput);
+
+		// Handle the response from the Account microservice
+		if (response.getStatusCode().is2xxSuccessful()) {
+			return ResponseEntity.ok("Data successfully processed in Account microservice");
+		} else {
+			return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+		}
+
+		// return oddsService.submitBet(betsInput);
 	}
 
 	public static OddsApiResponse[] mockOddsApiResponseArray() {

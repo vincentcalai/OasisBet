@@ -1,8 +1,8 @@
-package com.oasisbet.betting.odds.model.request;
+package com.oasisbet.account.model.request;
 
 import java.util.List;
 
-import com.oasisbet.betting.odds.model.BetSubmissionVO;
+import com.oasisbet.account.model.BetSubmissionVO;
 
 public class BetSlipRest {
 	private Long userId;
