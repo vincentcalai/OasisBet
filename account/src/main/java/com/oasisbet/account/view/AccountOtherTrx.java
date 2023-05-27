@@ -20,7 +20,6 @@ public class AccountOtherTrx {
 	@Column(name = "trx_id")
 	private Long trxId;
 
-	@Id
 	@Column(name = "acc_id", nullable = false, precision = 22, scale = 0)
 	private Long accId;
 
