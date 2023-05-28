@@ -1,21 +1,19 @@
 package com.oasisbet.account.view;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "tb_bet_trx")
 public class AccountBetTrxView {
 	@Id
-	@GeneratedValue(generator = "trx_sequence_generator")
-	@GenericGenerator(name = "trx_sequence_generator", strategy = "com.oasisbet.account.util.TrxIdGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "trx_id")
 	private Long trxId;
 
@@ -32,7 +30,7 @@ public class AccountBetTrxView {
 	private String compType;
 
 	@Column(name = "start_time", nullable = false)
-	private LocalDateTime startTime;
+	private Date startTime;
 
 	@Column(name = "bet_type", nullable = false, length = 30)
 	private String betType;
@@ -53,7 +51,7 @@ public class AccountBetTrxView {
 	private Boolean settled;
 
 	@Column(name = "trx_dt")
-	private LocalDateTime trxDateTime;
+	private Date trxDateTime;
 
 	public Long getTrxId() {
 		return trxId;
@@ -95,11 +93,11 @@ public class AccountBetTrxView {
 		this.compType = compType;
 	}
 
-	public LocalDateTime getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
@@ -151,11 +149,11 @@ public class AccountBetTrxView {
 		this.settled = settled;
 	}
 
-	public LocalDateTime getTrxDateTime() {
+	public Date getTrxDateTime() {
 		return trxDateTime;
 	}
 
-	public void setTrxDateTime(LocalDateTime trxDateTime) {
+	public void setTrxDateTime(Date trxDateTime) {
 		this.trxDateTime = trxDateTime;
 	}
 

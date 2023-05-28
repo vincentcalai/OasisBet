@@ -41,7 +41,6 @@ export class OddsBetSlipComponent implements OnInit {
   constructor(
     public sharedVar: SharedVarService,
     private apiService: ApiService,
-    private sharedMethods: SharedMethodsService,
     private router: Router,
     private authService: AuthService) { }
 

@@ -1,8 +1,11 @@
 package com.oasisbet.betting.odds.model;
 
+import java.util.Date;
+
 public class BetSubmissionVO {
 	public Long eventId;
 	public String eventDesc;
+	public Date startTime;
 	public String betSelection;
 	public String betSelectionName;
 	public String betTypeCd;
@@ -24,6 +27,14 @@ public class BetSubmissionVO {
 
 	public void setEventDesc(String eventDesc) {
 		this.eventDesc = eventDesc;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
 	public String getBetSelection() {

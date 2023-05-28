@@ -1,6 +1,6 @@
 package com.oasisbet.account.view;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,14 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
 @Table(name = "tb_other_trx")
 public class AccountOtherTrxView {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trx_sequence_generator")
-	@GenericGenerator(name = "trx_sequence_generator", strategy = "com.oasisbet.account.util.TrxIdGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "trx_id")
 	private Long trxId;
 
@@ -30,7 +27,7 @@ public class AccountOtherTrxView {
 	private Long amount;
 
 	@Column(name = "trx_dt")
-	private LocalDateTime trxDt;
+	private Date trxDt;
 
 	public Long getAccId() {
 		return accId;
@@ -56,11 +53,11 @@ public class AccountOtherTrxView {
 		this.amount = amount;
 	}
 
-	public LocalDateTime getTrxDt() {
+	public Date getTrxDt() {
 		return trxDt;
 	}
 
-	public void setTrxDt(LocalDateTime trxDt) {
+	public void setTrxDt(Date trxDt) {
 		this.trxDt = trxDt;
 	}
 
