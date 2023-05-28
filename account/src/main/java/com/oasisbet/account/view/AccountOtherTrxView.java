@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,11 +11,10 @@ import javax.persistence.Table;
 @Table(name = "tb_other_trx")
 public class AccountOtherTrxView {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "trx_id")
 	private Long trxId;
 
-	@Column(name = "acc_id", nullable = false, precision = 22, scale = 0)
+	@Column(name = "acc_id", nullable = false, precision = 15, scale = 0)
 	private Long accId;
 
 	@Column(name = "type", nullable = false, length = 1)

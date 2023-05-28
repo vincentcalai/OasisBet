@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.oasisbet.account.view.AccountBetTrxView;
 
 @Repository
-public interface IAccountBetTrxDao extends JpaRepository<AccountBetTrxView, Long> {
+public interface IAccountBetTrxDao extends JpaRepository<AccountBetTrxView, String> {
 
 }
