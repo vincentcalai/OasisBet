@@ -8,6 +8,7 @@ import { H2HBetSelection } from "./h2h-bet-selection.model";
 export class BetSlip {
     public eventId: number;
     public eventDesc: string;
+    public compType: string;
     public startTime: Date;
     public betSelection: string;
     public betSelectionName: string;

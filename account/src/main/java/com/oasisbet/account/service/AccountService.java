@@ -130,7 +130,7 @@ public class AccountService {
 				accountBetTrxView.setBetAmount(betSubmission.getBetAmount());
 				accountBetTrxView.setBetSelection(betSubmission.getBetSelection());
 				accountBetTrxView.setBetType(betSubmission.getBetTypeCd());
-				accountBetTrxView.setCompType("EPL");
+				accountBetTrxView.setCompType(betSubmission.getCompType());
 				accountBetTrxView.setEventDesc(betSubmission.getEventDesc());
 				accountBetTrxView.setEventId(betSubmission.getEventId());
 				accountBetTrxView.setOdds(betSubmission.getOdds());

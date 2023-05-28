@@ -132,6 +132,7 @@ export class OddsLandingComponent implements OnInit  {
     betSlip.betSelectionName = selectedTeam;
     betSlip.odds = odds;
     betSlip.startTime = event.startTime;
+    betSlip.compType = event.competition;
 
     if(addingBetSelection){
       this.selectedBets.push(betSlip);

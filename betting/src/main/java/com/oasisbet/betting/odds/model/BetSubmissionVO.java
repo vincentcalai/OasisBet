@@ -5,6 +5,7 @@ import java.util.Date;
 public class BetSubmissionVO {
 	public Long eventId;
 	public String eventDesc;
+	public String compType;
 	public Date startTime;
 	public String betSelection;
 	public String betSelectionName;
@@ -27,6 +28,14 @@ public class BetSubmissionVO {
 
 	public void setEventDesc(String eventDesc) {
 		this.eventDesc = eventDesc;
+	}
+
+	public String getCompType() {
+		return compType;
+	}
+
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 	public Date getStartTime() {
