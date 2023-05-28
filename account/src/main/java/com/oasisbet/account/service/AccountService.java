@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oasisbet.account.dao.IAccountBetTrxDao;
 import com.oasisbet.account.dao.IAccountDao;
 import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
@@ -30,6 +31,9 @@ public class AccountService {
 
 	@Autowired
 	private IUserDao userDao;
+
+	@Autowired
+	private IAccountBetTrxDao accountBetTrxDao;
 
 	public AccountView retrieveUserAccountByUsername(String user) {
 		UserView userView = userDao.findByUsername(user);
@@ -129,10 +133,10 @@ public class AccountService {
 				accountBetTrxView.setSettled(false);
 				accountBetTrxView.setStartTime(null);
 				accountBetTrxView.setTrxDateTime(currentTime);
-				accountBetTrxView.setTrxId(100000L);
 				betTrxList.add(accountBetTrxView);
 			});
 			// persist bet transaction list into db here
+			accountBetTrxDao.saveAll(betTrxList);
 		}
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");

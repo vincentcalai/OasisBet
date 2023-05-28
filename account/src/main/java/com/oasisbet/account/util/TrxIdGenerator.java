@@ -11,13 +11,14 @@ import com.oasisbet.account.dao.ISequence;
 import com.oasisbet.account.view.SequenceView;
 
 public class TrxIdGenerator implements IdentifierGenerator {
+
 	@Autowired
-	private ISequence sequenceRepository;
+	private ISequence sequenceDao;
 
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 		String seqName = "trx_sequence";
-		SequenceView trxSequence = sequenceRepository.findBySeqName(seqName);
+		SequenceView trxSequence = sequenceDao.findBySeqName(seqName);
 
 		if (trxSequence == null) {
 			trxSequence = new SequenceView();
@@ -27,7 +28,7 @@ public class TrxIdGenerator implements IdentifierGenerator {
 			trxSequence.setSeqValue(trxSequence.getSeqValue() + 1);
 		}
 
-		trxSequence = sequenceRepository.save(trxSequence);
+		trxSequence = sequenceDao.save(trxSequence);
 		return trxSequence.getSeqValue();
 	}
 }

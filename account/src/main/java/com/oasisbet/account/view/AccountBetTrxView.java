@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "tb_bet_trx")
 public class AccountBetTrxView {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trx_sequence_generator")
+	@GeneratedValue(generator = "trx_sequence_generator")
 	@GenericGenerator(name = "trx_sequence_generator", strategy = "com.oasisbet.account.util.TrxIdGenerator")
 	@Column(name = "trx_id")
 	private Long trxId;
