@@ -12,9 +12,9 @@ import javax.persistence.Table;
 public class AccountBetTrxView {
 	@Id
 	@Column(name = "trx_id")
-	private Long trxId;
+	private String trxId;
 
-	@Column(name = "acc_id", nullable = false, precision = 22, scale = 0)
+	@Column(name = "acc_id", nullable = false, precision = 15, scale = 0)
 	private Long accId;
 
 	@Column(name = "event_id", nullable = false)
@@ -50,11 +50,11 @@ public class AccountBetTrxView {
 	@Column(name = "trx_dt")
 	private Date trxDateTime;
 
-	public Long getTrxId() {
+	public String getTrxId() {
 		return trxId;
 	}
 
-	public void setTrxId(Long trxId) {
+	public void setTrxId(String trxId) {
 		this.trxId = trxId;
 	}
 

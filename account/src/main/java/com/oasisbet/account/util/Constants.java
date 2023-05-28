@@ -3,10 +3,13 @@ package com.oasisbet.account.util;
 public class Constants {
 
 	public static final String NO = "N";
+	public static final String SLASH = "/";
 
 	public static final Double INIT_BAL_AMT = 0.00;
 	public static final Double INIT_DEPOSIT_LIMIT = 1000.00;
 	public static final double MAX_BAL_AMT = 199999.99;
+
+	public static final String TRX_TYPE_BET = "B";
 
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";

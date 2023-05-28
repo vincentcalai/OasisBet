@@ -110,8 +110,6 @@ public class AccountService {
 		double totalStake = betSubmissionList.stream().mapToDouble(BetSubmissionVO::getBetAmount).reduce(0.0,
 				Double::sum);
 
-		Date currentDatetime = new Date();
-
 		if (!accountView.isPresent()) {
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 			response.setStatusCode(1);
@@ -123,9 +121,11 @@ public class AccountService {
 			final Long accId = accountView.get().getAccId();
 			List<AccountBetTrxView> betTrxList = new ArrayList<>();
 			betSubmissionList.forEach(betSubmission -> {
-				Long nextTrxId = sequenceService.getNextTrxId();
+				Long nextSeqTrxId = sequenceService.getNextTrxId();
+				Date currentDatetime = new Date();
+				String trxId = Constants.TRX_TYPE_BET + Constants.SLASH + accId + Constants.SLASH + nextSeqTrxId;
 				AccountBetTrxView accountBetTrxView = new AccountBetTrxView();
-				accountBetTrxView.setTrxId(nextTrxId);
+				accountBetTrxView.setTrxId(trxId);
 				accountBetTrxView.setAccId(accId);
 				accountBetTrxView.setBetAmount(betSubmission.getBetAmount());
 				accountBetTrxView.setBetSelection(betSubmission.getBetSelection());
@@ -142,9 +142,10 @@ public class AccountService {
 			});
 			// persist bet transaction list into db here
 			accountBetTrxDao.saveAll(betTrxList);
+			Date betPlacedDateTime = new Date();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, h:mma");
-			String betPlacedDateTime = dateFormat.format(currentDatetime);
-			response.setResultMessage(Constants.BET_PLACED_SUCCESS + betPlacedDateTime);
+			String formattedBetPlacedDateTime = dateFormat.format(betPlacedDateTime);
+			response.setResultMessage(Constants.BET_PLACED_SUCCESS + formattedBetPlacedDateTime);
 		}
 
 		return response;
