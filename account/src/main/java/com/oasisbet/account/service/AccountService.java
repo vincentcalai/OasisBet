@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oasisbet.account.dao.IAccountBetTrxDao;
 import com.oasisbet.account.dao.IAccountDao;
+import com.oasisbet.account.dao.IAccountOtherTrxDao;
 import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
@@ -19,6 +20,7 @@ import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetTrxView;
+import com.oasisbet.account.view.AccountOtherTrxView;
 import com.oasisbet.account.view.AccountView;
 import com.oasisbet.account.view.UserView;
 
@@ -34,6 +36,9 @@ public class AccountService {
 
 	@Autowired
 	private IAccountBetTrxDao accountBetTrxDao;
+
+	@Autowired
+	private IAccountOtherTrxDao accountOtherTrxDao;
 
 	@Autowired
 	private SequenceService sequenceService;
@@ -63,13 +68,29 @@ public class AccountService {
 			account.setBalance(newBalanceAmt);
 			account.setDepositLimit(newDepositLimit);
 
+			Long accId = account.getAccId();
+
+			// update account details
 			AccountView accountView = new AccountView();
-			accountView.setAccId(account.getAccId());
+			accountView.setAccId(accId);
 			accountView.setUsrId(account.getUsrId());
 			accountView.setBalance(account.getBalance());
 			accountView.setDepositLimit(account.getDepositLimit());
 			accountDao.save(accountView);
-			// future implementation - update deposit transaction
+
+			// update deposit transaction
+			Date currentDateTime = new Date();
+
+			Long nextSeqTrxId = sequenceService.getNextTrxId();
+			String trxId = Constants.TRX_TYPE_DEPOSIT + Constants.SLASH + accId + Constants.SLASH + nextSeqTrxId;
+
+			AccountOtherTrxView depositView = new AccountOtherTrxView();
+			depositView.setTrxId(trxId);
+			depositView.setAccId(accId);
+			depositView.setAmount(depositAmt);
+			depositView.setType(Constants.TRX_TYPE_DEPOSIT);
+			depositView.setTrxDt(currentDateTime);
+			accountOtherTrxDao.save(depositView);
 		}
 		response.setAccount(account);
 		response.setResultMessage(Constants.DEPOSIT_ACC_SUCCESS);
@@ -87,12 +108,30 @@ public class AccountService {
 		} else {
 			account.setBalance(newBalanceAmt);
 
+			Long accId = account.getAccId();
+
+			// update account details
 			AccountView accountView = new AccountView();
-			accountView.setAccId(account.getAccId());
+			accountView.setAccId(accId);
 			accountView.setUsrId(account.getUsrId());
 			accountView.setBalance(account.getBalance());
 			accountView.setDepositLimit(account.getDepositLimit());
 			accountDao.save(accountView);
+
+			Date currentDateTime = new Date();
+
+			Long nextSeqTrxId = sequenceService.getNextTrxId();
+			String trxId = Constants.TRX_TYPE_WITHDRAWAL + Constants.SLASH + accId + Constants.SLASH + nextSeqTrxId;
+
+			// update withdrawal transaction
+			AccountOtherTrxView withdrawalView = new AccountOtherTrxView();
+			withdrawalView.setTrxId(trxId);
+			withdrawalView.setAccId(accId);
+			withdrawalView.setAmount(withdrawalAmt);
+			withdrawalView.setType(Constants.TRX_TYPE_WITHDRAWAL);
+			withdrawalView.setTrxDt(currentDateTime);
+			accountOtherTrxDao.save(withdrawalView);
+
 		}
 		response.setAccount(account);
 		response.setResultMessage(Constants.WITHDRAW_ACC_SUCCESS);

@@ -10,6 +10,8 @@ public class Constants {
 	public static final double MAX_BAL_AMT = 199999.99;
 
 	public static final String TRX_TYPE_BET = "B";
+	public static final String TRX_TYPE_DEPOSIT = "D";
+	public static final String TRX_TYPE_WITHDRAWAL = "W";
 
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";
