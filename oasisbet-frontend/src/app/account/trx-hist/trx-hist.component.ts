@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AccountModel } from 'src/app/model/account.model';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-trx-hist',
@@ -8,12 +10,21 @@ import { AccountModel } from 'src/app/model/account.model';
 })
 export class TrxHistComponent implements OnInit {
 
-  placeholderView = "Please select a view";
-  items: string[] = ["test1", "test2"];
+  public subscriptions: Subscription = new Subscription();
+  public selectedTrxType: string = 'funds';
+  public selectedPeriod: string = 'today';
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+    console.log(this.selectedTrxType);
+    console.log(this.selectedPeriod);
+    this.subscriptions.add(
+      this.apiService.retrieveTrx(this.selectedTrxType, this.selectedPeriod).subscribe((resp: any) => {
+        console.log(resp);
+      })
+    );
+
   }
 
 }

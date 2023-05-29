@@ -49,6 +49,16 @@ public class AccountController {
 		return response;
 	}
 
+	@GetMapping(value = "/retrieveTrx")
+	public AccountRestResponse retrieveTrx(@RequestParam String type, String period) {
+		AccountRestResponse response = new AccountRestResponse();
+		// retrieve transactions based on params here
+
+		// AccountView accountView =
+		// this.accountService.retrieveUserAccountByUsername(user);
+		return response;
+	}
+
 	@PutMapping(value = "/updateAccDetails")
 	public AccountRestResponse updateAccDetails(@RequestBody AccountRest accountRest) {
 		AccountVO account = accountRest.getAccount();

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -77,6 +77,16 @@ export class ApiService {
 
   updateAccDetails(): Observable<ResponseModel> {
     return this.http.put<ResponseModel>(this.accountServicePrefix + '/account/updateAccDetails', this.sharedVar.updateAccountModel).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
+  retrieveTrx(trxType: string, period: string): Observable<Object> {
+    const params = new HttpParams()
+    .set('type', trxType)
+    .set('period', period);
+    return this.http.get(this.accountServicePrefix + '/account/retrieveTrx', { params }).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

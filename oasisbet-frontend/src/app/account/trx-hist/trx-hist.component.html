@@ -15,11 +15,12 @@
             <div class="col-md-3 offset-md-1">
                 <label class="control-label trx-section-label-width">View</label>
                 <div class="dropdown-section">
-                    <select id="trxViewDropdown" class="form-control trx-dropdown">
+                    <select [(ngModel)]="selectedTrxType" (ngModelChange)="ngOnInit()" id="trxViewDropdown"
+                      class="form-control trx-dropdown">
                         <option value="funds">Funds In/Out</option>
                         <option value="sportsbet">All Sports Bet</option>
-                        <option value="deposits">Deposits</option>
-                        <option value="withdrawals">Withdrawals</option>
+                        <option value="deposit">Deposits</option>
+                        <option value="withdrawal">Withdrawals</option>
                     </select>
                     <span class="dropdown-icon"><i class="fas fa-angle-down"></i></span>
                 </div>
@@ -27,12 +28,13 @@
             <div class="col-md-3 offset-md-1">
                 <label class="control-label trx-section-label-width">Time Period</label>
                 <div class="dropdown-section">
-                    <select id="trxTimePrdDropdown" class="form-control trx-dropdown">
+                    <select [(ngModel)]="selectedPeriod" (ngModelChange)="ngOnInit()" id="trxTimePrdDropdown"
+                      class="form-control trx-dropdown">
                         <option value="today">Today</option>
-                        <option value="last7days">Last 7 Days</option>
-                        <option value="last1mths">Last Month</option>
-                        <option value="last3mths">Last 3 Months</option>
-                        <option value="last6mths">Last 6 Months</option>
+                        <option value="last7day">Last 7 Days</option>
+                        <option value="last1mth">Last Month</option>
+                        <option value="last3mth">Last 3 Months</option>
+                        <option value="last6mth">Last 6 Months</option>
                     </select>
                     <span class="dropdown-icon"><i class="fas fa-angle-down"></i></span>
                 </div>
