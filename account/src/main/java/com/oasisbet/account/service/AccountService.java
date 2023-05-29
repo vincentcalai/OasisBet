@@ -203,11 +203,14 @@ public class AccountService {
 			typeCd = Constants.TRX_TYPE_WITHDRAWAL;
 		} else if (type.equals(Constants.FUNDS_CD)) {
 			typeCd = Constants.TRX_TYPE_ALL_FUNDS;
+		} else if (type.equals(Constants.SPORTS_BET_CD)) {
+			typeCd = Constants.TRX_TYPE_SPORTS_BET;
 		}
 
 		Date startDate = genStartDate(period);
 
 		List<AccountOtherTrxView> otherTrxView = null;
+		List<AccountBetTrxView> betTrxView = null;
 		List<Object[]> allFundsTrx = null;
 		List<TrxHistVO> trxHistList = new ArrayList<>();
 
@@ -220,6 +223,18 @@ public class AccountService {
 					trxHistVo.setDateTime((Date) trx[0]);
 					trxHistVo.setDesc((String) trx[1]);
 					trxHistVo.setAmount((Double) trx[2]);
+					trxHistList.add(trxHistVo);
+				});
+			}
+		} else if (typeCd.equals(Constants.TRX_TYPE_SPORTS_BET)) {
+			betTrxView = this.accountBetTrxDao.getByDateRange(startDate);
+
+			if (betTrxView != null && betTrxView.size() > 0) {
+				betTrxView.forEach(trx -> {
+					TrxHistVO trxHistVo = new TrxHistVO();
+					trxHistVo.setDateTime(trx.getTrxDateTime());
+					trxHistVo.setDesc(trx.getEventDesc());
+					trxHistVo.setAmount(trx.getBetAmount());
 					trxHistList.add(trxHistVo);
 				});
 			}
