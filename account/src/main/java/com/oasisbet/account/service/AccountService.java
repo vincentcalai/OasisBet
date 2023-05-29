@@ -201,18 +201,18 @@ public class AccountService {
 			typeCd = Constants.TRX_TYPE_DEPOSIT;
 		} else if (type.equals(Constants.WITHDRAWAL_CD)) {
 			typeCd = Constants.TRX_TYPE_WITHDRAWAL;
-		} else if (type.equals("funds")) {
-			typeCd = "F";
+		} else if (type.equals(Constants.FUNDS_CD)) {
+			typeCd = Constants.TRX_TYPE_ALL_FUNDS;
 		}
 
 		Date startDate = genStartDate(period);
 
 		List<AccountOtherTrxView> otherTrxView = null;
+		List<Object[]> allFundsTrx = null;
 		List<TrxHistVO> trxHistList = new ArrayList<>();
-		List<Object[]> allFundsTrx = new ArrayList<>();
 
-		if (typeCd.equals("F")) {
-			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx();
+		if (typeCd.equals(Constants.TRX_TYPE_ALL_FUNDS)) {
+			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(startDate);
 
 			allFundsTrx.forEach(trx -> {
 				TrxHistVO trxHistVo = new TrxHistVO();

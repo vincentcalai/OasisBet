@@ -12,9 +12,11 @@ public class Constants {
 	public static final String TRX_TYPE_BET = "B";
 	public static final String TRX_TYPE_DEPOSIT = "D";
 	public static final String TRX_TYPE_WITHDRAWAL = "W";
+	public static final String TRX_TYPE_ALL_FUNDS = "F";
 
 	public static final String DEPOSIT_CD = "deposit";
 	public static final String WITHDRAWAL_CD = "withdrawal";
+	public static final String FUNDS_CD = "funds";
 
 	public static final String DEPOSIT_DESC = "Deposit";
 	public static final String WITHDRAWAL_DESC = "Withdrawal";
