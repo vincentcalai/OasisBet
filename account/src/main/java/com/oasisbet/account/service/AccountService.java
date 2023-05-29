@@ -214,17 +214,19 @@ public class AccountService {
 		if (typeCd.equals(Constants.TRX_TYPE_ALL_FUNDS)) {
 			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(startDate);
 
-			allFundsTrx.forEach(trx -> {
-				TrxHistVO trxHistVo = new TrxHistVO();
-				trxHistVo.setDateTime((Date) trx[0]);
-				trxHistVo.setDesc((String) trx[1]);
-				trxHistVo.setAmount((Double) trx[2]);
-				trxHistList.add(trxHistVo);
-			});
+			if (allFundsTrx != null && allFundsTrx.size() > 0) {
+				allFundsTrx.forEach(trx -> {
+					TrxHistVO trxHistVo = new TrxHistVO();
+					trxHistVo.setDateTime((Date) trx[0]);
+					trxHistVo.setDesc((String) trx[1]);
+					trxHistVo.setAmount((Double) trx[2]);
+					trxHistList.add(trxHistVo);
+				});
+			}
 		} else {
 			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(typeCd, startDate);
 
-			if (otherTrxView != null) {
+			if (otherTrxView != null && otherTrxView.size() > 0) {
 				otherTrxView.forEach(trx -> {
 					Double amt = trx.getAmount();
 					String fullDesc = trx.getType().equals("D") ? Constants.DEPOSIT_DESC : Constants.WITHDRAWAL_DESC;
