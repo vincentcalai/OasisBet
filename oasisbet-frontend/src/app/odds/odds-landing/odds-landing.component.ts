@@ -3,7 +3,6 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 import { BetEvent } from 'src/app/model/bet-event.model';
 import { Subject, Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
-import { take } from 'rxjs/operators';
 import { H2HBetSelection } from 'src/app/model/h2h-bet-selection.model';
 import { BetSlip } from 'src/app/model/bet-slip.model';
 
@@ -99,25 +98,25 @@ export class OddsLandingComponent implements OnInit  {
     let odds: number = 0;
 
     if(this.selectedBets.length >= 5 &&
-    ((selection === '01' && !event.betSelection.homeSelected) ||
-    (selection === '02' && !event.betSelection.drawSelected) ||
-    (selection === '03' &&  !event.betSelection.awaySelected))){
+    ((selection === this.sharedVar.BET_SELECTION_H2H_HOME && !event.betSelection.homeSelected) ||
+    (selection === this.sharedVar.BET_SELECTION_H2H_DRAW && !event.betSelection.drawSelected) ||
+    (selection === this.sharedVar.BET_SELECTION_H2H_AWAY &&  !event.betSelection.awaySelected))){
       this.maxBetMsg = this.sharedVar.EXCEED_MAX_BET_MSG;
       return;
     }
     this.maxBetMsg = "";
 
-    if(selection === '01'){
+    if(selection === this.sharedVar.BET_SELECTION_H2H_HOME){
       event.betSelection.homeSelected = !event.betSelection.homeSelected;
       addingBetSelection = event.betSelection.homeSelected;
       odds = event.h2hEventOdds.homeOdds;
       selectedTeam = event.teamsDetails.homeTeam;
-    } else if(selection === '02'){
+    } else if(selection === this.sharedVar.BET_SELECTION_H2H_DRAW){
       event.betSelection.drawSelected = !event.betSelection.drawSelected;
       addingBetSelection = event.betSelection.drawSelected;
       odds = event.h2hEventOdds.drawOdds;
       selectedTeam = this.sharedVar.DRAW_RESULT;
-    } else {
+    } else if(selection === this.sharedVar.BET_SELECTION_H2H_AWAY) {
       event.betSelection.awaySelected = !event.betSelection.awaySelected;
       addingBetSelection = event.betSelection.awaySelected;
       odds = event.h2hEventOdds.awayOdds;
@@ -147,16 +146,16 @@ export class OddsLandingComponent implements OnInit  {
     const eventIdx = this.events.findIndex(e => e.eventId === removedBet.eventId);
     if (eventIdx !== -1) {
       const event = { ...this.events[eventIdx] };
-      if(removedBet.betSelection === '01'){
+      if(removedBet.betSelection === this.sharedVar.BET_SELECTION_H2H_HOME){
         event.betSelection.homeSelected = false;
-      } else if(removedBet.betSelection === '02'){
+      } else if(removedBet.betSelection === this.sharedVar.BET_SELECTION_H2H_DRAW){
         event.betSelection.drawSelected = false;
-      } else if(removedBet.betSelection === '03'){
+      } else if(removedBet.betSelection === this.sharedVar.BET_SELECTION_H2H_AWAY){
         event.betSelection.awaySelected = false;
       }
       this.events[eventIdx] = event;
     }
-    if(this.selectedBets.length < 5){
+    if(this.selectedBets.length < this.sharedVar.BET_SLIP_MAX_ALLOWED_BET){
       this.maxBetMsg = "";
     }
   }
