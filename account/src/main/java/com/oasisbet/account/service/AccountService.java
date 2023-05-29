@@ -1,7 +1,11 @@
 package com.oasisbet.account.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +21,7 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.StatusResponse;
+import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetTrxView;
@@ -188,6 +193,59 @@ public class AccountService {
 		}
 
 		return response;
+	}
+
+	public List<TrxHistVO> retrieveTrxHist(String type, String period) {
+		String typeCd = "";
+		if (type.equals("deposit")) {
+			typeCd = "D";
+		} else if (type.equals("withdrawal")) {
+			typeCd = "W";
+		}
+
+		Calendar calendar = Calendar.getInstance();
+		Date startDate = null;
+
+		switch (period) {
+		case "today":
+			LocalDate today = LocalDate.now();
+			LocalDateTime startOfDay = today.atStartOfDay();
+			startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+			break;
+		case "last7day":
+			calendar.add(Calendar.DAY_OF_MONTH, -6); // Subtract 6 days to include the last 7 days
+			startDate = calendar.getTime();
+			break;
+		case "last1mth":
+			calendar.add(Calendar.MONTH, -1);
+			startDate = calendar.getTime();
+			break;
+		case "last3mth":
+			calendar.add(Calendar.MONTH, -3);
+			startDate = calendar.getTime();
+			break;
+		case "last6mth":
+			calendar.add(Calendar.MONTH, -6);
+			startDate = calendar.getTime();
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid period: " + period);
+		}
+
+		List<AccountOtherTrxView> otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(typeCd, startDate);
+
+		List<TrxHistVO> trxHistList = new ArrayList<>();
+		otherTrxView.forEach(trx -> {
+			Double amt = trx.getAmount();
+			String fullDesc = trx.getType().equals("D") ? "Deposit" : "Withdrawal";
+			TrxHistVO trxHistVo = new TrxHistVO();
+			trxHistVo.setAmount(amt);
+			trxHistVo.setDateTime(trx.getTrxDt());
+			trxHistVo.setDesc(fullDesc);
+			trxHistList.add(trxHistVo);
+		});
+
+		return trxHistList;
 	}
 
 }

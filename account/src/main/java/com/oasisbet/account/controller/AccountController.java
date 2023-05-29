@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.StatusResponse;
+import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.request.BetSlipRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
+import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountView;
@@ -50,12 +52,10 @@ public class AccountController {
 	}
 
 	@GetMapping(value = "/retrieveTrx")
-	public AccountRestResponse retrieveTrx(@RequestParam String type, String period) {
-		AccountRestResponse response = new AccountRestResponse();
-		// retrieve transactions based on params here
-
-		// AccountView accountView =
-		// this.accountService.retrieveUserAccountByUsername(user);
+	public TrxHistRestResponse retrieveTrx(@RequestParam String type, String period) {
+		TrxHistRestResponse response = new TrxHistRestResponse();
+		List<TrxHistVO> trxHistVo = this.accountService.retrieveTrxHist(type, period);
+		response.setTrxHistList(trxHistVo);
 		return response;
 	}
 

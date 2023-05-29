@@ -44,18 +44,22 @@
         <table class="table" style="table-layout: fixed; width: 100%;">
             <thead class= "table-header">
                 <tr>
-                  <th style="text-align:center; width: 35%;">Date & Time</th>
-                  <th style="text-align:center; width: 10%;">Type</th>
-                  <th style="text-align:center; width: 35%;">Description</th>
+                  <th style="text-align:center; width: 30%;">Date & Time</th>
+                  <th style="text-align:center; width: 50%;">Description</th>
                   <th style="text-align:center; width: 20%;">Amount</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td class='text-center' colspan=12>
-                    No Transaction(s) Found.
-                  </td>
-                </tr>
+              <tr *ngFor="let trx of trxHistList">
+                <td style="text-align:center; width: 30%;">{{trx.dateTime | date:'medium'}}</td>
+                <td style="text-align:center; width: 50%;">{{trx.desc}}</td>
+                <td style="text-align:center; width: 20%;">{{trx.amount}}</td>
+              </tr>
+              <tr *ngIf='!trxHistList || trxHistList.length == 0'>
+                <td class='text-center' colspan=12>
+                  No Transaction(s) Found.
+                </td>
+              </tr>
             </tbody>
         </table>
     </div>
