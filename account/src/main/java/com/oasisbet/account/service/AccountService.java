@@ -201,8 +201,46 @@ public class AccountService {
 			typeCd = Constants.TRX_TYPE_DEPOSIT;
 		} else if (type.equals(Constants.WITHDRAWAL_CD)) {
 			typeCd = Constants.TRX_TYPE_WITHDRAWAL;
+		} else if (type.equals("funds")) {
+			typeCd = "F";
 		}
 
+		Date startDate = genStartDate(period);
+
+		List<AccountOtherTrxView> otherTrxView = null;
+		List<TrxHistVO> trxHistList = new ArrayList<>();
+		List<Object[]> allFundsTrx = new ArrayList<>();
+
+		if (typeCd.equals("F")) {
+			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx();
+
+			allFundsTrx.forEach(trx -> {
+				TrxHistVO trxHistVo = new TrxHistVO();
+				trxHistVo.setDateTime((Date) trx[0]);
+				trxHistVo.setDesc((String) trx[1]);
+				trxHistVo.setAmount((Double) trx[2]);
+				trxHistList.add(trxHistVo);
+			});
+		} else {
+			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(typeCd, startDate);
+
+			if (otherTrxView != null) {
+				otherTrxView.forEach(trx -> {
+					Double amt = trx.getAmount();
+					String fullDesc = trx.getType().equals("D") ? Constants.DEPOSIT_DESC : Constants.WITHDRAWAL_DESC;
+					TrxHistVO trxHistVo = new TrxHistVO();
+					trxHistVo.setAmount(amt);
+					trxHistVo.setDateTime(trx.getTrxDt());
+					trxHistVo.setDesc(fullDesc);
+					trxHistList.add(trxHistVo);
+				});
+			}
+		}
+
+		return trxHistList;
+	}
+
+	private Date genStartDate(String period) {
 		Calendar calendar = Calendar.getInstance();
 		Date startDate = null;
 
@@ -231,21 +269,7 @@ public class AccountService {
 		default:
 			throw new IllegalArgumentException("Invalid period: " + period);
 		}
-
-		List<AccountOtherTrxView> otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(typeCd, startDate);
-
-		List<TrxHistVO> trxHistList = new ArrayList<>();
-		otherTrxView.forEach(trx -> {
-			Double amt = trx.getAmount();
-			String fullDesc = trx.getType().equals("D") ? Constants.DEPOSIT_DESC : Constants.WITHDRAWAL_DESC;
-			TrxHistVO trxHistVo = new TrxHistVO();
-			trxHistVo.setAmount(amt);
-			trxHistVo.setDateTime(trx.getTrxDt());
-			trxHistVo.setDesc(fullDesc);
-			trxHistList.add(trxHistVo);
-		});
-
-		return trxHistList;
+		return startDate;
 	}
 
 }
