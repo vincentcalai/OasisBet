@@ -19,8 +19,6 @@ export class TrxHistComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    console.log(this.selectedTrxType);
-    console.log(this.selectedPeriod);
     this.subscriptions.add(
       this.apiService.retrieveTrx(this.selectedTrxType, this.selectedPeriod).subscribe((resp: any) => {
         this.trxHistList = resp.trxHistList;

@@ -197,34 +197,34 @@ public class AccountService {
 
 	public List<TrxHistVO> retrieveTrxHist(String type, String period) {
 		String typeCd = "";
-		if (type.equals("deposit")) {
-			typeCd = "D";
-		} else if (type.equals("withdrawal")) {
-			typeCd = "W";
+		if (type.equals(Constants.DEPOSIT_CD)) {
+			typeCd = Constants.TRX_TYPE_DEPOSIT;
+		} else if (type.equals(Constants.WITHDRAWAL_CD)) {
+			typeCd = Constants.TRX_TYPE_WITHDRAWAL;
 		}
 
 		Calendar calendar = Calendar.getInstance();
 		Date startDate = null;
 
 		switch (period) {
-		case "today":
+		case Constants.TODAY:
 			LocalDate today = LocalDate.now();
 			LocalDateTime startOfDay = today.atStartOfDay();
 			startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
 			break;
-		case "last7day":
+		case Constants.LAST_7_DAY:
 			calendar.add(Calendar.DAY_OF_MONTH, -6); // Subtract 6 days to include the last 7 days
 			startDate = calendar.getTime();
 			break;
-		case "last1mth":
+		case Constants.LAST_1_MTH:
 			calendar.add(Calendar.MONTH, -1);
 			startDate = calendar.getTime();
 			break;
-		case "last3mth":
+		case Constants.LAST_3_MTH:
 			calendar.add(Calendar.MONTH, -3);
 			startDate = calendar.getTime();
 			break;
-		case "last6mth":
+		case Constants.LAST_6_MTH:
 			calendar.add(Calendar.MONTH, -6);
 			startDate = calendar.getTime();
 			break;
@@ -237,7 +237,7 @@ public class AccountService {
 		List<TrxHistVO> trxHistList = new ArrayList<>();
 		otherTrxView.forEach(trx -> {
 			Double amt = trx.getAmount();
-			String fullDesc = trx.getType().equals("D") ? "Deposit" : "Withdrawal";
+			String fullDesc = trx.getType().equals("D") ? Constants.DEPOSIT_DESC : Constants.WITHDRAWAL_DESC;
 			TrxHistVO trxHistVo = new TrxHistVO();
 			trxHistVo.setAmount(amt);
 			trxHistVo.setDateTime(trx.getTrxDt());

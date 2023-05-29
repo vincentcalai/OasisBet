@@ -13,6 +13,18 @@ public class Constants {
 	public static final String TRX_TYPE_DEPOSIT = "D";
 	public static final String TRX_TYPE_WITHDRAWAL = "W";
 
+	public static final String DEPOSIT_CD = "deposit";
+	public static final String WITHDRAWAL_CD = "withdrawal";
+
+	public static final String DEPOSIT_DESC = "Deposit";
+	public static final String WITHDRAWAL_DESC = "Withdrawal";
+
+	public static final String TODAY = "today";
+	public static final String LAST_7_DAY = "last7day";
+	public static final String LAST_1_MTH = "last1mth";
+	public static final String LAST_3_MTH = "last3mth";
+	public static final String LAST_6_MTH = "last6mth";
+
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";
 
