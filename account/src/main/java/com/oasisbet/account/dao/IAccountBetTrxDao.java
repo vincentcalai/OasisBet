@@ -12,7 +12,7 @@ import com.oasisbet.account.view.AccountBetTrxView;
 @Repository
 public interface IAccountBetTrxDao extends JpaRepository<AccountBetTrxView, String> {
 
-	@Query("SELECT abt FROM AccountBetTrxView abt WHERE abt.trxDateTime >= :startDate order by abt.trxDateTime desc")
-	List<AccountBetTrxView> getByDateRange(Date startDate);
+	@Query("SELECT abt FROM AccountBetTrxView abt WHERE abt.accId = :accId and abt.trxDateTime >= :startDate order by abt.trxDateTime desc")
+	List<AccountBetTrxView> getByDateRange(Long accId, Date startDate);
 
 }

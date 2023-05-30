@@ -90,8 +90,9 @@ export class ApiService {
     );
   }
 
-  retrieveTrx(trxType: string, period: string): Observable<Object> {
+  retrieveTrx(accId: number, trxType: string, period: string): Observable<Object> {
     const params = new HttpParams()
+    .set('accId', accId)
     .set('type', trxType)
     .set('period', period);
     return this.http.get(this.accountServicePrefix + '/account/retrieveTrx', { params }).pipe(

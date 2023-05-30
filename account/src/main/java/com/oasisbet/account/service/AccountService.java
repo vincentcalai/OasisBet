@@ -220,7 +220,7 @@ public class AccountService {
 		return response;
 	}
 
-	public List<TrxHistVO> retrieveTrxHist(String type, String period) {
+	public List<TrxHistVO> retrieveTrxHist(Long accId, String type, String period) {
 		String typeCd = "";
 		if (type.equals(Constants.DEPOSIT_CD)) {
 			typeCd = Constants.TRX_TYPE_DEPOSIT;
@@ -240,7 +240,7 @@ public class AccountService {
 		List<TrxHistVO> trxHistList = new ArrayList<>();
 
 		if (typeCd.equals(Constants.TRX_TYPE_ALL_FUNDS)) {
-			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(startDate);
+			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(accId, startDate);
 
 			if (allFundsTrx != null && allFundsTrx.size() > 0) {
 				allFundsTrx.forEach(trx -> {
@@ -252,7 +252,7 @@ public class AccountService {
 				});
 			}
 		} else if (typeCd.equals(Constants.TRX_TYPE_SPORTS_BET)) {
-			betTrxView = this.accountBetTrxDao.getByDateRange(startDate);
+			betTrxView = this.accountBetTrxDao.getByDateRange(accId, startDate);
 
 			if (betTrxView != null && betTrxView.size() > 0) {
 				betTrxView.forEach(trx -> {
@@ -264,7 +264,7 @@ public class AccountService {
 				});
 			}
 		} else {
-			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(typeCd, startDate);
+			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(accId, typeCd, startDate);
 
 			if (otherTrxView != null && otherTrxView.size() > 0) {
 				otherTrxView.forEach(trx -> {
