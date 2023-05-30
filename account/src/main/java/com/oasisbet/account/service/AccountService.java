@@ -244,7 +244,11 @@ public class AccountService {
 			if (otherTrxView != null && otherTrxView.size() > 0) {
 				otherTrxView.forEach(trx -> {
 					Double amt = trx.getAmount();
-					String fullDesc = trx.getType().equals("D") ? Constants.DEPOSIT_DESC : Constants.WITHDRAWAL_DESC;
+					String fullDesc = trx.getType().equals("D")
+							? Constants.DEPOSIT_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
+									+ String.format("%.2f", amt)
+							: Constants.WITHDRAWAL_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
+									+ String.format("%.2f", amt);
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setAmount(amt);
 					trxHistVo.setDateTime(trx.getTrxDt());

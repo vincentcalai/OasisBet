@@ -4,6 +4,8 @@ public class Constants {
 
 	public static final String NO = "N";
 	public static final String SLASH = "/";
+	public static final String SPACE = " ";
+	public static final String DOLLAR_SIGN = "$";
 
 	public static final Double INIT_BAL_AMT = 0.00;
 	public static final Double INIT_DEPOSIT_LIMIT = 1000.00;

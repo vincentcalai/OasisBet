@@ -17,9 +17,8 @@ public interface IAccountOtherTrxDao extends JpaRepository<AccountOtherTrxView, 
 
 	@Query(value = "select trx_dt as dateTime, event_desc as `desc`, CAST(bet_amt AS DOUBLE) as amount from tb_bet_trx "
 			+ "where trx_dt >= :startDate union "
-			+ "select trx_dt, CONCAT(IF(type = 'D', 'Deposit ', 'Withdrawal '), amount), amount from tb_other_trx "
-			+ "where trx_dt >= :startDate "
-			+ "order by dateTime desc", nativeQuery = true)
+			+ "select trx_dt, CONCAT(IF(type = 'D', 'Deposit $', 'Withdrawal $'), amount), amount from tb_other_trx "
+			+ "where trx_dt >= :startDate order by dateTime desc", nativeQuery = true)
 	List<Object[]> getAllFundsInOutTrx(Date startDate);
 
 }
