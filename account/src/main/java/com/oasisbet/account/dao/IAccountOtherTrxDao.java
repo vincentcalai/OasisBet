@@ -21,4 +21,10 @@ public interface IAccountOtherTrxDao extends JpaRepository<AccountOtherTrxView, 
 			+ "where trx_dt >= :startDate order by dateTime desc", nativeQuery = true)
 	List<Object[]> getAllFundsInOutTrx(Date startDate);
 
+	@Query("SELECT sum(aot.amount) FROM AccountOtherTrxView aot WHERE aot.type = 'D' and aot.trxDt >= :startDate")
+	Double findYtdDeposit(Date startDate);
+
+	@Query("SELECT sum(aot.amount) FROM AccountOtherTrxView aot WHERE aot.type = 'W' and aot.trxDt >= :startDate")
+	Double findYtdWithdrawal(Date startDate);
+
 }

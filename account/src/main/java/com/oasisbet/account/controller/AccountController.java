@@ -22,7 +22,6 @@ import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
 import com.oasisbet.account.util.Constants;
-import com.oasisbet.account.view.AccountView;
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
@@ -35,18 +34,14 @@ public class AccountController {
 	@GetMapping(value = "/retrieveAccDetails")
 	public AccountRestResponse retrieveAccDetails(@RequestParam String user) {
 		AccountRestResponse response = new AccountRestResponse();
-		AccountView accountView = this.accountService.retrieveUserAccountByUsername(user);
-		AccountVO accountVo = null;
-		if (accountView != null) {
-			accountVo = new AccountVO();
-			accountVo.setAccId(accountView.getAccId());
-			accountVo.setUsrId(accountView.getUsrId());
-			accountVo.setBalance(accountView.getBalance());
-			accountVo.setDepositLimit(accountView.getDepositLimit());
-		} else {
+		AccountVO accountVo = this.accountService.retrieveUserAccountByUsername(user);
+		if (accountVo == null) {
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+			return response;
 		}
+		Long accId = accountVo.getAccId();
+		this.accountService.retrieveYtdDeposit(accId, accountVo);
 		response.setAccount(accountVo);
 		return response;
 	}

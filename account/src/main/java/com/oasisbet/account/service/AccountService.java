@@ -48,10 +48,30 @@ public class AccountService {
 	@Autowired
 	private SequenceService sequenceService;
 
-	public AccountView retrieveUserAccountByUsername(String user) {
+	public AccountVO retrieveUserAccountByUsername(String user) {
 		UserView userView = userDao.findByUsername(user);
 		Long usrId = userView.getId();
-		return accountDao.findByUsrId(usrId);
+		AccountView accountView = accountDao.findByUsrId(usrId);
+		AccountVO accountVo = null;
+		if (accountView != null) {
+			accountVo = new AccountVO();
+			accountVo.setAccId(accountView.getAccId());
+			accountVo.setUsrId(accountView.getUsrId());
+			accountVo.setBalance(accountView.getBalance());
+			accountVo.setDepositLimit(accountView.getDepositLimit());
+		}
+		return accountVo;
+	}
+
+	public void retrieveYtdDeposit(Long accId, AccountVO accountVo) {
+		LocalDate today = LocalDate.now();
+		LocalDate startOfYear = today.withDayOfYear(1);
+		LocalDateTime startOfDay = startOfYear.atStartOfDay();
+		Date startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+		Double ytdDepositAmount = accountOtherTrxDao.findYtdDeposit(startDate);
+		Double ytdWithdrawalAmount = accountOtherTrxDao.findYtdWithdrawal(startDate);
+		accountVo.setYtdDepositAmt(ytdDepositAmount);
+		accountVo.setYtdWithdrawalAmt(ytdWithdrawalAmount);
 	}
 
 	public AccountRestResponse processDepositAction(AccountVO account) {

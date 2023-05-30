@@ -8,6 +8,8 @@ public class AccountVO {
 	private Double depositAmt;
 	private Double withdrawalAmt;
 	private String actionType;
+	private Double ytdDepositAmt;
+	private Double ytdWithdrawalAmt;
 
 	public Long getAccId() {
 		return accId;
@@ -63,5 +65,21 @@ public class AccountVO {
 
 	public void setActionType(String actionType) {
 		this.actionType = actionType;
+	}
+
+	public Double getYtdDepositAmt() {
+		return ytdDepositAmt;
+	}
+
+	public void setYtdDepositAmt(Double ytdDepositAmt) {
+		this.ytdDepositAmt = ytdDepositAmt;
+	}
+
+	public Double getYtdWithdrawalAmt() {
+		return ytdWithdrawalAmt;
+	}
+
+	public void setYtdWithdrawalAmt(Double ytdWithdrawalAmt) {
+		this.ytdWithdrawalAmt = ytdWithdrawalAmt;
 	}
 }

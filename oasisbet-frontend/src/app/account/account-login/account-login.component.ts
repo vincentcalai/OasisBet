@@ -66,7 +66,6 @@ export class AccountLoginComponent implements OnInit {
           console.log(resp);
             if (resp.statusCode != 0) {
               this.errorMsg = resp.resultMessage;
-              resp.resultMessage = "";
             } else {
               sessionStorage.setItem(AUTH_USER, username);
               sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
