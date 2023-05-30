@@ -38,10 +38,15 @@ public class AccountController {
 		if (accountVo == null) {
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
-			return response;
 		}
-		Long accId = accountVo.getAccId();
-		this.accountService.retrieveYtdDeposit(accId, accountVo);
+		response.setAccount(accountVo);
+		return response;
+	}
+
+	@GetMapping(value = "/retrieveYtdAmounts")
+	public AccountRestResponse retrieveYtdAmounts(@RequestParam Long accId) {
+		AccountRestResponse response = new AccountRestResponse();
+		AccountVO accountVo = this.accountService.retrieveYtdAmounts(accId);
 		response.setAccount(accountVo);
 		return response;
 	}

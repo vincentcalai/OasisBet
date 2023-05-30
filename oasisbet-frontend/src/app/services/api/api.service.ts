@@ -13,6 +13,7 @@ import { UpdateAccountModel } from 'src/app/model/update-account.model';
   providedIn: 'root'
 })
 export class ApiService {
+
   public oddsServicePrefix;
   public resultServicePrefix;
   public accountServicePrefix;
@@ -70,6 +71,13 @@ export class ApiService {
 
   retrieveAccDetails(user: string): Observable<Object> {
     return this.http.get(this.accountServicePrefix + '/account/retrieveAccDetails?user=' + user).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
+  retrieveYtdAmounts(accId: number): Observable<Object> {
+    return this.http.get(this.accountServicePrefix + '/account/retrieveYtdAmounts?accId=' + accId).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

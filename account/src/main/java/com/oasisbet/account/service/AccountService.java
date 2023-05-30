@@ -63,15 +63,20 @@ public class AccountService {
 		return accountVo;
 	}
 
-	public void retrieveYtdDeposit(Long accId, AccountVO accountVo) {
+	public AccountVO retrieveYtdAmounts(Long accId) {
+		AccountVO accountVo = new AccountVO();
 		LocalDate today = LocalDate.now();
 		LocalDate startOfYear = today.withDayOfYear(1);
 		LocalDateTime startOfDay = startOfYear.atStartOfDay();
 		Date startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
-		Double ytdDepositAmount = accountOtherTrxDao.findYtdDeposit(startDate);
-		Double ytdWithdrawalAmount = accountOtherTrxDao.findYtdWithdrawal(startDate);
+
+		Double ytdDepositAmount = accountOtherTrxDao.findYtdDeposit(accId, startDate);
+		Double ytdWithdrawalAmount = accountOtherTrxDao.findYtdWithdrawal(accId, startDate);
+		ytdDepositAmount = ytdDepositAmount == null ? 0.0 : ytdDepositAmount;
+		ytdWithdrawalAmount = ytdWithdrawalAmount == null ? 0.0 : ytdWithdrawalAmount;
 		accountVo.setYtdDepositAmt(ytdDepositAmount);
 		accountVo.setYtdWithdrawalAmt(ytdWithdrawalAmount);
+		return accountVo;
 	}
 
 	public AccountRestResponse processDepositAction(AccountVO account) {

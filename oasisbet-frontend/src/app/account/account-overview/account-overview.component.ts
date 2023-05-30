@@ -23,17 +23,14 @@ export class AccountOverviewComponent implements OnInit {
   constructor(private sharedVar: SharedVarService, private authService: AuthService, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    let username = this.authService.getAuthenticationUser();
+    this.accountModelInput = this.authService.getRetrievedAccDetails();
+
+    let accId = this.accountModelInput.accId;
 
     this.subscriptions.add(
-      this.apiService.retrieveAccDetails(username).subscribe((resp: any) => {
-          if (resp.statusCode != 0) {
-            this.errorMsg = resp.resultMessage;
-          } else {
-            this.accountModelInput = resp.account;
+      this.apiService.retrieveYtdAmounts(accId).subscribe((resp: any) => {
             this.ytdDepositAmt = resp.account.ytdDepositAmt;
             this.ytdWithdrawalAmt = resp.account.ytdWithdrawalAmt;
-          }
         } ,
           error => {
           console.log(error);
