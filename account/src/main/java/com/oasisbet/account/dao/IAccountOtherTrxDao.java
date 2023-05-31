@@ -27,4 +27,10 @@ public interface IAccountOtherTrxDao extends JpaRepository<AccountOtherTrxView, 
 	@Query("SELECT sum(aot.amount) FROM AccountOtherTrxView aot WHERE aot.accId = :accId and aot.type = 'W' and aot.trxDt >= :startDate")
 	Double findYtdWithdrawal(Long accId, Date startDate);
 
+	@Query("SELECT sum(aot.amount) FROM AccountOtherTrxView aot WHERE aot.accId = :accId and aot.type = 'D' and aot.trxDt >= :startDate")
+	Double findMtdDeposit(Long accId, Date startDate);
+
+	@Query("SELECT sum(aot.amount) FROM AccountOtherTrxView aot WHERE aot.accId = :accId and aot.type = 'W' and aot.trxDt >= :startDate")
+	Double findMtdWithdrawal(Long accId, Date startDate);
+
 }

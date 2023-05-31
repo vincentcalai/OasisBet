@@ -51,6 +51,14 @@ public class AccountController {
 		return response;
 	}
 
+	@GetMapping(value = "/retrieveMtdAmounts")
+	public AccountRestResponse retrieveMtdAmounts(@RequestParam Long accId) {
+		AccountRestResponse response = new AccountRestResponse();
+		AccountVO accountVo = this.accountService.retrieveMtdAmounts(accId);
+		response.setAccount(accountVo);
+		return response;
+	}
+
 	@GetMapping(value = "/retrieveTrx")
 	public TrxHistRestResponse retrieveTrx(@RequestParam Long accId, String type, String period) {
 		TrxHistRestResponse response = new TrxHistRestResponse();
