@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oasisbet.account.dao.IAccountBetProcessTrxDao;
 import com.oasisbet.account.dao.IAccountBetTrxDao;
 import com.oasisbet.account.dao.IAccountDao;
 import com.oasisbet.account.dao.IAccountOtherTrxDao;
@@ -24,6 +25,7 @@ import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.util.Constants;
+import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
 import com.oasisbet.account.view.AccountOtherTrxView;
 import com.oasisbet.account.view.AccountView;
@@ -41,6 +43,9 @@ public class AccountService {
 
 	@Autowired
 	private IAccountBetTrxDao accountBetTrxDao;
+
+	@Autowired
+	private IAccountBetProcessTrxDao accountBetProcessTrxDao;
 
 	@Autowired
 	private IAccountOtherTrxDao accountOtherTrxDao;
@@ -203,6 +208,7 @@ public class AccountService {
 			// process bet transactions here
 			final Long accId = accountView.get().getAccId();
 			List<AccountBetTrxView> betTrxList = new ArrayList<>();
+			List<AccountBetProcessTrxView> betProcessTrxList = new ArrayList<>();
 			betSubmissionList.forEach(betSubmission -> {
 				Long nextSeqTrxId = sequenceService.getNextTrxId();
 				Date currentDatetime = new Date();
@@ -222,9 +228,18 @@ public class AccountService {
 				accountBetTrxView.setStartTime(betSubmission.getStartTime());
 				accountBetTrxView.setTrxDateTime(currentDatetime);
 				betTrxList.add(accountBetTrxView);
+
+				AccountBetProcessTrxView accountBetProcessTrxView = new AccountBetProcessTrxView();
+				accountBetProcessTrxView.setTrxId(trxId);
+				accountBetProcessTrxView.setAccId(accId);
+				accountBetProcessTrxView.setAmount(betSubmission.getBetAmount());
+				accountBetProcessTrxView.setType(Constants.TRX_TYPE_BET);
+				accountBetProcessTrxView.setTrxDt(currentDatetime);
+				betProcessTrxList.add(accountBetProcessTrxView);
 			});
 			// persist bet transaction list into db here
 			accountBetTrxDao.saveAll(betTrxList);
+			accountBetProcessTrxDao.saveAll(betProcessTrxList);
 			Date betPlacedDateTime = new Date();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, h:mma");
 			String formattedBetPlacedDateTime = dateFormat.format(betPlacedDateTime);

@@ -32,8 +32,6 @@ export class TrxHistComponent implements OnInit {
         this.apiService.retrieveMtdAmounts(accId).subscribe((resp: any) => {
               this.mtdBetAmount = resp.account.mtdBetAmount;
               this.mtdPayout = resp.account.mtdPayout;
-              console.log("month mtdBetAmt", this.mtdBetAmount);
-              console.log("month mtdPayout", this.mtdPayout);
           } ,
             error => {
             console.log(error);
