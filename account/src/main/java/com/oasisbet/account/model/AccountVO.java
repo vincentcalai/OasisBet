@@ -10,6 +10,8 @@ public class AccountVO {
 	private String actionType;
 	private Double ytdDepositAmt;
 	private Double ytdWithdrawalAmt;
+	private Double mtdBetAmount;
+	private Double mthPayout;
 
 	public Long getAccId() {
 		return accId;
@@ -81,5 +83,21 @@ public class AccountVO {
 
 	public void setYtdWithdrawalAmt(Double ytdWithdrawalAmt) {
 		this.ytdWithdrawalAmt = ytdWithdrawalAmt;
+	}
+
+	public Double getMtdBetAmount() {
+		return mtdBetAmount;
+	}
+
+	public void setMtdBetAmount(Double mtdBetAmount) {
+		this.mtdBetAmount = mtdBetAmount;
+	}
+
+	public Double getMthPayout() {
+		return mthPayout;
+	}
+
+	public void setMthPayout(Double mthPayout) {
+		this.mthPayout = mthPayout;
 	}
 }

@@ -83,6 +83,13 @@ export class ApiService {
     );
   }
 
+  retrieveMtdAmounts(accId: number): Observable<Object> {
+    return this.http.get(this.accountServicePrefix + '/account/retrieveMtdAmounts?accId=' + accId).pipe(
+      timeout(this.timeout),
+      catchError(this.handleError)
+    );
+  }
+
   updateAccDetails(): Observable<ResponseModel> {
     return this.http.put<ResponseModel>(this.accountServicePrefix + '/account/updateAccDetails', this.sharedVar.updateAccountModel).pipe(
       timeout(this.timeout),

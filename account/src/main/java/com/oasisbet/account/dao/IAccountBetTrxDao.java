@@ -15,4 +15,7 @@ public interface IAccountBetTrxDao extends JpaRepository<AccountBetTrxView, Stri
 	@Query("SELECT abt FROM AccountBetTrxView abt WHERE abt.accId = :accId and abt.trxDateTime >= :startDate order by abt.trxDateTime desc")
 	List<AccountBetTrxView> getByDateRange(Long accId, Date startDate);
 
+	@Query("SELECT sum(abt.betAmount) FROM AccountBetTrxView abt WHERE abt.accId = :accId and abt.trxDateTime >= :startDate")
+	Double findMtdBetAmount(Long accId, Date startDate);
+
 }

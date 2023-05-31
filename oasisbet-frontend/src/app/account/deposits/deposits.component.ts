@@ -22,14 +22,14 @@ export class DepositsComponent implements OnInit {
   public depositControl: FormControl;
   public accountModelInput: AccountModel;
   @Output() onSelectTrxMenu: EventEmitter<string>;
-  
+
   constructor(
-    private sharedVar: SharedVarService, 
-    public reactiveFormService: ReactiveFormService, 
-    private authService: AuthService, 
+    private sharedVar: SharedVarService,
+    public reactiveFormService: ReactiveFormService,
+    private authService: AuthService,
     private apiService: ApiService,
-    private router: Router) 
-  { 
+    private router: Router)
+  {
     this.onSelectTrxMenu = new EventEmitter<string>();
   }
 
@@ -84,5 +84,5 @@ export class DepositsComponent implements OnInit {
   ngOnDestory(){
     this.subscriptions.unsubscribe();
   }
-  
+
 }

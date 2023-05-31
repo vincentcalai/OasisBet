@@ -86,12 +86,10 @@ public class AccountService {
 		LocalDateTime startOfDay = startOfMonth.atStartOfDay();
 		Date startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
 
-		Double mtdDepositAmount = accountOtherTrxDao.findMtdDeposit(accId, startDate);
-		Double mtdWithdrawalAmount = accountOtherTrxDao.findMtdWithdrawal(accId, startDate);
-		mtdDepositAmount = mtdDepositAmount == null ? 0.0 : mtdDepositAmount;
-		mtdWithdrawalAmount = mtdWithdrawalAmount == null ? 0.0 : mtdWithdrawalAmount;
-		accountVo.setYtdDepositAmt(mtdDepositAmount);
-		accountVo.setYtdWithdrawalAmt(mtdWithdrawalAmount);
+		Double mtdBetAmount = accountBetTrxDao.findMtdBetAmount(accId, startDate);
+		mtdBetAmount = mtdBetAmount == null ? 0.0 : mtdBetAmount;
+		accountVo.setMtdBetAmount(mtdBetAmount);
+		// accountVo.setMthPayout(mtdPayout);
 		return accountVo;
 	}
 

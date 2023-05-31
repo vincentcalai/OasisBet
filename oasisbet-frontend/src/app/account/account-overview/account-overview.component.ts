@@ -38,9 +38,6 @@ export class AccountOverviewComponent implements OnInit {
         }
        )
     )
-
-    //this.accountModelInput = this.authService.getRetrievedAccDetails();
-    //console.log(this.accountModelInput);
   }
 
 }
