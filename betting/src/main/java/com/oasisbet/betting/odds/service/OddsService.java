@@ -120,10 +120,8 @@ public class OddsService {
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 		// long betEventSeq = getSequenceValue(collection, compType);
 
-		List<OddsApiResponse> resultsList = new ArrayList<>(Arrays.asList(results));
-
 		// check for missing bet events in DB and insert them
-		for (OddsApiResponse result : resultsList) {
+		for (OddsApiResponse result : results) {
 			String id = result.getId();
 			Bson filter = Filters.and(Filters.eq("comp_type", compType), Filters.eq("api_event_id", id));
 
@@ -131,12 +129,12 @@ public class OddsService {
 
 			if (!recordExists) {
 				// Record does not exists in the collection
-				logger.info("id: " + id + " does not exist in MongoDB");
+				logger.info("id: " + id + " does not exist in local table but exist in the api source");
 				// implement insert of bet event from api source here
 			}
 		}
 
-		List<String> apiSourceIdList = resultsList.stream().map(OddsApiResponse::getId).collect(Collectors.toList());
+		List<String> apiSourceIdList = Arrays.stream(results).map(OddsApiResponse::getId).collect(Collectors.toList());
 
 		// check for ended bet events in DB and remove them
 		for (Document document : collection.find(Filters.eq("comp_type", compType))) {
