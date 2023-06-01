@@ -118,7 +118,6 @@ public class OddsService {
 
 	public void syncAllBetEvents(String compType, OddsApiResponse[] results) {
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
-		// long betEventSeq = getSequenceValue(collection, compType);
 
 		// check for missing bet events in DB and insert them
 		for (OddsApiResponse result : results) {
@@ -133,7 +132,7 @@ public class OddsService {
 				Document betEventDocument = new Document();
 				betEventDocument.append("event_id", getSequenceValue(collection, compType)).append("api_event_id", id)
 						.append("comp_type", compType);
-				// Insert the document into the collection
+				// Insert the document into the local table
 				collection.insertOne(betEventDocument);
 				logger.info("Bet event with id: {} inserted into the collection.", id);
 			}
@@ -146,8 +145,9 @@ public class OddsService {
 			String apiEventId = document.getString("api_event_id");
 			if (!apiSourceIdList.contains(apiEventId)) {
 				logger.info("id: {} exist in local table but does not exist in the api source", apiEventId);
-				// implement remove of bet event in local table here
-
+				// Remove of bet event in local table
+				collection.deleteOne(Filters.eq("api_event_id", apiEventId));
+				logger.info("Deleted record with apiEventId: {}", apiEventId);
 			}
 		}
 
