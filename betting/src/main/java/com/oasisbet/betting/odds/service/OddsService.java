@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.client.MongoCollection;
@@ -23,6 +24,7 @@ import com.oasisbet.betting.odds.model.Market;
 import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.odds.model.TeamsDetails;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
+import com.oasisbet.betting.util.Constants;
 import com.oasisbet.betting.util.EventIdGenerator;
 import com.oasisbet.betting.util.MongoDBConnection;
 
@@ -81,27 +83,52 @@ public class OddsService {
 		return betEventList;
 	}
 
-	public long getSequenceValue(MongoCollection<Document> collection) {
+	public long getSequenceValue(MongoCollection<Document> collection, String compType) {
 		// Find the document with the highest _id value
-//		EventIdMap doc = collection.find().sort(new EventIdMap("_id", -1)).limit(1).first();
-//		EventIdMap eplEvents = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId")).limit(1)
-//				.first();
-		Document document = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId")).limit(1)
-				.first();
+		Document document = collection.find(Filters.eq("comp_type", compType)).sort(Sorts.descending("event_id"))
+				.limit(1).first();
 
 		// If no documents exist yet, start the sequence at 0
 		if (document == null) {
-			return 1000;
+			switch (compType) {
+			case Constants.API_SOURCE_COMP_TYPE_EPL:
+				return 1000000;
+			case Constants.API_SOURCE_COMP_TYPE_LALIGA:
+				return 2000000;
+			case Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA:
+				return 3000000;
+			case Constants.API_SOURCE_COMP_TYPE_SERIE_A:
+				return 4000000;
+			case Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE:
+				return 5000000;
+			default:
+				throw new IllegalArgumentException("Invalid competition type: " + compType);
+			}
 		}
 
 		// Get the value of the highest _id and return it
-		return document.getInteger("eventId") + 1;
+		return document.getInteger("event_id") + 1;
 	}
 
-	public void syncNewEvents() {
+	public void syncAllBetEvents(String compType, OddsApiResponse[] results) {
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
+		// long betEventSeq = getSequenceValue(collection, compType);
 
-		long betEventSeq = getSequenceValue(collection);
+		// check for missing bet events in DB and insert them
+		for (OddsApiResponse result : results) {
+			String id = result.getId();
+			Bson filter = Filters.and(Filters.eq("comp_type", compType), Filters.eq("api_event_id", id));
+
+			boolean recordExists = collection.find(filter).limit(1).iterator().hasNext();
+
+			if (!recordExists) {
+				// Record does not exists in the collection
+				System.out.println("id: " + id + " does not exist in MongoDB");
+				// implement insert of bet event here
+			}
+		}
+
+		// check for ended bet events in DB and remove them
 
 	}
 

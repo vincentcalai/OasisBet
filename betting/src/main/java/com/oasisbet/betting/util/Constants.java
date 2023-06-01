@@ -21,6 +21,12 @@ public class Constants {
 	public static final String API_SOURCE_URI_ODDS_FORMAT_PARAM = "oddsFormat=";
 	public static final String API_SOURCE_URI_BOOKMKR_PARAM = "bookmakers=";
 
+	public static final String API_SOURCE_COMP_TYPE_EPL = "soccer_epl";
+	public static final String API_SOURCE_COMP_TYPE_LALIGA = "soccer_spain_la_liga";
+	public static final String API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
+	public static final String API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
+	public static final String API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+
 	// Success Messages
 	public static final String BET_SUCCESS_MSG = "Bet successfully placed!";
 

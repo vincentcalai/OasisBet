@@ -16,8 +16,8 @@ public class MongoDBConnection {
 	private MongoDBConnection() {
 		// private constructor to prevent instantiation outside of the class
 		this.mongoClient = MongoClients.create("mongodb://localhost:27017");
-		this.database = mongoClient.getDatabase("oasisbet_app");
-		this.collection = database.getCollection("event_id_map");
+		this.database = mongoClient.getDatabase("OasisBet");
+		this.collection = database.getCollection("sports_event_mapping");
 	}
 
 	public static synchronized MongoDBConnection getInstance() {
