@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.client.MongoCollection;
@@ -30,6 +33,9 @@ import com.oasisbet.betting.util.MongoDBConnection;
 
 @Service
 public class OddsService {
+
+	private Logger logger = LoggerFactory.getLogger(OddsService.class);
+
 	public List<BetEvent> processMapping(OddsApiResponse[] results) throws ParseException {
 		List<BetEvent> betEventList = new ArrayList<>();
 		for (OddsApiResponse result : results) {
@@ -114,8 +120,10 @@ public class OddsService {
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 		// long betEventSeq = getSequenceValue(collection, compType);
 
+		List<OddsApiResponse> resultsList = new ArrayList<>(Arrays.asList(results));
+
 		// check for missing bet events in DB and insert them
-		for (OddsApiResponse result : results) {
+		for (OddsApiResponse result : resultsList) {
 			String id = result.getId();
 			Bson filter = Filters.and(Filters.eq("comp_type", compType), Filters.eq("api_event_id", id));
 
@@ -123,12 +131,22 @@ public class OddsService {
 
 			if (!recordExists) {
 				// Record does not exists in the collection
-				System.out.println("id: " + id + " does not exist in MongoDB");
-				// implement insert of bet event here
+				logger.info("id: " + id + " does not exist in MongoDB");
+				// implement insert of bet event from api source here
 			}
 		}
 
+		List<String> apiSourceIdList = resultsList.stream().map(OddsApiResponse::getId).collect(Collectors.toList());
+
 		// check for ended bet events in DB and remove them
+		for (Document document : collection.find(Filters.eq("comp_type", compType))) {
+			String apiEventId = document.getString("api_event_id");
+			if (!apiSourceIdList.contains(apiEventId)) {
+				logger.info("id: " + apiEventId + " exist in local table but does not exist in the api source");
+				// implement remove of bet event in local table here
+
+			}
+		}
 
 	}
 
