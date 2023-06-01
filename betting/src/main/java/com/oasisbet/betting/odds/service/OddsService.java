@@ -128,9 +128,14 @@ public class OddsService {
 			boolean recordExists = collection.find(filter).limit(1).iterator().hasNext();
 
 			if (!recordExists) {
-				// Record does not exists in the collection
-				logger.info("id: " + id + " does not exist in local table but exist in the api source");
-				// implement insert of bet event from api source here
+				logger.info("id: {} does not exist in local table but exist in the api source", id);
+				// Create a new document for the bet event
+				Document betEventDocument = new Document();
+				betEventDocument.append("event_id", getSequenceValue(collection, compType)).append("api_event_id", id)
+						.append("comp_type", compType);
+				// Insert the document into the collection
+				collection.insertOne(betEventDocument);
+				logger.info("Bet event with id: {} inserted into the collection.", id);
 			}
 		}
 
@@ -140,7 +145,7 @@ public class OddsService {
 		for (Document document : collection.find(Filters.eq("comp_type", compType))) {
 			String apiEventId = document.getString("api_event_id");
 			if (!apiSourceIdList.contains(apiEventId)) {
-				logger.info("id: " + apiEventId + " exist in local table but does not exist in the api source");
+				logger.info("id: {} exist in local table but does not exist in the api source", apiEventId);
 				// implement remove of bet event in local table here
 
 			}
