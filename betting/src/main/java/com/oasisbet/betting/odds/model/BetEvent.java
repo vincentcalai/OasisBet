@@ -3,7 +3,7 @@ package com.oasisbet.betting.odds.model;
 import java.util.Date;
 
 public class BetEvent {
-	public long eventId;
+	public Long eventId;
 	public String competition;
 	public String eventDesc;
 	public Date startTime;
@@ -20,11 +20,11 @@ public class BetEvent {
 		this.h2hEventOdds = h2hEventOdds;
 	}
 
-	public long getEventId() {
+	public Long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(long eventId) {
+	public void setEventId(Long eventId) {
 		this.eventId = eventId;
 	}
 

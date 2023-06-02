@@ -8,7 +8,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -28,11 +30,12 @@ import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.odds.model.TeamsDetails;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
 import com.oasisbet.betting.util.Constants;
-import com.oasisbet.betting.util.EventIdGenerator;
 import com.oasisbet.betting.util.MongoDBConnection;
 
 @Service
 public class OddsService {
+
+	private static Map<String, Long> apiSourceIdMap = new HashMap<>();
 
 	private Logger logger = LoggerFactory.getLogger(OddsService.class);
 
@@ -74,22 +77,23 @@ public class OddsService {
 				String eventDesc = homeTeam + " vs " + awayTeam;
 				String competition = result.getSport_title();
 				BetEvent event = new BetEvent(competition, eventDesc, startTime, teamDetails, h2hEventOdds);
+				event.setEventId(apiSourceIdMap.get(result.getId()));
 				betEventList.add(event);
 			}
 		}
 
 		betEventList = betEventList.stream().sorted(Comparator.comparing(BetEvent::getStartTime)).map(event -> {
-			long eventId = EventIdGenerator.nextId();
-			event.setEventId(eventId);
+//			long eventId = EventIdGenerator.nextId();
+//			event.setEventId(eventId);
 			H2HEventOdds h2hEventOdds = event.getH2hEventOdds();
-			h2hEventOdds.setEventId(eventId);
+			h2hEventOdds.setEventId(event.getEventId());
 			event.setH2hEventOdds(h2hEventOdds);
 			return event;
 		}).collect(Collectors.toList());
 		return betEventList;
 	}
 
-	public long getSequenceValue(MongoCollection<Document> collection, String compType) {
+	public Long getSequenceValue(MongoCollection<Document> collection, String compType) {
 		// Find the document with the highest _id value
 		Document document = collection.find(Filters.eq("comp_type", compType)).sort(Sorts.descending("event_id"))
 				.limit(1).first();
@@ -98,22 +102,22 @@ public class OddsService {
 		if (document == null) {
 			switch (compType) {
 			case Constants.API_SOURCE_COMP_TYPE_EPL:
-				return 1000000;
+				return 1000000L;
 			case Constants.API_SOURCE_COMP_TYPE_LALIGA:
-				return 2000000;
+				return 2000000L;
 			case Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA:
-				return 3000000;
+				return 3000000L;
 			case Constants.API_SOURCE_COMP_TYPE_SERIE_A:
-				return 4000000;
+				return 4000000L;
 			case Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE:
-				return 5000000;
+				return 5000000L;
 			default:
 				throw new IllegalArgumentException("Invalid competition type: " + compType);
 			}
 		}
 
 		// Get the value of the highest _id and return it
-		return document.getInteger("event_id") + 1;
+		return document.getLong("event_id") + 1;
 	}
 
 	public void syncAllBetEvents(String compType, OddsApiResponse[] results) {
@@ -121,20 +125,27 @@ public class OddsService {
 
 		// check for missing bet events in DB and insert them
 		for (OddsApiResponse result : results) {
-			String id = result.getId();
-			Bson filter = Filters.and(Filters.eq("comp_type", compType), Filters.eq("api_event_id", id));
+			String apiEventId = result.getId();
+			Bson filter = Filters.and(Filters.eq("comp_type", compType), Filters.eq("api_event_id", apiEventId));
 
 			boolean recordExists = collection.find(filter).limit(1).iterator().hasNext();
 
 			if (!recordExists) {
-				logger.info("id: {} does not exist in local table but exist in the api source", id);
+				logger.info("id: {} does not exist in local table but exist in the api source", apiEventId);
 				// Create a new document for the bet event
-				Document betEventDocument = new Document();
-				betEventDocument.append("event_id", getSequenceValue(collection, compType)).append("api_event_id", id)
-						.append("comp_type", compType);
+				Document newBetEventDocument = new Document();
+				newBetEventDocument.append("event_id", getSequenceValue(collection, compType))
+						.append("api_event_id", apiEventId).append("comp_type", compType);
 				// Insert the document into the local table
-				collection.insertOne(betEventDocument);
-				logger.info("Bet event with id: {} inserted into the collection.", id);
+				collection.insertOne(newBetEventDocument);
+				logger.info("Bet event with id: {} inserted into the collection.", apiEventId);
+			}
+
+			// Map all current bet events to local HashMap
+			if (!apiSourceIdMap.containsKey(apiEventId)) {
+				Document document = collection.find(filter).limit(1).first();
+				Long eventId = document.getLong("event_id");
+				apiSourceIdMap.put(apiEventId, eventId);
 			}
 		}
 
