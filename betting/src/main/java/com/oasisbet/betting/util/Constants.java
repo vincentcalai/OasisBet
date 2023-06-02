@@ -27,6 +27,10 @@ public class Constants {
 	public static final String API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
 	public static final String API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
 
+	public static final String EVENT_ID = "event_id";
+	public static final String COMP_TYPE = "comp_type";
+	public static final String API_EVENT_ID = "api_event_id";
+
 	// Success Messages
 	public static final String BET_SUCCESS_MSG = "Bet successfully placed!";
 
