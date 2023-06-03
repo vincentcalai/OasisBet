@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "647a9ef168563948516e7469"
+  },
+  "event_id": 1000005,
+  "api_event_id": "a085aa8beb661722ad957e5d8c15f798",
+  "comp_type": "soccer_epl"
+},
+{
+  "_id": {
+    "$oid": "647aa02468563948516e746d"
+  },
+  "event_id": 2000003,
+  "api_event_id": "d4e3a23b451b0c26782e4f5e7d8f9321",
+  "comp_type": "soccer_spain_la_liga"
+},
+{
+  "_id": {
+    "$oid": "647aa02868563948516e746e"
+  },
+  "event_id": 2000004,
+  "api_event_id": "8f2b58e32b1c4d10d9e6718214a5246d",
+  "comp_type": "soccer_spain_la_liga"
+},
+{
+  "_id": {
+    "$oid": "647aa0ac68563948516e746f"
+  },
+  "event_id": 1000006,
+  "api_event_id": "f7d5d5a141e21df15f23b5e306340bed",
+  "comp_type": "soccer_epl"
+},
+{
+  "_id": {
+    "$oid": "647aa0ac68563948516e7470"
+  },
+  "event_id": 1000007,
+  "api_event_id": "66ca5a121b5ddc4763cf1708222be377",
+  "comp_type": "soccer_epl"
+}]
