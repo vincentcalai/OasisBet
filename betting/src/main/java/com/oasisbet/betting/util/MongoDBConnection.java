@@ -1,7 +1,5 @@
 package com.oasisbet.betting.util;
 
-import javax.annotation.PostConstruct;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,12 +17,11 @@ public class MongoDBConnection {
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
 
-	@Autowired
-	private MongoDBConfig mongoDBConfig;
+	private static MongoDBConfig mongoDBConfig;
 
-	@PostConstruct
-	public void init() {
-		MongoDBConnection.instance = new MongoDBConnection(mongoDBConfig);
+	@Autowired
+	public void initMongoDBConnection(MongoDBConfig mongoDBConfig) {
+		MongoDBConnection.mongoDBConfig = mongoDBConfig;
 	}
 
 	@Autowired
@@ -38,9 +35,9 @@ public class MongoDBConnection {
 	public static synchronized MongoDBConnection getInstance() {
 		// lazy initialization - only create instance when it is requested for the first
 		// time
-//		if (instance == null) {
-//			instance = new MongoDBConnection(mongoDBConfig);
-//		}
+		if (instance == null) {
+			instance = new MongoDBConnection(mongoDBConfig);
+		}
 		return instance;
 	}
 
