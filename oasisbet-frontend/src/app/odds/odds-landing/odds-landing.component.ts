@@ -44,12 +44,26 @@ export class OddsLandingComponent implements OnInit  {
 
           //initiliase H2HBetSelection object and save to all events
           this.events.map(event => {
-            const initBetSelection = new H2HBetSelection();
-            event.betSelection = initBetSelection;
+              const initBetSelection = new H2HBetSelection();
+              event.betSelection = initBetSelection;
           });
 
           //convert json response from String to Date format
           this.events.map(event => event.startTime = new Date(event.startTime));
+
+          //record those bet selection in current bet slip to match bet selection on screen
+          this.selectedBets.forEach( betInBetSlip => {
+            let betEvent: BetEvent | undefined = this.events.find(event => event.eventId === betInBetSlip.eventId);
+            if(betEvent){
+              if(betInBetSlip.betTypeCd === this.sharedVar.BET_TYPE_CD_H2H && betInBetSlip.betSelection === this.sharedVar.BET_SELECTION_H2H_HOME){
+                betEvent.betSelection.homeSelected = true;
+              } else if(betInBetSlip.betTypeCd === this.sharedVar.BET_TYPE_CD_H2H && betInBetSlip.betSelection === this.sharedVar.BET_SELECTION_H2H_DRAW){
+                betEvent.betSelection.drawSelected = true;
+              } else if(betInBetSlip.betTypeCd === this.sharedVar.BET_TYPE_CD_H2H && betInBetSlip.betSelection === this.sharedVar.BET_SELECTION_H2H_AWAY){
+                betEvent.betSelection.awaySelected = true;
+              }
+            }
+          });
 
           //save unique event dates from all events retrieved
           this.eventDates = Array.from(new Set(this.events.map(event => {
