@@ -2,6 +2,7 @@ package com.oasisbet.betting.util;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.client.MongoClient;
@@ -10,6 +11,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 @Component
+@Profile("!test")
 public class MongoDBConnection {
 
 	private static MongoDBConnection instance = null;
