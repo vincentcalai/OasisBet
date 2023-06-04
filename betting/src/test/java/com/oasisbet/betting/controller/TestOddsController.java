@@ -23,6 +23,7 @@ import com.oasisbet.betting.odds.model.BetSubmissionVO;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.proxy.AccountProxy;
+import com.oasisbet.betting.util.Constants;
 
 @ExtendWith(MockitoExtension.class)
 public class TestOddsController extends TestBaseSetup {
@@ -37,12 +38,31 @@ public class TestOddsController extends TestBaseSetup {
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void testSubmitBet() throws JsonProcessingException, Exception {
+	public void testSubmitBetSuccess() throws JsonProcessingException, Exception {
 		BetSlipRest betsInput = mockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();
 
 		Mockito.when(proxy.processBet(Mockito.any(BetSlipRest.class))).thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(betsInput);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
+	public void testSubmitBetFail() throws JsonProcessingException, Exception {
+		BetSlipRest betsInput = mockBetSubmissionData();
+
+		StatusResponse expectedResponse = new StatusResponse();
+		expectedResponse.setStatusCode(1);
+		expectedResponse.setResultMessage(Constants.BET_PROCESS_ERROR);
+
+		Mockito.when(proxy.processBet(Mockito.any(BetSlipRest.class))).thenThrow(new Exception());
 
 		String request = objectMapper.writeValueAsString(betsInput);
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")

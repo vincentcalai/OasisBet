@@ -10,5 +10,5 @@ import com.oasisbet.betting.odds.model.response.StatusResponse;
 public interface AccountProxy {
 
 	@PostMapping("/account/processBet")
-	public StatusResponse processBet(BetSlipRest betsInput);
+	public StatusResponse processBet(BetSlipRest betsInput) throws Exception;
 }

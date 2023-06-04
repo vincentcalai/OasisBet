@@ -35,6 +35,7 @@ public class Constants {
 	public static final String BET_SUCCESS_MSG = "Bet successfully placed!";
 
 	// Error Messages
+	public static final String BET_PROCESS_ERROR = "There is an error while processing your bet. Please contact the administrator.";
 	public static final String RETRIEVE_ODDS_API_EXCEPTION = "Error Retrieving Odds from source API";
 	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
 

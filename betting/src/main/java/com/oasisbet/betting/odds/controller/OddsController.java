@@ -92,7 +92,16 @@ public class OddsController {
 	@PostMapping(value = "/bets")
 	public StatusResponse submitBet(@RequestBody BetSlipRest betsInput) {
 		// Make the API call to the Account microservice using the Feign Client
-		StatusResponse response = proxy.processBet(betsInput);
+		StatusResponse response = null;
+		try {
+			response = proxy.processBet(betsInput);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			response = new StatusResponse();
+			response.setStatusCode(1);
+			response.setResultMessage(Constants.BET_PROCESS_ERROR);
+			logger.error("error while processing bet ", e);
+		}
 		return response;
 	}
 
