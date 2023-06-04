@@ -59,13 +59,11 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr *ngIf = '!events || events.length == 0'>
-                                      <td class='text-center' colspan=12>
-                                        No Event(s) Found.
-                                      </td>
-                                    </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="container-fluid text-center" *ngIf = '!eventDates || eventDates.length == 0'>
+                            <span>No Event(s) Found.</span>
                         </div>
                     </div>
                 </div>
