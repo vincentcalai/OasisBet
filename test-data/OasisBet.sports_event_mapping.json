@@ -1,0 +1,70 @@
+[{
+  "event_id": 1000000,
+  "api_event_id": "66ca5a121b5ddc4763cf1708222be377",
+  "comp_type": "soccer_epl"
+},
+{
+  "event_id": 1000001,
+  "api_event_id": "a085aa8beb661722ad957e5d8c15f798",
+  "comp_type": "soccer_epl"
+},
+{
+  "event_id": 1000002,
+  "api_event_id": "f7d5d5a141e21df15f23b5e306340bed",
+  "comp_type": "soccer_epl"
+},
+{
+  "event_id": 2000000,
+  "api_event_id": "d4e3a23b451b0c26782e4f5e7d8f9321",
+  "comp_type": "soccer_spain_la_liga"
+},
+{
+  "event_id": 2000001,
+  "api_event_id": "8f2b58e32b1c4d10d9e6718214a5246d",
+  "comp_type": "soccer_spain_la_liga"
+},
+{
+  "event_id": 3000000,
+  "api_event_id": "6bfc7d4b024f39859f731e739e9e9fe2",
+  "comp_type": "soccer_germany_bundesliga"
+},
+{
+  "event_id": 3000001,
+  "api_event_id": "74c9ae71b731a5e2bc7631ff0dca54e9",
+  "comp_type": "soccer_germany_bundesliga"
+},
+{
+  "event_id": 3000002,
+  "api_event_id": "8f26dbb905e61d37a2c84c9428b1e98f",
+  "comp_type": "soccer_germany_bundesliga"
+},
+{
+  "event_id": 5000000,
+  "api_event_id": "20d0c5053a0914f753cb2fcf6f84416e",
+  "comp_type": "soccer_france_ligue_one"
+},
+{
+  "event_id": 5000001,
+  "api_event_id": "4d7e79c8f19a620caea24c05ebdce377",
+  "comp_type": "soccer_france_ligue_one"
+},
+{
+  "event_id": 5000002,
+  "api_event_id": "a2e81b5f49a99cc20b58de1ad5ae98a6",
+  "comp_type": "soccer_france_ligue_one"
+},
+{
+  "event_id": 4000000,
+  "api_event_id": "c4899d1a8129766fd5274de2c9b3a75b",
+  "comp_type": "soccer_italy_serie_a"
+},
+{
+  "event_id": 4000001,
+  "api_event_id": "d67985c60227e89deabf406c0f2af616",
+  "comp_type": "soccer_italy_serie_a"
+},
+{
+  "event_id": 4000002,
+  "api_event_id": "f3e32c2929d70533b2110a147b0c2858",
+  "comp_type": "soccer_italy_serie_a"
+}]
