@@ -119,7 +119,8 @@ public class OddsService {
 	public void syncAllBetEvents(String compType, OddsApiResponse[] results) {
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 
-		Arrays.sort(results, Comparator.comparing(OddsApiResponse::getCommence_time));
+		Arrays.sort(results, Comparator.comparing(OddsApiResponse::getCommence_time,
+				Comparator.nullsFirst(Comparator.naturalOrder())));
 
 		// check for missing bet events in DB and insert them
 		for (OddsApiResponse result : results) {
