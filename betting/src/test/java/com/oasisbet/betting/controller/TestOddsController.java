@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.betting.TestBaseSetup;
 import com.oasisbet.betting.odds.model.BetSubmissionVO;
@@ -38,7 +37,7 @@ public class TestOddsController extends TestBaseSetup {
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void testSubmitBetSuccess() throws JsonProcessingException, Exception {
+	public void testSubmitBetSuccess() throws Exception {
 		BetSlipRest betsInput = mockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();
@@ -55,7 +54,7 @@ public class TestOddsController extends TestBaseSetup {
 	}
 
 	@Test
-	public void testSubmitBetFail() throws JsonProcessingException, Exception {
+	public void testSubmitBetFail() throws Exception {
 		BetSlipRest betsInput = mockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();
