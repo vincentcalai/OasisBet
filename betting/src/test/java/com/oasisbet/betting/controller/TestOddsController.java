@@ -1,9 +1,5 @@
 package com.oasisbet.betting.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -18,7 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.betting.TestBaseSetup;
-import com.oasisbet.betting.odds.model.BetSubmissionVO;
+import com.oasisbet.betting.fixture.BettingFixture;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.proxy.AccountProxy;
@@ -38,7 +34,7 @@ public class TestOddsController extends TestBaseSetup {
 
 	@Test
 	public void testSubmitBetSuccess() throws Exception {
-		BetSlipRest betsInput = mockBetSubmissionData();
+		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();
 
@@ -55,7 +51,7 @@ public class TestOddsController extends TestBaseSetup {
 
 	@Test
 	public void testSubmitBetFail() throws Exception {
-		BetSlipRest betsInput = mockBetSubmissionData();
+		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();
 		expectedResponse.setStatusCode(1);
@@ -72,23 +68,4 @@ public class TestOddsController extends TestBaseSetup {
 				.andExpect(MockMvcResultMatchers.content().json(response));
 	}
 
-	private BetSlipRest mockBetSubmissionData() {
-		BetSlipRest betsInput = new BetSlipRest();
-		betsInput.setUserId(22L);
-		List<BetSubmissionVO> betSubmissionVOlist = new ArrayList<>();
-		BetSubmissionVO betSubmission = new BetSubmissionVO();
-		betSubmission.setEventId(1000001L);
-		betSubmission.setBetAmount(1.00);
-		betSubmission.setBetSelection("01");
-		betSubmission.setBetSelectionName("Manchester United");
-		betSubmission.setBetTypeCd("01");
-		betSubmission.setCompType("soccer_epl");
-		betSubmission.setEventDesc("Manchester City vs Manchester United");
-		betSubmission.setOdds(4.05);
-		betSubmission.setPotentialPayout(4.05);
-		betSubmission.setStartTime(new Date());
-		betSubmissionVOlist.add(betSubmission);
-		betsInput.setBetSlip(betSubmissionVOlist);
-		return betsInput;
-	}
 }
