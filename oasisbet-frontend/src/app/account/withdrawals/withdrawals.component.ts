@@ -24,7 +24,7 @@ export class WithdrawalsComponent implements OnInit {
   @Output() onSelectTrxMenu: EventEmitter<string>;
 
   constructor(
-      public sharedVar: SharedVarService, 
+      public sharedVar: SharedVarService,
       private authService: AuthService,
       public reactiveFormService: ReactiveFormService,
       private apiService: ApiService
@@ -54,7 +54,7 @@ export class WithdrawalsComponent implements OnInit {
     this.errorMsg = "";
     this.responseMsg = "";
     const username = this.authService.getAuthenticationUser();
-    
+
     if(this.withdrawalForm.valid){
       console.log("withdrawal amount front end validation passed!");
       this.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
@@ -114,7 +114,7 @@ export class WithdrawalsComponent implements OnInit {
     return this.withdrawalForm.get('password');
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
     this.subscriptions.unsubscribe();
   }
 }
