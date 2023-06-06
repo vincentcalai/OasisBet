@@ -81,7 +81,7 @@ export class DepositsComponent implements OnInit {
     }
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
     this.subscriptions.unsubscribe();
   }
 

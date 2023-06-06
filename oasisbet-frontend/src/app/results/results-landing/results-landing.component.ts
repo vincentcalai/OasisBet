@@ -40,7 +40,7 @@ export class ResultsLandingComponent implements OnInit {
     );
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
     this.subscriptions.unsubscribe();
   }
 
