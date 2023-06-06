@@ -83,7 +83,7 @@ export class AccountLoginComponent implements OnInit {
     )
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
     this.sharedVar.changeShowUserNotLoginMsg(null);
     this.subscriptions.unsubscribe();
   }
