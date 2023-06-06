@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
 
-@FeignClient(name = "account", url = "localhost:8803")
+@FeignClient(name = "account")
 public interface AccountProxy {
 
 	@PostMapping("/account/processBet")
