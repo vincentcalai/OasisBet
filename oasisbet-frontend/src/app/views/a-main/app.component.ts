@@ -33,7 +33,7 @@ export class AppComponent {
       }));
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
     this.subscriptions.unsubscribe();
   }
 }

@@ -25,7 +25,7 @@ export class AccountLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.sharedVar.showUserNotLoginSource.subscribe(message => this.errorMsg = message)
+      this.sharedVar.showUserNotLoginSource.subscribe(message => 
     );
 
     //get response success message after creating user
@@ -81,7 +81,8 @@ export class AccountLoginComponent implements OnInit {
     )
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
+    this.sharedVar.changeShowUserNotLoginMsg(null);
     this.subscriptions.unsubscribe();
   }
 

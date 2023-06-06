@@ -90,7 +90,7 @@ export class CreateUserComponent implements OnInit {
     }
   }
 
-  ngOnDestory(){
+  ngOnDestroy(){
     this.subscriptions.unsubscribe();
   }
 
