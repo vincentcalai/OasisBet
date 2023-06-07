@@ -1,5 +1,8 @@
 package com.oasisbet.account.controller;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +19,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.account.TestWithSpringBoot;
+import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
+import com.oasisbet.account.model.request.AccountRest;
+import com.oasisbet.account.model.request.BetSlipRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
@@ -143,4 +150,68 @@ public class TestAccountController extends TestWithSpringBoot {
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json(response));
 	}
+
+	@Test
+	public void testUpdateAccDetailsOnDeposit() throws Exception {
+
+		AccountRest accountRest = new AccountRest();
+		AccountVO accountVo = new AccountVO();
+		accountVo.setAccId(100003L);
+		accountVo.setActionType("D");
+		accountRest.setAccount(accountVo);
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		Mockito.when(accountService.processDepositAction(Mockito.any(AccountVO.class))).thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(accountRest);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/account/updateAccDetails")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+		verify(accountService, times(1)).processDepositAction(Mockito.any(AccountVO.class));
+	}
+
+	@Test
+	public void testUpdateAccDetailsOnWithdrawal() throws Exception {
+
+		AccountRest accountRest = new AccountRest();
+		AccountVO accountVo = new AccountVO();
+		accountVo.setAccId(100003L);
+		accountVo.setActionType("W");
+		accountRest.setAccount(accountVo);
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		Mockito.when(accountService.processWithdrawalAction(Mockito.any(AccountVO.class))).thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(accountRest);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/account/updateAccDetails")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+		verify(accountService, times(1)).processWithdrawalAction(Mockito.any(AccountVO.class));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testProcessBet() throws Exception {
+
+		BetSlipRest betSlipRest = AccountFixture.createMockBetSubmissionData();
+
+		StatusResponse expectedResponse = new StatusResponse();
+		Mockito.when(accountService.processBet(Mockito.any(Long.class), Mockito.any(List.class)))
+				.thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(betSlipRest);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/account/processBet")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
 }
