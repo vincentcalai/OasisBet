@@ -55,9 +55,12 @@ public class AccountService {
 
 	public AccountVO retrieveUserAccountByUsername(String user) {
 		UserView userView = userDao.findByUsername(user);
+		AccountVO accountVo = null;
+		if (userView == null) {
+			return accountVo;
+		}
 		Long usrId = userView.getId();
 		AccountView accountView = accountDao.findByUsrId(usrId);
-		AccountVO accountVo = null;
 		if (accountView != null) {
 			accountVo = new AccountVO();
 			accountVo.setAccId(accountView.getAccId());
