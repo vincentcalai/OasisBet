@@ -63,4 +63,26 @@ public class TestAccountController extends TestWithSpringBoot {
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json(response));
 	}
+
+	@Test
+	public void testRetrieveYtdAmounts() throws Exception {
+		Long accId = 100003L;
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		AccountVO accountVo = new AccountVO();
+		accountVo.setUsrId(3L);
+		accountVo.setBalance(20.00);
+		accountVo.setYtdDepositAmt(20.00);
+		accountVo.setYtdWithdrawalAmt(50.00);
+		expectedResponse.setAccount(accountVo);
+
+		Mockito.when(accountService.retrieveYtdAmounts(Mockito.any(Long.class))).thenReturn(accountVo);
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveYtdAmounts")
+				.contentType(MediaType.APPLICATION_JSON).param("accId", String.valueOf(accId));
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
 }
