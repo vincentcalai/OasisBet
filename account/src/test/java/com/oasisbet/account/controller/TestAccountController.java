@@ -1,5 +1,9 @@
 package com.oasisbet.account.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.account.TestWithSpringBoot;
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
+import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
 import com.oasisbet.account.util.Constants;
 
@@ -80,6 +86,58 @@ public class TestAccountController extends TestWithSpringBoot {
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveYtdAmounts")
 				.contentType(MediaType.APPLICATION_JSON).param("accId", String.valueOf(accId));
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
+	public void testRetrieveMtdAmounts() throws Exception {
+		Long accId = 100003L;
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		AccountVO accountVo = new AccountVO();
+		accountVo.setUsrId(3L);
+		accountVo.setBalance(20.00);
+		accountVo.setMtdBetAmount(35.00);
+		accountVo.setMthPayout(48.00);
+		expectedResponse.setAccount(accountVo);
+
+		Mockito.when(accountService.retrieveMtdAmounts(Mockito.any(Long.class))).thenReturn(accountVo);
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveMtdAmounts")
+				.contentType(MediaType.APPLICATION_JSON).param("accId", String.valueOf(accId));
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
+	public void testRetrieveTrx() throws Exception {
+		Long accId = 100003L;
+		String type = "F";
+		String period = "last1mth";
+
+		String dateString = "2023-05-31"; // The desired date in string format
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		TrxHistRestResponse expectedResponse = new TrxHistRestResponse();
+		List<TrxHistVO> trxHistVoList = new ArrayList<>();
+		TrxHistVO trxHistVo = new TrxHistVO();
+		trxHistVo.setAmount(20.00);
+		trxHistVo.setDateTime(dateFormat.parse(dateString));
+		trxHistVo.setDesc("Test Description");
+		trxHistVoList.add(trxHistVo);
+		expectedResponse.setTrxHistList(trxHistVoList);
+
+		Mockito.when(accountService.retrieveTrxHist(Mockito.any(Long.class), Mockito.any(String.class),
+				Mockito.any(String.class))).thenReturn(trxHistVoList);
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveTrx")
+				.contentType(MediaType.APPLICATION_JSON).param("accId", String.valueOf(accId))
+				.param("type", String.valueOf(type)).param("period", String.valueOf(period));
 
 		String response = objectMapper.writeValueAsString(expectedResponse);
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
