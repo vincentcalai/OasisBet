@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.request.BetSlipRest;
 
@@ -26,5 +27,21 @@ public class AccountFixture {
 		betSubmissionVOlist.add(betSubmission);
 		betsInput.setBetSlip(betSubmissionVOlist);
 		return betsInput;
+	}
+
+	public static AccountVO createMockAccountVO() {
+		AccountVO accountVo = new AccountVO();
+		accountVo.setAccId(100002L);
+		accountVo.setActionType("D");
+		accountVo.setBalance(2000.00);
+		accountVo.setDepositAmt(100.00);
+		accountVo.setDepositLimit(500.00);
+		accountVo.setMtdBetAmount(58.88);
+		accountVo.setMthPayout(62.99);
+		accountVo.setUsrId(1L);
+		accountVo.setWithdrawalAmt(560.00);
+		accountVo.setYtdDepositAmt(399.10);
+		accountVo.setYtdWithdrawalAmt(672.50);
+		return accountVo;
 	}
 }
