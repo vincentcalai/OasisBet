@@ -97,7 +97,6 @@ public class AccountService {
 		Double mtdBetAmount = accountBetTrxDao.findMtdBetAmount(accId, startDate);
 		mtdBetAmount = mtdBetAmount == null ? 0.0 : mtdBetAmount;
 		accountVo.setMtdBetAmount(mtdBetAmount);
-		// accountVo.setMthPayout(mtdPayout);
 		return accountVo;
 	}
 

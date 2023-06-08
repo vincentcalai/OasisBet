@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.oasisbet.account.TestWithSpringBoot;
+import com.oasisbet.account.dao.IAccountBetTrxDao;
 import com.oasisbet.account.dao.IAccountOtherTrxDao;
 import com.oasisbet.account.model.AccountVO;
 
@@ -25,6 +26,9 @@ public class TestAccountService extends TestWithSpringBoot {
 
 	@Mock
 	private IAccountOtherTrxDao accountOtherTrxDao;
+
+	@Mock
+	private IAccountBetTrxDao accountBetTrxDao;
 
 	@Test
 	void testRetrieveUserAccountByUsernameSuccess() {
@@ -73,6 +77,28 @@ public class TestAccountService extends TestWithSpringBoot {
 
 		assertEquals(0.0, accountVo.getYtdDepositAmt());
 		assertEquals(0.0, accountVo.getYtdWithdrawalAmt());
+	}
+
+	@Test
+	void testRetrieveMtdAmountsSuccess() throws Exception {
+		Long accId = 100002L;
+		Double mtdBetAmount = 20.0;
+		when(accountBetTrxDao.findMtdBetAmount(Mockito.any(Long.class), Mockito.any(Date.class)))
+				.thenReturn(mtdBetAmount);
+
+		AccountVO accountVo = mockAccountService.retrieveMtdAmounts(accId);
+
+		assertEquals(mtdBetAmount, accountVo.getMtdBetAmount());
+	}
+
+	@Test
+	void testRetrieveMtdAmountsFail() throws Exception {
+		Long accId = 100002L;
+		when(accountBetTrxDao.findMtdBetAmount(Mockito.any(Long.class), Mockito.any(Date.class))).thenReturn(null);
+
+		AccountVO accountVo = mockAccountService.retrieveMtdAmounts(accId);
+
+		assertEquals(0, accountVo.getMtdBetAmount());
 	}
 
 }
