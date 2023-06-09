@@ -252,13 +252,13 @@ public class AccountService {
 
 	public List<TrxHistVO> retrieveTrxHist(Long accId, String type, String period) {
 		String typeCd = "";
-		if (type.equals(Constants.DEPOSIT_CD)) {
+		if (Constants.DEPOSIT_CD.equals(type)) {
 			typeCd = Constants.TRX_TYPE_DEPOSIT;
-		} else if (type.equals(Constants.WITHDRAWAL_CD)) {
+		} else if (Constants.WITHDRAWAL_CD.equals(type)) {
 			typeCd = Constants.TRX_TYPE_WITHDRAWAL;
-		} else if (type.equals(Constants.FUNDS_CD)) {
+		} else if (Constants.FUNDS_CD.equals(type)) {
 			typeCd = Constants.TRX_TYPE_ALL_FUNDS;
-		} else if (type.equals(Constants.SPORTS_BET_CD)) {
+		} else if (Constants.SPORTS_BET_CD.equals(type)) {
 			typeCd = Constants.TRX_TYPE_SPORTS_BET;
 		}
 
@@ -269,7 +269,7 @@ public class AccountService {
 		List<Object[]> allFundsTrx = null;
 		List<TrxHistVO> trxHistList = new ArrayList<>();
 
-		if (typeCd.equals(Constants.TRX_TYPE_ALL_FUNDS)) {
+		if (Constants.TRX_TYPE_ALL_FUNDS.equals(typeCd)) {
 			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(accId, startDate);
 
 			if (allFundsTrx != null && allFundsTrx.size() > 0) {
@@ -281,7 +281,7 @@ public class AccountService {
 					trxHistList.add(trxHistVo);
 				});
 			}
-		} else if (typeCd.equals(Constants.TRX_TYPE_SPORTS_BET)) {
+		} else if (Constants.TRX_TYPE_SPORTS_BET.equals(typeCd)) {
 			betTrxView = this.accountBetTrxDao.getByDateRange(accId, startDate);
 
 			if (betTrxView != null && betTrxView.size() > 0) {
