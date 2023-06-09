@@ -1,6 +1,7 @@
 package com.oasisbet.account.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -8,6 +9,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.oasisbet.account.TestWithSpringBoot;
@@ -43,6 +47,7 @@ public class TestAccountService extends TestWithSpringBoot {
 	private AccountService accountService;
 
 	@InjectMocks
+	@Spy
 	private AccountService mockAccountService;
 
 	@Autowired
@@ -408,6 +413,62 @@ public class TestAccountService extends TestWithSpringBoot {
 
 		Mockito.verify(mockAccountBetTrxDao).getByDateRange(eq(accId), eq(date));
 		assertEquals(2, list.size());
+	}
+
+	@Test
+	void testGenStartDateFail_InvalidPeriod() throws Exception {
+		String period = "invalid";
+		assertThrows(IllegalArgumentException.class, () -> accountService.genStartDate(period));
+	}
+
+	@Test
+	void testGenStartDateTodayDate() throws Exception {
+		String period = "today";
+		LocalDate today = LocalDate.now();
+		LocalDateTime startOfDay = today.atStartOfDay();
+		Date expectedResult = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+		Date result = accountService.genStartDate(period);
+		assertEquals(expectedResult.getDate(), result.getDate());
+	}
+
+	@Test
+	void testGenStartDateLast7Days() throws Exception {
+		String period = "last7day";
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -6);
+		Date expectedResult = calendar.getTime();
+		Date result = accountService.genStartDate(period);
+		assertEquals(expectedResult.getDate(), result.getDate());
+	}
+
+	@Test
+	void testGenStartDateLast1Month() throws Exception {
+		String period = "last1mth";
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		Date expectedResult = calendar.getTime();
+		Date result = accountService.genStartDate(period);
+		assertEquals(expectedResult.getDate(), result.getDate());
+	}
+
+	@Test
+	void testGenStartDateLast3Month() throws Exception {
+		String period = "last3mth";
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -3);
+		Date expectedResult = calendar.getTime();
+		Date result = accountService.genStartDate(period);
+		assertEquals(expectedResult.getDate(), result.getDate());
+	}
+
+	@Test
+	void testGenStartDateLast6Month() throws Exception {
+		String period = "last6mth";
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -6);
+		Date expectedResult = calendar.getTime();
+		Date result = accountService.genStartDate(period);
+		assertEquals(expectedResult.getDate(), result.getDate());
 	}
 
 }
