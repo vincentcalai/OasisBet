@@ -189,9 +189,9 @@ public class AccountService {
 		return response;
 	}
 
-	public StatusResponse processBet(Long userId, List<BetSubmissionVO> betSubmissionList) {
+	public StatusResponse processBet(Long accId, List<BetSubmissionVO> betSubmissionList) {
 		StatusResponse response = new StatusResponse();
-		Optional<AccountView> accountView = this.accountDao.findById(userId);
+		Optional<AccountView> accountView = this.accountDao.findById(accId);
 		double accountBal = 0.0;
 		if (accountView.isPresent()) {
 			accountBal = accountView.get().getBalance();
@@ -208,7 +208,6 @@ public class AccountService {
 			response.setStatusCode(2);
 		} else {
 			// process bet transactions here
-			final Long accId = accountView.get().getAccId();
 			List<AccountBetTrxView> betTrxList = new ArrayList<>();
 			List<AccountBetProcessTrxView> betProcessTrxList = new ArrayList<>();
 			betSubmissionList.forEach(betSubmission -> {

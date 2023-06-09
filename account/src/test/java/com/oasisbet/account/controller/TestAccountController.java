@@ -199,7 +199,7 @@ public class TestAccountController extends TestWithSpringBoot {
 	@Test
 	public void testProcessBet() throws Exception {
 
-		BetSlipRest betSlipRest = AccountFixture.createMockBetSubmissionData();
+		BetSlipRest betSlipRest = AccountFixture.createMockBetSubmissionRestData();
 
 		StatusResponse expectedResponse = new StatusResponse();
 		Mockito.when(accountService.processBet(Mockito.any(Long.class), Mockito.any(List.class)))
