@@ -316,7 +316,7 @@ public class AccountService {
 		return trxHistList;
 	}
 
-	private Date genStartDate(String period) {
+	public Date genStartDate(String period) {
 		Calendar calendar = Calendar.getInstance();
 		Date startDate = null;
 

@@ -1,8 +1,15 @@
 package com.oasisbet.account.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +29,7 @@ import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.StatusResponse;
+import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
@@ -255,6 +263,151 @@ public class TestAccountService extends TestWithSpringBoot {
 		assertEquals(2.00, betProcessTrxView2.getAmount());
 		assertEquals(2.00, betProcessTrxView3.getAmount());
 		assertEquals(0, response.getStatusCode());
+	}
+
+	@Test
+	void testRetrieveTrxHistAllFunds() throws Exception {
+		Long accId = 100002L;
+		String type = "funds";
+		String period = "last6mth";
+
+		LocalDate localDate = LocalDate.of(2023, 1, 1);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
+		Date date = calendar.getTime();
+
+		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
+
+		List<Object[]> trxList = new ArrayList<>();
+		Object[] trx1 = new Object[3];
+		trx1[0] = new Date();
+		trx1[1] = "Manchester United vs Chelsea";
+		trx1[2] = 10.00;
+		Object[] trx2 = new Object[3];
+		trx2[0] = new Date();
+		trx2[1] = "Desposit $100";
+		trx2[2] = 100.00;
+		Object[] trx3 = new Object[3];
+		trx3[0] = new Date();
+		trx3[1] = "Withdrawal $40";
+		trx3[2] = 40.00;
+		trxList.add(trx1);
+		trxList.add(trx2);
+		trxList.add(trx3);
+		Mockito.when(mockAccountOtherTrxDao.getAllFundsInOutTrx(anyLong(), any(Date.class))).thenReturn(trxList);
+
+		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
+
+		Mockito.verify(mockAccountOtherTrxDao).getAllFundsInOutTrx(eq(accId), eq(date));
+		assertEquals(3, list.size());
+	}
+
+	@Test
+	void testRetrieveTrxHistDeposit() throws Exception {
+		Long accId = 100002L;
+		String type = "deposit";
+		String typeCd = "D";
+		String period = "last6mth";
+
+		LocalDate localDate = LocalDate.of(2023, 1, 1);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
+		Date date = calendar.getTime();
+
+		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
+
+		List<AccountOtherTrxView> trxList = new ArrayList<>();
+		AccountOtherTrxView trx1 = new AccountOtherTrxView();
+		trx1.setAccId(100000L);
+		trx1.setAmount(10.00);
+		trx1.setTrxDt(new Date());
+		trx1.setTrxId("D/100000/100034");
+		trx1.setType("D");
+		AccountOtherTrxView trx2 = new AccountOtherTrxView();
+		trx2.setAccId(100000L);
+		trx2.setAmount(20.00);
+		trx2.setTrxDt(new Date());
+		trx2.setTrxId("D/100000/100035");
+		trx2.setType("D");
+		trxList.add(trx1);
+		trxList.add(trx2);
+		Mockito.when(this.mockAccountOtherTrxDao.getByTypeByDateRange(anyLong(), anyString(), any(Date.class)))
+				.thenReturn(trxList);
+
+		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
+
+		Mockito.verify(mockAccountOtherTrxDao).getByTypeByDateRange(eq(accId), eq(typeCd), eq(date));
+		assertEquals(2, list.size());
+	}
+
+	@Test
+	void testRetrieveTrxHistWithdrawal() throws Exception {
+		Long accId = 100002L;
+		String type = "withdrawal";
+		String typeCd = "W";
+		String period = "last6mth";
+
+		LocalDate localDate = LocalDate.of(2023, 1, 1);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
+		Date date = calendar.getTime();
+
+		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
+
+		List<AccountOtherTrxView> trxList = new ArrayList<>();
+		AccountOtherTrxView trx1 = new AccountOtherTrxView();
+		trx1.setAccId(100000L);
+		trx1.setAmount(10.00);
+		trx1.setTrxDt(new Date());
+		trx1.setTrxId("W/100000/100034");
+		trx1.setType("W");
+		AccountOtherTrxView trx2 = new AccountOtherTrxView();
+		trx2.setAccId(100000L);
+		trx2.setAmount(20.00);
+		trx2.setTrxDt(new Date());
+		trx2.setTrxId("W/100000/100035");
+		trx2.setType("W");
+		trxList.add(trx1);
+		trxList.add(trx2);
+		Mockito.when(this.mockAccountOtherTrxDao.getByTypeByDateRange(anyLong(), anyString(), any(Date.class)))
+				.thenReturn(trxList);
+
+		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
+
+		Mockito.verify(mockAccountOtherTrxDao).getByTypeByDateRange(eq(accId), eq(typeCd), eq(date));
+		assertEquals(2, list.size());
+	}
+
+	@Test
+	void testRetrieveTrxHistSportsBet() throws Exception {
+		Long accId = 100002L;
+		String type = "sportsbet";
+		String period = "last6mth";
+
+		LocalDate localDate = LocalDate.of(2023, 1, 1);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
+		Date date = calendar.getTime();
+
+		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
+
+		List<AccountBetTrxView> trxList = new ArrayList<>();
+		AccountBetTrxView trx1 = new AccountBetTrxView();
+		trx1.setAccId(100000L);
+		trx1.setEventId(100008L);
+		trx1.setTrxId("B/100000/100034");
+		AccountBetTrxView trx2 = new AccountBetTrxView();
+		trx2.setAccId(100000L);
+		trx2.setEventId(100009L);
+		trx2.setTrxId("B/100000/100035");
+		trxList.add(trx1);
+		trxList.add(trx2);
+		Mockito.when(this.mockAccountBetTrxDao.getByDateRange(anyLong(), any(Date.class))).thenReturn(trxList);
+
+		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
+
+		Mockito.verify(mockAccountBetTrxDao).getByDateRange(eq(accId), eq(date));
+		assertEquals(2, list.size());
 	}
 
 }
