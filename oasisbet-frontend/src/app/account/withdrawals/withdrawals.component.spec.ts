@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WithdrawalsComponent } from './withdrawals.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('WithdrawalsComponent', () => {
   let component: WithdrawalsComponent;
@@ -8,7 +11,12 @@ describe('WithdrawalsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WithdrawalsComponent ]
+      declarations: [ WithdrawalsComponent ],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ReactiveFormsModule
+      ]
     })
     .compileComponents();
   });

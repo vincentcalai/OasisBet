@@ -9,6 +9,7 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public title = 'oasisbet-frontend';
   public subscriptions: Subscription = new Subscription();
   public errorMsg: String = this.sharedVar.GENERAL_SYS_DOWN_ERR_MSG;
   public showError: boolean = false;
