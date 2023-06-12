@@ -25,13 +25,17 @@ describe('TrxHistComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrxHistComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
     let account = new AccountModel;
     account.accId = 1;
     sessionStorage.setItem(ACC_DETAILS, JSON.stringify(account));
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    sessionStorage.removeItem(ACC_DETAILS);
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

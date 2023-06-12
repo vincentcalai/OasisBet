@@ -25,13 +25,17 @@ describe('AccountOverviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountOverviewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
     let accountModel = new AccountModel();
     accountModel.accId = 1;
     sessionStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    sessionStorage.removeItem(ACC_DETAILS);
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
