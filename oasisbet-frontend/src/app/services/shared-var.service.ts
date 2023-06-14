@@ -60,7 +60,7 @@ export class SharedVarService {
   currentException = this.exceptionSource.asObservable();
 
   public responseSource = new BehaviorSubject<ResponseModel>(null);
-  responseModel = this.exceptionSource.asObservable();
+  responseModel = this.responseSource.asObservable();
 
   public showUserNotLoginSource = new BehaviorSubject<string>(null);
   showUserNotLogin = this.showUserNotLoginSource.asObservable();

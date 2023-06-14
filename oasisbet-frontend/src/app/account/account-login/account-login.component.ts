@@ -20,7 +20,7 @@ export class AccountLoginComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
 
-  constructor(private sharedVar: SharedVarService, private apiService: ApiService, private authService: AuthService, private router: Router) {
+  constructor(public sharedVar: SharedVarService, public apiService: ApiService, public authService: AuthService, public router: Router) {
   }
 
   ngOnInit(): void {
