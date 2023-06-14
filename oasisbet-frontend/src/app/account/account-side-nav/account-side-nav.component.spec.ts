@@ -22,4 +22,17 @@ describe('AccountSideNavComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('when select menu, should emit the correct menu', () => {
+    const accountMenuSelect = component.sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW;
+    let emittedMenuSelect: string;
+
+    component.onSelectAccountMenu.subscribe((menuSelect: string) => {
+      emittedMenuSelect = menuSelect;
+    });
+
+    component.selectAccountMenu(accountMenuSelect);
+
+    expect(emittedMenuSelect).toBe(accountMenuSelect);
+  });
 });

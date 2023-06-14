@@ -20,7 +20,7 @@ export class AccountOverviewComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
 
-  constructor(private sharedVar: SharedVarService, private authService: AuthService, private apiService: ApiService) { }
+  constructor(public sharedVar: SharedVarService, public authService: AuthService, public apiService: ApiService) { }
 
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();

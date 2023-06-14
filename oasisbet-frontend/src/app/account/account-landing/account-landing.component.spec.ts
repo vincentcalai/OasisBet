@@ -28,4 +28,10 @@ describe('AccountLandingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('when select transaction history menu, account navigation menu should show transaction history', () => {
+    const expectedMenu = component.sharedVar.NAV_MENU_SELECT_TRX_HIST;
+    component.navToAccountMenu(expectedMenu);
+    expect(component.selectAccountNavMenu).toBe(expectedMenu);
+  });
 });
