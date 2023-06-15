@@ -29,7 +29,7 @@ export class CreateUserComponent implements OnInit {
     public apiService: ApiService,
     public sharedMethods: SharedMethodsService,
     public dialog: MatDialog,
-    private router: Router) { }
+    public router: Router) { }
 
   ngOnInit(): void {
     this.createUserForm = this.initializeCreateUserForm();
@@ -64,6 +64,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   confirmCreateUser(){
+    console.log("form valid: ", this.createUserForm.valid);
     if(this.createUserForm.valid){
       this.sharedVar.createUserModel.user.username = this.username?.value.toUpperCase();
       this.sharedVar.createUserModel.user.password = this.password?.value;
