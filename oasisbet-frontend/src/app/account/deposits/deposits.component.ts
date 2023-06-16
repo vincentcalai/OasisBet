@@ -24,11 +24,11 @@ export class DepositsComponent implements OnInit {
   @Output() onSelectTrxMenu: EventEmitter<string>;
 
   constructor(
-    private sharedVar: SharedVarService,
+    public sharedVar: SharedVarService,
     public reactiveFormService: ReactiveFormService,
-    private authService: AuthService,
-    private apiService: ApiService,
-    private router: Router)
+    public authService: AuthService,
+    public apiService: ApiService,
+    public router: Router)
   {
     this.onSelectTrxMenu = new EventEmitter<string>();
   }
