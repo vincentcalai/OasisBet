@@ -101,6 +101,18 @@ describe('WithdrawalsComponent', () => {
     expect(component.responseMsg).toBe('');
   });
 
+  it('should not handle withdrawal and display error message on login fail when form validation passed, but wrong credential was entered', () => {
+    const withdrawalAmount = 100;
+    const password = 'password123';
+    component.withdrawalAmt.setValue(withdrawalAmount);
+    component.password.setValue(password);
+    spyOn(component, 'handleJWTAuthLogin').and.returnValue(of(false));
+    component.onConfirmWithdrawal();
+    expect(component.withdrawalForm.valid).toBeTruthy();
+    expect(component.errorMsg).toBe('Incorrect Password. Please enter correct password.');
+    expect(component.responseMsg).toBe('');
+  });
+
   it('should throw exception when form validation passed, but api updateAccDetails throw error', () => {
     const error = new HttpErrorResponse({ status: 500 });
     const withdrawalAmount = 100;
@@ -121,14 +133,13 @@ describe('WithdrawalsComponent', () => {
     expect(component.sharedVar.changeException).toHaveBeenCalledTimes(1);
   });
 
-  it('when login is successful, should return true', () => {
-    const username = sessionStorage.getItem(AUTH_USER);
-    const password = "password123";
-    const token = {
-      "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
-    };
-    spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of(token));
-    expect(component.handleJWTAuthLogin(username, password)).toBeTruthy();
+  it('should return true for correct login credentials', () => {
+    const username = 'testuser';
+    const password = 'password123';
+    spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of({}));
+    component.handleJWTAuthLogin(username, password).subscribe(result => {
+      expect(result).toBeTrue();
+    });
   });
 
   it('should return false for incorrect login credentials', () => {
