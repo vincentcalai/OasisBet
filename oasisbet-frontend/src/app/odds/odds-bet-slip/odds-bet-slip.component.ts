@@ -33,16 +33,16 @@ export class OddsBetSlipComponent implements OnInit {
   @Output() removedBetSelection: EventEmitter<BetSlip> = new EventEmitter<BetSlip>();
   @Output() removeAllBetSelections: EventEmitter<void> = new EventEmitter<void>();
 
-  private betSlipSubscription: Subscription;
-  private subscriptions: Subscription = new Subscription();
+  public betSlipSubscription: Subscription;
+  public subscriptions: Subscription = new Subscription();
 
   @Input() initBetSlip: Observable<void>;
 
   constructor(
     public sharedVar: SharedVarService,
-    private apiService: ApiService,
-    private router: Router,
-    private authService: AuthService) { }
+    public apiService: ApiService,
+    public router: Router,
+    public authService: AuthService) { }
 
   ngOnInit(): void {
     this.betSlipSubscription = this.initBetSlip.subscribe(() => {
