@@ -25,9 +25,9 @@ export class WithdrawalsComponent implements OnInit {
 
   constructor(
       public sharedVar: SharedVarService,
-      private authService: AuthService,
+      public authService: AuthService,
       public reactiveFormService: ReactiveFormService,
-      private apiService: ApiService
+      public apiService: ApiService
     ) {
     this.onSelectTrxMenu = new EventEmitter<string>();
   }
