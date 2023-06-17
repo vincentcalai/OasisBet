@@ -27,4 +27,18 @@ describe('ConfirmDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should close the dialog', () => {
+    const dialogRefMock: MatDialogRef<any> = jasmine.createSpyObj('MatDialogRef', ['close']);
+    component.dialogRef = dialogRefMock;
+    component.onCancelClick();
+    expect(dialogRefMock.close).toHaveBeenCalled();
+  });
+
+  it('should close the dialog with "confirm"', () => {
+    const dialogRefMock: MatDialogRef<any> = jasmine.createSpyObj('MatDialogRef', ['close']);
+    component.dialogRef = dialogRefMock;
+    component.onConfirmClick();
+    expect(dialogRefMock.close).toHaveBeenCalledWith('confirm');
+  });
 });
