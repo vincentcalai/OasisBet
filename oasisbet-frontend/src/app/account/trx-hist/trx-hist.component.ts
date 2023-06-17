@@ -19,10 +19,10 @@ export class TrxHistComponent implements OnInit {
   public subscriptions: Subscription = new Subscription();
   public selectedTrxType: string = 'funds';
   public selectedPeriod: string = 'today';
-  public trxHistList: TrxHistModel[];
+  public trxHistList: TrxHistModel[] = [];
   accountModelInput: AccountModel;
 
-  constructor(private apiService: ApiService, private sharedVar: SharedVarService, private authService: AuthService) { }
+  constructor(public apiService: ApiService, public sharedVar: SharedVarService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
