@@ -68,18 +68,7 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should remove the specified bet selection and update total stake', () => {
-    const betSelection: BetSlip = {
-      eventId: 1000001, 
-      betSelection: '02', 
-      betAmount: 10,
-      eventDesc: 'Liverpool vs Arsenal',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Draw',
-      betTypeCd: '01',
-      odds: 3.25,
-      potentialPayout: 32.50
-    };
+    const betSelection: BetSlip = mockBetSelection1;
     component.betSelections = [betSelection];
     component.totalStake = 10;
     component.onDeleteBetSelection(betSelection);
@@ -88,18 +77,7 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should update the bet amount and potential payout', () => {
-    const betSelection: BetSlip = {
-      eventId: 1000001, 
-      betSelection: '02', 
-      betAmount: 10,
-      eventDesc: 'Liverpool vs Arsenal',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Draw',
-      betTypeCd: '01',
-      odds: 3.25,
-      potentialPayout: 32.50
-    };
+    const betSelection: BetSlip = mockBetSelection1;
     component.betSelections = [betSelection];
     const betAmount = '20.00';
     component.onBetAmountChange(betSelection, betAmount);
@@ -109,42 +87,9 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should remove bet selections with zero bet amount and emit removed bet selections', () => {
-    const betSelection1: BetSlip = {
-      eventId: 1000001, 
-      betSelection: '02', 
-      betAmount: 10,
-      eventDesc: 'Liverpool vs Arsenal',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Draw',
-      betTypeCd: '01',
-      odds: 3.25,
-      potentialPayout: 32.50
-    };
-    const betSelection2: BetSlip = {
-      eventId: 1000002, 
-      betSelection: '01', 
-      betAmount: 0,
-      eventDesc: 'Chelsea vs Luton Town',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Chelsea',
-      betTypeCd: '01',
-      odds: 1.22,
-      potentialPayout: 0
-    };
-    const betSelection3: BetSlip = {
-      eventId: 1000003, 
-      betSelection: '03', 
-      betAmount: 10,
-      eventDesc: 'Fulham vs Manchester City',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Manchester City',
-      betTypeCd: '01',
-      odds: 1.15,
-      potentialPayout: 11.50
-    };
+    const betSelection1: BetSlip = mockBetSelection1;
+    const betSelection2: BetSlip = mockBetSelection2;
+    const betSelection3: BetSlip = mockBetSelection3;
     component.betSelections = [betSelection1, betSelection2, betSelection3];
     component.placedBetStatus = 1;
     spyOn(component.betSelectionsChange, 'emit');
@@ -157,30 +102,8 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should reset bet amounts and total stake, and emit enable bets', () => {
-    const betSelection1: BetSlip = {
-      eventId: 1000001, 
-      betSelection: '02', 
-      betAmount: 10,
-      eventDesc: 'Liverpool vs Arsenal',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Draw',
-      betTypeCd: '01',
-      odds: 3.25,
-      potentialPayout: 32.50
-    };
-    const betSelection2: BetSlip = {
-      eventId: 1000002, 
-      betSelection: '01', 
-      betAmount: 10,
-      eventDesc: 'Chelsea vs Luton Town',
-      compType: 'soccer_epl',
-      startTime: new Date(),
-      betSelectionName: 'Chelsea',
-      betTypeCd: '01',
-      odds: 1.22,
-      potentialPayout: 12.20
-    };
+    const betSelection1: BetSlip = mockBetSelection1;
+    const betSelection2: BetSlip = mockBetSelection2;
     component.betSelections = [betSelection1, betSelection2];
     component.totalStake = 20;
     component.placedBetStatus = 2;
@@ -196,32 +119,7 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should submit bets successfully and handle the response', () => {
-    const betSelections: BetSlip[] = [
-      {
-        eventId: 1000001, 
-        betSelection: '02', 
-        betAmount: 10,
-        eventDesc: 'Liverpool vs Arsenal',
-        compType: 'soccer_epl',
-        startTime: new Date(),
-        betSelectionName: 'Draw',
-        betTypeCd: '01',
-        odds: 3.25,
-        potentialPayout: 32.50
-      },
-      {
-        eventId: 1000002, 
-        betSelection: '01', 
-        betAmount: 10,
-        eventDesc: 'Chelsea vs Luton Town',
-        compType: 'soccer_epl',
-        startTime: new Date(),
-        betSelectionName: 'Chelsea',
-        betTypeCd: '01',
-        odds: 1.22,
-        potentialPayout: 12.20
-      }
-    ];
+    const betSelections: BetSlip[] = mockBetSlip();
     const account: any = { accId: 100001 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);
     spyOn(component.apiService, 'postSubmitBets').and.returnValue(of({ statusCode: 0, resultMessage: 'Bet Submission Success' }));
@@ -241,32 +139,7 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should submit bets and handle the fail response, when bet submission fail due to status code not 0', () => {
-    const betSelections: BetSlip[] = [
-      {
-        eventId: 1000001, 
-        betSelection: '02', 
-        betAmount: 10,
-        eventDesc: 'Liverpool vs Arsenal',
-        compType: 'soccer_epl',
-        startTime: new Date(),
-        betSelectionName: 'Draw',
-        betTypeCd: '01',
-        odds: 3.25,
-        potentialPayout: 32.50
-      },
-      {
-        eventId: 1000002, 
-        betSelection: '01', 
-        betAmount: 10,
-        eventDesc: 'Chelsea vs Luton Town',
-        compType: 'soccer_epl',
-        startTime: new Date(),
-        betSelectionName: 'Chelsea',
-        betTypeCd: '01',
-        odds: 1.22,
-        potentialPayout: 12.20
-      }
-    ];
+    const betSelections: BetSlip[] = mockBetSlip();
     const account: any = { accId: 100001 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);
     spyOn(component.apiService, 'postSubmitBets').and.returnValue(of({ statusCode: 1, resultMessage: 'Bet Submission Failure' }));
@@ -286,32 +159,7 @@ describe('OddsBetSlipComponent', () => {
 
   it('should throw error, when api call postSubmitBets failed', () => {
     const error = new HttpErrorResponse({ status: 500 });
-    const betSelections: BetSlip[] = [
-      {
-        eventId: 1000001, 
-        betSelection: '02', 
-        betAmount: 10,
-        eventDesc: 'Liverpool vs Arsenal',
-        compType: 'soccer_epl',
-        startTime: new Date(),
-        betSelectionName: 'Draw',
-        betTypeCd: '01',
-        odds: 3.25,
-        potentialPayout: 32.50
-      },
-      {
-        eventId: 1000002, 
-        betSelection: '01', 
-        betAmount: 10,
-        eventDesc: 'Chelsea vs Luton Town',
-        compType: 'soccer_epl',
-        startTime: new Date(),
-        betSelectionName: 'Chelsea',
-        betTypeCd: '01',
-        odds: 1.22,
-        potentialPayout: 12.20
-      }
-    ];
+    const betSelections: BetSlip[] = mockBetSlip();
     const account: any = { accId: 100001 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);
     spyOn(component.apiService, 'postSubmitBets').and.returnValue(throwError(error));
@@ -345,3 +193,72 @@ describe('OddsBetSlipComponent', () => {
     expect(component.router.navigate).toHaveBeenCalled();
   });
 })
+
+const mockBetSelection1 = {
+  eventId: 1000001,
+  betSelection: '02',
+  betAmount: 10,
+  eventDesc: 'Liverpool vs Arsenal',
+  compType: 'soccer_epl',
+  startTime: new Date(),
+  betSelectionName: 'Draw',
+  betTypeCd: '01',
+  odds: 3.25,
+  potentialPayout: 32.50
+};
+
+const mockBetSelection2 = {
+  eventId: 1000002,
+  betSelection: '01',
+  betAmount: 0,
+  eventDesc: 'Chelsea vs Luton Town',
+  compType: 'soccer_epl',
+  startTime: new Date(),
+  betSelectionName: 'Chelsea',
+  betTypeCd: '01',
+  odds: 1.22,
+  potentialPayout: 0
+};
+
+const mockBetSelection3 = {
+  eventId: 1000003,
+  betSelection: '03',
+  betAmount: 10,
+  eventDesc: 'Fulham vs Manchester City',
+  compType: 'soccer_epl',
+  startTime: new Date(),
+  betSelectionName: 'Manchester City',
+  betTypeCd: '01',
+  odds: 1.15,
+  potentialPayout: 11.50
+};
+
+function mockBetSlip(): BetSlip[] {
+  return [
+    {
+      eventId: 1000001,
+      betSelection: '02',
+      betAmount: 10,
+      eventDesc: 'Liverpool vs Arsenal',
+      compType: 'soccer_epl',
+      startTime: new Date(),
+      betSelectionName: 'Draw',
+      betTypeCd: '01',
+      odds: 3.25,
+      potentialPayout: 32.50
+    },
+    {
+      eventId: 1000002,
+      betSelection: '01',
+      betAmount: 10,
+      eventDesc: 'Chelsea vs Luton Town',
+      compType: 'soccer_epl',
+      startTime: new Date(),
+      betSelectionName: 'Chelsea',
+      betTypeCd: '01',
+      odds: 1.22,
+      potentialPayout: 12.20
+    }
+  ];
+}
+

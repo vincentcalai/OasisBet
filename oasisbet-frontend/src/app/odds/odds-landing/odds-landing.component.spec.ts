@@ -26,4 +26,5 @@ describe('OddsLandingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });
