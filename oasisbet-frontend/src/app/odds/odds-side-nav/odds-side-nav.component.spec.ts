@@ -22,4 +22,17 @@ describe('OddsSideNavComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('when select competition type, should emit the correct menu', () => {
+    const compTypeSelect = component.sharedVar.COMP_HEADER_EPL;
+    let emittedMenuSelect: string;
+
+    component.onSelectCompType.subscribe((compType: string) => {
+      emittedMenuSelect = compType;
+    });
+
+    component.selectCompType(compTypeSelect);
+
+    expect(emittedMenuSelect).toBe(compTypeSelect);
+  });
 });
