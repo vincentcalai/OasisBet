@@ -49,11 +49,8 @@ describe('OddsLandingComponent', () => {
         },
       ],
     };
-
     spyOn(component.apiService, 'retrieveOdds').and.returnValue(of(mockResponse));
-
     component.ngOnInit();
-
     expect(component.apiService.retrieveOdds).toHaveBeenCalledWith(component.compType);
     expect(component.events.length).toEqual(2);
     expect(component.eventDates.length).toEqual(2);
@@ -81,11 +78,8 @@ describe('OddsLandingComponent', () => {
         },
       ],
     };
-
     spyOn(component.apiService, 'retrieveOdds').and.returnValue(of(mockResponse));
-
     component.ngOnInit();
-
     expect(component.apiService.retrieveOdds).toHaveBeenCalledWith(component.compType);
     expect(component.events.length).toEqual(2);
     expect(component.eventDates.length).toEqual(1);
