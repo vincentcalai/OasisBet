@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OddsLandingComponent } from './odds-landing.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { BetSlip } from 'src/app/model/bet-slip.model';
 
 describe('OddsLandingComponent', () => {
   let component: OddsLandingComponent;
@@ -101,24 +103,37 @@ describe('OddsLandingComponent', () => {
       ],
     };
     spyOn(component.apiService, 'retrieveOdds').and.returnValue(of(mockResponse));
-    const betSlip = {
-      eventId: 1000001,
-      eventDesc: "Leicester City vs Manchester United",
-      compType: "soccer_epl",
-      startTime: new Date(),
-      betSelection: "01",
-      betSelectionName: 'Leicester City',
-      betTypeCd: "01",
-      odds: 5.00,
-      betAmount: 5.00,
-      potentialPayout: 25.00
-    };
+    const betSlip = mockBetSlip();
     component.selectedBets.push(betSlip);
     component.ngOnInit();
-    console.log("events:", component.events[0].betSelection);
     expect(component.apiService.retrieveOdds).toHaveBeenCalledWith(component.compType);
     expect(component.events[0].betSelection.homeSelected).toBeTruthy();
     expect(component.selectedBets).toEqual([betSlip]);
   });
 
+  it('should throw error, when api call retrieveOdds failed', () => {
+    const error = new HttpErrorResponse({ status: 500 });
+    spyOn(component.apiService, 'retrieveOdds').and.returnValue(throwError(error));
+    spyOn(component.sharedVar, 'changeException');
+    component.ngOnInit();
+    expect(component.apiService.retrieveOdds).toHaveBeenCalled();
+    expect(component.sharedVar.changeException).toHaveBeenCalled();
+  });
+
 });
+
+function mockBetSlip() {
+  return {
+    eventId: 1000001,
+    eventDesc: "Leicester City vs Manchester United",
+    compType: "soccer_epl",
+    startTime: new Date(),
+    betSelection: "01",
+    betSelectionName: 'Leicester City',
+    betTypeCd: "01",
+    odds: 5.00,
+    betAmount: 5.00,
+    potentialPayout: 25.00
+  };
+}
+
