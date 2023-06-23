@@ -12,7 +12,7 @@ export const ACC_DETAILS = 'accountDetails';
 
 export class AuthService {
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(public apiService: ApiService, public router: Router) { }
 
     jwtAuthenticate(username: string, password: string) {
       return this.apiService.jwtAuthenticate(username, password);
@@ -22,11 +22,11 @@ export class AuthService {
       let user =  sessionStorage.getItem(AUTH_USER);
       return !(user === null);
     }
-  
+
     getAuthenticationUser(){
       return sessionStorage.getItem(AUTH_USER);
     }
-  
+
     getAuthenticationToken(){
       if(this.getAuthenticationUser()){
         return sessionStorage.getItem(TOKEN);
