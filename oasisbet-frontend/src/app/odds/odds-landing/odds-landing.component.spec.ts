@@ -104,12 +104,16 @@ describe('OddsLandingComponent', () => {
       ],
     };
     spyOn(component.apiService, 'retrieveOdds').and.returnValue(of(mockResponse));
-    const betSlip = mockBetSlip();
-    component.selectedBets.push(betSlip);
+    const betSlip1 = mockBetSlip();
+    const betSlip2 = mockBetSlip2();
+    const betSlip3 = mockBetSlip3();
+    component.selectedBets.push(betSlip1);
+    component.selectedBets.push(betSlip2);
+    component.selectedBets.push(betSlip3);
     component.ngOnInit();
     expect(component.apiService.retrieveOdds).toHaveBeenCalledWith(component.compType);
     expect(component.events[0].betSelection.homeSelected).toBeTruthy();
-    expect(component.selectedBets).toEqual([betSlip]);
+    expect(component.selectedBets).toEqual([betSlip1, betSlip2, betSlip3]);
   });
 
   it('should throw error, when api call retrieveOdds failed', () => {
@@ -167,21 +171,43 @@ describe('OddsLandingComponent', () => {
   });
 
   it('should clear the existing bets from previous submission and should have correct details for first bet selection that was added into the bet slip after a successful bet submission', () => {
-    const mockEvent = mockBetEvent();
+    const mockEvent1 = mockBetEvent();
+    const mockEvent2 = mockBetEvent();
+    const mockEvent3 = mockBetEvent();
     component.isBetSlipClean = true;
     component.selectedBets = mockBetSlips();
     component.betSlipSubject = new BehaviorSubject<any>(null);
-    const selection = '01';
-    component.selectBetSelection(mockEvent, selection);
-    expect(component.selectedBets.length).toBe(1);
-    expect(component.selectedBets[0].eventId).toBe(mockEvent.eventId);
-    expect(component.selectedBets[0].eventDesc).toBe(mockEvent.eventDesc);
+    const selection1 = '01';
+    const selection2 = '02';
+    const selection3 = '03';
+    component.selectBetSelection(mockEvent1, selection1);
+    component.selectBetSelection(mockEvent2, selection2);
+    component.selectBetSelection(mockEvent3, selection3);
+    expect(component.selectedBets.length).toBe(3);
+    expect(component.selectedBets[0].eventId).toBe(mockEvent1.eventId);
+    expect(component.selectedBets[0].eventDesc).toBe(mockEvent1.eventDesc);
     expect(component.selectedBets[0].betTypeCd).toBe(component.sharedVar.BET_TYPE_CD_H2H);
     expect(component.selectedBets[0].betSelection).toBe(component.sharedVar.BET_SELECTION_H2H_HOME);
-    expect(component.selectedBets[0].betSelectionName).toBe(mockEvent.teamsDetails.homeTeam);
-    expect(component.selectedBets[0].odds).toBe(mockEvent.h2hEventOdds.homeOdds);
-    expect(component.selectedBets[0].startTime).toBe(mockEvent.startTime);
-    expect(component.selectedBets[0].compType).toBe(mockEvent.competition);
+    expect(component.selectedBets[0].betSelectionName).toBe(mockEvent1.teamsDetails.homeTeam);
+    expect(component.selectedBets[0].odds).toBe(mockEvent1.h2hEventOdds.homeOdds);
+    expect(component.selectedBets[0].startTime).toBe(mockEvent1.startTime);
+    expect(component.selectedBets[0].compType).toBe(mockEvent1.competition);
+    expect(component.selectedBets[1].eventId).toBe(mockEvent2.eventId);
+    expect(component.selectedBets[1].eventDesc).toBe(mockEvent2.eventDesc);
+    expect(component.selectedBets[1].betTypeCd).toBe(component.sharedVar.BET_TYPE_CD_H2H);
+    expect(component.selectedBets[1].betSelection).toBe(component.sharedVar.BET_SELECTION_H2H_DRAW);
+    expect(component.selectedBets[1].betSelectionName).toBe("Draw");
+    expect(component.selectedBets[1].odds).toBe(mockEvent2.h2hEventOdds.drawOdds);
+    expect(component.selectedBets[1].startTime).toBe(mockEvent2.startTime);
+    expect(component.selectedBets[1].compType).toBe(mockEvent2.competition);
+    expect(component.selectedBets[2].eventId).toBe(mockEvent3.eventId);
+    expect(component.selectedBets[2].eventDesc).toBe(mockEvent3.eventDesc);
+    expect(component.selectedBets[2].betTypeCd).toBe(component.sharedVar.BET_TYPE_CD_H2H);
+    expect(component.selectedBets[2].betSelection).toBe(component.sharedVar.BET_SELECTION_H2H_AWAY);
+    expect(component.selectedBets[2].betSelectionName).toBe(mockEvent3.teamsDetails.awayTeam);
+    expect(component.selectedBets[2].odds).toBe(mockEvent3.h2hEventOdds.awayOdds);
+    expect(component.selectedBets[2].startTime).toBe(mockEvent3.startTime);
+    expect(component.selectedBets[2].compType).toBe(mockEvent3.competition);
   });
 
   it('should remove bet selection from the bet slip for unselecting a bet from UI', () => {
