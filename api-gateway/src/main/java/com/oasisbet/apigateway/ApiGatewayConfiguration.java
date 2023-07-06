@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ApiGatewayConfiguration {
+
 	@Bean
-	public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
-		return builder.routes()
-				.route(p -> p.path("/odds/**").uri("lb://betting"))
-				.route(p -> p.path("/account/**").uri("lb://account")).build();
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+		return builder.routes().route("betting_route", r -> r.path("/odds/**").uri("lb://BETTING"))
+				.route("account_route", r -> r.path("/account/**").uri("lb://ACCOUNT"))
+				.route("user_route", r -> r.path("/user/**").uri("lb://ACCOUNT")).build();
 	}
+
 }

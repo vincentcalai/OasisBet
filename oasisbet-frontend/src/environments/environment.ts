@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   apiUrl: "http://localhost:8801",
   apiUrl2: "http://localhost:8802",
-  apiUrl3: "http://localhost:8803"
+  apiUrl3: "http://localhost:8803",
+  commonApiUrl: "http://localhost:8765"
 };
 
 /*
