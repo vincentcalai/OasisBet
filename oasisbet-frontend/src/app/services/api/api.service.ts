@@ -11,22 +11,16 @@ import { SharedVarService } from '../shared-var.service';
 })
 export class ApiService {
 
-  public oddsServicePrefix;
-  public resultServicePrefix;
-  public accountServicePrefix;
   public commonApiPrefix;
   public timeout = 200000;
 
   constructor(public http: HttpClient,
     public sharedVar: SharedVarService) {
-    this.oddsServicePrefix = environment.apiUrl;
-    this.resultServicePrefix = environment.apiUrl2;
-    this.accountServicePrefix = environment.apiUrl3;
     this.commonApiPrefix = environment.commonApiUrl;
   }
 
   jwtAuthenticate(username: string, password: string) {
-    return this.http.post<any>( this.accountServicePrefix + "/authenticate",{
+    return this.http.post<any>( this.commonApiPrefix + "/user/authenticate",{
       username,
       password
     })

@@ -26,7 +26,7 @@ public class TestJWTUtil extends TestWithSpringBoot {
 		String password = "password";
 		JwtTokenRequest jwtTokenRequest = new JwtTokenRequest(username, password);
 		String request = objMapper.writeValueAsString(jwtTokenRequest);
-		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/authenticate").content(request)
+		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/user/authenticate").content(request)
 				.contentType(MediaType.APPLICATION_JSON);
 		this.mockMvc.perform(requestBuilt).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -37,7 +37,7 @@ public class TestJWTUtil extends TestWithSpringBoot {
 		String password = "failpassword";
 		JwtTokenRequest jwtTokenRequest = new JwtTokenRequest(username, password);
 		String request = objMapper.writeValueAsString(jwtTokenRequest);
-		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/authenticate").content(request)
+		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/user/authenticate").content(request)
 				.contentType(MediaType.APPLICATION_JSON);
 		this.mockMvc.perform(requestBuilt).andExpect(MockMvcResultMatchers.status().is(401));
 	}
@@ -48,7 +48,7 @@ public class TestJWTUtil extends TestWithSpringBoot {
 		String password = "password";
 		JwtTokenRequest jwtTokenRequest = new JwtTokenRequest(username, password);
 		String request = objMapper.writeValueAsString(jwtTokenRequest);
-		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/authenticate").content(request)
+		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/user/authenticate").content(request)
 				.contentType(MediaType.APPLICATION_JSON);
 		this.mockMvc.perform(requestBuilt).andExpect(MockMvcResultMatchers.status().is(401));
 	}
