@@ -11,6 +11,7 @@ public class ApiGatewayConfiguration {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes().route("betting_route", r -> r.path("/odds/**").uri("lb://BETTING"))
+				.route("result_route", r -> r.path("/result/**").uri("lb://RESULT"))
 				.route("account_route", r -> r.path("/account/**").uri("lb://ACCOUNT"))
 				.route("user_route", r -> r.path("/user/**").uri("lb://ACCOUNT")).build();
 	}
