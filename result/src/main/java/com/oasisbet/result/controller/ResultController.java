@@ -42,7 +42,18 @@ public class ResultController {
 //			ResponseEntity<ResultApiResponse[]> responseEntity = restTemplate.getForEntity(uri,
 //					ResultApiResponse[].class);
 //			results = responseEntity.getBody();
-			results = MockData.mockEplResultApiResponseArray();
+
+			if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
+				results = MockData.mockEplResultApiResponseArray();
+			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
+				results = MockData.mockLaLigaOddsApiResponseArray();
+			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
+				results = MockData.mockBundesligaOddsApiResponseArray();
+			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
+				results = MockData.mockSerieAOddsApiResponseArray();
+			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
+				results = MockData.mockLigueOneOddsApiResponseArray();
+			}
 			List<ResultEvent> resultEventList = resultService.processMapping(results);
 			response.setResultEvent(resultEventList);
 			return response;
