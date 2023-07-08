@@ -20,4 +20,8 @@ public class Constants {
 
 	public static final String RETRIEVE_RESULT_API_EXCEPTION = "Error Retrieving Results from source API";
 	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
+
+	public static final String EVENT_ID = "event_id";
+	public static final String COMP_TYPE = "comp_type";
+	public static final String API_EVENT_ID = "api_event_id";
 }

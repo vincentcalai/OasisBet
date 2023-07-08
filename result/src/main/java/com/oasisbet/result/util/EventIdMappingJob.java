@@ -3,6 +3,7 @@ package com.oasisbet.result.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
-import com.oasisbet.result.model.EventIdMap;
 
 @Service
 public class EventIdMappingJob implements Job {
@@ -24,13 +24,13 @@ public class EventIdMappingJob implements Job {
 
 		log.info("executing EventIdMappingJob...");
 
-		MongoCollection<EventIdMap> collection = MongoDBConnection.getInstance().getCollection();
-		List<EventIdMap> eplEvents = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId"))
+		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
+		List<Document> eplEvents = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId"))
 				.into(new ArrayList<>());
 
-		for (EventIdMap event : eplEvents) {
-			log.info("id: " + event.getEventId() + " source: " + event.getSourceId() + " compType: "
-					+ event.getCompType());
+		for (Document event : eplEvents) {
+			log.info("id: " + event.getString(Constants.EVENT_ID) + " source: "
+					+ event.getString(Constants.API_EVENT_ID) + " compType: " + event.getString(Constants.COMP_TYPE));
 		}
 
 	}
