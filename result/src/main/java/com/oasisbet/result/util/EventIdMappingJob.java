@@ -25,12 +25,12 @@ public class EventIdMappingJob implements Job {
 		log.info("executing EventIdMappingJob...");
 
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
-		List<Document> eplEvents = collection.find(Filters.eq("compType", "EPL")).sort(Sorts.ascending("eventId"))
-				.into(new ArrayList<>());
+		List<Document> eplEvents = collection.find(Filters.eq(Constants.COMP_TYPE, Constants.API_SOURCE_COMP_TYPE_EPL))
+				.sort(Sorts.ascending("eventId")).into(new ArrayList<>());
 
 		for (Document event : eplEvents) {
-			log.info("id: " + event.getString(Constants.EVENT_ID) + " source: "
-					+ event.getString(Constants.API_EVENT_ID) + " compType: " + event.getString(Constants.COMP_TYPE));
+			log.info("id: " + event.getLong(Constants.EVENT_ID) + " source: " + event.getString(Constants.API_EVENT_ID)
+					+ " compType: " + event.getString(Constants.COMP_TYPE));
 		}
 
 	}
