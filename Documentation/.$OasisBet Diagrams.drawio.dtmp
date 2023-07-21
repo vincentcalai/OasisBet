@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-07-08T03:41:22.516Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="CiRikwYVYIqoOEwNGPID" version="21.1.2" type="device" pages="4">
+<mxfile host="Electron" modified="2023-07-21T13:45:36.301Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="tMoCuSIRDT8q5iDFOvp8" version="21.1.2" type="device" pages="4">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="1418" dy="828" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -337,7 +337,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="3yRNvgIO_LXvSJmdzNFA" name="Entity-Relationship Diagram">
-    <mxGraphModel dx="1418" dy="828" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="844" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -405,11 +405,17 @@
         <mxCell id="JayWEi_rSAy8RRjLmOz3-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;" parent="1" source="dWHiE6yfVeQo9Ne-HcMX-53" target="y5_4rmctNcQE3Bt_X_gW-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="ZTR4sL29Cz2ge3E5iEzx-1" value="result_event_mapping" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="272" y="582" width="171" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="ZTR4sL29Cz2ge3E5iEzx-2" value="event_id: bigint&lt;br&gt;api_event_id: bigint&lt;br&gt;comp_type: varchar(20)&lt;br&gt;score: varchar(10)&lt;br&gt;outcome: bigint" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="ZTR4sL29Cz2ge3E5iEzx-1">
+          <mxGeometry y="50" width="171" height="85" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="rX7CZ6C7idOaKAo0EbVl" name="Microservice Architecture Design">
-    <mxGraphModel dx="1418" dy="828" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="844" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -434,10 +440,8 @@
         <mxCell id="n--Mw3TsR7HPo-DKLm6b-4" value="Front-end Web UI&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="270" y="230" width="640" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="YP3LvEAmpG9vps54qjSR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.247;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="n--Mw3TsR7HPo-DKLm6b-5" target="NkveTH0OLbuvpOsbD4DB-1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="671" y="505" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="Mm9Cn6kK5PegQiGqCRPd-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.325;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="n--Mw3TsR7HPo-DKLm6b-5" target="NkveTH0OLbuvpOsbD4DB-1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="n--Mw3TsR7HPo-DKLm6b-5" value="Betting Microservice" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
           <mxGeometry x="525" y="390" width="130" height="50" as="geometry" />
@@ -448,8 +452,10 @@
         <mxCell id="n--Mw3TsR7HPo-DKLm6b-6" value="Account Management Microservice" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
           <mxGeometry x="330" y="390" width="130" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="YP3LvEAmpG9vps54qjSR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0.02;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="n--Mw3TsR7HPo-DKLm6b-7" target="NkveTH0OLbuvpOsbD4DB-1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="Mm9Cn6kK5PegQiGqCRPd-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.638;entryY=-0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="n--Mw3TsR7HPo-DKLm6b-7" target="NkveTH0OLbuvpOsbD4DB-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="785" y="482" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="n--Mw3TsR7HPo-DKLm6b-7" value="Result Microservice" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
           <mxGeometry x="720" y="390" width="130" height="50" as="geometry" />
@@ -477,10 +483,10 @@
           <mxGeometry x="270" y="300" width="640" height="40" as="geometry" />
         </mxCell>
         <mxCell id="NkveTH0OLbuvpOsbD4DB-1" value="&lt;br&gt;&lt;br&gt;Betting/Result DB" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-          <mxGeometry x="645" y="477" width="80" height="100" as="geometry" />
+          <mxGeometry x="640" y="482" width="80" height="100" as="geometry" />
         </mxCell>
         <mxCell id="s3ncZgwoo6Pfu3EHYZ56-1" value="MongoDB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="660" y="582" width="60" height="30" as="geometry" />
+          <mxGeometry x="650.5" y="588" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="s3ncZgwoo6Pfu3EHYZ56-2" value="MySQL DB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="350.5" y="582" width="89" height="30" as="geometry" />
