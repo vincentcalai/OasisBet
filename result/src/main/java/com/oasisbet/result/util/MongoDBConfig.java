@@ -11,8 +11,10 @@ public class MongoDBConfig {
 	private String connectionUrl;
 	@Value("${mongodb.client.databaseName}")
 	private String databaseName;
-	@Value("${mongodb.client.collectionName}")
-	private String collectionName;
+	@Value("${mongodb.client.sportsEventMapping.collectionName}")
+	private String sportsEventMappingCollectionName;
+	@Value("${mongodb.client.resultEventMapping.collectionName}")
+	private String resultEventMappingCollectionName;
 
 	public String getConnectionUrl() {
 		return connectionUrl;
@@ -30,12 +32,20 @@ public class MongoDBConfig {
 		this.databaseName = databaseName;
 	}
 
-	public String getCollectionName() {
-		return collectionName;
+	public String getSportsEventMappingCollectionName() {
+		return sportsEventMappingCollectionName;
 	}
 
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
+	public void setSportsEventMappingCollectionName(String collectionName) {
+		this.sportsEventMappingCollectionName = collectionName;
+	}
+
+	public String getResultEventMappingCollectionName() {
+		return resultEventMappingCollectionName;
+	}
+
+	public void setResultEventMappingCollectionName(String resultEventMappingCollectionName) {
+		this.resultEventMappingCollectionName = resultEventMappingCollectionName;
 	}
 
 }

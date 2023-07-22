@@ -24,7 +24,8 @@ public class EventIdMappingJob implements Job {
 
 		log.info("executing EventIdMappingJob...");
 
-		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
+		MongoCollection<Document> collection = MongoDBConnection.getInstance()
+				.getSportsEventMappingCollectionCollection();
 		List<Document> eplEvents = collection.find(Filters.eq(Constants.COMP_TYPE, Constants.API_SOURCE_COMP_TYPE_EPL))
 				.sort(Sorts.ascending("eventId")).into(new ArrayList<>());
 
