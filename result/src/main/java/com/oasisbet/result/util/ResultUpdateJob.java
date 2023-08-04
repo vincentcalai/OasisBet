@@ -15,14 +15,14 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 
 @Service
-public class EventIdMappingJob implements Job {
+public class ResultUpdateJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext context) {
 
-		Logger log = LoggerFactory.getLogger(EventIdMappingJob.class);
+		Logger log = LoggerFactory.getLogger(ResultUpdateJob.class);
 
-		log.info("executing EventIdMappingJob...");
+		log.info("executing ResultUpdateJob...");
 
 		MongoCollection<Document> collection = MongoDBConnection.getInstance()
 				.getSportsEventMappingCollectionCollection();
