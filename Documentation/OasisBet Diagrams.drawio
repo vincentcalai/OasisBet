@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-08-04T01:45:40.151Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="4j_T9INgaBnDdv_Ksxcy" version="21.1.2" type="device" pages="6">
+<mxfile host="Electron" modified="2023-08-04T01:54:57.509Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="7iI3clWMLt73ItfY8CjP" version="21.1.2" type="device" pages="6">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="1418" dy="828" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -815,7 +815,12 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="DXG5iya03QflFjD1MIS9-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="wqDWKGKcJZA5SQp5ApsX-1" target="DXG5iya03QflFjD1MIS9-1" edge="1">
+        <mxCell id="DXG5iya03QflFjD1MIS9-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="JGCQMWx6B2TRfaaxxWCG-2" target="DXG5iya03QflFjD1MIS9-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="270" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JGCQMWx6B2TRfaaxxWCG-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wqDWKGKcJZA5SQp5ApsX-1" target="JGCQMWx6B2TRfaaxxWCG-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="wqDWKGKcJZA5SQp5ApsX-1" value="System trigger ResultUpdateJob every 1min" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
@@ -828,15 +833,15 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DXG5iya03QflFjD1MIS9-1" value="Retrieve results from odds-api.com" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="120" y="225" width="120" height="70" as="geometry" />
+          <mxGeometry x="120" y="315" width="120" height="70" as="geometry" />
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-6" value="Event completed?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="135" y="345" width="90" height="90" as="geometry" />
+          <mxGeometry x="135" y="435" width="90" height="90" as="geometry" />
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="yj34XtjA6ghgMHyZEAl1-6" target="yj34XtjA6ghgMHyZEAl1-16" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="270" y="500" as="targetPoint" />
-            <mxPoint x="225" y="500" as="sourcePoint" />
+            <mxPoint x="270" y="590" as="targetPoint" />
+            <mxPoint x="225" y="590" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-12" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="yj34XtjA6ghgMHyZEAl1-11" vertex="1" connectable="0">
@@ -845,7 +850,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-16" value="Update score, outcome, completed flag &amp;amp; completed_dt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="330" y="355" width="120" height="70" as="geometry" />
+          <mxGeometry x="330" y="445" width="120" height="70" as="geometry" />
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="yj34XtjA6ghgMHyZEAl1-20" target="yj34XtjA6ghgMHyZEAl1-22" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -856,19 +861,24 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-20" value="Is result new ID?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="280" y="222.5" width="120" height="75" as="geometry" />
+          <mxGeometry x="280" y="312.5" width="120" height="75" as="geometry" />
         </mxCell>
-        <mxCell id="ueavtwVGvOxfvO3AsWzq-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yj34XtjA6ghgMHyZEAl1-22" target="yFmV9Xe5sh5eFCmzY3S--2" edge="1">
+        <mxCell id="ueavtwVGvOxfvO3AsWzq-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="yFmV9Xe5sh5eFCmzY3S--2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="285" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JGCQMWx6B2TRfaaxxWCG-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="yj34XtjA6ghgMHyZEAl1-22" target="yFmV9Xe5sh5eFCmzY3S--2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="yj34XtjA6ghgMHyZEAl1-22" value="Get event ID from sports_event_mapping table" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="440" y="125" width="140" height="70" as="geometry" />
+          <mxGeometry x="440" y="220" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="yFmV9Xe5sh5eFCmzY3S--1" value="No - &lt;br&gt;is existing Result" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1" vertex="1" connectable="0">
-          <mxGeometry x="280" y="335" as="geometry" />
+          <mxGeometry x="280" y="425" as="geometry" />
         </mxCell>
         <mxCell id="yFmV9Xe5sh5eFCmzY3S--2" value="Insert result in DB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="455" y="227.5" width="110" height="70" as="geometry" />
+          <mxGeometry x="455" y="317.5" width="110" height="70" as="geometry" />
         </mxCell>
         <mxCell id="w-SzVjrKLFN2Bsb0cxFD-1" value="Result Update Process" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=5;fontSize=14;" parent="1" vertex="1">
           <mxGeometry x="230" y="60" width="260" height="30" as="geometry" />
@@ -897,6 +907,9 @@
         </mxCell>
         <mxCell id="w-SzVjrKLFN2Bsb0cxFD-8" value="Delete result in DB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="830" y="410" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="JGCQMWx6B2TRfaaxxWCG-2" value="Get competition type" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="120" y="220" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

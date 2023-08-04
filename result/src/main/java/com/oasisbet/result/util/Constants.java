@@ -1,5 +1,8 @@
 package com.oasisbet.result.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
 
 	public static final String AMPERSAND = "&";
@@ -24,4 +27,8 @@ public class Constants {
 	public static final String EVENT_ID = "event_id";
 	public static final String COMP_TYPE = "comp_type";
 	public static final String API_EVENT_ID = "api_event_id";
+
+	public static final List<String> COMP_TYPE_LIST = Arrays.asList(Constants.API_SOURCE_COMP_TYPE_EPL,
+			Constants.API_SOURCE_COMP_TYPE_LALIGA, Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA,
+			Constants.API_SOURCE_COMP_TYPE_SERIE_A, Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE);
 }
