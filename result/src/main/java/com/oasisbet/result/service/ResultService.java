@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import com.oasisbet.result.model.ResultApiResponse;
@@ -68,5 +69,36 @@ public class ResultService {
 		resultEventList = resultEventList.stream().sorted(Comparator.comparing(ResultEvent::getStartTime))
 				.collect(Collectors.toList());
 		return resultEventList;
+	}
+
+	public boolean validateUpdateResultFlag(Document searchResult) {
+		String score = null;
+		String outcome = null;
+		Date completedDt = null;
+
+		if (searchResult.containsKey("score")) {
+			score = searchResult.getString("score");
+		}
+
+		if (searchResult.containsKey("outcome")) {
+			outcome = searchResult.getString("outcome");
+		}
+
+		if (searchResult.containsKey("completed_dt")) {
+			completedDt = searchResult.getDate("completed_dt");
+		}
+
+		return score.isEmpty() && outcome.isEmpty() && completedDt == null;
+	}
+
+	public String determineOutcome(String homeScore, String awayScore) {
+		Integer homeScoreInt = Integer.parseInt(homeScore);
+		Integer awayScoreInt = Integer.parseInt(awayScore);
+		if (homeScoreInt > awayScoreInt)
+			return "01";
+		else if (awayScoreInt > homeScoreInt)
+			return "03";
+		else
+			return "02";
 	}
 }
