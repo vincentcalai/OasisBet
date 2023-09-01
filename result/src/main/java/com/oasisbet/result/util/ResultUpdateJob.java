@@ -22,7 +22,8 @@ import com.oasisbet.result.service.ResultService;
 @Service
 public class ResultUpdateJob implements Job {
 
-	MongoCollection<Document> collection = MongoDBConnection.getInstance().getResultEventMappingCollection();
+	MongoCollection<Document> resultCollection = MongoDBConnection.getInstance().getResultEventMappingCollection();
+	MongoCollection<Document> sportsCollection = MongoDBConnection.getInstance().getSportsEventMappingCollection();
 
 	@Autowired
 	ResultService resultService;
@@ -60,79 +61,66 @@ public class ResultUpdateJob implements Job {
 
 				for (ResultApiResponse result : results) {
 					String apiEventId = result.getId();
-					Document searchQuery = new Document("api_event_id", apiEventId);
-					Document searchResult = collection.find(searchQuery).first();
-					if (searchResult != null) {
-						log.info("result event is found in db, api_event_id: " + apiEventId);
+					List<Score> scoreList = result.getScores();
+					String homeScore = "";
+					String awayScore = "";
+					String finalScore = "";
+					String outcomeResult = null;
+					if (scoreList.size() == 2) {
+						homeScore = scoreList.get(0).getScore();
+						awayScore = scoreList.get(1).getScore();
+						finalScore = homeScore + "-" + awayScore;
+						outcomeResult = resultService.determineOutcome(homeScore, awayScore);
 
-						Boolean completed = false;
-						String outcomeResult = null;
-						List<Score> scoreList = result.getScores();
-						String homeScore = "";
-						String awayScore = "";
-						String finalScore = "";
-						if (scoreList.size() == 2) {
-							homeScore = scoreList.get(0).getScore();
-							awayScore = scoreList.get(1).getScore();
-							finalScore = homeScore + "-" + awayScore;
-							outcomeResult = resultService.determineOutcome(homeScore, awayScore);
+						Document searchQuery = new Document("api_event_id", apiEventId);
+						Document searchResult = resultCollection.find(searchQuery).first();
+						if (searchResult != null) {
+							log.info("result event is found in db, api_event_id: " + apiEventId);
+
+							Boolean completed = false;
 							boolean updateResultFlag = resultService.validateUpdateResultFlag(searchResult);
 
 							if (searchResult.containsKey("completed")) {
 								completed = searchResult.getBoolean("completed");
 								// if event is completed - Update score, outcome, completed flag & completed_dt
 								if (!completed && updateResultFlag) {
-									collection.updateOne(Filters.eq("api_event_id", apiEventId),
+									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
 											Updates.set("score", finalScore));
-									collection.updateOne(Filters.eq("api_event_id", apiEventId),
+									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
 											Updates.set("completed_dt", new Date()));
-									collection.updateOne(Filters.eq("api_event_id", apiEventId),
+									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
 											Updates.set("outcome", outcomeResult));
-									collection.updateOne(Filters.eq("api_event_id", apiEventId),
+									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
 											Updates.set("completed", true));
 								}
 							}
 						} else {
-							log.error(
-									"There is an error with getting the scores. Please check the score from the API source. API Event ID: ",
-									apiEventId);
+							log.info("result NOT found in db, api_event_id: " + apiEventId);
+							Long eventId = null;
+							// Get event ID from sports_event_mapping table
+							Document searchSportsResult = sportsCollection.find(searchQuery).first();
+							if (searchSportsResult != null && searchSportsResult.containsKey("event_id")) {
+								eventId = searchSportsResult.getLong("event_id");
+								// insert result into DB
+								Document document = new Document().append("event_id", eventId)
+										.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
+										.append("score", finalScore).append("outcome", outcomeResult)
+										.append("completed", result.isCompleted()).append("completed_dt", null);
+								resultCollection.insertOne(document);
+							}
 						}
 					} else {
-						log.info("result NOT found in db, api_event_id: " + apiEventId);
-						// Get event ID from sports_event_mapping table
-
-						// insert result into DB
+						log.error(
+								"There is an error with getting the scores from result API source. Please check the score from the API source. API Event ID: ",
+								apiEventId);
 					}
+
 				}
 
 			} catch (RestClientException e) {
 				log.error("error retrieve response from the-odds-api.com", e);
 			}
 		}
-
-//		MongoCollection<Document> collection = MongoDBConnection.getInstance()
-//				.getSportsEventMappingCollectionCollection();
-//		List<Document> eplEvents = collection.find(Filters.eq(Constants.COMP_TYPE, Constants.API_SOURCE_COMP_TYPE_EPL))
-//				.sort(Sorts.ascending("eventId")).into(new ArrayList<>());
-//
-//		for (Document event : eplEvents) {
-//			log.info("id: " + event.getLong(Constants.EVENT_ID) + " source: " + event.getString(Constants.API_EVENT_ID)
-//					+ " compType: " + event.getString(Constants.COMP_TYPE));
-//		}
-
 	}
-
-//	private int getSequenceValue(MongoCollection<EventIdMap> collection) {
-//		// Find the document with the highest _id value
-//		EventIdMap doc = collection.find().sort(new EventIdMap("_id", -1)).limit(1).first();
-//
-//		// If no documents exist yet, start the sequence at 0
-//		if (doc == null) {
-//			return 0;
-//		}
-//
-//		// Get the value of the highest _id and return it
-//		return doc.getInteger("_id");
-//	}
 
 }

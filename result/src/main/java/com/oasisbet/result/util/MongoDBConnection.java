@@ -18,6 +18,7 @@ public class MongoDBConnection {
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	private MongoCollection<Document> resultEventMappingCollection;
+	private MongoCollection<Document> sportsEventMappingCollection;
 
 	private static MongoDBConfig mongoDBConfig;
 
@@ -32,6 +33,7 @@ public class MongoDBConnection {
 		this.mongoClient = MongoClients.create(mongoDBConfig.getConnectionUrl());
 		this.database = mongoClient.getDatabase(mongoDBConfig.getDatabaseName());
 		this.resultEventMappingCollection = database.getCollection(mongoDBConfig.getResultEventMappingCollectionName());
+		this.sportsEventMappingCollection = database.getCollection(mongoDBConfig.getSportsEventMappingCollectionName());
 	}
 
 	public static synchronized MongoDBConnection getInstance() {
@@ -45,5 +47,9 @@ public class MongoDBConnection {
 
 	public MongoCollection<Document> getResultEventMappingCollection() {
 		return resultEventMappingCollection;
+	}
+
+	public MongoCollection<Document> getSportsEventMappingCollection() {
+		return sportsEventMappingCollection;
 	}
 }
