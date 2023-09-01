@@ -14,7 +14,7 @@ import com.oasisbet.result.model.ResultApiResponse;
 @Service
 public class ResultUpdateJob implements Job {
 
-	MongoCollection<Document> collection = MongoDBConnection.getInstance().getSportsEventMappingCollectionCollection();
+	MongoCollection<Document> collection = MongoDBConnection.getInstance().getResultEventMappingCollection();
 
 	@Override
 	public void execute(JobExecutionContext context) {
