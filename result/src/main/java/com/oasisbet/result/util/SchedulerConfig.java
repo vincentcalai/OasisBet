@@ -46,7 +46,7 @@ public class SchedulerConfig {
 	// Setup Cron Job eventIdMappingJobTrigger
 
 	@Bean
-	public CronTriggerFactoryBean eventIdMappingJobTrigger(@Qualifier("eventIdMappingJobDetail") JobDetail jobDetail) {
+	public CronTriggerFactoryBean resultUpdateJobTrigger(@Qualifier("resultUpdateJobDetail") JobDetail jobDetail) {
 		CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
 		factoryBean.setJobDetail(jobDetail);
 		factoryBean.setStartDelay(0L);
@@ -55,9 +55,9 @@ public class SchedulerConfig {
 	}
 
 	@Bean
-	public JobDetailFactoryBean eventIdMappingJobDetail() {
+	public JobDetailFactoryBean resultUpdateJobDetail() {
 		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-		factoryBean.setJobClass(EventIdMappingJob.class);
+		factoryBean.setJobClass(ResultUpdateJob.class);
 		factoryBean.setDurability(true);
 		return factoryBean;
 	}
