@@ -1,5 +1,8 @@
 package com.oasisbet.result.util;
 
+import java.util.Date;
+import java.util.List;
+
 import org.bson.Document;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -9,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import com.oasisbet.result.model.ResultApiResponse;
+import com.oasisbet.result.model.Score;
 
 @Service
 public class ResultUpdateJob implements Job {
@@ -53,8 +59,46 @@ public class ResultUpdateJob implements Job {
 					Document searchResult = collection.find(searchQuery).first();
 					if (searchResult != null) {
 						log.info("result event is found in db, api_event_id: " + apiEventId);
+
+						Boolean completed = false;
+						String outcomeResult = null;
+						List<Score> scoreList = result.getScores();
+						String homeScore = "";
+						String awayScore = "";
+						String finalScore = "";
+						if (scoreList.size() == 2) {
+							homeScore = scoreList.get(0).getScore();
+							awayScore = scoreList.get(1).getScore();
+							finalScore = homeScore + "-" + awayScore;
+							outcomeResult = determineOutcome(homeScore, awayScore);
+						} else {
+							log.error(
+									"There is an error with getting the scores. Please check the score from the API source. API Event ID: ",
+									apiEventId);
+						}
+
+						boolean updateResultFlag = validateUpdateResultFlag(searchResult);
+
+						if (searchResult.containsKey("completed")) {
+							completed = searchResult.getBoolean("completed");
+							// if event is completed - Update score, outcome, completed flag & completed_dt
+							if (!completed && updateResultFlag) {
+								collection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("score", finalScore));
+								collection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("completed_dt", new Date()));
+								collection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("outcome", outcomeResult));
+								collection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("completed", true));
+							}
+						}
+
 					} else {
 						log.info("result NOT found in db, api_event_id: " + apiEventId);
+						// Get event ID from sports_event_mapping table
+
+						// insert result into DB
 					}
 				}
 
@@ -73,6 +117,37 @@ public class ResultUpdateJob implements Job {
 //					+ " compType: " + event.getString(Constants.COMP_TYPE));
 //		}
 
+	}
+
+	private boolean validateUpdateResultFlag(Document searchResult) {
+		String score = null;
+		String outcome = null;
+		Date completedDt = null;
+
+		if (searchResult.containsKey("score")) {
+			score = searchResult.getString("score");
+		}
+
+		if (searchResult.containsKey("outcome")) {
+			outcome = searchResult.getString("outcome");
+		}
+
+		if (searchResult.containsKey("completed_dt")) {
+			completedDt = searchResult.getDate("completed_dt");
+		}
+
+		return score.isEmpty() && outcome.isEmpty() && completedDt == null;
+	}
+
+	private String determineOutcome(String homeScore, String awayScore) {
+		Integer homeScoreInt = Integer.parseInt(homeScore);
+		Integer awayScoreInt = Integer.parseInt(awayScore);
+		if (homeScoreInt > awayScoreInt)
+			return "01";
+		else if (awayScoreInt > homeScoreInt)
+			return "03";
+		else
+			return "02";
 	}
 
 //	private int getSequenceValue(MongoCollection<EventIdMap> collection) {
