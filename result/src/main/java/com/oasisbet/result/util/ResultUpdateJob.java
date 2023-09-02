@@ -71,8 +71,8 @@ public class ResultUpdateJob implements Job {
 						homeScore = scoreList.get(0).getScore();
 						awayScore = scoreList.get(1).getScore();
 						finalScore = scoreSb.append(homeScore).append("-").append(awayScore).toString();
+						outcomeResult = resultService.determineOutcome(homeScore, awayScore);
 					}
-					outcomeResult = resultService.determineOutcome(homeScore, awayScore);
 
 					Document searchQuery = new Document("api_event_id", apiEventId);
 					Document searchResult = resultCollection.find(searchQuery).first();
@@ -101,8 +101,7 @@ public class ResultUpdateJob implements Job {
 						Long eventId = null;
 						// Get event ID from sports_event_mapping table
 						Document searchSportsResult = sportsCollection.find(searchQuery).first();
-						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")
-								&& !finalScore.isEmpty()) {
+						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")) {
 							eventId = searchSportsResult.getLong("event_id");
 							// insert result into DB
 							Document document = new Document().append("event_id", eventId)
