@@ -85,7 +85,7 @@ public class ResultUpdateJob implements Job {
 						if (searchResult.containsKey("completed")) {
 							completed = searchResult.getBoolean("completed");
 							// if event is completed - Update score, outcome, completed flag & completed_dt
-							if (!completed && updateResultFlag && !finalScore.isEmpty()) {
+							if (!completed && updateResultFlag && !finalScore.isEmpty() && !outcomeResult.isEmpty()) {
 								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
 										Updates.set("score", finalScore));
 								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),

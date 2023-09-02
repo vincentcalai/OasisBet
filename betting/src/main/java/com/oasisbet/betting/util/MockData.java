@@ -141,7 +141,7 @@ public class MockData {
 	}
 
 	public static OddsApiResponse[] mockLaLigaOddsApiResponseArray() {
-		OddsApiResponse[] array = new OddsApiResponse[2];
+		OddsApiResponse[] array = new OddsApiResponse[3];
 		OddsApiResponse mockResponse1 = new OddsApiResponse();
 		mockResponse1.setId("d4e3a23b451b0c26782e4f5e7d8f9321");
 		mockResponse1.setSport_key("soccer_laliga");
@@ -222,8 +222,49 @@ public class MockData {
 
 		mockResponse2.setBookmakers(bookmakerList2);
 
+		OddsApiResponse mockResponse3 = new OddsApiResponse();
+		mockResponse3.setId("4ad1e71603e51a092558022eefa20bbc");
+		mockResponse3.setSport_key("soccer_laliga");
+		mockResponse3.setSport_title("La Liga");
+		mockResponse3.setCommence_time("2023-04-27T18:45:00Z");
+		mockResponse3.setHome_team("Villarreal CF");
+		mockResponse3.setAway_team("Atlético de Madrid");
+
+		Bookmaker bookmaker3 = new Bookmaker();
+		bookmaker3.setKey("pinnacle");
+		bookmaker3.setTitle("Pinnacle");
+		bookmaker3.setLast_update("2023-04-26T18:45:00Z");
+
+		Market market3 = new Market();
+		market3.setKey("h2h");
+		market3.setLast_update("2023-04-26T18:45:00Z");
+
+		Outcome outcome7 = new Outcome();
+		outcome7.setName("Villarreal CF");
+		outcome7.setPrice(3.45);
+
+		Outcome outcome8 = new Outcome();
+		outcome8.setName("Atlético de Madrid");
+		outcome8.setPrice(1.87);
+
+		Outcome outcome9 = new Outcome();
+		outcome9.setName("Draw");
+		outcome9.setPrice(3.35);
+
+		List<Outcome> outcomeList3 = Arrays.asList(outcome7, outcome8, outcome9);
+		market3.setOutcomes(outcomeList3);
+
+		List<Market> marketList3 = Arrays.asList(market3);
+
+		bookmaker3.setMarkets(marketList3);
+
+		List<Bookmaker> bookmakerList3 = Arrays.asList(bookmaker3);
+
+		mockResponse3.setBookmakers(bookmakerList3);
+
 		array[0] = mockResponse1;
 		array[1] = mockResponse2;
+		array[2] = mockResponse3;
 
 		return array;
 	}
