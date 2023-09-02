@@ -66,55 +66,52 @@ public class ResultUpdateJob implements Job {
 					String awayScore = "";
 					String finalScore = "";
 					String outcomeResult = null;
-					if (scoreList.size() == 2) {
+					if (scoreList != null && scoreList.size() == 2) {
+						StringBuilder scoreSb = new StringBuilder();
 						homeScore = scoreList.get(0).getScore();
 						awayScore = scoreList.get(1).getScore();
-						finalScore = homeScore + "-" + awayScore;
-						outcomeResult = resultService.determineOutcome(homeScore, awayScore);
+						finalScore = scoreSb.append(homeScore).append("-").append(awayScore).toString();
+					}
+					outcomeResult = resultService.determineOutcome(homeScore, awayScore);
 
-						Document searchQuery = new Document("api_event_id", apiEventId);
-						Document searchResult = resultCollection.find(searchQuery).first();
-						if (searchResult != null) {
-							log.info("result event is found in db, api_event_id: " + apiEventId);
+					Document searchQuery = new Document("api_event_id", apiEventId);
+					Document searchResult = resultCollection.find(searchQuery).first();
+					if (searchResult != null) {
+						log.info("result event is found in db, api_event_id: " + apiEventId);
 
-							Boolean completed = false;
-							boolean updateResultFlag = resultService.validateUpdateResultFlag(searchResult);
+						Boolean completed = false;
+						boolean updateResultFlag = resultService.validateUpdateResultFlag(searchResult);
 
-							if (searchResult.containsKey("completed")) {
-								completed = searchResult.getBoolean("completed");
-								// if event is completed - Update score, outcome, completed flag & completed_dt
-								if (!completed && updateResultFlag) {
-									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-											Updates.set("score", finalScore));
-									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-											Updates.set("completed_dt", new Date()));
-									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-											Updates.set("outcome", outcomeResult));
-									resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-											Updates.set("completed", true));
-								}
-							}
-						} else {
-							log.info("result NOT found in db, api_event_id: " + apiEventId);
-							Long eventId = null;
-							// Get event ID from sports_event_mapping table
-							Document searchSportsResult = sportsCollection.find(searchQuery).first();
-							if (searchSportsResult != null && searchSportsResult.containsKey("event_id")) {
-								eventId = searchSportsResult.getLong("event_id");
-								// insert result into DB
-								Document document = new Document().append("event_id", eventId)
-										.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
-										.append("score", finalScore).append("outcome", outcomeResult)
-										.append("completed", result.isCompleted()).append("completed_dt", null);
-								resultCollection.insertOne(document);
+						if (searchResult.containsKey("completed")) {
+							completed = searchResult.getBoolean("completed");
+							// if event is completed - Update score, outcome, completed flag & completed_dt
+							if (!completed && updateResultFlag && !finalScore.isEmpty()) {
+								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("score", finalScore));
+								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("completed_dt", new Date()));
+								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("outcome", outcomeResult));
+								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
+										Updates.set("completed", true));
 							}
 						}
 					} else {
-						log.error(
-								"There is an error with getting the scores from result API source. Please check the score from the API source. API Event ID: ",
-								apiEventId);
+						log.info("result NOT found in db, api_event_id: " + apiEventId);
+						Long eventId = null;
+						// Get event ID from sports_event_mapping table
+						Document searchSportsResult = sportsCollection.find(searchQuery).first();
+						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")
+								&& !finalScore.isEmpty()) {
+							eventId = searchSportsResult.getLong("event_id");
+							// insert result into DB
+							Document document = new Document().append("event_id", eventId)
+									.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
+									.append("score", finalScore).append("outcome", outcomeResult)
+									.append("completed", result.isCompleted()).append("completed_dt", null);
+							resultCollection.insertOne(document);
+						}
 					}
-
 				}
 
 			} catch (RestClientException e) {

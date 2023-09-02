@@ -84,10 +84,11 @@ public class MockData {
 	}
 
 	public static ResultApiResponse[] mockLaLigaOddsApiResponseArray() {
-		ResultApiResponse[] array = new ResultApiResponse[2];
+		ResultApiResponse[] array = new ResultApiResponse[3];
 
 		ResultApiResponse mockResponse1 = new ResultApiResponse();
 		ResultApiResponse mockResponse2 = new ResultApiResponse();
+		ResultApiResponse mockResponse3 = new ResultApiResponse();
 
 		List<Score> scoreList1 = new ArrayList<>();
 		Score mockHomeScore1 = new Score();
@@ -113,7 +114,7 @@ public class MockData {
 		Score mockHomeScore2 = new Score();
 		mockHomeScore2.setName("Valencia");
 		mockHomeScore2.setScore("2");
-		scoreList2.add(mockHomeScore1);
+		scoreList2.add(mockHomeScore2);
 		Score mockAwayScore2 = new Score();
 		mockAwayScore2.setName("Sevilla");
 		mockAwayScore2.setScore("3");
@@ -129,8 +130,18 @@ public class MockData {
 		mockResponse2.setLast_update("2023-04-30T18:45:00Z");
 		mockResponse2.setScores(scoreList2);
 
+		mockResponse3.setId("4ad1e71603e51a092558022eefa20bbc");
+		mockResponse3.setSport_key("soccer_laliga");
+		mockResponse3.setSport_title("La Liga");
+		mockResponse3.setCommence_time("2023-04-27T18:45:00Z");
+		mockResponse3.setHome_team("Villarreal CF");
+		mockResponse3.setAway_team("Atlético de Madrid");
+		mockResponse3.setCompleted(false);
+		mockResponse3.setLast_update(null);
+
 		array[0] = mockResponse1;
 		array[1] = mockResponse2;
+		array[2] = mockResponse3;
 
 		return array;
 	}
