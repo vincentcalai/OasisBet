@@ -62,9 +62,9 @@ public class ResultUpdateJob implements Job {
 				for (ResultApiResponse result : results) {
 					String apiEventId = result.getId();
 					List<Score> scoreList = result.getScores();
-					String homeScore = "";
-					String awayScore = "";
-					String finalScore = "";
+					String homeScore = null;
+					String awayScore = null;
+					String finalScore = null;
 					String outcomeResult = null;
 					if (scoreList != null && scoreList.size() == 2) {
 						StringBuilder scoreSb = new StringBuilder();
@@ -85,7 +85,8 @@ public class ResultUpdateJob implements Job {
 						if (searchResult.containsKey("completed")) {
 							completed = searchResult.getBoolean("completed");
 							// if event is completed - Update score, outcome, completed flag & completed_dt
-							if (!completed && updateResultFlag && !finalScore.isEmpty() && !outcomeResult.isEmpty()) {
+							if (!completed && updateResultFlag && (finalScore != null && !finalScore.isEmpty())
+									&& outcomeResult != null) {
 								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
 										Updates.set("score", finalScore));
 								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
@@ -101,7 +102,8 @@ public class ResultUpdateJob implements Job {
 						Long eventId = null;
 						// Get event ID from sports_event_mapping table
 						Document searchSportsResult = sportsCollection.find(searchQuery).first();
-						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")) {
+						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")
+								&& (finalScore != null && !finalScore.isEmpty()) && outcomeResult != null) {
 							eventId = searchSportsResult.getLong("event_id");
 							// insert result into DB
 							Document document = new Document().append("event_id", eventId)

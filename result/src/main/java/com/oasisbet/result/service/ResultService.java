@@ -88,7 +88,7 @@ public class ResultService {
 			completedDt = searchResult.getDate("completed_dt");
 		}
 
-		return score.isEmpty() && outcome.isEmpty() && completedDt == null;
+		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && completedDt == null;
 	}
 
 	public String determineOutcome(String homeScore, String awayScore) {
