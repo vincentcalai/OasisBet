@@ -77,7 +77,7 @@ public class ResultUpdateJob implements Job {
 					Document searchQuery = new Document("api_event_id", apiEventId);
 					Document searchResult = resultCollection.find(searchQuery).first();
 					if (searchResult != null) {
-						log.info("result event is found in db, api_event_id: " + apiEventId);
+						log.info("result event is found in db, api_event_id: {}", apiEventId);
 
 						Boolean completed = false;
 						boolean updateResultFlag = resultService.validateUpdateResultFlag(searchResult);
@@ -98,7 +98,7 @@ public class ResultUpdateJob implements Job {
 							}
 						}
 					} else {
-						log.info("result NOT found in db, api_event_id: " + apiEventId);
+						log.info("result NOT found in db, api_event_id: {}", apiEventId);
 						Long eventId = null;
 						// Get event ID from sports_event_mapping table
 						Document searchSportsResult = sportsCollection.find(searchQuery).first();
@@ -106,6 +106,7 @@ public class ResultUpdateJob implements Job {
 								&& (finalScore != null && !finalScore.isEmpty()) && outcomeResult != null) {
 							eventId = searchSportsResult.getLong("event_id");
 							// insert result into DB
+							log.info("inserting new result event, api_event_id: {}", apiEventId);
 							Document document = new Document().append("event_id", eventId)
 									.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
 									.append("score", finalScore).append("outcome", outcomeResult)
