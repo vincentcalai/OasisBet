@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
@@ -22,7 +24,6 @@ import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.proxy.AccountProxy;
 import com.oasisbet.betting.util.Constants;
-import com.oasisbet.betting.util.MockData;
 
 @RestController
 @RequestMapping(path = "/odds")
@@ -48,23 +49,23 @@ public class OddsController {
 				+ Constants.API_SOURCE_URI_ODDS_FORMAT_PARAM + Constants.API_SOURCE_URI_ODDS_FORMAT_DEC
 				+ Constants.AMPERSAND + Constants.API_SOURCE_URI_BOOKMKR_PARAM
 				+ Constants.API_SOURCE_URI_BOOKMKR_PINNACLE;
-//		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 		OddsApiResponse[] results = null;
 		BettingRestResponse response = new BettingRestResponse();
 		try {
-//			ResponseEntity<OddsApiResponse[]> responseEntity = restTemplate.getForEntity(uri, OddsApiResponse[].class);
-//			results = responseEntity.getBody();
-			if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
-				results = MockData.mockEplOddsApiResponseArray();
-			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
-				results = MockData.mockLaLigaOddsApiResponseArray();
-			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
-				results = MockData.mockBundesligaOddsApiResponseArray();
-			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
-				results = MockData.mockSerieAOddsApiResponseArray();
-			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
-				results = MockData.mockLigueOneOddsApiResponseArray();
-			}
+			ResponseEntity<OddsApiResponse[]> responseEntity = restTemplate.getForEntity(uri, OddsApiResponse[].class);
+			results = responseEntity.getBody();
+//			if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
+//				results = MockData.mockEplOddsApiResponseArray();
+//			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
+//				results = MockData.mockLaLigaOddsApiResponseArray();
+//			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
+//				results = MockData.mockBundesligaOddsApiResponseArray();
+//			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
+//				results = MockData.mockSerieAOddsApiResponseArray();
+//			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
+//				results = MockData.mockLigueOneOddsApiResponseArray();
+//			}
 
 			// sync new bet events to DB, create new event id for new bet events
 			oddsService.syncAllBetEvents(compType, results);
