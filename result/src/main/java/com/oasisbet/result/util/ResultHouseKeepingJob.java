@@ -1,5 +1,6 @@
 package com.oasisbet.result.util;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,7 +34,8 @@ public class ResultHouseKeepingJob implements Job {
 		calendar.add(Calendar.DAY_OF_MONTH, -30);
 		Date thirtyDaysAgo = calendar.getTime();
 
-		Document query = new Document("completed_dt", new Document("$lt", thirtyDaysAgo));
+		Document query = new Document("$and", Arrays.asList(
+				new Document("completed_dt", new Document("$lt", thirtyDaysAgo)), new Document("completed", true)));
 
 		resultCollection.deleteMany(query);
 
