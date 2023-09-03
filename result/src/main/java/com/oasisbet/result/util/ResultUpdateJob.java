@@ -9,8 +9,10 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -102,16 +104,15 @@ public class ResultUpdateJob implements Job {
 						Long eventId = null;
 						// Get event ID from sports_event_mapping table
 						Document searchSportsResult = sportsCollection.find(searchQuery).first();
-						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")
-								&& (finalScore != null && !finalScore.isEmpty()) && outcomeResult != null) {
+						if (searchSportsResult != null && searchSportsResult.containsKey("event_id")) {
 							eventId = searchSportsResult.getLong("event_id");
 							// insert result into DB
-							log.info("inserting new result event, api_event_id: {}", apiEventId);
 							Document document = new Document().append("event_id", eventId)
 									.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
 									.append("score", finalScore).append("outcome", outcomeResult)
 									.append("completed", result.isCompleted()).append("completed_dt", null);
 							resultCollection.insertOne(document);
+							log.info("inserting new result event, api_event_id: {}", apiEventId);
 						}
 					}
 				}
