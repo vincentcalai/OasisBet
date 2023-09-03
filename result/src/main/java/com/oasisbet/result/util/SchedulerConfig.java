@@ -43,7 +43,7 @@ public class SchedulerConfig {
 		return propertiesFactoryBean.getObject();
 	}
 
-	// Setup Cron Job eventIdMappingJobTrigger
+	// Setup Cron Job resultUpdateJobTrigger
 
 	@Bean
 	public CronTriggerFactoryBean resultUpdateJobTrigger(@Qualifier("resultUpdateJobDetail") JobDetail jobDetail) {
@@ -51,6 +51,7 @@ public class SchedulerConfig {
 		factoryBean.setJobDetail(jobDetail);
 		factoryBean.setStartDelay(0L);
 		factoryBean.setCronExpression("0 0 9 * * ?");
+		// factoryBean.setCronExpression("0 */2 * ? * *");
 		return factoryBean;
 	}
 
@@ -58,6 +59,27 @@ public class SchedulerConfig {
 	public JobDetailFactoryBean resultUpdateJobDetail() {
 		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
 		factoryBean.setJobClass(ResultUpdateJob.class);
+		factoryBean.setDurability(true);
+		return factoryBean;
+	}
+
+	// Setup Cron Job resultHouseKeepingJobTrigger
+
+	@Bean
+	public CronTriggerFactoryBean resultHouseKeepingJobTrigger(
+			@Qualifier("resultHouseKeepingJobDetail") JobDetail jobDetail) {
+		CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
+		factoryBean.setJobDetail(jobDetail);
+		factoryBean.setStartDelay(0L);
+		factoryBean.setCronExpression("0 0 9 * * ?");
+		// factoryBean.setCronExpression("0 */2 * ? * *");
+		return factoryBean;
+	}
+
+	@Bean
+	public JobDetailFactoryBean resultHouseKeepingJobDetail() {
+		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+		factoryBean.setJobClass(ResultHouseKeepingJob.class);
 		factoryBean.setDurability(true);
 		return factoryBean;
 	}

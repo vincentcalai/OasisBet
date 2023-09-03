@@ -1,5 +1,7 @@
 package com.oasisbet.result.util;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,13 +11,10 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.Score;
@@ -89,14 +88,10 @@ public class ResultUpdateJob implements Job {
 							// if event is completed - Update score, outcome, completed flag & completed_dt
 							if (!completed && updateResultFlag && (finalScore != null && !finalScore.isEmpty())
 									&& outcomeResult != null) {
-								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-										Updates.set("score", finalScore));
-								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-										Updates.set("completed_dt", new Date()));
-								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-										Updates.set("outcome", outcomeResult));
-								resultCollection.updateOne(Filters.eq("api_event_id", apiEventId),
-										Updates.set("completed", true));
+								resultCollection.updateOne(eq("api_event_id", apiEventId),
+										Updates.combine(Updates.set("score", finalScore),
+												Updates.set("completed_dt", new Date()),
+												Updates.set("outcome", outcomeResult), Updates.set("completed", true)));
 							}
 						}
 					} else {
