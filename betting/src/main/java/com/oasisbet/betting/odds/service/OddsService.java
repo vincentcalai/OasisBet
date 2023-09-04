@@ -29,8 +29,8 @@ import com.oasisbet.betting.odds.model.Market;
 import com.oasisbet.betting.odds.model.Outcome;
 import com.oasisbet.betting.odds.model.TeamsDetails;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
-import com.oasisbet.betting.util.Constants;
-import com.oasisbet.betting.util.MongoDBConnection;
+import com.oasisbet.betting.odds.util.Constants;
+import com.oasisbet.betting.odds.util.MongoDBConnection;
 
 @Service
 public class OddsService {

@@ -1,4 +1,4 @@
-package com.oasisbet.betting.util;
+package com.oasisbet.betting.odds.util;
 
 import java.util.Arrays;
 import java.util.List;

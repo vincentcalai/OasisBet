@@ -21,9 +21,9 @@ import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.BettingRestResponse;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
+import com.oasisbet.betting.odds.proxy.AccountProxy;
 import com.oasisbet.betting.odds.service.OddsService;
-import com.oasisbet.betting.proxy.AccountProxy;
-import com.oasisbet.betting.util.Constants;
+import com.oasisbet.betting.odds.util.Constants;
 
 @RestController
 @RequestMapping(path = "/odds")

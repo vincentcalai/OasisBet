@@ -1,4 +1,4 @@
-package com.oasisbet.betting.util;
+package com.oasisbet.betting.odds.util;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;

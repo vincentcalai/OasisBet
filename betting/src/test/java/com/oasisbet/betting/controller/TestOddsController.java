@@ -17,8 +17,8 @@ import com.oasisbet.betting.TestBaseSetup;
 import com.oasisbet.betting.fixture.BettingFixture;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
-import com.oasisbet.betting.proxy.AccountProxy;
-import com.oasisbet.betting.util.Constants;
+import com.oasisbet.betting.odds.proxy.AccountProxy;
+import com.oasisbet.betting.odds.util.Constants;
 
 @ExtendWith(MockitoExtension.class)
 public class TestOddsController extends TestBaseSetup {

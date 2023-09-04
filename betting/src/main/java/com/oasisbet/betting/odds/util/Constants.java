@@ -1,4 +1,4 @@
-package com.oasisbet.betting.util;
+package com.oasisbet.betting.odds.util;
 
 public class Constants {
 	public static final String YES = "Y";

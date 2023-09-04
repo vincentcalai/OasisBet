@@ -1,4 +1,4 @@
-package com.oasisbet.betting.proxy;
+package com.oasisbet.betting.odds.proxy;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
