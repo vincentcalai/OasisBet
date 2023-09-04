@@ -1,4 +1,4 @@
-package com.oasisbet.result.util;
+package com.oasisbet.account.util;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -43,41 +43,22 @@ public class SchedulerConfig {
 		return propertiesFactoryBean.getObject();
 	}
 
-	// Setup Cron Job resultUpdateJobTrigger
+	// Setup Cron Job accountBetTrxJobTrigger
+
 	@Bean
-	public CronTriggerFactoryBean resultUpdateJobTrigger(@Qualifier("resultUpdateJobDetail") JobDetail jobDetail) {
+	public CronTriggerFactoryBean accountBetTrxJobTrigger(@Qualifier("accountBetTrxUpdateDetail") JobDetail jobDetail) {
 		CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
 		factoryBean.setJobDetail(jobDetail);
 		factoryBean.setStartDelay(0L);
-		factoryBean.setCronExpression("0 0 9 * * ?");
-		// factoryBean.setCronExpression("0 */2 * ? * *");
+		// factoryBean.setCronExpression("0 0 10 * * ?");
+		factoryBean.setCronExpression("0 */2 * ? * *");
 		return factoryBean;
 	}
 
 	@Bean
-	public JobDetailFactoryBean resultUpdateJobDetail() {
+	public JobDetailFactoryBean accountBetTrxUpdateDetail() {
 		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-		factoryBean.setJobClass(ResultUpdateJob.class);
-		factoryBean.setDurability(true);
-		return factoryBean;
-	}
-
-	// Setup Cron Job resultHouseKeepingJobTrigger
-	@Bean
-	public CronTriggerFactoryBean resultHouseKeepingJobTrigger(
-			@Qualifier("resultHouseKeepingJobDetail") JobDetail jobDetail) {
-		CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
-		factoryBean.setJobDetail(jobDetail);
-		factoryBean.setStartDelay(0L);
-		factoryBean.setCronExpression("0 0 9 * * ?");
-		// factoryBean.setCronExpression("0 */2 * ? * *");
-		return factoryBean;
-	}
-
-	@Bean
-	public JobDetailFactoryBean resultHouseKeepingJobDetail() {
-		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-		factoryBean.setJobClass(ResultHouseKeepingJob.class);
+		factoryBean.setJobClass(AccountBetTrxUpdateJob.class);
 		factoryBean.setDurability(true);
 		return factoryBean;
 	}
