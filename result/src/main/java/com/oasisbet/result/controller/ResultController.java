@@ -15,6 +15,7 @@ import org.springframework.web.client.RestClientException;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultRestResponse;
+import com.oasisbet.result.model.StatusResponse;
 import com.oasisbet.result.service.ResultService;
 import com.oasisbet.result.util.Constants;
 import com.oasisbet.result.util.MockData;
@@ -69,6 +70,12 @@ public class ResultController {
 			return response;
 		}
 
+	}
+
+	@GetMapping(value = "/retrieveCompletedResults")
+	public StatusResponse retrieveCompletedResults() {
+		System.out.println("calling retrieveCompletedResults");
+		return null;
 	}
 
 }

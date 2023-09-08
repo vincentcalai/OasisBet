@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,7 @@ import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
+import com.oasisbet.account.proxy.ResultProxy;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
@@ -52,6 +55,11 @@ public class AccountService {
 
 	@Autowired
 	private SequenceService sequenceService;
+
+	@Autowired
+	private ResultProxy proxy;
+
+	Logger logger = LoggerFactory.getLogger(AccountService.class);
 
 	public AccountVO retrieveUserAccountByUsername(String user) {
 		UserView userView = userDao.findByUsername(user);
@@ -346,6 +354,19 @@ public class AccountService {
 			throw new IllegalArgumentException("Invalid period: " + period);
 		}
 		return startDate;
+	}
+
+	public StatusResponse retrieveCompletedResults() {
+		StatusResponse response = null;
+		try {
+			response = proxy.retrieveCompletedResults();
+		} catch (Exception e) {
+			response = new StatusResponse();
+			response.setStatusCode(1);
+			response.setResultMessage("Error Retrieving result from local database");
+			logger.error("error Retrieving result from local database ", e);
+		}
+		return response;
 	}
 
 }
