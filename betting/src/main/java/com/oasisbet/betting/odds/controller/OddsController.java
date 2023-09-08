@@ -95,7 +95,6 @@ public class OddsController {
 		try {
 			response = proxy.processBet(betsInput);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			response = new StatusResponse();
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.BET_PROCESS_ERROR);
