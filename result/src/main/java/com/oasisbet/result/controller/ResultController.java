@@ -1,8 +1,10 @@
 package com.oasisbet.result.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +14,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
+import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.ResultRestResponse;
-import com.oasisbet.result.model.StatusResponse;
 import com.oasisbet.result.service.ResultService;
 import com.oasisbet.result.util.Constants;
 import com.oasisbet.result.util.MockData;
+import com.oasisbet.result.util.MongoDBConnection;
 
 @RestController
 @RequestMapping(path = "/result")
 public class ResultController {
 
 	Logger logger = LoggerFactory.getLogger(ResultController.class);
+	MongoCollection<Document> resultCollection = MongoDBConnection.getInstance().getResultEventMappingCollection();
 
 	@Autowired
 	ResultService resultService;
@@ -73,9 +79,21 @@ public class ResultController {
 	}
 
 	@GetMapping(value = "/retrieveCompletedResults")
-	public StatusResponse retrieveCompletedResults() {
-		System.out.println("calling retrieveCompletedResults");
-		return null;
+	public List<ResultEventMapping> retrieveCompletedResults() {
+		List<ResultEventMapping> resultEventMappingList = new ArrayList<>();
+		Document filter = new Document("completed", true);
+		FindIterable<Document> results = resultCollection.find(filter);
+		for (Document result : results) {
+			ResultEventMapping resultEventMapping = new ResultEventMapping();
+			resultEventMapping.setEventId(result.getLong("event_id"));
+			resultEventMapping.setApiEventId(result.getString("api_event_id"));
+			resultEventMapping.setCompType(result.getString("comp_type"));
+			resultEventMapping.setScore(result.getString("score"));
+			resultEventMapping.setOutcome(result.getString("outcome"));
+			resultEventMapping.setCompleted(result.getBoolean("completed"));
+			resultEventMappingList.add(resultEventMapping);
+		}
+		return resultEventMappingList;
 	}
 
 }

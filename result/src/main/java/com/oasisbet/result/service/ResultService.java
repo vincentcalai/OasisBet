@@ -11,10 +11,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.oasisbet.result.dao.IResultEventMappingDao;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
+import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.Score;
 
 @Service

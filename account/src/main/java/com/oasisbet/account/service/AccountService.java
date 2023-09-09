@@ -23,9 +23,11 @@ import com.oasisbet.account.dao.IAccountOtherTrxDao;
 import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
+import com.oasisbet.account.model.response.ResultEventMappingResponse;
 import com.oasisbet.account.proxy.ResultProxy;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
@@ -356,15 +358,16 @@ public class AccountService {
 		return startDate;
 	}
 
-	public StatusResponse retrieveCompletedResults() {
-		StatusResponse response = null;
+	public ResultEventMappingResponse retrieveCompletedResults() {
+		ResultEventMappingResponse response = new ResultEventMappingResponse();
+		List<ResultEventMapping> resultList = null;
 		try {
-			response = proxy.retrieveCompletedResults();
+			resultList = proxy.retrieveCompletedResults();
+			response.setResultEventMapping(resultList);
 		} catch (Exception e) {
-			response = new StatusResponse();
 			response.setStatusCode(1);
-			response.setResultMessage("Error Retrieving result from local database");
-			logger.error("error Retrieving result from local database ", e);
+			response.setResultMessage(Constants.ERROR_RETRIEVE_COMPL_RESULT);
+			logger.error("error retrieving completed result events from Result Microservice", e);
 		}
 		return response;
 	}
