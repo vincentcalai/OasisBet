@@ -121,4 +121,5 @@ public class ResultService {
 			resultEventMappingList.add(resultEventMapping);
 		}
 	}
+
 }

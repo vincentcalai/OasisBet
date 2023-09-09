@@ -361,4 +361,8 @@ public class AccountService {
 		return proxy.retrieveCompletedResults();
 	}
 
+	public List<AccountBetTrxView> retrieveNotSettledBetTrx() {
+		return accountBetTrxDao.findBySettled(Constants.FALSE);
+	}
+
 }

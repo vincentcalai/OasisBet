@@ -2,6 +2,7 @@ package com.oasisbet.account.util;
 
 public class Constants {
 
+	public static final boolean FALSE = false;
 	public static final String NO = "N";
 	public static final String SLASH = "/";
 	public static final String SPACE = " ";

@@ -18,4 +18,6 @@ public interface IAccountBetTrxDao extends JpaRepository<AccountBetTrxView, Stri
 	@Query("SELECT sum(abt.betAmount) FROM AccountBetTrxView abt WHERE abt.accId = :accId and abt.trxDateTime >= :startDate")
 	Double findMtdBetAmount(Long accId, Date startDate);
 
+	List<AccountBetTrxView> findBySettled(boolean settled);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.service.AccountService;
+import com.oasisbet.account.view.AccountBetTrxView;
 
 @Service
 public class AccountBetTrxUpdateJob implements Job {
@@ -26,7 +27,11 @@ public class AccountBetTrxUpdateJob implements Job {
 		log.info("executing AccountBetTrxUpdateJob...");
 
 		try {
-			List<ResultEventMapping> results = accountService.retrieveCompletedResults();
+			List<AccountBetTrxView> unsettledBetTrxList = accountService.retrieveNotSettledBetTrx();
+			if (unsettledBetTrxList.size() > 0) {
+				List<ResultEventMapping> results = accountService.retrieveCompletedResults();
+			}
+
 		} catch (Exception e) {
 			log.error("error retrieving completed result events from Result Microservice", e);
 		}
