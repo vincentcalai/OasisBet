@@ -27,7 +27,6 @@ import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
-import com.oasisbet.account.model.response.ResultEventMappingResponse;
 import com.oasisbet.account.proxy.ResultProxy;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
@@ -358,18 +357,8 @@ public class AccountService {
 		return startDate;
 	}
 
-	public ResultEventMappingResponse retrieveCompletedResults() {
-		ResultEventMappingResponse response = new ResultEventMappingResponse();
-		List<ResultEventMapping> resultList = null;
-		try {
-			resultList = proxy.retrieveCompletedResults();
-			response.setResultEventMapping(resultList);
-		} catch (Exception e) {
-			response.setStatusCode(1);
-			response.setResultMessage(Constants.ERROR_RETRIEVE_COMPL_RESULT);
-			logger.error("error retrieving completed result events from Result Microservice", e);
-		}
-		return response;
+	public List<ResultEventMapping> retrieveCompletedResults() throws Exception {
+		return proxy.retrieveCompletedResults();
 	}
 
 }

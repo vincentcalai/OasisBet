@@ -11,14 +11,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.oasisbet.result.dao.IResultEventMappingDao;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.Score;
+import com.oasisbet.result.util.MongoDBConnection;
 
 @Service
 public class ResultService {
@@ -103,5 +104,21 @@ public class ResultService {
 			return "03";
 		else
 			return "02";
+	}
+
+	public void retrieveCompletedResults(List<ResultEventMapping> resultEventMappingList) {
+		MongoCollection<Document> resultCollection = MongoDBConnection.getInstance().getResultEventMappingCollection();
+		Document filter = new Document("completed", true);
+		FindIterable<Document> results = resultCollection.find(filter);
+		for (Document result : results) {
+			ResultEventMapping resultEventMapping = new ResultEventMapping();
+			resultEventMapping.setEventId(result.getLong("event_id"));
+			resultEventMapping.setApiEventId(result.getString("api_event_id"));
+			resultEventMapping.setCompType(result.getString("comp_type"));
+			resultEventMapping.setScore(result.getString("score"));
+			resultEventMapping.setOutcome(result.getString("outcome"));
+			resultEventMapping.setCompleted(result.getBoolean("completed"));
+			resultEventMappingList.add(resultEventMapping);
+		}
 	}
 }

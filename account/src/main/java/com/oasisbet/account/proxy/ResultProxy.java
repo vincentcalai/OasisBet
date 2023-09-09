@@ -11,5 +11,5 @@ import com.oasisbet.account.model.ResultEventMapping;
 public interface ResultProxy {
 
 	@GetMapping("/result/retrieveCompletedResults")
-	public List<ResultEventMapping> retrieveCompletedResults() throws Exception;
+	public List<ResultEventMapping> retrieveCompletedResults();
 }

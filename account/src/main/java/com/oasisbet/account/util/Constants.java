@@ -50,7 +50,5 @@ public class Constants {
 
 	// Exception - Betting
 	public static final String ERR_INSUFFICIENT_BAL = "You have insufficient balance in your account. Please top up your account.";
-	// Exception - Result
-	public static final String ERROR_RETRIEVE_COMPL_RESULT = "Error retrieving completed results from Result Module";
 
 }

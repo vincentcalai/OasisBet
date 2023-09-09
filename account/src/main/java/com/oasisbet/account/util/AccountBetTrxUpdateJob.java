@@ -1,5 +1,7 @@
 package com.oasisbet.account.util;
 
+import java.util.List;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -8,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.oasisbet.account.model.response.ResultEventMappingResponse;
+import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.service.AccountService;
 
 @Service
@@ -23,7 +25,11 @@ public class AccountBetTrxUpdateJob implements Job {
 
 		log.info("executing AccountBetTrxUpdateJob...");
 
-		ResultEventMappingResponse response = accountService.retrieveCompletedResults();
+		try {
+			List<ResultEventMapping> results = accountService.retrieveCompletedResults();
+		} catch (Exception e) {
+			log.error("error retrieving completed result events from Result Microservice", e);
+		}
 
 	}
 
