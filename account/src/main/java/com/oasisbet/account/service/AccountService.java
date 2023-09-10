@@ -372,4 +372,8 @@ public class AccountService {
 		return accountBetTrxDao.findBySettled(Constants.FALSE);
 	}
 
+	public void processBetTrxSettlement(AccountBetTrxView betTrx) {
+
+	}
+
 }

@@ -70,7 +70,6 @@ public class ResultController {
 			response.setResultMessage(Constants.DATE_PARSING_EXCEPTION);
 			return response;
 		}
-
 	}
 
 	@GetMapping(value = "/retrieveCompletedResults")
