@@ -32,6 +32,8 @@ public class Constants {
 	public static final String LAST_3_MTH = "last3mth";
 	public static final String LAST_6_MTH = "last6mth";
 
+	public static final String BET_TYPE_1X2 = "01";
+
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";
 
