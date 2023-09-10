@@ -2,12 +2,7 @@ package com.oasisbet.result.model;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "result_event_mapping")
 public class ResultEventMapping {
-	@Id
 	private long eventId;
 	private String apiEventId;
 	private String compType;
