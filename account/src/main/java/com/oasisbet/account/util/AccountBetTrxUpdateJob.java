@@ -1,6 +1,7 @@
 package com.oasisbet.account.util;
 
 import java.util.List;
+import java.util.Map;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -27,11 +28,14 @@ public class AccountBetTrxUpdateJob implements Job {
 		log.info("executing AccountBetTrxUpdateJob...");
 
 		try {
+			Map<Long, ResultEventMapping> resultMap = accountService.retrieveCompletedResults();
 			List<AccountBetTrxView> unsettledBetTrxList = accountService.retrieveNotSettledBetTrx();
-			if (unsettledBetTrxList.size() > 0) {
-				List<ResultEventMapping> results = accountService.retrieveCompletedResults();
-			}
-
+			unsettledBetTrxList.forEach(betTrx -> {
+				if (resultMap.containsKey(betTrx.getEventId())) {
+					// process bet trx settlement based on result outcome of completed event
+					// accountService.processBetTrxSettlement()
+				}
+			});
 		} catch (Exception e) {
 			log.error("error retrieving completed result events from Result Microservice", e);
 		}

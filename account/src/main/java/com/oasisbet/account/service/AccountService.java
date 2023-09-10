@@ -7,7 +7,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -357,8 +359,13 @@ public class AccountService {
 		return startDate;
 	}
 
-	public List<ResultEventMapping> retrieveCompletedResults() throws Exception {
-		return proxy.retrieveCompletedResults();
+	public Map<Long, ResultEventMapping> retrieveCompletedResults() throws Exception {
+		List<ResultEventMapping> completedResults = proxy.retrieveCompletedResults();
+		Map<Long, ResultEventMapping> resultsMap = new HashMap<>();
+		completedResults.forEach(result -> {
+			resultsMap.put(result.getEventId(), result);
+		});
+		return resultsMap;
 	}
 
 	public List<AccountBetTrxView> retrieveNotSettledBetTrx() {
