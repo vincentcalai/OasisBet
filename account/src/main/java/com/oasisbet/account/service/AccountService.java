@@ -373,7 +373,23 @@ public class AccountService {
 	}
 
 	public void process1X2BetTrxSettlement(AccountBetTrxView betTrx) {
+		Long accId = betTrx.getAccId();
+		double winAmount = betTrx.getPotentialReturn();
+		// insert transaction into bet process trx table
+		Long nextSeqTrxId = sequenceService.getNextTrxId();
+		AccountBetProcessTrxView accountBetProcessTrxView = new AccountBetProcessTrxView();
+		accountBetProcessTrxView
+				.setTrxId(Constants.TRX_TYPE_WINNING_CREDIT + Constants.SLASH + accId + Constants.SLASH + nextSeqTrxId);
+		accountBetProcessTrxView.setAccId(accId);
+		accountBetProcessTrxView.setAmount(winAmount);
+		accountBetProcessTrxView.setType(Constants.TRX_TYPE_WINNING_CREDIT);
+		accountBetProcessTrxView.setTrxDt(new Date());
 
+		// add winning amount and update balance in user account
+		AccountView accountView = accountDao.getById(accId);
+		double originalBal = accountView.getBalance();
+		accountView.setBalance(originalBal + winAmount);
+		accountDao.save(accountView);
 	}
 
 }

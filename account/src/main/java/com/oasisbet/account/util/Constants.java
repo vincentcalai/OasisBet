@@ -13,6 +13,7 @@ public class Constants {
 	public static final double MAX_BAL_AMT = 199999.99;
 
 	public static final String TRX_TYPE_BET = "B";
+	public static final String TRX_TYPE_WINNING_CREDIT = "C";
 	public static final String TRX_TYPE_DEPOSIT = "D";
 	public static final String TRX_TYPE_WITHDRAWAL = "W";
 	public static final String TRX_TYPE_ALL_FUNDS = "F";
