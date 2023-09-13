@@ -37,7 +37,7 @@ public class AccountBetTrxUpdateJob implements Job {
 					// process winning bet trx for 1X2 bets
 					if (Constants.BET_TYPE_1X2.equals(betTrx.getBetType())
 							&& betTrx.getBetSelection().equals(resultEvent.getOutcome())) {
-						accountService.processBetTrxSettlement(betTrx);
+						accountService.process1X2BetTrxSettlement(betTrx);
 					}
 				}
 			});

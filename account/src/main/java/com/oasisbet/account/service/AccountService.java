@@ -375,6 +375,7 @@ public class AccountService {
 	public void process1X2BetTrxSettlement(AccountBetTrxView betTrx) {
 		Long accId = betTrx.getAccId();
 		double winAmount = betTrx.getPotentialReturn();
+
 		// insert transaction into bet process trx table
 		Long nextSeqTrxId = sequenceService.getNextTrxId();
 		AccountBetProcessTrxView accountBetProcessTrxView = new AccountBetProcessTrxView();
@@ -384,6 +385,7 @@ public class AccountService {
 		accountBetProcessTrxView.setAmount(winAmount);
 		accountBetProcessTrxView.setType(Constants.TRX_TYPE_WINNING_CREDIT);
 		accountBetProcessTrxView.setTrxDt(new Date());
+		accountBetProcessTrxDao.save(accountBetProcessTrxView);
 
 		// add winning amount and update balance in user account
 		AccountView accountView = accountDao.getById(accId);
