@@ -394,4 +394,8 @@ public class AccountService {
 		accountDao.save(accountView);
 	}
 
+	public void updateBetTrx(AccountBetTrxView betTrxView) {
+		accountBetTrxDao.save(betTrxView);
+	}
+
 }

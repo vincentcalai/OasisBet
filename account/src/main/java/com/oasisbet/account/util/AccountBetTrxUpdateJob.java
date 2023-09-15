@@ -34,10 +34,16 @@ public class AccountBetTrxUpdateJob implements Job {
 				if (resultMap.containsKey(betTrx.getEventId())) {
 					// process bet trx settlement based on result outcome of completed event
 					ResultEventMapping resultEvent = resultMap.get(betTrx.getEventId());
-					// process winning bet trx for 1X2 bets
-					if (Constants.BET_TYPE_1X2.equals(betTrx.getBetType())
-							&& betTrx.getBetSelection().equals(resultEvent.getOutcome())) {
-						accountService.process1X2BetTrxSettlement(betTrx);
+
+					if (Constants.BET_TYPE_1X2.equals(betTrx.getBetType())) {
+						boolean isBetTrxWin = betTrx.getBetSelection().equals(resultEvent.getOutcome());
+						if (isBetTrxWin) {
+							// process winning bet trx for 1X2 bets
+							accountService.process1X2BetTrxSettlement(betTrx);
+						}
+						// update bet trx is_settled flag
+						betTrx.setSettled(isBetTrxWin);
+						accountService.updateBetTrx(betTrx);
 					}
 				}
 			});
