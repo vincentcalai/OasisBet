@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-15T13:08:02.154Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="dyJ4Tqhr60CvRrTh_LY4" version="21.1.2" type="device" pages="7">
+<mxfile host="Electron" modified="2023-09-15T13:14:06.405Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="BjTCl35djmeb0SSrZ6tV" version="21.1.2" type="device" pages="7">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="2938" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -915,7 +915,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="kcoiVNoE8lFW1kzjeGiP" name="Account Bet Transaction Update Diagram">
-    <mxGraphModel dx="1038" dy="996" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="859" dy="824" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -955,7 +955,7 @@
           <mxGeometry x="290" y="348.75" width="110" height="72.5" as="geometry" />
         </mxCell>
         <mxCell id="SejuNS0jGy3UiEcQMcwL-13" value="Account Bet Transaction Update Process" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=5;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="151" y="52" width="380" height="30" as="geometry" />
+          <mxGeometry x="266" y="51" width="380" height="30" as="geometry" />
         </mxCell>
         <mxCell id="SejuNS0jGy3UiEcQMcwL-14" value="Map event id to result (eventId:ResultEvent)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="120" y="250" width="120" height="60" as="geometry" />
@@ -988,6 +988,14 @@
         <mxCell id="sQYKS20TVOtRwPoWRNYD-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sQYKS20TVOtRwPoWRNYD-26" target="sQYKS20TVOtRwPoWRNYD-29">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="sQYKS20TVOtRwPoWRNYD-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sQYKS20TVOtRwPoWRNYD-26" target="sQYKS20TVOtRwPoWRNYD-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sQYKS20TVOtRwPoWRNYD-42" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sQYKS20TVOtRwPoWRNYD-41">
+          <mxGeometry x="0.1912" y="1" relative="1" as="geometry">
+            <mxPoint y="17" as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="sQYKS20TVOtRwPoWRNYD-26" value="Is result outcome same?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
           <mxGeometry x="290" y="570" width="110" height="72.5" as="geometry" />
         </mxCell>
@@ -1013,14 +1021,20 @@
         <mxCell id="sQYKS20TVOtRwPoWRNYD-32" value="Insert trx into bet process trx table (tb_bet_process_trx)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="460" y="680" width="120" height="70" as="geometry" />
         </mxCell>
+        <mxCell id="sQYKS20TVOtRwPoWRNYD-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sQYKS20TVOtRwPoWRNYD-34" target="sQYKS20TVOtRwPoWRNYD-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="sQYKS20TVOtRwPoWRNYD-34" value="Update balance with winnings in user account&lt;br&gt;(tb_acc)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="460" y="570" width="120" height="70" as="geometry" />
         </mxCell>
         <mxCell id="sQYKS20TVOtRwPoWRNYD-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="75" y="115" width="516" height="701" as="geometry" />
+          <mxGeometry x="89" y="115" width="501" height="701" as="geometry" />
         </mxCell>
         <mxCell id="sQYKS20TVOtRwPoWRNYD-38" value="Account Microservice" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
           <mxGeometry x="345.0037931034482" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="sQYKS20TVOtRwPoWRNYD-39" value="Update is_settled status to true/false in bet trx table&lt;br&gt;(tb_bet_trx)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="460" y="462.5" width="120" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
