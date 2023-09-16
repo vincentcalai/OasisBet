@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>{{ data.message }}</h2>
+<h2 mat-dialog-title>{{dialogTitle}}</h2>
 <div mat-dialog-content>
-  <p>Are you sure to create this user?</p>
+  <p>{{dialogMessage}}</p>
 </div>
 <div mat-dialog-actions align="end">
   <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelClick()">

@@ -43,6 +43,13 @@ export class SharedVarService {
   public readonly EXCEED_MAX_BET_MSG= "Maximum bet in a bet slip is 5.";
   public readonly USER_NOT_LOGGED_IN = "Please login to place bet.";
 
+  public readonly CREATE_USER_DIALOG_TYPE = "create_user";
+  public readonly CFM_DEPOSIT_DIALOG_TYPE = "cfm_deposit";
+  public readonly CREATE_USER_DIALOG_TITLE = "Confirm Create User";
+  public readonly CFM_DEPOSIT_DIALOG_TITLE = "Confirm Deposit";
+  public readonly CREATE_USER_DIALOG_MSG = "Are you sure to create this user?";
+  public readonly CFM_DEPOSIT_DIALOG_MSG = "Are you sure to deposit?";
+
   public readonly sharedModalConfig = {
     backdrop: true,
     ignoreBackdropClick: true,

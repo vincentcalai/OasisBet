@@ -52,7 +52,7 @@ export class CreateUserComponent implements OnInit {
   confirmClicked(){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
-      data: { message: 'Confirm Create User' }
+      data: { type: this.sharedVar.CREATE_USER_DIALOG_TYPE, title: this.sharedVar.CREATE_USER_DIALOG_TITLE }
     });
 
     dialogRef.afterClosed().subscribe(result => {

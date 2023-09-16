@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
@@ -25,6 +27,7 @@ export class DepositsComponent implements OnInit {
 
   constructor(
     public sharedVar: SharedVarService,
+    public dialog: MatDialog,
     public reactiveFormService: ReactiveFormService,
     public authService: AuthService,
     public apiService: ApiService,
@@ -79,6 +82,20 @@ export class DepositsComponent implements OnInit {
       console.log("deposit amount failed!");
       this.reactiveFormService.displayValidationErrors(this.depositControl);
     }
+  }
+
+  confirmClicked(){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: { type: this.sharedVar.CFM_DEPOSIT_DIALOG_TYPE, title: this.sharedVar.CFM_DEPOSIT_DIALOG_TITLE }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        console.log("confirm deposit");
+        this.onConfirmDeposit();
+      }
+    });
   }
 
   ngOnDestroy(){
