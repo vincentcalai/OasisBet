@@ -54,7 +54,6 @@ export class DepositsComponent implements OnInit {
   }
 
   onConfirmDeposit(){
-    if(this.depositControl.valid){
       this.errorMsg = "";
       this.responseMsg = "";
       console.log("deposit amount success!");
@@ -78,24 +77,25 @@ export class DepositsComponent implements OnInit {
           this.sharedVar.changeException(error);
         })
       );
+  }
+
+  confirmClicked(){
+    if(this.depositControl.valid){
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: { type: this.sharedVar.CFM_DEPOSIT_DIALOG_TYPE, title: this.sharedVar.CFM_DEPOSIT_DIALOG_TITLE }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          console.log("confirm deposit");
+          this.onConfirmDeposit();
+        }
+      });
     } else{
       console.log("deposit amount failed!");
       this.reactiveFormService.displayValidationErrors(this.depositControl);
     }
-  }
-
-  confirmClicked(){
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: { type: this.sharedVar.CFM_DEPOSIT_DIALOG_TYPE, title: this.sharedVar.CFM_DEPOSIT_DIALOG_TITLE }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'confirm') {
-        console.log("confirm deposit");
-        this.onConfirmDeposit();
-      }
-    });
   }
 
   ngOnDestroy(){
