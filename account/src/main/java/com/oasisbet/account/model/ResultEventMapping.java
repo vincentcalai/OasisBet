@@ -9,7 +9,7 @@ public class ResultEventMapping {
 	private String score;
 	private String outcome;
 	private boolean completed;
-	private Date completedDt;
+	private Date lastUpdateDt;
 
 	public long getEventId() {
 		return eventId;
@@ -59,11 +59,11 @@ public class ResultEventMapping {
 		this.completed = completed;
 	}
 
-	public Date getCompletedDt() {
-		return completedDt;
+	public Date getLastUpdatedDt() {
+		return lastUpdateDt;
 	}
 
-	public void setCompletedDt(Date completedDt) {
-		this.completedDt = completedDt;
+	public void setLastUpdatedDt(Date lastUpdateDt) {
+		this.lastUpdateDt = lastUpdateDt;
 	}
 }

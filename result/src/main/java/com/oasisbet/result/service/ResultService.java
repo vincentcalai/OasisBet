@@ -78,7 +78,7 @@ public class ResultService {
 	public boolean validateUpdateResultFlag(Document searchResult) {
 		String score = null;
 		String outcome = null;
-		Date completedDt = null;
+		Date lastUpdatedDt = null;
 
 		if (searchResult.containsKey("score")) {
 			score = searchResult.getString("score");
@@ -88,11 +88,11 @@ public class ResultService {
 			outcome = searchResult.getString("outcome");
 		}
 
-		if (searchResult.containsKey("completed_dt")) {
-			completedDt = searchResult.getDate("completed_dt");
+		if (searchResult.containsKey("last_updated_dt")) {
+			lastUpdatedDt = searchResult.getDate("last_updated_dt");
 		}
 
-		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && completedDt == null;
+		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && lastUpdatedDt == null;
 	}
 
 	public String determineOutcome(String homeScore, String awayScore) {
@@ -118,6 +118,7 @@ public class ResultService {
 			resultEventMapping.setScore(result.getString("score"));
 			resultEventMapping.setOutcome(result.getString("outcome"));
 			resultEventMapping.setCompleted(result.getBoolean("completed"));
+			resultEventMapping.setCompletedDt(result.getDate("lastUpdatedDt"));
 			resultEventMappingList.add(resultEventMapping);
 		}
 	}

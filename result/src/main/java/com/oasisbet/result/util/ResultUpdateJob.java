@@ -87,12 +87,13 @@ public class ResultUpdateJob implements Job {
 
 						if (searchResult.containsKey("completed")) {
 							completed = searchResult.getBoolean("completed");
-							// if event is completed - Update score, outcome, completed flag & completed_dt
+							// if event is completed - Update score, outcome, completed flag &
+							// last_updated_dt
 							if (!completed && updateResultFlag && (finalScore != null && !finalScore.isEmpty())
 									&& outcomeResult != null) {
 								resultCollection.updateOne(eq("api_event_id", apiEventId),
 										Updates.combine(Updates.set("score", finalScore),
-												Updates.set("completed_dt", new Date()),
+												Updates.set("last_updated_dt", new Date()),
 												Updates.set("outcome", outcomeResult), Updates.set("completed", true)));
 							}
 						}
@@ -107,7 +108,7 @@ public class ResultUpdateJob implements Job {
 							Document document = new Document().append("event_id", eventId)
 									.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
 									.append("score", finalScore).append("outcome", outcomeResult)
-									.append("completed", result.isCompleted()).append("completed_dt", null);
+									.append("completed", result.isCompleted()).append("last_updated_dt", null);
 							resultCollection.insertOne(document);
 							log.info("inserting new result event, api_event_id: {}", apiEventId);
 						}

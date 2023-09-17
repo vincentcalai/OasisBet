@@ -35,7 +35,7 @@ public class ResultHouseKeepingJob implements Job {
 		Date thirtyDaysAgo = calendar.getTime();
 
 		Document query = new Document("$and", Arrays.asList(
-				new Document("completed_dt", new Document("$lt", thirtyDaysAgo)), new Document("completed", true)));
+				new Document("last_updated_dt", new Document("$lt", thirtyDaysAgo)), new Document("completed", true)));
 
 		resultCollection.deleteMany(query);
 
