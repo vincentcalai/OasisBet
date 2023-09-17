@@ -11,8 +11,10 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
@@ -38,27 +40,27 @@ public class ResultUpdateJob implements Job {
 
 		for (String compType : Constants.COMP_TYPE_LIST) {
 			String baseUri = Constants.API_SOURCE_BASE_URI;
-//			String uri = baseUri + compType + Constants.API_SOURCE_URI_SCORES + Constants.API_SOURCE_URI_API_KEY_PARAM
-//					+ Constants.API_SOURCE_API_KEY + Constants.AMPERSAND + Constants.API_SOURCE_URI_DAYS_FROM_PARAM
-//					+ Constants.API_SOURCE_URI_DEFAULT_DAY;
-//			RestTemplate restTemplate = new RestTemplate();
+			String uri = baseUri + compType + Constants.API_SOURCE_URI_SCORES + Constants.API_SOURCE_URI_API_KEY_PARAM
+					+ Constants.API_SOURCE_API_KEY + Constants.AMPERSAND + Constants.API_SOURCE_URI_DAYS_FROM_PARAM
+					+ Constants.API_SOURCE_URI_DEFAULT_DAY;
+			RestTemplate restTemplate = new RestTemplate();
 			ResultApiResponse[] results = null;
 			try {
-//				ResponseEntity<ResultApiResponse[]> responseEntity = restTemplate.getForEntity(uri,
-//						ResultApiResponse[].class);
-//				results = responseEntity.getBody();
+				ResponseEntity<ResultApiResponse[]> responseEntity = restTemplate.getForEntity(uri,
+						ResultApiResponse[].class);
+				results = responseEntity.getBody();
 
-				if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
-					results = MockData.mockEplResultApiResponseArray();
-				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
-					results = MockData.mockLaLigaOddsApiResponseArray();
-				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
-					results = MockData.mockBundesligaOddsApiResponseArray();
-				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
-					results = MockData.mockSerieAOddsApiResponseArray();
-				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
-					results = MockData.mockLigueOneOddsApiResponseArray();
-				}
+//				if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
+//					results = MockData.mockEplResultApiResponseArray();
+//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
+//					results = MockData.mockLaLigaOddsApiResponseArray();
+//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
+//					results = MockData.mockBundesligaOddsApiResponseArray();
+//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
+//					results = MockData.mockSerieAOddsApiResponseArray();
+//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
+//					results = MockData.mockLigueOneOddsApiResponseArray();
+//				}
 
 				for (ResultApiResponse result : results) {
 					String apiEventId = result.getId();
