@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Constants {
 
+	public static final String EMPTY_STRING = "";
 	public static final String AMPERSAND = "&";
 
 	public static final String API_SOURCE_API_KEY = "4cb61e84b1c798ec69e03a836c068cea";

@@ -3,7 +3,9 @@ package com.oasisbet.result.util;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 import org.quartz.Job;
@@ -70,11 +72,20 @@ public class ResultUpdateJob implements Job {
 					String finalScore = null;
 					String outcomeResult = null;
 					if (scoreList != null && scoreList.size() == 2) {
+						Map<String, String> homeAwayScoreMap = new HashMap<>();
+						homeAwayScoreMap.put(scoreList.get(0).getName(), scoreList.get(0).getScore());
+						homeAwayScoreMap.put(scoreList.get(1).getName(), scoreList.get(1).getScore());
 						StringBuilder scoreSb = new StringBuilder();
-						homeScore = scoreList.get(0).getScore();
-						awayScore = scoreList.get(1).getScore();
-						finalScore = scoreSb.append(homeScore).append("-").append(awayScore).toString();
-						outcomeResult = resultService.determineOutcome(homeScore, awayScore);
+						homeScore = homeAwayScoreMap.containsKey(result.getHome_team())
+								? homeAwayScoreMap.get(result.getHome_team())
+								: null;
+						awayScore = homeAwayScoreMap.containsKey(result.getAway_team())
+								? homeAwayScoreMap.get(result.getAway_team())
+								: null;
+						if (homeScore != null && awayScore != null) {
+							finalScore = scoreSb.append(homeScore).append("-").append(awayScore).toString();
+							outcomeResult = resultService.determineOutcome(homeScore, awayScore);
+						}
 					}
 
 					Document searchQuery = new Document("api_event_id", apiEventId);
@@ -108,7 +119,7 @@ public class ResultUpdateJob implements Job {
 							Document document = new Document().append("event_id", eventId)
 									.append("api_event_id", apiEventId).append("comp_type", result.getSport_key())
 									.append("score", finalScore).append("outcome", outcomeResult)
-									.append("completed", result.isCompleted()).append("last_updated_dt", null);
+									.append("completed", result.isCompleted()).append("last_updated_dt", new Date());
 							resultCollection.insertOne(document);
 							log.info("inserting new result event, api_event_id: {}", apiEventId);
 						}
