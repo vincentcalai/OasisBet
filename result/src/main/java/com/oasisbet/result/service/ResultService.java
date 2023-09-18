@@ -61,7 +61,7 @@ public class ResultService {
 							: scoreList.get(1);
 					Score awayScore = scoreList.get(1).getName().equals(result.getAway_team()) ? scoreList.get(1)
 							: scoreList.get(0);
-					score = homeScore.getScore() + "-" + awayScore.getScore();
+					score = homeScore.getScore() + Constants.DASH + awayScore.getScore();
 				}
 
 				ResultEvent event = new ResultEvent(1000, competition, eventDesc, startTime, completed, homeTeam,
