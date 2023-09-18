@@ -93,7 +93,7 @@ public class ResultService {
 			lastUpdatedDt = searchResult.getDate("last_updated_dt");
 		}
 
-		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && lastUpdatedDt == null;
+		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && lastUpdatedDt != null;
 	}
 
 	public String determineOutcome(String homeScore, String awayScore) {
