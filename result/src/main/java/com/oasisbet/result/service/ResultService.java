@@ -19,6 +19,7 @@ import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.Score;
+import com.oasisbet.result.util.Constants;
 import com.oasisbet.result.util.MongoDBConnection;
 
 @Service
@@ -54,7 +55,7 @@ public class ResultService {
 				String awayTeam = result.getAway_team();
 
 				List<Score> scoreList = result.getScores();
-				String score = "";
+				String score = Constants.EMPTY_STRING;
 				if (scoreList != null && scoreList.size() > 1) {
 					Score homeScore = scoreList.get(0).getName().equals(result.getHome_team()) ? scoreList.get(0)
 							: scoreList.get(1);
