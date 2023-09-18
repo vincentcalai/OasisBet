@@ -262,7 +262,7 @@ public class AccountService {
 	}
 
 	public List<TrxHistVO> retrieveTrxHist(Long accId, String type, String period) {
-		String typeCd = "";
+		String typeCd = Constants.EMPTY_STRING;
 		if (Constants.DEPOSIT_CD.equals(type)) {
 			typeCd = Constants.TRX_TYPE_DEPOSIT;
 		} else if (Constants.WITHDRAWAL_CD.equals(type)) {
