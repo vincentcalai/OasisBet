@@ -42,7 +42,7 @@ public class AccountBetTrxUpdateJob implements Job {
 							accountService.process1X2BetTrxSettlement(betTrx);
 						}
 						// update bet trx is_settled flag
-						betTrx.setSettled(isBetTrxWin);
+						betTrx.setSettled(Constants.TRUE);
 						accountService.updateBetTrx(betTrx);
 					}
 				}
