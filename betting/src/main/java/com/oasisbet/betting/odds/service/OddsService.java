@@ -1,5 +1,7 @@
 package com.oasisbet.betting.odds.service;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.Updates;
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.Bookmaker;
 import com.oasisbet.betting.odds.model.H2HEventOdds;
@@ -135,7 +139,8 @@ public class OddsService {
 				// Create a new document for the bet event
 				Document newBetEventDocument = new Document();
 				newBetEventDocument.append(Constants.EVENT_ID, getSequenceValue(collection, compType))
-						.append(Constants.API_EVENT_ID, apiEventId).append(Constants.COMP_TYPE, compType);
+						.append(Constants.API_EVENT_ID, apiEventId).append(Constants.COMP_TYPE, compType)
+						.append(Constants.COMPLETED, Constants.FALSE).append(Constants.CREATED_DT, new Date());
 				// Insert the document into the local table
 				collection.insertOne(newBetEventDocument);
 				logger.info("Bet event with id: {} inserted into the collection.", apiEventId);
@@ -149,16 +154,17 @@ public class OddsService {
 			}
 		}
 
-		List<String> apiSourceIdList = Arrays.stream(results).map(OddsApiResponse::getId).collect(Collectors.toList());
+		Set<String> apiSourceIdList = Arrays.stream(results).map(OddsApiResponse::getId).collect(Collectors.toSet());
 
 		// check for ended bet events in DB and remove them
 		for (Document document : collection.find(Filters.eq(Constants.COMP_TYPE, compType))) {
 			String apiEventId = document.getString(Constants.API_EVENT_ID);
 			if (!apiSourceIdList.contains(apiEventId)) {
 				logger.info("id: {} exist in local table but does not exist in the api source", apiEventId);
-				// Remove of bet event in local table
-				collection.deleteOne(Filters.eq(Constants.API_EVENT_ID, apiEventId));
-				logger.info("Deleted record with apiEventId: {}", apiEventId);
+				// Event has completed - update completed flag to true
+				collection.updateOne(eq(Constants.API_EVENT_ID, apiEventId),
+						Updates.set(Constants.COMPLETED, Constants.TRUE));
+				logger.info("Update completed record for apiEventId: {}", apiEventId);
 			}
 		}
 

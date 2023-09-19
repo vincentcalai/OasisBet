@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-19T13:37:18.671Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="f1QjpkHXVloWzTkhYas0" version="21.1.2" type="device" pages="7">
+<mxfile host="Electron" modified="2023-09-19T14:03:40.526Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="P1QEL5RV5cbVxl62TDkT" version="21.1.2" type="device" pages="7">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="2938" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -492,7 +492,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="O1DqkuOZHktEkahuvCp-" name="Bet Event Syncing Diagram">
-    <mxGraphModel dx="2954" dy="1204" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="2037" dy="830" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -763,7 +763,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="BijDtUbEanHPSh_1iYHw-68" value="Add into local map" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-          <mxGeometry x="310" y="857" width="120" height="63" as="geometry" />
+          <mxGeometry x="310" y="867" width="120" height="63" as="geometry" />
         </mxCell>
         <mxCell id="BijDtUbEanHPSh_1iYHw-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="BijDtUbEanHPSh_1iYHw-69" target="BijDtUbEanHPSh_1iYHw-68" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -789,7 +789,7 @@
         <mxCell id="BijDtUbEanHPSh_1iYHw-74" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;Bet event exist in local map, but dont exist from API source?&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;verticalAlign=middle;horizontal=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
           <mxGeometry x="300" y="965" width="140" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="BijDtUbEanHPSh_1iYHw-77" value="Bet Event ended -&lt;br&gt;Delete from DB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="BijDtUbEanHPSh_1iYHw-77" value="&lt;font color=&quot;#ff0000&quot;&gt;Bet Event ended -&lt;br&gt;Update completed flag&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="482.5" y="988.5" width="120" height="63" as="geometry" />
         </mxCell>
         <mxCell id="s7yzt4ZJnWOXmm51bTEE-1" value="Get sequence number for new competiton type" style="text;html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;strokeWidth=1;perimeterSpacing=1;" parent="1" vertex="1">

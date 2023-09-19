@@ -1,6 +1,9 @@
 package com.oasisbet.betting.odds.util;
 
 public class Constants {
+	public static final boolean TRUE = true;
+	public static final boolean FALSE = false;
+
 	public static final String YES = "Y";
 	public static final String NO = "N";
 	public static final String AMPERSAND = "&";
@@ -30,6 +33,8 @@ public class Constants {
 	public static final String EVENT_ID = "event_id";
 	public static final String COMP_TYPE = "comp_type";
 	public static final String API_EVENT_ID = "api_event_id";
+	public static final String COMPLETED = "completed";
+	public static final String CREATED_DT = "create_dt";
 
 	// Success Messages
 	public static final String BET_SUCCESS_MSG = "Bet successfully placed!";
