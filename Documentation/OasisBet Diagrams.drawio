@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-09-17T04:28:44.504Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="qs4OfWCFWpNL4SIGkhsL" version="21.1.2" type="device" pages="7">
+<mxfile host="Electron" modified="2023-09-19T13:37:18.671Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="f1QjpkHXVloWzTkhYas0" version="21.1.2" type="device" pages="7">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="2938" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -492,7 +492,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="O1DqkuOZHktEkahuvCp-" name="Bet Event Syncing Diagram">
-    <mxGraphModel dx="2938" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="2954" dy="1204" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -912,7 +912,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="kcoiVNoE8lFW1kzjeGiP" name="Account Bet Transaction Update Diagram">
-    <mxGraphModel dx="2938" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="2954" dy="1204" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1030,7 +1030,7 @@
         <mxCell id="sQYKS20TVOtRwPoWRNYD-38" value="Account Microservice" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1" vertex="1" connectable="0">
           <mxGeometry x="345.0037931034482" y="102" as="geometry" />
         </mxCell>
-        <mxCell id="sQYKS20TVOtRwPoWRNYD-39" value="Update is_settled status to true/false in bet trx table&lt;br&gt;(tb_bet_trx)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="sQYKS20TVOtRwPoWRNYD-39" value="Update is_settled status to true in bet trx table&lt;br&gt;(tb_bet_trx)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="460" y="462.5" width="120" height="70" as="geometry" />
         </mxCell>
       </root>
