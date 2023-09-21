@@ -1,5 +1,8 @@
 package com.oasisbet.betting.odds.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
 	public static final boolean TRUE = true;
 	public static final boolean FALSE = false;
@@ -29,6 +32,9 @@ public class Constants {
 	public static final String API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
 	public static final String API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
 	public static final String API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+	public static final List<String> API_SOURCE_COMP_TYPE_LIST = Arrays.asList(API_SOURCE_COMP_TYPE_EPL,
+			API_SOURCE_COMP_TYPE_LALIGA, API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A,
+			API_SOURCE_COMP_TYPE_LIGUE_ONE);
 
 	public static final String EVENT_ID = "event_id";
 	public static final String COMP_TYPE = "comp_type";

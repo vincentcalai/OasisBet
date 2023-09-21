@@ -120,7 +120,7 @@ public class OddsService {
 		return document.getLong(Constants.EVENT_ID) + 1;
 	}
 
-	public void syncAllBetEvents(String compType, OddsApiResponse[] results) {
+	public void updateCurrBetEvents(String compType, OddsApiResponse[] results) {
 		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 
 		Arrays.sort(results, Comparator.comparing(OddsApiResponse::getCommence_time,
