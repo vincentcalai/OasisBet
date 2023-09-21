@@ -1,12 +1,15 @@
 package com.oasisbet.betting.odds.util;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Constants {
 	public static final boolean TRUE = true;
 	public static final boolean FALSE = false;
 
+	public static final String EMPTY_STRING = "";
 	public static final String YES = "Y";
 	public static final String NO = "N";
 	public static final String AMPERSAND = "&";
@@ -32,9 +35,17 @@ public class Constants {
 	public static final String API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
 	public static final String API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
 	public static final String API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+
+	public static final String COMP_TYPE_TITLE_EPL = "English Premier League";
+	public static final String COMP_TYPE_TITLE_LA_LIGA = "La Liga";
+	public static final String COMP_TYPE_TITLE_BUNDESLIGA = "Bundesliga";
+	public static final String COMP_TYPE_TITLE_SERIE_A = "Serie A";
+	public static final String COMP_TYPE_TITLE_LIGUE_ONE = "Ligue One";
+
 	public static final List<String> API_SOURCE_COMP_TYPE_LIST = Arrays.asList(API_SOURCE_COMP_TYPE_EPL,
 			API_SOURCE_COMP_TYPE_LALIGA, API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A,
 			API_SOURCE_COMP_TYPE_LIGUE_ONE);
+	public static final Map<String, String> API_SOURCE_COMP_TYPE_MAP = new HashMap<>();
 
 	public static final String EVENT_TYPE_1X2 = "01";
 
@@ -58,5 +69,13 @@ public class Constants {
 	public static final String BET_PROCESS_ERROR = "There is an error while processing your bet. Please contact the administrator.";
 	public static final String RETRIEVE_ODDS_API_EXCEPTION = "Error Retrieving Odds from source API";
 	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
+
+	static {
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_EPL, COMP_TYPE_TITLE_EPL);
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_LALIGA, COMP_TYPE_TITLE_LA_LIGA);
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_BUNDESLIGA, COMP_TYPE_TITLE_BUNDESLIGA);
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_SERIE_A, COMP_TYPE_TITLE_SERIE_A);
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_LIGUE_ONE, COMP_TYPE_TITLE_LIGUE_ONE);
+	}
 
 }

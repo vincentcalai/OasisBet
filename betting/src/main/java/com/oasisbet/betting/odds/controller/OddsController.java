@@ -1,6 +1,5 @@
 package com.oasisbet.betting.odds.controller;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.BettingRestResponse;
-import com.oasisbet.betting.odds.model.response.OddsApiResponse;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.proxy.AccountProxy;
 import com.oasisbet.betting.odds.service.OddsService;
@@ -37,19 +35,8 @@ public class OddsController {
 	@GetMapping(value = "/retrieveOdds")
 	public BettingRestResponse retrieveOdds(@RequestParam("compType") String compType) {
 		// retrieve from sport_event_mapping into results
-		OddsApiResponse[] results = null;
 		BettingRestResponse response = new BettingRestResponse();
-
-		List<BetEvent> betEventList;
-		try {
-			betEventList = oddsService.processMapping(results);
-		} catch (ParseException e) {
-			logger.error("error parsing date ", e);
-			response.setStatusCode(1);
-			response.setResultMessage(Constants.DATE_PARSING_EXCEPTION);
-			return response;
-		}
-
+		List<BetEvent> betEventList = oddsService.retrieveBetEventByCompType(compType);
 		response.setBetEvent(betEventList);
 		return response;
 

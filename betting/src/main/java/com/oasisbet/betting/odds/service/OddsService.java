@@ -8,9 +8,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -19,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
@@ -35,58 +34,42 @@ import com.oasisbet.betting.odds.util.MongoDBConnection;
 @Service
 public class OddsService {
 
-	private static Map<String, Long> apiSourceIdMap = new HashMap<>();
-
 	private Logger logger = LoggerFactory.getLogger(OddsService.class);
 
-	public List<BetEvent> processMapping(OddsApiResponse[] results) throws ParseException {
+	MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
+
+	public List<BetEvent> retrieveBetEventByCompType(String compType) {
+
+		Bson filter = Filters.eq(Constants.COMP_TYPE, compType);
+		FindIterable<Document> results = collection.find(filter);
+
 		List<BetEvent> betEventList = new ArrayList<>();
-		for (OddsApiResponse result : results) {
-			List<Bookmaker> bookmakerList = result.getBookmakers();
-			Long eventId = apiSourceIdMap.get(result.getId());
-			if (bookmakerList != null && bookmakerList.size() > 0) {
-				Bookmaker bookmaker = bookmakerList.get(0);
-				List<Market> marketList = bookmaker.getMarkets();
-				Market market = marketList.get(0);
-				List<Outcome> outcomeList = market.getOutcomes();
-				Outcome homeOutcome = outcomeList.get(0).getName().equals(result.getHome_team()) ? outcomeList.get(0)
-						: outcomeList.get(1);
-				Outcome awayOutcome = outcomeList.get(1).getName().equals(result.getAway_team()) ? outcomeList.get(1)
-						: outcomeList.get(0);
-				Outcome drawOutcome = outcomeList.get(2);
-				double homeOdds = homeOutcome.getPrice();
-				double awayOdds = awayOutcome.getPrice();
-				double drawOdds = drawOutcome.getPrice();
-				H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
-				h2hEventOdds.setEventId(eventId);
+		for (Document result : results) {
+			Long eventId = result.getLong(Constants.EVENT_ID);
+			double homeOdds = result.getDouble(Constants.HOME_ODDS);
+			double awayOdds = result.getDouble(Constants.AWAY_ODDS);
+			double drawOdds = result.getDouble(Constants.DRAW_ODDS);
+			H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
+			h2hEventOdds.setEventId(eventId);
 
-				String dateString = result.getCommence_time();
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-				Date startTime = dateFormat.parse(dateString);
+			Date startTime = result.getDate(Constants.COMMENCE_TIME);
 
-				// Convert to SG time - add 8 hours to the start time
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(startTime);
+			String homeTeam = result.getString(Constants.HOME_TEAM);
+			String awayTeam = result.getString(Constants.AWAY_TEAM);
 
-				calendar.add(Calendar.HOUR_OF_DAY, 8);
-				startTime = calendar.getTime();
+			TeamsDetails teamDetails = new TeamsDetails(homeTeam, awayTeam);
 
-				String homeTeam = result.getHome_team();
-				String awayTeam = result.getAway_team();
-
-				TeamsDetails teamDetails = new TeamsDetails(homeTeam, awayTeam);
-
-				String eventDesc = homeTeam + " vs " + awayTeam;
-				String competition = result.getSport_title();
-				BetEvent event = new BetEvent(competition, eventDesc, startTime, teamDetails, h2hEventOdds);
-				event.setEventId(eventId);
-				betEventList.add(event);
-			}
+			String eventDesc = homeTeam + " vs " + awayTeam;
+			String competition = Constants.API_SOURCE_COMP_TYPE_MAP.getOrDefault(compType, Constants.EMPTY_STRING);
+			BetEvent event = new BetEvent(competition, eventDesc, startTime, teamDetails, h2hEventOdds);
+			event.setEventId(eventId);
+			betEventList.add(event);
 		}
 
 		betEventList = betEventList.stream().sorted(Comparator.comparing(BetEvent::getStartTime))
 				.collect(Collectors.toList());
 		return betEventList;
+
 	}
 
 	public Long getSequenceValue(MongoCollection<Document> collection, String compType) {
@@ -117,8 +100,6 @@ public class OddsService {
 	}
 
 	public void updateCurrBetEvents(String compType, OddsApiResponse[] results) {
-		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
-
 		Arrays.sort(results, Comparator.comparing(OddsApiResponse::getCommence_time,
 				Comparator.nullsFirst(Comparator.naturalOrder())));
 
