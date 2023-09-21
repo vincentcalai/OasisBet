@@ -36,9 +36,18 @@ public class Constants {
 			API_SOURCE_COMP_TYPE_LALIGA, API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A,
 			API_SOURCE_COMP_TYPE_LIGUE_ONE);
 
+	public static final String EVENT_TYPE_1X2 = "01";
+
 	public static final String EVENT_ID = "event_id";
 	public static final String COMP_TYPE = "comp_type";
 	public static final String API_EVENT_ID = "api_event_id";
+	public static final String EVENT_TYPE = "event_type";
+	public static final String COMMENCE_TIME = "commence_time";
+	public static final String HOME_TEAM = "home_team";
+	public static final String AWAY_TEAM = "away_team";
+	public static final String HOME_ODDS = "home_odds";
+	public static final String AWAY_ODDS = "away_odds";
+	public static final String DRAW_ODDS = "draw_odds";
 	public static final String COMPLETED = "completed";
 	public static final String CREATED_DT = "create_dt";
 
