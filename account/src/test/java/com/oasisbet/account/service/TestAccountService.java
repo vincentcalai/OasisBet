@@ -41,7 +41,7 @@ import com.oasisbet.account.view.AccountBetTrxView;
 import com.oasisbet.account.view.AccountOtherTrxView;
 import com.oasisbet.account.view.AccountView;
 
-public class TestAccountService extends TestWithSpringBoot {
+class TestAccountService extends TestWithSpringBoot {
 
 	@Autowired
 	private AccountService accountService;
