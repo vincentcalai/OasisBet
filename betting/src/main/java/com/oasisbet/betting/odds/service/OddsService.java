@@ -1,5 +1,6 @@
 package com.oasisbet.betting.odds.service;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,52 +10,49 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Sorts;
+import com.oasisbet.betting.odds.dao.ISportsEventMappingDao;
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.Bookmaker;
 import com.oasisbet.betting.odds.model.H2HEventOdds;
 import com.oasisbet.betting.odds.model.Market;
 import com.oasisbet.betting.odds.model.Outcome;
+import com.oasisbet.betting.odds.model.SportsEventMapping;
 import com.oasisbet.betting.odds.model.TeamsDetails;
 import com.oasisbet.betting.odds.model.response.OddsApiResponse;
 import com.oasisbet.betting.odds.util.Constants;
-import com.oasisbet.betting.odds.util.MongoDBConnection;
 
 @Service
 public class OddsService {
 
 	private Logger logger = LoggerFactory.getLogger(OddsService.class);
 
-	public List<BetEvent> retrieveBetEventByCompType(String compType) {
-		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
+	@Autowired
+	private ISportsEventMappingDao sportsEventMappingDao;
 
-		Bson filter = Filters.eq(Constants.COMP_TYPE, compType);
-		FindIterable<Document> results = collection.find(filter);
+	public List<BetEvent> retrieveBetEventByCompType(String compType) {
+		List<SportsEventMapping> sportsEventMappingList = sportsEventMappingDao.findByCompType(compType);
 
 		List<BetEvent> betEventList = new ArrayList<>();
-		for (Document result : results) {
-			Long eventId = result.getLong(Constants.EVENT_ID);
-			double homeOdds = result.getDouble(Constants.HOME_ODDS);
-			double awayOdds = result.getDouble(Constants.AWAY_ODDS);
-			double drawOdds = result.getDouble(Constants.DRAW_ODDS);
+		for (SportsEventMapping result : sportsEventMappingList) {
+			BigInteger eventId = result.getEventId();
+			double homeOdds = result.getHomeOdds();
+			double awayOdds = result.getAwayOdds();
+			double drawOdds = result.getDrawOdds();
 			H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
 			h2hEventOdds.setEventId(eventId);
 
-			Date startTime = result.getDate(Constants.COMMENCE_TIME);
+			Date startTime = result.getCommenceTime();
 
-			String homeTeam = result.getString(Constants.HOME_TEAM);
-			String awayTeam = result.getString(Constants.AWAY_TEAM);
+			String homeTeam = result.getHomeTeam();
+			String awayTeam = result.getAwayTeam();
 
 			TeamsDetails teamDetails = new TeamsDetails(homeTeam, awayTeam);
 
@@ -71,54 +69,50 @@ public class OddsService {
 
 	}
 
-	public Long getSequenceValue(MongoCollection<Document> collection, String compType) {
-		// Find the document with the highest _id value
-		Document document = collection.find(Filters.eq(Constants.COMP_TYPE, compType))
-				.sort(Sorts.descending(Constants.EVENT_ID)).limit(1).first();
+	public BigInteger getSequenceValue(String compType) {
+		// Find the event with the highest event_id value
+		Optional<SportsEventMapping> sportEvent = sportsEventMappingDao.findFirstByOrderByEventIdDesc();
 
-		// If no documents exist yet, start the sequence at 0
-		if (document == null) {
+		// If no event with same competition exist yet, start the sequence at 0
+		if (!sportEvent.isPresent()) {
 			switch (compType) {
 			case Constants.API_SOURCE_COMP_TYPE_EPL:
-				return 1000000L;
+				return BigInteger.valueOf(1000000L);
 			case Constants.API_SOURCE_COMP_TYPE_LALIGA:
-				return 2000000L;
+				return BigInteger.valueOf(2000000L);
 			case Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA:
-				return 3000000L;
+				return BigInteger.valueOf(3000000L);
 			case Constants.API_SOURCE_COMP_TYPE_SERIE_A:
-				return 4000000L;
+				return BigInteger.valueOf(4000000L);
 			case Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE:
-				return 5000000L;
+				return BigInteger.valueOf(5000000L);
 			default:
 				throw new IllegalArgumentException("Invalid competition type: " + compType);
 			}
 		}
 
-		// Get the value of the highest _id and return it
-		return document.getLong(Constants.EVENT_ID) + 1;
+		// Get the value of the highest event_id, add 1 and return it
+		return sportEvent.get().getEventId().add(BigInteger.valueOf(1L));
 	}
 
 	public void updateCurrBetEvents(String compType, OddsApiResponse[] results) {
-		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 		Arrays.sort(results, Comparator.comparing(OddsApiResponse::getCommence_time,
 				Comparator.nullsFirst(Comparator.naturalOrder())));
 
 		// check for missing bet events in DB and insert them
 		for (OddsApiResponse result : results) {
 			String apiEventId = result.getId();
-			Bson filter = Filters.and(Filters.eq(Constants.COMP_TYPE, compType),
-					Filters.eq(Constants.API_EVENT_ID, apiEventId));
 
-			boolean recordExists = collection.find(filter).limit(1).iterator().hasNext();
+			List<SportsEventMapping> sportsEvent = sportsEventMappingDao.findByApiEventId(apiEventId);
 
-			if (!recordExists) {
-				logger.info("id: {} does not exist in local table but exist in the api source", apiEventId);
+			if (sportsEvent == null || sportsEvent.isEmpty()) {
+				logger.info("id: {} does not exist in DB, inserting record into db.", apiEventId);
 
 				try {
 					Date startTime = convertCommenceTimeToDate(result.getCommence_time());
 
 					List<Bookmaker> bookmakerList = result.getBookmakers();
-					if (bookmakerList != null && bookmakerList.size() > 0) {
+					if (bookmakerList != null && !bookmakerList.isEmpty()) {
 						Bookmaker bookmaker = bookmakerList.get(0);
 						List<Market> marketList = bookmaker.getMarkets();
 						Market market = marketList.get(0);
@@ -134,21 +128,25 @@ public class OddsService {
 						double awayOdds = awayOutcome.getPrice();
 						double drawOdds = drawOutcome.getPrice();
 
-						Long eventId = getSequenceValue(collection, compType);
+						BigInteger eventId = getSequenceValue(compType);
 
 						// Create a new document for the bet event
-						Document newBetEventDocument = new Document();
-						newBetEventDocument.append(Constants.EVENT_ID, eventId)
-								.append(Constants.API_EVENT_ID, apiEventId).append(Constants.COMP_TYPE, compType)
-								.append(Constants.EVENT_TYPE, Constants.EVENT_TYPE_1X2)
-								.append(Constants.COMMENCE_TIME, startTime)
-								.append(Constants.HOME_TEAM, result.getHome_team())
-								.append(Constants.AWAY_TEAM, result.getAway_team())
-								.append(Constants.HOME_ODDS, homeOdds).append(Constants.AWAY_ODDS, awayOdds)
-								.append(Constants.DRAW_ODDS, drawOdds).append(Constants.COMPLETED, Constants.FALSE)
-								.append(Constants.CREATED_DT, new Date());
-						// Insert the document into the local table
-						collection.insertOne(newBetEventDocument);
+						SportsEventMapping sportsEventMapping = new SportsEventMapping();
+						sportsEventMapping.setEventId(eventId);
+						sportsEventMapping.setApiEventId(apiEventId);
+						sportsEventMapping.setCompType(compType);
+						sportsEventMapping.setEventType(Constants.EVENT_TYPE_1X2);
+						sportsEventMapping.setCommenceTime(startTime);
+						sportsEventMapping.setHomeTeam(result.getHome_team());
+						sportsEventMapping.setAwayTeam(result.getAway_team());
+						sportsEventMapping.setHomeOdds(homeOdds);
+						sportsEventMapping.setAwayOdds(awayOdds);
+						sportsEventMapping.setDrawOdds(drawOdds);
+						sportsEventMapping.setCompleted(Constants.FALSE);
+						sportsEventMapping.setCreateDt(new Date());
+
+						// Insert the new event into the mongo db table sports_event_mapping
+						sportsEventMappingDao.save(sportsEventMapping);
 						logger.info("Bet event with id: {}, mapped to: {} inserted into the collection.", apiEventId,
 								eventId);
 					}
@@ -157,9 +155,7 @@ public class OddsService {
 				}
 
 			}
-
 		}
-
 	}
 
 	private Date convertCommenceTimeToDate(String dateString) throws ParseException {

@@ -1,9 +1,10 @@
 package com.oasisbet.betting.odds.model;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class BetEvent {
-	private Long eventId;
+	private BigInteger eventId;
 	private String competition;
 	private String eventDesc;
 	private Date startTime;
@@ -20,11 +21,11 @@ public class BetEvent {
 		this.h2hEventOdds = h2hEventOdds;
 	}
 
-	public Long getEventId() {
+	public BigInteger getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(Long eventId) {
+	public void setEventId(BigInteger eventId) {
 		this.eventId = eventId;
 	}
 

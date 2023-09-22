@@ -1,10 +1,12 @@
 package com.oasisbet.betting.odds.model;
 
+import java.math.BigInteger;
+
 public class H2HEventOdds {
-	public long eventId;
-	public double homeOdds;
-	public double drawOdds;
-	public double awayOdds;
+	private BigInteger eventId;
+	private double homeOdds;
+	private double drawOdds;
+	private double awayOdds;
 
 	public H2HEventOdds(double homeOdds, double drawOdds, double awayOdds) {
 		super();
@@ -13,11 +15,11 @@ public class H2HEventOdds {
 		this.awayOdds = awayOdds;
 	}
 
-	public long getEventId() {
+	public BigInteger getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(long eventId) {
+	public void setEventId(BigInteger eventId) {
 		this.eventId = eventId;
 	}
 
