@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +15,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oasisbet.betting.model.TestSetupEvent;
+import com.oasisbet.betting.odds.model.SportsEventMapping;
 
 @TestExecutionListeners(mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS, listeners = DependencyInjectionTestExecutionListener.class)
 @AutoConfigureMockMvc
@@ -23,16 +23,17 @@ import com.oasisbet.betting.model.TestSetupEvent;
 public abstract class TestBaseSetup {
 
 	// This class is to initialize the embedded MongoDB database with data
-	@BeforeEach
-	public void setupMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
+	@BeforeAll
+	public static void setupMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
 		// Read the JSON data from file
 		String jsonData = new String(
 				Files.readAllBytes(Paths.get("C:\\OasisBet\\OasisBet\\test-data\\OasisBet.sports_event_mapping.json")));
 
 		// Convert JSON to Java objects
 		ObjectMapper objectMapper = new ObjectMapper();
-		List<TestSetupEvent> events = objectMapper.readValue(jsonData, new TypeReference<List<TestSetupEvent>>() {
-		});
+		List<SportsEventMapping> events = objectMapper.readValue(jsonData,
+				new TypeReference<List<SportsEventMapping>>() {
+				});
 
 		// Save the events to the collection
 		mongoTemplate.insert(events, "sports_event_mapping");

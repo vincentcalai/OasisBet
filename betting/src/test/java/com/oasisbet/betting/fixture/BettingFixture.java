@@ -1,5 +1,6 @@
 package com.oasisbet.betting.fixture;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -35,24 +36,24 @@ public class BettingFixture {
 	public static List<BetEvent> createMockOddsData() {
 		TeamsDetails teamDetails1 = new TeamsDetails("Manchester City", "Manchester United");
 		H2HEventOdds eventOdds1 = new H2HEventOdds(1.65, 3.80, 6.55);
-		eventOdds1.setEventId(1000001L);
+		eventOdds1.setEventId(BigInteger.valueOf(1000000L));
 		BetEvent betEvent1 = new BetEvent("English Premier League", "Manchester City vs Manchester United", new Date(),
 				teamDetails1, eventOdds1);
-		betEvent1.setEventId(1000001L);
+		betEvent1.setEventId(BigInteger.valueOf(1000000L));
 
 		TeamsDetails teamDetails2 = new TeamsDetails("Chelsea", "Liverpool");
 		H2HEventOdds eventOdds2 = new H2HEventOdds(2.65, 3.20, 2.52);
-		eventOdds2.setEventId(1000002L);
+		eventOdds2.setEventId(BigInteger.valueOf(1000001L));
 		BetEvent betEvent2 = new BetEvent("English Premier League", "Chelsea vs Liverpool", new Date(), teamDetails2,
 				eventOdds2);
-		betEvent1.setEventId(1000002L);
+		betEvent1.setEventId(BigInteger.valueOf(1000001L));
 
 		TeamsDetails teamDetails3 = new TeamsDetails("Arsenal", "Luton Town");
 		H2HEventOdds eventOdds3 = new H2HEventOdds(1.15, 6.5, 15.00);
-		eventOdds3.setEventId(1000003L);
+		eventOdds3.setEventId(BigInteger.valueOf(1000002L));
 		BetEvent betEvent3 = new BetEvent("English Premier League", "Arsenal vs Luton Town", new Date(), teamDetails3,
 				eventOdds3);
-		betEvent1.setEventId(1000003L);
+		betEvent1.setEventId(BigInteger.valueOf(1000002L));
 
 		return Arrays.asList(betEvent1, betEvent2, betEvent3);
 	}
