@@ -36,9 +36,8 @@ public class OddsService {
 
 	private Logger logger = LoggerFactory.getLogger(OddsService.class);
 
-	MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
-
 	public List<BetEvent> retrieveBetEventByCompType(String compType) {
+		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 
 		Bson filter = Filters.eq(Constants.COMP_TYPE, compType);
 		FindIterable<Document> results = collection.find(filter);
@@ -100,6 +99,7 @@ public class OddsService {
 	}
 
 	public void updateCurrBetEvents(String compType, OddsApiResponse[] results) {
+		MongoCollection<Document> collection = MongoDBConnection.getInstance().getCollection();
 		Arrays.sort(results, Comparator.comparing(OddsApiResponse::getCommence_time,
 				Comparator.nullsFirst(Comparator.naturalOrder())));
 
