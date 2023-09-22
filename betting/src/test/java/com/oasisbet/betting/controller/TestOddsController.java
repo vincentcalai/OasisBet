@@ -1,5 +1,7 @@
 package com.oasisbet.betting.controller;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -12,19 +14,25 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.betting.TestBaseSetup;
 import com.oasisbet.betting.fixture.BettingFixture;
+import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.proxy.AccountProxy;
+import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.odds.util.Constants;
 
 @ExtendWith(MockitoExtension.class)
-public class TestOddsController extends TestBaseSetup {
+class TestOddsController extends TestBaseSetup {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@MockBean
+	private OddsService oddsService;
 
 	@MockBean
 	private AccountProxy proxy;
@@ -33,7 +41,23 @@ public class TestOddsController extends TestBaseSetup {
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void testSubmitBetSuccess() throws Exception {
+	void testRetrieveOddsSuccess() throws JsonProcessingException, Exception {
+		String compType = "soccer_epl";
+		List<BetEvent> betEvents = BettingFixture.createMockOddsData();
+
+		StatusResponse expectedResponse = new StatusResponse();
+
+		Mockito.when(oddsService.retrieveBetEventByCompType(Mockito.anyString())).thenReturn(betEvents);
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/odds/retrieveOdds")
+				.param("compType", compType).contentType(MediaType.APPLICATION_JSON);
+
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedResponse)));
+	}
+
+	@Test
+	void testSubmitBetSuccess() throws Exception {
 		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();
@@ -50,7 +74,7 @@ public class TestOddsController extends TestBaseSetup {
 	}
 
 	@Test
-	public void testSubmitBetFail() throws Exception {
+	void testSubmitBetFail() throws Exception {
 		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
 		StatusResponse expectedResponse = new StatusResponse();

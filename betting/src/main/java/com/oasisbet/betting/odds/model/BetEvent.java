@@ -3,12 +3,12 @@ package com.oasisbet.betting.odds.model;
 import java.util.Date;
 
 public class BetEvent {
-	public Long eventId;
-	public String competition;
-	public String eventDesc;
-	public Date startTime;
-	public TeamsDetails teamsDetails;
-	public H2HEventOdds h2hEventOdds;
+	private Long eventId;
+	private String competition;
+	private String eventDesc;
+	private Date startTime;
+	private TeamsDetails teamsDetails;
+	private H2HEventOdds h2hEventOdds;
 
 	public BetEvent(String competition, String eventDesc, Date startTime, TeamsDetails teamsDetails,
 			H2HEventOdds h2hEventOdds) {

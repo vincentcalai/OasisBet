@@ -27,7 +27,7 @@ public abstract class TestBaseSetup {
 	public void setupMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
 		// Read the JSON data from file
 		String jsonData = new String(
-				Files.readAllBytes(Paths.get("C:\\Oasis\\OasisBet\\test-data\\OasisBet.sports_event_mapping.json")));
+				Files.readAllBytes(Paths.get("C:\\OasisBet\\OasisBet\\test-data\\OasisBet.sports_event_mapping.json")));
 
 		// Convert JSON to Java objects
 		ObjectMapper objectMapper = new ObjectMapper();

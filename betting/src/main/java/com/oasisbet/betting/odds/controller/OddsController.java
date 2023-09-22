@@ -39,7 +39,6 @@ public class OddsController {
 		List<BetEvent> betEventList = oddsService.retrieveBetEventByCompType(compType);
 		response.setBetEvent(betEventList);
 		return response;
-
 	}
 
 	@PostMapping(value = "/bets")
