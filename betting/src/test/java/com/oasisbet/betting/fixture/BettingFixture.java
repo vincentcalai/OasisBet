@@ -204,12 +204,12 @@ public class BettingFixture {
 		market4.setLast_update("2023-04-29T06:27:40Z");
 
 		Outcome outcome10 = new Outcome();
-		outcome10.setName("Manchester City");
-		outcome10.setPrice(1.14);
+		outcome10.setName("Nottingham Forest");
+		outcome10.setPrice(15.55);
 
 		Outcome outcome11 = new Outcome();
-		outcome11.setName("Southampton");
-		outcome11.setPrice(15.55);
+		outcome11.setName("Manchester City");
+		outcome11.setPrice(1.15);
 
 		Outcome outcome12 = new Outcome();
 		outcome12.setName("Draw");

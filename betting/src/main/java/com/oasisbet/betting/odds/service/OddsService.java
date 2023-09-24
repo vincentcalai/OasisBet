@@ -153,7 +153,6 @@ public class OddsService {
 				} catch (ParseException e) {
 					logger.error("error parsing date ", e);
 				}
-
 			}
 		}
 	}

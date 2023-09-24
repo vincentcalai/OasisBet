@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 
 import com.oasisbet.betting.TestBaseSetup;
 import com.oasisbet.betting.fixture.BettingFixture;
@@ -21,6 +23,9 @@ class TestOddsService extends TestBaseSetup {
 
 	@Autowired
 	private OddsService oddsService;
+
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
 	@Test
 	void testRetrieveBetEventByCompTypeCountIs3() {
@@ -80,6 +85,16 @@ class TestOddsService extends TestBaseSetup {
 	}
 
 	@Test
+	void testGetSequenceValueLigueOneInitialValueIs5000000Success() {
+		Query query = new Query();
+		mongoTemplate.remove(query, "sports_event_mapping");
+
+		BigInteger eventId = oddsService.getSequenceValue("soccer_france_ligue_one");
+
+		assertEquals(BigInteger.valueOf(5000000), eventId);
+	}
+
+	@Test
 	void testGetSequenceValueEplNextValueIs1000003Success() {
 		BigInteger eventId = oddsService.getSequenceValue("soccer_epl");
 
@@ -99,5 +114,35 @@ class TestOddsService extends TestBaseSetup {
 		oddsService.updateCurrBetEvents("soccer_epl", results);
 		List<BetEvent> retrievedResult = oddsService.retrieveBetEventByCompType("soccer_epl");
 		assertEquals(4, retrievedResult.size());
+	}
+
+	@Test
+	void testUpdateCurrBetEventsInsertVerifyEventDescSuccess() {
+		OddsApiResponse[] results = BettingFixture.mockEplOddsApiResponseArray();
+		oddsService.updateCurrBetEvents("soccer_epl", results);
+		List<BetEvent> retrievedBetEvents = oddsService.retrieveBetEventByCompType("soccer_epl");
+		assertEquals("Tottenham Hotspur vs Manchester United", retrievedBetEvents.get(0).getEventDesc());
+		assertEquals("Southampton vs Bournemouth", retrievedBetEvents.get(1).getEventDesc());
+		assertEquals("Everton vs Newcastle United", retrievedBetEvents.get(2).getEventDesc());
+		assertEquals("Manchester City vs Nottingham Forest", retrievedBetEvents.get(3).getEventDesc());
+	}
+
+	@Test
+	void testUpdateCurrBetEventsInsertVerifyEventOddsSuccess() {
+		OddsApiResponse[] results = BettingFixture.mockEplOddsApiResponseArray();
+		oddsService.updateCurrBetEvents("soccer_epl", results);
+		List<BetEvent> retrievedBetEvents = oddsService.retrieveBetEventByCompType("soccer_epl");
+		assertEquals(2.81, retrievedBetEvents.get(0).getH2hEventOdds().getHomeOdds());
+		assertEquals(2.49, retrievedBetEvents.get(0).getH2hEventOdds().getAwayOdds());
+		assertEquals(3.71, retrievedBetEvents.get(0).getH2hEventOdds().getDrawOdds());
+		assertEquals(2.32, retrievedBetEvents.get(1).getH2hEventOdds().getHomeOdds());
+		assertEquals(3.25, retrievedBetEvents.get(1).getH2hEventOdds().getAwayOdds());
+		assertEquals(3.46, retrievedBetEvents.get(1).getH2hEventOdds().getDrawOdds());
+		assertEquals(5.17, retrievedBetEvents.get(2).getH2hEventOdds().getHomeOdds());
+		assertEquals(1.74, retrievedBetEvents.get(2).getH2hEventOdds().getAwayOdds());
+		assertEquals(3.85, retrievedBetEvents.get(2).getH2hEventOdds().getDrawOdds());
+		assertEquals(1.15, retrievedBetEvents.get(3).getH2hEventOdds().getHomeOdds());
+		assertEquals(15.55, retrievedBetEvents.get(3).getH2hEventOdds().getAwayOdds());
+		assertEquals(6.80, retrievedBetEvents.get(3).getH2hEventOdds().getDrawOdds());
 	}
 }
