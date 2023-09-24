@@ -14,8 +14,8 @@ public interface ISportsEventMappingDao extends MongoRepository<SportsEventMappi
 
 	List<SportsEventMapping> findByCompType(String compType);
 
-	Optional<SportsEventMapping> findFirstByOrderByEventIdDesc();
-
 	List<SportsEventMapping> findByApiEventId(String apiEventId);
+
+	Optional<SportsEventMapping> findFirstByCompTypeOrderByEventIdDesc(String compType);
 
 }

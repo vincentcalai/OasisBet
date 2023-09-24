@@ -71,7 +71,7 @@ public class OddsService {
 
 	public BigInteger getSequenceValue(String compType) {
 		// Find the event with the highest event_id value
-		Optional<SportsEventMapping> sportEvent = sportsEventMappingDao.findFirstByOrderByEventIdDesc();
+		Optional<SportsEventMapping> sportEvent = sportsEventMappingDao.findFirstByCompTypeOrderByEventIdDesc(compType);
 
 		// If no event with same competition exist yet, start the sequence at 0
 		if (!sportEvent.isPresent()) {
