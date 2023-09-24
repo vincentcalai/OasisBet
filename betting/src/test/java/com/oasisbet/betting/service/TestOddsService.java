@@ -6,17 +6,17 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.oasisbet.betting.TestBaseSetup;
+import com.oasisbet.betting.fixture.BettingFixture;
 import com.oasisbet.betting.odds.model.BetEvent;
+import com.oasisbet.betting.odds.model.response.OddsApiResponse;
 import com.oasisbet.betting.odds.service.OddsService;
 
 @ExtendWith(MockitoExtension.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TestOddsService extends TestBaseSetup {
 
 	@Autowired
@@ -80,9 +80,24 @@ class TestOddsService extends TestBaseSetup {
 	}
 
 	@Test
+	void testGetSequenceValueEplNextValueIs1000003Success() {
+		BigInteger eventId = oddsService.getSequenceValue("soccer_epl");
+
+		assertEquals(BigInteger.valueOf(1000003), eventId);
+	}
+
+	@Test
 	void testGetSequenceValueBundesligaNextValueIs3000003Success() {
 		BigInteger eventId = oddsService.getSequenceValue("soccer_germany_bundesliga");
 
 		assertEquals(BigInteger.valueOf(3000003), eventId);
+	}
+
+	@Test
+	void testUpdateCurrBetEventsInsertSuccess() {
+		OddsApiResponse[] results = BettingFixture.mockEplOddsApiResponseArray();
+		oddsService.updateCurrBetEvents("soccer_epl", results);
+		List<BetEvent> retrievedResult = oddsService.retrieveBetEventByCompType("soccer_epl");
+		assertEquals(4, retrievedResult.size());
 	}
 }

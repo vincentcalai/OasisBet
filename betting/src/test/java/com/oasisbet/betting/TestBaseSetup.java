@@ -5,11 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
@@ -23,8 +25,8 @@ import com.oasisbet.betting.odds.model.SportsEventMapping;
 public abstract class TestBaseSetup {
 
 	// This class is to initialize the embedded MongoDB database with data
-	@BeforeAll
-	public static void setupMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
+	@BeforeEach
+	public void setupMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
 		// Read the JSON data from file
 		String jsonData = new String(
 				Files.readAllBytes(Paths.get("C:\\OasisBet\\OasisBet\\test-data\\OasisBet.sports_event_mapping.json")));
@@ -37,5 +39,11 @@ public abstract class TestBaseSetup {
 
 		// Save the events to the collection
 		mongoTemplate.insert(events, "sports_event_mapping");
+	}
+
+	@AfterEach
+	public void destroyMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
+		Query query = new Query();
+		mongoTemplate.remove(query, "sports_event_mapping");
 	}
 }
