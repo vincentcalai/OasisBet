@@ -471,4 +471,10 @@ class TestAccountService extends TestWithSpringBoot {
 		assertEquals(expectedResult.getDate(), result.getDate());
 	}
 
+	@Test
+	void testRetrieveNotSettledBetTrx() throws Exception {
+		List<AccountBetTrxView> accountBetTrxList = accountService.retrieveNotSettledBetTrx();
+		assertEquals(26, accountBetTrxList.size());
+	}
+
 }
