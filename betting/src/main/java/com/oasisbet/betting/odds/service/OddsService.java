@@ -157,7 +157,7 @@ public class OddsService {
 		}
 	}
 
-	private Date convertCommenceTimeToDate(String dateString) throws ParseException {
+	public Date convertCommenceTimeToDate(String dateString) throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		Date startTime = dateFormat.parse(dateString);
 

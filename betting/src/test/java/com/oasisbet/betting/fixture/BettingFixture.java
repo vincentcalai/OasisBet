@@ -64,7 +64,7 @@ public class BettingFixture {
 
 	public static OddsApiResponse[] mockEplOddsApiResponseArray() {
 
-		OddsApiResponse[] array = new OddsApiResponse[4];
+		OddsApiResponse[] array = new OddsApiResponse[5];
 
 		OddsApiResponse mockResponse1 = new OddsApiResponse();
 		mockResponse1.setId("a085aa8beb661722ad957e5d8c15f798");
@@ -226,10 +226,98 @@ public class BettingFixture {
 
 		mockResponse4.setBookmakers(bookmakerList4);
 
+		OddsApiResponse mockResponse5 = new OddsApiResponse();
+		mockResponse5.setId("69ce6c2d85c6731d5d04a2181043ac9a");
+		mockResponse5.setSport_key("soccer_epl");
+		mockResponse5.setSport_title("EPL");
+		mockResponse5.setCommence_time("2023-04-30T20:45:00Z");
+		mockResponse5.setHome_team("Crystal Palace");
+		mockResponse5.setAway_team("Fulham");
+
+		Bookmaker bookmaker5 = new Bookmaker();
+		bookmaker5.setKey("pinnacle");
+		bookmaker5.setTitle("Pinnacle");
+		bookmaker5.setLast_update("2023-04-29T06:27:40Z");
+
+		Market market5 = new Market();
+		market5.setKey("h2h");
+		market5.setLast_update("2023-04-29T06:27:40Z");
+
+		Outcome outcome13 = new Outcome();
+		outcome13.setName("Crystal Palace");
+		outcome13.setPrice(2.00);
+
+		Outcome outcome14 = new Outcome();
+		outcome14.setName("Fulham");
+		outcome14.setPrice(3.05);
+
+		Outcome outcome15 = new Outcome();
+		outcome15.setName("Draw");
+		outcome15.setPrice(3.50);
+
+		List<Outcome> outcomeList5 = Arrays.asList(outcome13, outcome14, outcome15);
+		market5.setOutcomes(outcomeList5);
+
+		List<Market> marketList5 = Arrays.asList(market5);
+
+		bookmaker5.setMarkets(marketList5);
+
+		List<Bookmaker> bookmakerList5 = Arrays.asList(bookmaker5);
+
+		mockResponse5.setBookmakers(bookmakerList5);
+
 		array[0] = mockResponse1;
 		array[1] = mockResponse2;
 		array[2] = mockResponse3;
 		array[3] = mockResponse4;
+		array[4] = mockResponse5;
+		return array;
+	}
+
+	public static OddsApiResponse[] mockDatePaseErrorEplOdds() {
+		OddsApiResponse[] array = new OddsApiResponse[1];
+
+		OddsApiResponse mockResponse1 = new OddsApiResponse();
+		mockResponse1.setId("74a747a8cd2ad057e7e1f432d608ce63");
+		mockResponse1.setSport_key("soccer_epl");
+		mockResponse1.setSport_title("EPL");
+		mockResponse1.setCommence_time("ERROR");
+		mockResponse1.setHome_team("Cheslea");
+		mockResponse1.setAway_team("Aston Villa");
+
+		Bookmaker bookmaker = new Bookmaker();
+		bookmaker.setKey("pinnacle");
+		bookmaker.setTitle("Pinnacle");
+		bookmaker.setLast_update("2023-04-27T06:27:40Z");
+
+		Market market = new Market();
+		market.setKey("h2h");
+		market.setLast_update("2023-04-27T06:27:40Z");
+
+		Outcome outcome1 = new Outcome();
+		outcome1.setName("Cheslea");
+		outcome1.setPrice(1.85);
+
+		Outcome outcome2 = new Outcome();
+		outcome2.setName("Aston Villa");
+		outcome2.setPrice(3.85);
+
+		Outcome outcome3 = new Outcome();
+		outcome3.setName("Draw");
+		outcome3.setPrice(3.35);
+
+		List<Outcome> outcomeList = Arrays.asList(outcome1, outcome2, outcome3);
+		market.setOutcomes(outcomeList);
+
+		List<Market> marketList = Arrays.asList(market);
+
+		bookmaker.setMarkets(marketList);
+
+		List<Bookmaker> bookmakerList = Arrays.asList(bookmaker);
+
+		mockResponse1.setBookmakers(bookmakerList);
+		array[0] = mockResponse1;
+
 		return array;
 	}
 
