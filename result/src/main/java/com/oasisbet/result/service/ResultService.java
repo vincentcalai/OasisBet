@@ -10,20 +10,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
+import com.oasisbet.result.dao.IResultEventMappingDao;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.Score;
 import com.oasisbet.result.util.Constants;
-import com.oasisbet.result.util.MongoDBConnection;
 
 @Service
 public class ResultService {
+
+	@Autowired
+	IResultEventMappingDao resultEventMappingDao;
+
 	public List<ResultEvent> processMapping(ResultApiResponse[] results) throws ParseException {
 		List<ResultEvent> resultEventList = new ArrayList<>();
 		for (ResultApiResponse result : results) {
@@ -76,22 +78,10 @@ public class ResultService {
 		return resultEventList;
 	}
 
-	public boolean validateUpdateResultFlag(Document searchResult) {
-		String score = null;
-		String outcome = null;
-		Date lastUpdatedDt = null;
-
-		if (searchResult.containsKey("score")) {
-			score = searchResult.getString("score");
-		}
-
-		if (searchResult.containsKey("outcome")) {
-			outcome = searchResult.getString("outcome");
-		}
-
-		if (searchResult.containsKey("last_updated_dt")) {
-			lastUpdatedDt = searchResult.getDate("last_updated_dt");
-		}
+	public boolean validateUpdateResultFlag(ResultEventMapping searchResult) {
+		String score = searchResult.getScore();
+		String outcome = searchResult.getOutcome();
+		Date lastUpdatedDt = searchResult.getLastUpdatedDt();
 
 		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && lastUpdatedDt != null;
 	}
@@ -107,21 +97,8 @@ public class ResultService {
 			return "02";
 	}
 
-	public void retrieveCompletedResults(List<ResultEventMapping> resultEventMappingList) {
-		MongoCollection<Document> resultCollection = MongoDBConnection.getInstance().getResultEventMappingCollection();
-		Document filter = new Document("completed", true);
-		FindIterable<Document> results = resultCollection.find(filter);
-		for (Document result : results) {
-			ResultEventMapping resultEventMapping = new ResultEventMapping();
-			resultEventMapping.setEventId(result.getLong("event_id"));
-			resultEventMapping.setApiEventId(result.getString("api_event_id"));
-			resultEventMapping.setCompType(result.getString("comp_type"));
-			resultEventMapping.setScore(result.getString("score"));
-			resultEventMapping.setOutcome(result.getString("outcome"));
-			resultEventMapping.setCompleted(result.getBoolean("completed"));
-			resultEventMapping.setCompletedDt(result.getDate("lastUpdatedDt"));
-			resultEventMappingList.add(resultEventMapping);
-		}
+	public List<ResultEventMapping> retrieveCompletedResults() {
+		return resultEventMappingDao.findByCompleted(Constants.TRUE);
 	}
 
 }

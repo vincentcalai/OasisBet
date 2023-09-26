@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Constants {
 
+	public static final boolean TRUE = true;
+	public static final boolean FALSE = false;
+
 	public static final String EMPTY_STRING = "";
 	public static final String DASH = "-";
 	public static final String AMPERSAND = "&";

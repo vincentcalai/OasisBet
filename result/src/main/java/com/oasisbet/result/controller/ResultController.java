@@ -1,7 +1,6 @@
 package com.oasisbet.result.controller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -75,9 +74,7 @@ public class ResultController {
 
 	@GetMapping(value = "/retrieveCompletedResults")
 	public List<ResultEventMapping> retrieveCompletedResults() {
-		List<ResultEventMapping> resultEventMappingList = new ArrayList<>();
-		resultService.retrieveCompletedResults(resultEventMappingList);
-		return resultEventMappingList;
+		return resultService.retrieveCompletedResults();
 	}
 
 }

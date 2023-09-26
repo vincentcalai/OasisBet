@@ -1,21 +1,27 @@
 package com.oasisbet.result.model;
 
+import java.math.BigInteger;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "result_event_mapping")
 public class ResultEventMapping {
-	private long eventId;
+	@Id
+	private BigInteger eventId;
 	private String apiEventId;
 	private String compType;
 	private String score;
 	private String outcome;
 	private boolean completed;
-	private Date completedDt;
+	private Date lastUpdatedDt;
 
-	public long getEventId() {
+	public BigInteger getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(long eventId) {
+	public void setEventId(BigInteger eventId) {
 		this.eventId = eventId;
 	}
 
@@ -59,11 +65,12 @@ public class ResultEventMapping {
 		this.completed = completed;
 	}
 
-	public Date getCompletedDt() {
-		return completedDt;
+	public Date getLastUpdatedDt() {
+		return lastUpdatedDt;
 	}
 
-	public void setCompletedDt(Date completedDt) {
-		this.completedDt = completedDt;
+	public void setLastUpdatedDt(Date lastUpdatedDt) {
+		this.lastUpdatedDt = lastUpdatedDt;
 	}
+
 }
