@@ -1,4 +1,4 @@
-package com.oasisbet.betting;
+package com.oasisbet.result;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oasisbet.betting.odds.model.SportsEventMapping;
+import com.oasisbet.result.model.SportsEventMapping;
 
 @TestExecutionListeners(mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS, listeners = DependencyInjectionTestExecutionListener.class)
 @AutoConfigureMockMvc
