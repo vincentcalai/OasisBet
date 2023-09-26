@@ -31,7 +31,6 @@ public abstract class TestBaseSetup {
 	public void setupMongoDbData(@Autowired MongoTemplate mongoTemplate) throws IOException {
 		Path currentDir = Paths.get(System.getProperty("user.dir"));
 		Path parentDir = currentDir.getParent();
-		System.out.println("file1 Path: " + parentDir.toAbsolutePath());
 		String sportsEventMappingFilePath = parentDir.toAbsolutePath() + File.separator + "test-data" + File.separator
 				+ "OasisBet.sports_event_mapping.json";
 

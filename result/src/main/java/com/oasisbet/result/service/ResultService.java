@@ -45,8 +45,6 @@ public class ResultService {
 				startTime = calendar.getTime();
 
 				if (lastUpdated != null) {
-					calendar.setTime(lastUpdated);
-					calendar.add(Calendar.HOUR_OF_DAY, 8);
 					lastUpdated = calendar.getTime();
 				}
 
