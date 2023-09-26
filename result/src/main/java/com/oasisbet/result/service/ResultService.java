@@ -81,9 +81,8 @@ public class ResultService {
 	public boolean validateUpdateResultFlag(ResultEventMapping searchResult) {
 		String score = searchResult.getScore();
 		String outcome = searchResult.getOutcome();
-		Date lastUpdatedDt = searchResult.getLastUpdatedDt();
 
-		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty()) && lastUpdatedDt != null;
+		return (score == null || score.isEmpty()) && (outcome == null || outcome.isEmpty());
 	}
 
 	public String determineOutcome(String homeScore, String awayScore) {
