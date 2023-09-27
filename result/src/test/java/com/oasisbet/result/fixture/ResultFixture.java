@@ -46,7 +46,7 @@ public class ResultFixture {
 		Score mockHomeScore2 = new Score();
 		mockHomeScore2.setName("Arsenal");
 		mockHomeScore2.setScore("4");
-		scoreList2.add(mockHomeScore1);
+		scoreList2.add(mockHomeScore2);
 		Score mockAwayScore2 = new Score();
 		mockAwayScore2.setName("Sheffield United");
 		mockAwayScore2.setScore("0");
@@ -129,8 +129,9 @@ public class ResultFixture {
 				new Date());
 		ResultEvent resultEvent2 = new ResultEvent(1000002L, "English Premier League", "Arsenal vs Sheffield United",
 				startTime2, true, "Arsenal", "Sheffield United", "4-0", new Date());
-		ResultEvent resultEvent3 = new ResultEvent(1000003L, "English Premier League", "Southampton vs Arsenal",
-				startTime3, true, "Newcastle United", "Manchester United", "1-1", new Date());
+		ResultEvent resultEvent3 = new ResultEvent(1000003L, "English Premier League",
+				"Newcastle United vs Manchester United", startTime3, true, "Newcastle United", "Manchester United",
+				"1-1", new Date());
 		List<ResultEvent> resultEvents = new ArrayList<>();
 		resultEvents.add(resultEvent1);
 		resultEvents.add(resultEvent2);
