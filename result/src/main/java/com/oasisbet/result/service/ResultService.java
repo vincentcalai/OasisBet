@@ -1,5 +1,6 @@
 package com.oasisbet.result.service;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,14 +11,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oasisbet.result.dao.IResultEventMappingDao;
+import com.oasisbet.result.dao.ISportsEventMappingDao;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.Score;
+import com.oasisbet.result.model.SportsEventMapping;
 import com.oasisbet.result.util.Constants;
 
 @Service
@@ -25,6 +30,11 @@ public class ResultService {
 
 	@Autowired
 	IResultEventMappingDao resultEventMappingDao;
+
+	@Autowired
+	ISportsEventMappingDao sportsEventMappingDao;
+
+	private Logger logger = LoggerFactory.getLogger(ResultService.class);
 
 	public List<ResultEvent> processMapping(ResultApiResponse[] results) throws ParseException {
 		List<ResultEvent> resultEventList = new ArrayList<>();
@@ -64,9 +74,17 @@ public class ResultService {
 					score = homeScore.getScore() + Constants.DASH + awayScore.getScore();
 				}
 
-				ResultEvent event = new ResultEvent(1000, competition, eventDesc, startTime, completed, homeTeam,
-						awayTeam, score, lastUpdated);
-				resultEventList.add(event);
+				String apiEventId = result.getId();
+				List<SportsEventMapping> sportsEventList = sportsEventMappingDao.findByApiEventId(apiEventId);
+				if (sportsEventList != null && !sportsEventList.isEmpty()) {
+					BigInteger eventIdBigInt = sportsEventList.get(0).getEventId();
+					long eventId = eventIdBigInt.longValue();
+					ResultEvent event = new ResultEvent(eventId, competition, eventDesc, startTime, completed, homeTeam,
+							awayTeam, score, lastUpdated);
+					resultEventList.add(event);
+				} else {
+					logger.info("api event id: {} is not found in sports_event_mapping table", apiEventId);
+				}
 			}
 
 		}
