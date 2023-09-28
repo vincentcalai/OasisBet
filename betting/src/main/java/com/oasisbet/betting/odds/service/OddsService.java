@@ -38,7 +38,8 @@ public class OddsService {
 	private ISportsEventMappingDao sportsEventMappingDao;
 
 	public List<BetEvent> retrieveBetEventByCompType(String compType) {
-		List<SportsEventMapping> sportsEventMappingList = sportsEventMappingDao.findByCompType(compType);
+		List<SportsEventMapping> sportsEventMappingList = sportsEventMappingDao
+				.findByCompTypeAndCompletedFalse(compType);
 
 		List<BetEvent> betEventList = new ArrayList<>();
 		for (SportsEventMapping result : sportsEventMappingList) {

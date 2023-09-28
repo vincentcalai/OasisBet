@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.oasisbet.result.fixture.ResultFixture;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
+import com.oasisbet.result.model.Score;
 
 @ExtendWith(MockitoExtension.class)
 class TestResultService extends TestBaseSetup {
@@ -174,6 +176,39 @@ class TestResultService extends TestBaseSetup {
 		assertThrows(ParseException.class, () -> {
 			resultService.processMapping(apiInputParams);
 		});
+	}
+
+	@Test
+	void testProcessMappingEventIdNotFoundNotAdded() throws ParseException {
+		ResultApiResponse[] inputResult = new ResultApiResponse[1];
+
+		ResultApiResponse mockResponse1 = new ResultApiResponse();
+
+		List<Score> scoreList1 = new ArrayList<>();
+		Score mockHomeScore1 = new Score();
+		mockHomeScore1.setName("Crystal Palace");
+		mockHomeScore1.setScore("2");
+		scoreList1.add(mockHomeScore1);
+		Score mockAwayScore1 = new Score();
+		mockAwayScore1.setName("Burnley");
+		mockAwayScore1.setScore("0");
+		scoreList1.add(mockAwayScore1);
+
+		mockResponse1.setId("abcdefg1234567890");
+		mockResponse1.setSport_key("soccer_epl");
+		mockResponse1.setSport_title("English Premier League");
+		mockResponse1.setCommence_time("2023-04-28T18:45:00Z");
+		mockResponse1.setHome_team("Crystal Palace");
+		mockResponse1.setAway_team("Burnley");
+		mockResponse1.setCompleted(true);
+		mockResponse1.setLast_update("2023-04-29T18:45:00Z");
+		mockResponse1.setScores(scoreList1);
+
+		inputResult[0] = mockResponse1;
+
+		List<ResultEvent> result = resultService.processMapping(inputResult);
+
+		assertEquals(result.size(), 0);
 	}
 
 }

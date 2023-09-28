@@ -41,6 +41,48 @@
   "createDt": "2023-09-21T14:04:00.082Z"
 },
 {
+  "eventId": 1000003,
+  "apiEventId": "e306340bed661722ad957e5d8c15f798",
+  "compType": "soccer_epl",
+  "eventType": "01",
+  "commenceTime": "2023-05-28T18:45:00.000Z",
+  "homeTeam": "Tottenham Hotspur",
+  "awayTeam": "Leicester City",
+  "homeOdds": 1.88,
+  "awayOdds": 3.46,
+  "drawOdds": 3.55,
+  "completed": true,
+  "createDt": "2023-09-21T14:04:00.080Z"
+},
+{
+  "eventId": 1000004,
+  "apiEventId": "2ad957e5d8661722ad957e5d8c15f798",
+  "compType": "soccer_epl",
+  "eventType": "01",
+  "commenceTime": "2023-05-29T18:45:00.000Z",
+  "homeTeam": "Arsenal",
+  "awayTeam": "Sheffield United",
+  "homeOdds": 1.15,
+  "awayOdds": 6.00,
+  "drawOdds": 15.45,
+  "completed": true,
+  "createDt": "2023-09-21T14:04:00.080Z"
+},
+{
+  "eventId": 1000005,
+  "apiEventId": "1722ad957e661722ad957e5d8c15f798",
+  "compType": "soccer_epl",
+  "eventType": "01",
+  "commenceTime": "2023-05-30T19:45:00.000Z",
+  "homeTeam": "Newcastle United",
+  "awayTeam": "Manchester United",
+  "homeOdds": 2.40,
+  "awayOdds": 3.40,
+  "drawOdds": 2.70,
+  "completed": true,
+  "createDt": "2023-09-21T14:04:00.080Z"
+},
+{
   "eventId": 2000000,
   "apiEventId": "4ad1e71603e51a092558022eefa20bbc",
   "compType": "soccer_spain_la_liga",

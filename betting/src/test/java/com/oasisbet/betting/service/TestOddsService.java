@@ -149,10 +149,10 @@ class TestOddsService extends TestBaseSetup {
 	}
 
 	@Test
-	void testGetSequenceValueEplNextValueIs1000003Success() {
+	void testGetSequenceValueEplNextValueIs1000006Success() {
 		BigInteger eventId = oddsService.getSequenceValue("soccer_epl");
 
-		assertEquals(BigInteger.valueOf(1000003), eventId);
+		assertEquals(BigInteger.valueOf(1000006), eventId);
 	}
 
 	@Test

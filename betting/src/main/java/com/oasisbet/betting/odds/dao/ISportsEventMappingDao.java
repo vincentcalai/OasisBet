@@ -12,10 +12,10 @@ import com.oasisbet.betting.odds.model.SportsEventMapping;
 @Repository
 public interface ISportsEventMappingDao extends MongoRepository<SportsEventMapping, BigInteger> {
 
-	List<SportsEventMapping> findByCompType(String compType);
-
 	List<SportsEventMapping> findByApiEventId(String apiEventId);
 
 	Optional<SportsEventMapping> findFirstByCompTypeOrderByEventIdDesc(String compType);
+
+	List<SportsEventMapping> findByCompTypeAndCompletedFalse(String compType);
 
 }

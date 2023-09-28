@@ -32,7 +32,7 @@ public class ResultFixture {
 		mockAwayScore1.setScore("1");
 		scoreList1.add(mockAwayScore1);
 
-		mockResponse1.setId("a085aa8beb661722ad957e5d8c15f798");
+		mockResponse1.setId("e306340bed661722ad957e5d8c15f798");
 		mockResponse1.setSport_key("soccer_epl");
 		mockResponse1.setSport_title("English Premier League");
 		mockResponse1.setCommence_time("2023-04-28T18:45:00Z");
@@ -52,7 +52,7 @@ public class ResultFixture {
 		mockAwayScore2.setScore("0");
 		scoreList2.add(mockAwayScore2);
 
-		mockResponse2.setId("f7d5d5a141e21df15f23b5e306340bed");
+		mockResponse2.setId("2ad957e5d8661722ad957e5d8c15f798");
 		mockResponse2.setSport_key("soccer_epl");
 		mockResponse2.setSport_title("English Premier League");
 		mockResponse2.setCommence_time("2023-04-29T18:45:00Z");
@@ -72,7 +72,7 @@ public class ResultFixture {
 		mockAwayScore3.setScore("1");
 		scoreList3.add(mockAwayScore3);
 
-		mockResponse3.setId("66ca5a121b5ddc4763cf1708222be377");
+		mockResponse3.setId("1722ad957e661722ad957e5d8c15f798");
 		mockResponse3.setSport_key("soccer_epl");
 		mockResponse3.setSport_title("English Premier League");
 		mockResponse3.setCommence_time("2023-04-30T19:45:00Z");
