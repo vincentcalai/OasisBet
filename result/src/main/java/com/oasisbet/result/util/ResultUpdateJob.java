@@ -36,6 +36,9 @@ public class ResultUpdateJob implements Job {
 	@Autowired
 	ISportsEventMappingDao sportsEventMappingDao;
 
+	@Autowired
+	RestTemplate restTemplate;
+
 	@Override
 	public void execute(JobExecutionContext context) {
 
@@ -48,7 +51,6 @@ public class ResultUpdateJob implements Job {
 			String uri = baseUri + compType + Constants.API_SOURCE_URI_SCORES + Constants.API_SOURCE_URI_API_KEY_PARAM
 					+ Constants.API_SOURCE_API_KEY + Constants.AMPERSAND + Constants.API_SOURCE_URI_DAYS_FROM_PARAM
 					+ Constants.API_SOURCE_URI_DEFAULT_DAY;
-			RestTemplate restTemplate = new RestTemplate();
 			ResultApiResponse[] results = null;
 			try {
 				ResponseEntity<ResultApiResponse[]> responseEntity = restTemplate.getForEntity(uri,

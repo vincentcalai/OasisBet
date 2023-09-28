@@ -30,6 +30,9 @@ public class ResultController {
 	@Autowired
 	ResultService resultService;
 
+	@Autowired
+	RestTemplate restTemplate;
+
 	@GetMapping(value = "/retrieveResults")
 	public ResultRestResponse retrieveResults(@RequestParam("compType") String compType) {
 
@@ -37,7 +40,6 @@ public class ResultController {
 		String uri = baseUri + compType + Constants.API_SOURCE_URI_SCORES + Constants.API_SOURCE_URI_API_KEY_PARAM
 				+ Constants.API_SOURCE_API_KEY + Constants.AMPERSAND + Constants.API_SOURCE_URI_DAYS_FROM_PARAM
 				+ Constants.API_SOURCE_URI_DEFAULT_DAY;
-		RestTemplate restTemplate = new RestTemplate();
 		ResultApiResponse[] results = null;
 		ResultRestResponse response = new ResultRestResponse();
 		try {

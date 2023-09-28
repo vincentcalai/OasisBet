@@ -58,6 +58,8 @@ class TestResultController extends TestBaseSetup {
 
 		when(mockRestTemplate.getForEntity(Mockito.anyString(), Mockito.any())).thenReturn(mockResponseEntity);
 
+		Mockito.when(resultService.processMapping(Mockito.any(ResultApiResponse[].class))).thenReturn(mockResults);
+
 		ResultRestResponse expectedResponse = new ResultRestResponse();
 		expectedResponse.setResultEvent(mockResults);
 

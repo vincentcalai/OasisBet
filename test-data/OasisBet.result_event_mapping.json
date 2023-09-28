@@ -1,0 +1,1820 @@
+[{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0f8"
+  },
+  "event_id": 1000012,
+  "api_event_id": "e0d240a77323657c98952a74519218cd",
+  "comp_type": "soccer_epl",
+  "score": "1-1",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T23:54:05.203Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0f9"
+  },
+  "event_id": 1000016,
+  "api_event_id": "69ce6c2d85c6731d5d04a2181043ac9a",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.681Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0fa"
+  },
+  "event_id": 1000017,
+  "api_event_id": "2bb1ad8d75800f87589c2a3d898da3ee",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.682Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0fb"
+  },
+  "event_id": 1000018,
+  "api_event_id": "dd847ce1e1804f38613accf052ebfc75",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.684Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0fc"
+  },
+  "event_id": 1000019,
+  "api_event_id": "a2a29539dc0215b10cc6e65d1f75d45e",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0fd"
+  },
+  "event_id": 1000020,
+  "api_event_id": "04e4afa3695006c6ddd876af49547206",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.687Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0fe"
+  },
+  "event_id": 1000021,
+  "api_event_id": "b33e91dedc34bd50ddd02097f933f7bc",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.688Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e0ff"
+  },
+  "event_id": 1000025,
+  "api_event_id": "74a747a8cd2ad057e7e1f432d608ce63",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.689Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e100"
+  },
+  "event_id": 1000022,
+  "api_event_id": "73f6f4db270424113488eef28af56751",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.691Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e101"
+  },
+  "event_id": 1000023,
+  "api_event_id": "9cd2dab20828bbf6ccd694853f2c5215",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.692Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e102"
+  },
+  "event_id": 1000024,
+  "api_event_id": "8210c0ad84e05ca0c1d6e008d5d2c274",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.693Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e103"
+  },
+  "event_id": 1000026,
+  "api_event_id": "9d35082081b6450749fb6f1cc908f57b",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.694Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e104"
+  },
+  "event_id": 1000027,
+  "api_event_id": "7d4220e8bf528f818408301b517fbee8",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.695Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e105"
+  },
+  "event_id": 1000028,
+  "api_event_id": "bf0182d3f58394917fe1d87dd5d46fb0",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.696Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e106"
+  },
+  "event_id": 1000029,
+  "api_event_id": "2ffa0cbab18cafdc6ec18e225b27fc18",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.698Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e107"
+  },
+  "event_id": 1000030,
+  "api_event_id": "e573c7cf0a99cdc038d519a5b63520c0",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.699Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e108"
+  },
+  "event_id": 1000031,
+  "api_event_id": "822f82f91ad92eb7dc3667ef2625bc16",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.700Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e109"
+  },
+  "event_id": 1000032,
+  "api_event_id": "c1d930d000d60dec48b06ccd2ce5a9d7",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.701Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e10a"
+  },
+  "event_id": 1000033,
+  "api_event_id": "37aed7a71cd72642860be7e3947000ea",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.702Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e10b"
+  },
+  "event_id": 1000034,
+  "api_event_id": "d808239f478b81bbbd8afc914dcdc548",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.704Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851c9b11c994dca48e10c"
+  },
+  "event_id": 1000035,
+  "api_event_id": "7bc7e53ac44c6bd3cbe692b0d46e76fe",
+  "comp_type": "soccer_epl",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:01.705Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e10d"
+  },
+  "event_id": 2000004,
+  "api_event_id": "cd9b93ed73f1f71a3127dba6d58c6867",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "2-0",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.008Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e10e"
+  },
+  "event_id": 2000005,
+  "api_event_id": "b15f43f6377bb61f479242013931f2f3",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "3-0",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.009Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e10f"
+  },
+  "event_id": 2000006,
+  "api_event_id": "9cb6d859a9d89f07dd4c5bae37fb1224",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "0-1",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.011Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e110"
+  },
+  "event_id": 2000007,
+  "api_event_id": "afd40269158289030cf0d693bf3bd830",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "5-0",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.012Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e111"
+  },
+  "event_id": 2000008,
+  "api_event_id": "26466d40d8f24203a58ace67964b8116",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "3-2",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.013Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e112"
+  },
+  "event_id": 2000009,
+  "api_event_id": "217c4c976b7d269528f10a921e1dd932",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "2-1",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.014Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e113"
+  },
+  "event_id": 2000010,
+  "api_event_id": "6527e3169cc10287c0d13f4ac892ed6d",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "1-0",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.016Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e114"
+  },
+  "event_id": 2000012,
+  "api_event_id": "d5146060f6f5c78983498675b76fba93",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "2-1",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.017Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e115"
+  },
+  "event_id": 2000013,
+  "api_event_id": "fcabf33b1fbd6fe0acea4167c3709239",
+  "comp_type": "soccer_spain_la_liga",
+  "score": "2-4",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T23:54:05.509Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e116"
+  },
+  "event_id": 3000002,
+  "api_event_id": "d9c6588b696ac16b667713f90795df93",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "2-2",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.336Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e117"
+  },
+  "event_id": 3000006,
+  "api_event_id": "171b397bafc20dcc6c1fbcfa124a9686",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "1-3",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.337Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e118"
+  },
+  "event_id": 3000004,
+  "api_event_id": "4be7bf88e60dd5246a35c46c5d49c12f",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "2-4",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.338Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e119"
+  },
+  "event_id": 3000005,
+  "api_event_id": "54fa66edc137450ec8c1bd51280238cb",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "1-3",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.340Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e11a"
+  },
+  "event_id": 3000007,
+  "api_event_id": "d988a31c490f38f4ef57b2507bf20b21",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "2-1",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.341Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e11b"
+  },
+  "event_id": 3000003,
+  "api_event_id": "23b47f3eb1ac38e754fb9201206f8926",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "3-0",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.342Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e11c"
+  },
+  "event_id": 3000008,
+  "api_event_id": "f858946bc101f632869c3d2686d6e102",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "1-1",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.343Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e11d"
+  },
+  "event_id": 3000009,
+  "api_event_id": "0bdd14eb684e84e888bfa69351ca87e0",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "4-2",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.344Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e11e"
+  },
+  "event_id": 3000010,
+  "api_event_id": "248f1ceb902ec042d05a02806827bd45",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": "3-3",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.345Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e11f"
+  },
+  "event_id": 4000004,
+  "api_event_id": "a73236e37bcf761a2802da68bd711d1d",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "3-1",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.644Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e120"
+  },
+  "event_id": 4000005,
+  "api_event_id": "b09a64f76f789c99abaabdd0b6759162",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "5-1",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.645Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e121"
+  },
+  "event_id": 4000006,
+  "api_event_id": "aa611f563ade115bc90f659c83934927",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "2-2",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.645Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e122"
+  },
+  "event_id": 4000007,
+  "api_event_id": "95700f87d4ec79e658366c33fdda120e",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "0-0",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.646Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e123"
+  },
+  "event_id": 4000008,
+  "api_event_id": "e1c5e62cdda9e9f5fce9c648505caca9",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "4-2",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.648Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e124"
+  },
+  "event_id": 4000009,
+  "api_event_id": "4ab998b1c88def460ab3ad9377e01058",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "1-1",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.650Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e125"
+  },
+  "event_id": 4000010,
+  "api_event_id": "cdc0bb3ba80d734d500ddf91411c23cd",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "3-2",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.650Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e126"
+  },
+  "event_id": 4000011,
+  "api_event_id": "7f6eb372b8263fe7343e71e1440d0de9",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "7-0",
+  "outcome": "01",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.651Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e127"
+  },
+  "event_id": 4000012,
+  "api_event_id": "234d555b7821cb5bb6f5777e9b1aba2e",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "0-3",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T23:54:06.095Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e128"
+  },
+  "event_id": 4000013,
+  "api_event_id": "4e395e9790bcb86bc447c61dfcc90bed",
+  "comp_type": "soccer_italy_serie_a",
+  "score": "0-0",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T23:54:06.096Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e129"
+  },
+  "event_id": 5000006,
+  "api_event_id": "e4b7831859133ea71c79f8aa2c63bece",
+  "comp_type": "soccer_france_ligue_one",
+  "score": "2-2",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.985Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e12a"
+  },
+  "event_id": 5000008,
+  "api_event_id": "4bbde77a9239dafb04c20dcfb5c36634",
+  "comp_type": "soccer_france_ligue_one",
+  "score": "0-1",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.986Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e12b"
+  },
+  "event_id": 5000011,
+  "api_event_id": "314f908ddf4c604c28fe930b609b362c",
+  "comp_type": "soccer_france_ligue_one",
+  "score": "2-2",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.987Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e12c"
+  },
+  "event_id": 5000007,
+  "api_event_id": "af5f4ce01fed7bd364dd317a644a0148",
+  "comp_type": "soccer_france_ligue_one",
+  "score": "1-2",
+  "outcome": "03",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.988Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "650851cab11c994dca48e12d"
+  },
+  "event_id": 5000010,
+  "api_event_id": "348cea810f73019be11a48accf435a7b",
+  "comp_type": "soccer_france_ligue_one",
+  "score": "0-0",
+  "outcome": "02",
+  "completed": true,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:34:02.989Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e12e"
+  },
+  "event_id": 2000014,
+  "api_event_id": "f8ce1bd440b8457cde26c826381e88b7",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.617Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e12f"
+  },
+  "event_id": 2000015,
+  "api_event_id": "8f342c4367a8a195ece1964ed05ab920",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.618Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e130"
+  },
+  "event_id": 2000016,
+  "api_event_id": "2af2f0a394ca9e6b5d0103082d04acf7",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.618Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e131"
+  },
+  "event_id": 2000017,
+  "api_event_id": "fb723f372cce04985b742cddf8f07c41",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.619Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e132"
+  },
+  "event_id": 2000018,
+  "api_event_id": "02b611c3f154525e41ab6aeaaa1c40f0",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.620Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e133"
+  },
+  "event_id": 2000019,
+  "api_event_id": "deb5cee30d89ac7308b53a7c702a1671",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.620Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e134"
+  },
+  "event_id": 2000020,
+  "api_event_id": "597242c12cfd4fc2082f2bb4ea459784",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.621Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e135"
+  },
+  "event_id": 2000021,
+  "api_event_id": "74af2c9326fe1c0baa7b9a689eb0b66e",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.622Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e136"
+  },
+  "event_id": 2000022,
+  "api_event_id": "379ae720a07cefcb0a374ef36f033dc5",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.622Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e137"
+  },
+  "event_id": 2000023,
+  "api_event_id": "c0d85aa36f10bc7ed6be94e26ab87838",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.623Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e138"
+  },
+  "event_id": 2000024,
+  "api_event_id": "7ccb91bc0a4f81a6c992456434015117",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.624Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e139"
+  },
+  "event_id": 2000025,
+  "api_event_id": "a897dc37f6b8cfab656ab04a48ca5e86",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.624Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e13a"
+  },
+  "event_id": 2000026,
+  "api_event_id": "223ef8e876c644ce0484e952f62b2d0c",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.625Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e13b"
+  },
+  "event_id": 2000027,
+  "api_event_id": "76e465483b576e9ae880a010e0f9b037",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.625Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e13c"
+  },
+  "event_id": 2000028,
+  "api_event_id": "9282af9cf4e84682a2cd6532c928e0ab",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.626Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e13d"
+  },
+  "event_id": 2000029,
+  "api_event_id": "0867e0272f8be73f260366a156cfb2ed",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.627Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e13e"
+  },
+  "event_id": 2000030,
+  "api_event_id": "dd36f04b8b6b415266888d611bdfa351",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.627Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e13f"
+  },
+  "event_id": 2000031,
+  "api_event_id": "1203f211996ddce5249b96e72362d3ea",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.628Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e140"
+  },
+  "event_id": 2000032,
+  "api_event_id": "7fce98a1c52052f080ba32a28a3e7d8e",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.629Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e141"
+  },
+  "event_id": 2000033,
+  "api_event_id": "02896fae04ac26a53e36f7cab062261f",
+  "comp_type": "soccer_spain_la_liga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.629Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e142"
+  },
+  "event_id": 3000011,
+  "api_event_id": "700593896c012aa07437510f04e22955",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.964Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e143"
+  },
+  "event_id": 3000012,
+  "api_event_id": "c5033d044bdae85dc9c170d2a4f7a670",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.965Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e144"
+  },
+  "event_id": 3000013,
+  "api_event_id": "458a6ff97af690bfa2801b416ff2e42b",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.965Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e145"
+  },
+  "event_id": 3000014,
+  "api_event_id": "df49edd688a431ee62343c38dad53496",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.966Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e146"
+  },
+  "event_id": 3000015,
+  "api_event_id": "ca672c20094b6a4ad01089a5d2e0ab9a",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.967Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e147"
+  },
+  "event_id": 3000016,
+  "api_event_id": "b7645ae76ee19bfb6bd44e7950f46731",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.968Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e148"
+  },
+  "event_id": 3000017,
+  "api_event_id": "6e44197c1f22de2ed1a28bd868e257fa",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.968Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e149"
+  },
+  "event_id": 3000018,
+  "api_event_id": "24b7fbd6382b55f8237060d1048fe45a",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.969Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e14a"
+  },
+  "event_id": 3000019,
+  "api_event_id": "d9457bff975d2d6f27753a706a5205f8",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.970Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e14b"
+  },
+  "event_id": 3000020,
+  "api_event_id": "e254b3b8c2262b5317d202cae6d2112d",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.970Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e14c"
+  },
+  "event_id": 3000021,
+  "api_event_id": "16eed4eba566b5090bd140c691cb9a8f",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.971Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e14d"
+  },
+  "event_id": 3000022,
+  "api_event_id": "4ba9881339e46e78aa7438f28be99fc3",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.972Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e14e"
+  },
+  "event_id": 3000023,
+  "api_event_id": "d281f8fee3c201eda4f9c9e2b3b9463a",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.972Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e14f"
+  },
+  "event_id": 3000024,
+  "api_event_id": "ce0458a23e3d656c5e719e9955cc1de0",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.973Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e150"
+  },
+  "event_id": 3000025,
+  "api_event_id": "b7438a1de455b51b64b235ac002066be",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.974Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e151"
+  },
+  "event_id": 3000026,
+  "api_event_id": "031bdd9f91324ef74631e5f4d5cb12a5",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.974Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e152"
+  },
+  "event_id": 3000027,
+  "api_event_id": "bd96140653b2e610742d0d1217b1a718",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.975Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65085589b11c994dca48e153"
+  },
+  "event_id": 3000028,
+  "api_event_id": "d7b724a93f4d2b08bd09ef397b8bf3b2",
+  "comp_type": "soccer_germany_bundesliga",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:01.976Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e154"
+  },
+  "event_id": 4000014,
+  "api_event_id": "655b596f84a8fbe67c40d677810b335c",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.280Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e155"
+  },
+  "event_id": 4000015,
+  "api_event_id": "740dd3b08af51c2b93ceed860b40d823",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.281Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e156"
+  },
+  "event_id": 4000016,
+  "api_event_id": "733b4bc2464dff47ce2c1e32528affe6",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.282Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e157"
+  },
+  "event_id": 4000017,
+  "api_event_id": "a8ee868334a641dd08435c5d0b45983e",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.282Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e158"
+  },
+  "event_id": 4000018,
+  "api_event_id": "2bc7267281956fe02b245212db08cf29",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.283Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e159"
+  },
+  "event_id": 4000019,
+  "api_event_id": "b00dacb807617fcc000bbda8d67ea768",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.284Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e15a"
+  },
+  "event_id": 4000020,
+  "api_event_id": "5d2f2f28c6f7a0905eb7c372885bbc66",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.285Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e15b"
+  },
+  "event_id": 4000021,
+  "api_event_id": "eeb0c91b729048c44b82313b21645d79",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.286Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e15c"
+  },
+  "event_id": 4000022,
+  "api_event_id": "2145f0e115f6cd3d0d88fb5388a409a6",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.286Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e15d"
+  },
+  "event_id": 4000023,
+  "api_event_id": "549cc2b3beca9138da3efba7ec6e25ba",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.287Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e15e"
+  },
+  "event_id": 4000024,
+  "api_event_id": "1fc76cdc027106d6c95f8b84b08cc538",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.288Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e15f"
+  },
+  "event_id": 4000025,
+  "api_event_id": "d309eed887cff5d701752dbc96854875",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.289Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e160"
+  },
+  "event_id": 4000026,
+  "api_event_id": "0535394c5ff731fe0d22a45e193f6814",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.289Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e161"
+  },
+  "event_id": 4000027,
+  "api_event_id": "c4b050eb4cdb224b12f3ba696b8b3f22",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.290Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e162"
+  },
+  "event_id": 4000028,
+  "api_event_id": "d6727be84b5f0dcefd7b7ca5acc061f5",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.291Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e163"
+  },
+  "event_id": 4000029,
+  "api_event_id": "2d9264e482c8270fd8a242f8bef09d3a",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.292Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e164"
+  },
+  "event_id": 4000030,
+  "api_event_id": "0051193ba2487e8a6078cc0a42553999",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.292Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e165"
+  },
+  "event_id": 4000031,
+  "api_event_id": "bd4ca360d7ed9701ae9d3ee1d7ad52cd",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.293Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e166"
+  },
+  "event_id": 4000032,
+  "api_event_id": "b46e235895670ed78f86c4c293501fb0",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.294Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e167"
+  },
+  "event_id": 4000033,
+  "api_event_id": "60ce9b5a3989a64f9df4dacba1733f90",
+  "comp_type": "soccer_italy_serie_a",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.295Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e168"
+  },
+  "event_id": 5000013,
+  "api_event_id": "b4c54b563195da436c9620d1f2f78676",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.570Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e169"
+  },
+  "event_id": 5000014,
+  "api_event_id": "1e7cc2eb935be9b24952e6b6e9ca2bad",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.570Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e16a"
+  },
+  "event_id": 5000015,
+  "api_event_id": "4fea873643ebc36c286ecb7a75dfbf4f",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.571Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e16b"
+  },
+  "event_id": 5000016,
+  "api_event_id": "205cd8d341e9d5dda3d7d7e3f28ddd02",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.572Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e16c"
+  },
+  "event_id": 5000017,
+  "api_event_id": "666ebf834f88204413a38aa68da4c7a1",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.573Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e16d"
+  },
+  "event_id": 5000018,
+  "api_event_id": "522f9863e3a020bb1393ced9fba6b4c1",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.573Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e16e"
+  },
+  "event_id": 5000019,
+  "api_event_id": "d48efcb124c678d9376a7e364fde826f",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.574Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e16f"
+  },
+  "event_id": 5000020,
+  "api_event_id": "1b8154ba015ca07829bf75d95f2591b6",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.575Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e170"
+  },
+  "event_id": 5000021,
+  "api_event_id": "fa2999ca7e4edf93efe69da1a217d91e",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.575Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e171"
+  },
+  "event_id": 5000022,
+  "api_event_id": "f4c0b8685d4ec35f4f3a49e477373721",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.576Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e172"
+  },
+  "event_id": 5000023,
+  "api_event_id": "3bef5b839bd24fdfcf78a779988f30d7",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.577Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e173"
+  },
+  "event_id": 5000024,
+  "api_event_id": "b94bceec4c2e337fd8566efd352079ff",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.577Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e174"
+  },
+  "event_id": 5000025,
+  "api_event_id": "2acf9cebcf9ccdb2c9e58d90d028b837",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.578Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e175"
+  },
+  "event_id": 5000026,
+  "api_event_id": "f6fb06bebdbf9ffbc27c7d912da7f4a9",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.579Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e176"
+  },
+  "event_id": 5000027,
+  "api_event_id": "3fcf3acfa3c01493237e15f0a278268c",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.580Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e177"
+  },
+  "event_id": 5000028,
+  "api_event_id": "bb89708595d1aec1a7b82337b1987843",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.580Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e178"
+  },
+  "event_id": 5000029,
+  "api_event_id": "fd1761d7efefc51fcce47c8dd7c1cec3",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.581Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6508558ab11c994dca48e179"
+  },
+  "event_id": 5000030,
+  "api_event_id": "43c431929c0124de59f5d0637066a60a",
+  "comp_type": "soccer_france_ligue_one",
+  "score": null,
+  "outcome": null,
+  "completed": false,
+  "last_updated_dt": {
+    "$date": "2023-09-18T13:50:02.582Z"
+  }
+}]
