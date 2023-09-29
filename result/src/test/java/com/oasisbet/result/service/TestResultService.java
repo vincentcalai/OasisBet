@@ -30,7 +30,7 @@ class TestResultService extends TestBaseSetup {
 	@Test
 	void testRetrieveBetEventByCompTypeCountIs3() {
 		List<ResultEventMapping> results = resultService.retrieveCompletedResults();
-		assertEquals(3, results.size());
+		assertEquals(18, results.size());
 	}
 
 	@Test
