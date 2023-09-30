@@ -110,6 +110,7 @@ public class ResultUpdateJob implements Job {
 							resultEvent.setLastUpdatedDt(new Date());
 							resultEvent.setCompleted(Constants.TRUE);
 							resultEvent.setOutcome(outcomeResult);
+							resultEventMappingDao.save(resultEvent);
 						}
 					} else {
 						log.info("result NOT found in db, api_event_id: {}", apiEventId);

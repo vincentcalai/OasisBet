@@ -1,6 +1,7 @@
 package com.oasisbet.result.job;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
@@ -112,6 +113,50 @@ class TestResultUpdateJob extends TestBaseSetup {
 
 		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
 		assertEquals(23, newResultEventList.size());
+	}
+
+	@Test
+	void testResultUpdateJobResultEventUpdateSuccess() throws SchedulerException, InterruptedException {
+
+		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
+		assertEquals(23, resultEventList.size());
+
+		ResultApiResponse[] mockBody = ResultFixture.mockSerieAResultApiResponseArray();
+
+		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
+				.thenReturn(new ResponseEntity<>(mockBody, HttpStatus.OK));
+
+		resultUpdateJob.execute(null);
+
+		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
+		assertEquals(23, newResultEventList.size());
+
+		long eventCount1 = newResultEventList.stream()
+				.filter(event -> event.getApiEventId().equals("c4899d1a8129766fd5274de2c9b3a75b")).count();
+		long eventCount2 = newResultEventList.stream()
+				.filter(event -> event.getApiEventId().equals("d67985c60227e89deabf406c0f2af616")).count();
+		long eventCount3 = newResultEventList.stream()
+				.filter(event -> event.getApiEventId().equals("f3e32c2929d70533b2110a147b0c2858")).count();
+		assertEquals(1, eventCount1);
+		assertEquals(1, eventCount2);
+		assertEquals(1, eventCount3);
+
+		newResultEventList.forEach(result -> {
+			if (result.getApiEventId().equals("c4899d1a8129766fd5274de2c9b3a75b")) {
+				assertTrue(result.isCompleted());
+				assertEquals("3-1", result.getScore());
+				assertEquals("01", result.getOutcome());
+			} else if (result.getApiEventId().equals("d67985c60227e89deabf406c0f2af616")) {
+				assertTrue(result.isCompleted());
+				assertEquals("2-2", result.getScore());
+				assertEquals("02", result.getOutcome());
+			} else if (result.getApiEventId().equals("f3e32c2929d70533b2110a147b0c2858")) {
+				assertTrue(result.isCompleted());
+				assertEquals("1-2", result.getScore());
+				assertEquals("03", result.getOutcome());
+			}
+		});
+
 	}
 
 }

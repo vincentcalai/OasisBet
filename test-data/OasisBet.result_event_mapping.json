@@ -146,27 +146,27 @@
   "eventId": 4000000,
   "apiEventId": "c4899d1a8129766fd5274de2c9b3a75b",
   "compType": "soccer_italy_serie_a",
-  "score": "3-1",
-  "outcome": "01",
-  "completed": true,
+  "score": null,
+  "outcome": null,
+  "completed": false,
   "lastUpdatedDt": "2023-09-18T13:34:02.644Z"
 },
 {
   "eventId": 4000001,
   "apiEventId": "d67985c60227e89deabf406c0f2af616",
   "compType": "soccer_italy_serie_a",
-  "score": "5-1",
-  "outcome": "01",
-  "completed": true,
+  "score": null,
+  "outcome": null,
+  "completed": false,
   "lastUpdatedDt": "2023-09-18T13:34:02.645Z"
 },
 {
   "eventId": 4000002,
   "apiEventId": "f3e32c2929d70533b2110a147b0c2858",
   "compType": "soccer_italy_serie_a",
-  "score": "2-2",
-  "outcome": "02",
-  "completed": true,
+  "score": null,
+  "outcome": null,
+  "completed": false,
   "lastUpdatedDt": "2023-09-18T13:34:02.645Z"
 },
 {

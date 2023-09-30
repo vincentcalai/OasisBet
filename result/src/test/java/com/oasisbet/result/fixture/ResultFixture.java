@@ -89,6 +89,81 @@ public class ResultFixture {
 		return array;
 	}
 
+	public static ResultApiResponse[] mockSerieAResultApiResponseArray() {
+
+		ResultApiResponse[] array = new ResultApiResponse[3];
+
+		ResultApiResponse mockResponse1 = new ResultApiResponse();
+		ResultApiResponse mockResponse2 = new ResultApiResponse();
+		ResultApiResponse mockResponse3 = new ResultApiResponse();
+
+		List<Score> scoreList1 = new ArrayList<>();
+		Score mockHomeScore1 = new Score();
+		mockHomeScore1.setName("Inter Milan");
+		mockHomeScore1.setScore("3");
+		scoreList1.add(mockHomeScore1);
+		Score mockAwayScore1 = new Score();
+		mockAwayScore1.setName("Fiorentina");
+		mockAwayScore1.setScore("1");
+		scoreList1.add(mockAwayScore1);
+
+		mockResponse1.setId("c4899d1a8129766fd5274de2c9b3a75b");
+		mockResponse1.setSport_key("soccer_italy_serie_a");
+		mockResponse1.setSport_title("Serie A");
+		mockResponse1.setCommence_time("2023-04-28T18:45:00Z");
+		mockResponse1.setHome_team("Inter Milan");
+		mockResponse1.setAway_team("Fiorentina");
+		mockResponse1.setCompleted(true);
+		mockResponse1.setLast_update("2023-04-29T18:45:00Z");
+		mockResponse1.setScores(scoreList1);
+
+		List<Score> scoreList2 = new ArrayList<>();
+		Score mockHomeScore2 = new Score();
+		mockHomeScore2.setName("A.S. Roma");
+		mockHomeScore2.setScore("2");
+		scoreList2.add(mockHomeScore2);
+		Score mockAwayScore2 = new Score();
+		mockAwayScore2.setName("Napoli");
+		mockAwayScore2.setScore("2");
+		scoreList2.add(mockAwayScore2);
+
+		mockResponse2.setId("d67985c60227e89deabf406c0f2af616");
+		mockResponse2.setSport_key("soccer_italy_serie_a");
+		mockResponse2.setSport_title("Serie A");
+		mockResponse2.setCommence_time("2023-04-29T18:45:00Z");
+		mockResponse2.setHome_team("A.S. Roma");
+		mockResponse2.setAway_team("Napoli");
+		mockResponse2.setCompleted(true);
+		mockResponse2.setLast_update("2023-04-30T18:45:00Z");
+		mockResponse2.setScores(scoreList2);
+
+		List<Score> scoreList3 = new ArrayList<>();
+		Score mockHomeScore3 = new Score();
+		mockHomeScore3.setName("Juventus");
+		mockHomeScore3.setScore("1");
+		scoreList3.add(mockHomeScore3);
+		Score mockAwayScore3 = new Score();
+		mockAwayScore3.setName("AC Milan");
+		mockAwayScore3.setScore("2");
+		scoreList3.add(mockAwayScore3);
+
+		mockResponse3.setId("f3e32c2929d70533b2110a147b0c2858");
+		mockResponse3.setSport_key("soccer_italy_serie_a");
+		mockResponse3.setSport_title("Serie A");
+		mockResponse3.setCommence_time("2023-04-30T19:45:00Z");
+		mockResponse3.setHome_team("Juventus");
+		mockResponse3.setAway_team("AC Milan");
+		mockResponse3.setCompleted(true);
+		mockResponse3.setLast_update("2023-04-30T22:45:00Z");
+		mockResponse3.setScores(scoreList3);
+
+		array[0] = mockResponse1;
+		array[1] = mockResponse2;
+		array[2] = mockResponse3;
+
+		return array;
+	}
+
 	public static List<ResultEvent> createMockResultEvents() {
 
 		ResultEvent resultEvent1 = new ResultEvent(1000088L, "English Premier League", "Brentford vs Aston Villa",
