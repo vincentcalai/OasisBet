@@ -75,7 +75,7 @@ public class ResultFixture {
 		mockAwayScore1.setScore("1");
 		scoreList1.add(mockAwayScore1);
 
-		mockResponse1.setId("e0d240a77323657c98952a74519218cd");
+		mockResponse1.setId("e306340bed661722ad957e5d8c15f798");
 		mockResponse1.setSport_key("soccer_epl");
 		mockResponse1.setSport_title("English Premier League");
 		mockResponse1.setCommence_time("2023-04-28T18:45:00Z");
@@ -95,7 +95,7 @@ public class ResultFixture {
 		mockAwayScore2.setScore("0");
 		scoreList2.add(mockAwayScore2);
 
-		mockResponse2.setId("69ce6c2d85c6731d5d04a2181043ac9a");
+		mockResponse2.setId("2ad957e5d8661722ad957e5d8c15f798");
 		mockResponse2.setSport_key("soccer_epl");
 		mockResponse2.setSport_title("English Premier League");
 		mockResponse2.setCommence_time("2023-04-29T18:45:00Z");
@@ -504,12 +504,12 @@ public class ResultFixture {
 		calendar.add(Calendar.HOUR_OF_DAY, 8);
 		startTime3 = calendar.getTime();
 
-		ResultEvent resultEvent1 = new ResultEvent(1000001L, "English Premier League",
+		ResultEvent resultEvent1 = new ResultEvent(1000003L, "English Premier League",
 				"Tottenham Hotspur vs Leicester City", startTime1, true, "Tottenham Hotspur", "Leicester City", "4-1",
 				new Date());
-		ResultEvent resultEvent2 = new ResultEvent(1000002L, "English Premier League", "Arsenal vs Sheffield United",
+		ResultEvent resultEvent2 = new ResultEvent(1000004L, "English Premier League", "Arsenal vs Sheffield United",
 				startTime2, true, "Arsenal", "Sheffield United", "4-0", new Date());
-		ResultEvent resultEvent3 = new ResultEvent(1000003L, "English Premier League",
+		ResultEvent resultEvent3 = new ResultEvent(1000005L, "English Premier League",
 				"Newcastle United vs Manchester United", startTime3, true, "Newcastle United", "Manchester United",
 				"1-1", new Date());
 		List<ResultEvent> resultEvents = new ArrayList<>();

@@ -44,7 +44,7 @@ class TestResultUpdateJob extends TestBaseSetup {
 		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
 		assertEquals(23, resultEventList.size());
 
-		ResultApiResponse[] mockEplBody = ResultFixture.mockEplResultApiResponseArray();
+		ResultApiResponse[] mockEplBody = ResultFixture.mockEplInsert3NewResultEvents();
 		ResultApiResponse[] mockLigaBody = ResultFixture.mockLaLigaResultApiResponseArray();
 		ResultApiResponse[] mockBundesligaBody = ResultFixture.mockBundesligaResultApiResponseArray();
 		ResultApiResponse[] mockSerieABody = ResultFixture.mockSerieAResultApiResponseArray();
@@ -60,7 +60,7 @@ class TestResultUpdateJob extends TestBaseSetup {
 		resultUpdateJob.execute(null);
 
 		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
-		assertEquals(24, newResultEventList.size());
+		assertEquals(26, newResultEventList.size());
 	}
 
 	@Test
