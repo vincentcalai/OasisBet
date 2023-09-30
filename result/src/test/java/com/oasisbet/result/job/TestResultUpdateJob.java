@@ -39,12 +39,38 @@ class TestResultUpdateJob extends TestBaseSetup {
 	private IResultEventMappingDao resultEventMappingDao;
 
 	@Test
-	void testResultUpdateJob3NewEventsInsertedSuccess() throws SchedulerException, InterruptedException {
+	void testResultUpdateJob1NewEplEventInsertedSuccess() throws SchedulerException, InterruptedException {
 
 		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
 		assertEquals(23, resultEventList.size());
 
-		ResultApiResponse[] mockBody = ResultFixture.mockEplResultApiResponseArray();
+		ResultApiResponse[] mockEplBody = ResultFixture.mockEplResultApiResponseArray();
+		ResultApiResponse[] mockLigaBody = ResultFixture.mockLaLigaResultApiResponseArray();
+		ResultApiResponse[] mockBundesligaBody = ResultFixture.mockBundesligaResultApiResponseArray();
+		ResultApiResponse[] mockSerieABody = ResultFixture.mockSerieAResultApiResponseArray();
+		ResultApiResponse[] mockLigueOneBody = ResultFixture.mockLigueOneResultApiResponseArray();
+
+		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
+				.thenReturn(new ResponseEntity<>(mockEplBody, HttpStatus.OK))
+				.thenReturn(new ResponseEntity<>(mockLigaBody, HttpStatus.OK))
+				.thenReturn(new ResponseEntity<>(mockBundesligaBody, HttpStatus.OK))
+				.thenReturn(new ResponseEntity<>(mockSerieABody, HttpStatus.OK))
+				.thenReturn(new ResponseEntity<>(mockLigueOneBody, HttpStatus.OK));
+
+		resultUpdateJob.execute(null);
+
+		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
+		assertEquals(24, newResultEventList.size());
+	}
+
+	@Test
+	void testResultUpdateJob3NewEventsInsertedVerifyApiEventIdSuccess()
+			throws SchedulerException, InterruptedException {
+
+		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
+		assertEquals(23, resultEventList.size());
+
+		ResultApiResponse[] mockBody = ResultFixture.mockEplInsert3NewResultEvents();
 
 		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
 				.thenReturn(new ResponseEntity<>(mockBody, HttpStatus.OK));
@@ -53,26 +79,13 @@ class TestResultUpdateJob extends TestBaseSetup {
 
 		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
 		assertEquals(26, newResultEventList.size());
-	}
 
-	@Test
-	void testResultUpdateJob3NewEventsInsertedVerifyApiEventIdSuccess()
-			throws SchedulerException, InterruptedException {
-
-		ResultApiResponse[] mockBody = ResultFixture.mockEplResultApiResponseArray();
-
-		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
-				.thenReturn(new ResponseEntity<>(mockBody, HttpStatus.OK));
-
-		resultUpdateJob.execute(null);
-
-		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
 		long eventCount1 = newResultEventList.stream()
-				.filter(event -> event.getApiEventId().equals("e306340bed661722ad957e5d8c15f798")).count();
+				.filter(event -> event.getApiEventId().equals("66ca5a121b5ddc4763cf1708222be377")).count();
 		long eventCount2 = newResultEventList.stream()
-				.filter(event -> event.getApiEventId().equals("2ad957e5d8661722ad957e5d8c15f798")).count();
+				.filter(event -> event.getApiEventId().equals("a085aa8beb661722ad957e5d8c15f798")).count();
 		long eventCount3 = newResultEventList.stream()
-				.filter(event -> event.getApiEventId().equals("1722ad957e661722ad957e5d8c15f798")).count();
+				.filter(event -> event.getApiEventId().equals("f7d5d5a141e21df15f23b5e306340bed")).count();
 		assertEquals(1, eventCount1);
 		assertEquals(1, eventCount2);
 		assertEquals(1, eventCount3);
@@ -81,7 +94,7 @@ class TestResultUpdateJob extends TestBaseSetup {
 	@Test
 	void testResultUpdateJob3NewEventsInsertedVerifyEventIdSuccess() throws SchedulerException, InterruptedException {
 
-		ResultApiResponse[] mockBody = ResultFixture.mockEplResultApiResponseArray();
+		ResultApiResponse[] mockBody = ResultFixture.mockEplInsert3NewResultEvents();
 
 		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
 				.thenReturn(new ResponseEntity<>(mockBody, HttpStatus.OK));
@@ -90,11 +103,11 @@ class TestResultUpdateJob extends TestBaseSetup {
 
 		List<ResultEventMapping> newResultEventList = resultEventMappingDao.findAll();
 		long eventCount1 = newResultEventList.stream()
-				.filter(event -> event.getEventId().equals(BigInteger.valueOf(1000003L))).count();
+				.filter(event -> event.getEventId().equals(BigInteger.valueOf(1000000L))).count();
 		long eventCount2 = newResultEventList.stream()
-				.filter(event -> event.getEventId().equals(BigInteger.valueOf(1000004L))).count();
+				.filter(event -> event.getEventId().equals(BigInteger.valueOf(1000001L))).count();
 		long eventCount3 = newResultEventList.stream()
-				.filter(event -> event.getEventId().equals(BigInteger.valueOf(1000005L))).count();
+				.filter(event -> event.getEventId().equals(BigInteger.valueOf(1000002L))).count();
 		assertEquals(1, eventCount1);
 		assertEquals(1, eventCount2);
 		assertEquals(1, eventCount3);
@@ -121,7 +134,7 @@ class TestResultUpdateJob extends TestBaseSetup {
 		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
 		assertEquals(23, resultEventList.size());
 
-		ResultApiResponse[] mockBody = ResultFixture.mockSerieAResultApiResponseArray();
+		ResultApiResponse[] mockBody = ResultFixture.mockSerieANewResultEvent();
 
 		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
 				.thenReturn(new ResponseEntity<>(mockBody, HttpStatus.OK));
