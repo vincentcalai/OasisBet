@@ -202,25 +202,31 @@ public class AccountService {
 
 	public StatusResponse processBet(Long accId, List<BetSubmissionVO> betSubmissionList) {
 		StatusResponse response = new StatusResponse();
-		Optional<AccountView> accountView = this.accountDao.findById(accId);
+		Optional<AccountView> accountViewOptional = this.accountDao.findById(accId);
 		double accountBal = 0.0;
-		if (accountView.isPresent()) {
-			accountBal = accountView.get().getBalance();
+		if (accountViewOptional.isPresent()) {
+			accountBal = accountViewOptional.get().getBalance();
 		}
 
 		double totalStake = betSubmissionList.stream().mapToDouble(BetSubmissionVO::getBetAmount).reduce(0.0,
 				Double::sum);
 
-		if (!accountView.isPresent()) {
+		if (!accountViewOptional.isPresent()) {
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 			response.setStatusCode(1);
 		} else if (totalStake > accountBal) {
 			response.setResultMessage(Constants.ERR_INSUFFICIENT_BAL);
 			response.setStatusCode(2);
 		} else {
+			// update account balance
+			AccountView accountView = accountViewOptional.get();
+			accountBal -= totalStake;
+			accountView.setBalance(accountBal);
+
 			// process bet transactions here
 			List<AccountBetTrxView> betTrxList = new ArrayList<>();
 			List<AccountBetProcessTrxView> betProcessTrxList = new ArrayList<>();
+
 			betSubmissionList.forEach(betSubmission -> {
 				Long nextSeqTrxId = sequenceService.getNextTrxId();
 				Date currentDatetime = new Date();
@@ -249,9 +255,11 @@ public class AccountService {
 				accountBetProcessTrxView.setTrxDt(currentDatetime);
 				betProcessTrxList.add(accountBetProcessTrxView);
 			});
-			// persist bet transaction list into db here
+			// persist bet transaction list in db
 			accountBetTrxDao.saveAll(betTrxList);
 			accountBetProcessTrxDao.saveAll(betProcessTrxList);
+			// persist user account balance in db
+			this.accountDao.save(accountView);
 			Date betPlacedDateTime = new Date();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, h:mma");
 			String formattedBetPlacedDateTime = dateFormat.format(betPlacedDateTime);
