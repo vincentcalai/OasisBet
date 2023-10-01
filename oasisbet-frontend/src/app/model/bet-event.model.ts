@@ -8,7 +8,7 @@ import { TeamsDetails } from "./team-details.model";
 })
 export class BetEvent {
     public eventId: number;
-    public competition: string;
+    public compType: string;
     public eventDesc: string;
     public startTime: Date;
     public teamsDetails: TeamsDetails;

@@ -6,7 +6,7 @@ import { H2HEventOdds } from "./h2h-event-odds.model";
 })
 export class ResultEvent {
     public eventId: number;
-    public competition: string;
+    public compType: string;
     public eventDesc: string;
     public startTime: Date;
     public completed: boolean;

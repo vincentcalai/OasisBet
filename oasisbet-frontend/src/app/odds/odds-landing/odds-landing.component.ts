@@ -75,6 +75,8 @@ export class OddsLandingComponent implements OnInit  {
             const eventsDetails = this.events.filter(event => event.startTime.toDateString() === dateString);
             this.eventsMap.set(dateString, eventsDetails);
           });
+
+          console.log(this.events);
         } ,
           error => {
           console.log(error);
@@ -145,7 +147,7 @@ export class OddsLandingComponent implements OnInit  {
     betSlip.betSelectionName = selectedTeam;
     betSlip.odds = odds;
     betSlip.startTime = event.startTime;
-    betSlip.compType = event.competition;
+    betSlip.compType = event.compType;
 
     if(addingBetSelection){
       this.selectedBets.push(betSlip);

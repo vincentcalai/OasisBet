@@ -5,16 +5,16 @@ import java.util.Date;
 
 public class BetEvent {
 	private BigInteger eventId;
-	private String competition;
+	private String compType;
 	private String eventDesc;
 	private Date startTime;
 	private TeamsDetails teamsDetails;
 	private H2HEventOdds h2hEventOdds;
 
-	public BetEvent(String competition, String eventDesc, Date startTime, TeamsDetails teamsDetails,
+	public BetEvent(String compType, String eventDesc, Date startTime, TeamsDetails teamsDetails,
 			H2HEventOdds h2hEventOdds) {
 		super();
-		this.competition = competition;
+		this.compType = compType;
 		this.eventDesc = eventDesc;
 		this.startTime = startTime;
 		this.teamsDetails = teamsDetails;
@@ -29,12 +29,12 @@ public class BetEvent {
 		this.eventId = eventId;
 	}
 
-	public String getCompetition() {
-		return competition;
+	public String getCompType() {
+		return compType;
 	}
 
-	public void setCompetition(String competition) {
-		this.competition = competition;
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 	public String getEventDesc() {

@@ -58,8 +58,8 @@ public class OddsService {
 			TeamsDetails teamDetails = new TeamsDetails(homeTeam, awayTeam);
 
 			String eventDesc = homeTeam + " vs " + awayTeam;
-			String competition = Constants.API_SOURCE_COMP_TYPE_MAP.getOrDefault(compType, Constants.EMPTY_STRING);
-			BetEvent event = new BetEvent(competition, eventDesc, startTime, teamDetails, h2hEventOdds);
+			String betCompType = Constants.API_SOURCE_COMP_TYPE_MAP.getOrDefault(compType, Constants.EMPTY_STRING);
+			BetEvent event = new BetEvent(betCompType, eventDesc, startTime, teamDetails, h2hEventOdds);
 			event.setEventId(eventId);
 			betEventList.add(event);
 		}
