@@ -1,7 +1,10 @@
 package com.oasisbet.result.util;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oasisbet.result.dao.IResultEventMappingDao;
+import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.service.ResultService;
 
 @Service
@@ -30,11 +34,15 @@ public class ResultHouseKeepingJob implements Job {
 		log.info("executing ResultHouseKeepingJob...");
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_MONTH, -30);
-		Date thirtyDaysAgo = calendar.getTime();
+		calendar.add(Calendar.DAY_OF_MONTH, -90);
+		Date ninetyDaysAgo = calendar.getTime();
 
-		resultEventMappingDao.deleteRecordsOlderThanThirtyDays(thirtyDaysAgo);
+		List<ResultEventMapping> ninetyDaysAgoResultEventList = resultEventMappingDao
+				.findByCompletedAndLastUpdatedDtBefore(Constants.TRUE, ninetyDaysAgo);
+		List<BigInteger> deleteIdList = ninetyDaysAgoResultEventList.stream().map(event -> event.getEventId())
+				.collect(Collectors.toList());
 
+		resultEventMappingDao.deleteAllById(deleteIdList);
 	}
 
 }
