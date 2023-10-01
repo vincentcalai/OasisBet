@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.oasisbet.result.model.ResultEventMapping;
@@ -15,8 +14,7 @@ public interface IResultEventMappingDao extends MongoRepository<ResultEventMappi
 
 	List<ResultEventMapping> findByCompleted(boolean completed);
 
-	@Query("DELETE FROM ResultEventMapping r WHERE r.completedDt < :thirtyDaysAgo")
-	void deleteRecordsOlderThanThirtyDays(Date thirtyDaysAgo);
+	List<ResultEventMapping> findByCompletedAndLastUpdatedDtBefore(boolean isCompleted, Date date);
 
 	ResultEventMapping findByApiEventId(String apiEventId);
 

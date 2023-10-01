@@ -185,7 +185,7 @@
   "score": "4-0",
   "outcome": "01",
   "completed": true,
-  "lastUpdatedDt": "2023-09-18T13:34:02.985Z"
+  "lastUpdatedDt": "2023-06-18T13:34:02.985Z"
 },
 {
   "eventId": 5000008,
@@ -194,7 +194,7 @@
   "score": "1-2",
   "outcome": "03",
   "completed": true,
-  "lastUpdatedDt": "2023-09-18T13:34:02.986Z"
+  "lastUpdatedDt": "2023-06-18T13:34:02.986Z"
 },
 {
   "eventId": 5000011,
@@ -203,5 +203,5 @@
   "score": "2-2",
   "outcome": "02",
   "completed": true,
-  "lastUpdatedDt": "2023-09-18T13:34:02.987Z"
+  "lastUpdatedDt": "2023-06-18T13:34:02.987Z"
 }]
