@@ -69,7 +69,7 @@ describe('ResultsLandingComponent', () => {
       [
         {
           eventId: 1000001,
-          competition: 'soccer_epl',
+          compType: 'soccer_epl',
           eventDesc: 'Arsenal vs Liverpool',
           startTime: '2023-05-15T10:00:00Z',
           completed: false,
@@ -80,7 +80,7 @@ describe('ResultsLandingComponent', () => {
         },
         {
           eventId: 1000002,
-          competition: 'soccer_epl',
+          compType: 'soccer_epl',
           eventDesc: 'Chelsea vs Leicester City',
           startTime: '2023-05-15T12:00:00Z',
           completed: false,

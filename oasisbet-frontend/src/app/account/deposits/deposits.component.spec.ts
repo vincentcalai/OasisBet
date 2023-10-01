@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { AccountModel } from 'src/app/model/account.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('DepositsComponent', () => {
   let component: DepositsComponent;
@@ -15,6 +16,9 @@ describe('DepositsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ DepositsComponent ],
+      providers: [
+        { provide: MatDialog, useValue: {} }, // Provide a mock MatDialog
+      ],
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
@@ -56,9 +60,11 @@ describe('DepositsComponent', () => {
   it('when confirm deposit fail, should display validation errors', () => {
     component.depositControl.setValue('invalid');
     component.depositControl.markAsTouched();
+    spyOn(component, 'onConfirmDeposit');
     spyOn(component.apiService, 'updateAccDetails');
     spyOn(component.reactiveFormService, 'displayValidationErrors');
-    component.onConfirmDeposit();
+    component.confirmClicked();
+    expect(component.onConfirmDeposit).not.toHaveBeenCalled();
     expect(component.apiService.updateAccDetails).not.toHaveBeenCalled();
     expect(component.errorMsg).toBe('');
     expect(component.responseMsg).toBe('');

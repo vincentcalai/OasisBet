@@ -38,7 +38,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1,
           eventDesc: 'Event 1',
           startTime: '2023-05-15T12:00:00Z',
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {},
           h2hEventOdds: {}
         },
@@ -46,7 +46,7 @@ describe('OddsLandingComponent', () => {
           eventId: 2,
           eventDesc: 'Event 2',
           startTime: '2023-05-16T15:30:00Z',
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {},
           h2hEventOdds: {}
         },
@@ -67,7 +67,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1000001,
           eventDesc: 'Event 1',
           startTime: '2023-05-15T12:00:00Z',
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {},
           h2hEventOdds: {}
         },
@@ -75,7 +75,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1000002,
           eventDesc: 'Event 2',
           startTime: '2023-05-15T15:30:00Z',
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {},
           h2hEventOdds: {}
         },
@@ -97,7 +97,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1000001,
           eventDesc: 'Event 1',
           startTime: '2023-05-15T12:00:00Z',
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {},
           h2hEventOdds: {}
         },
@@ -191,7 +191,7 @@ describe('OddsLandingComponent', () => {
     expect(component.selectedBets[0].betSelectionName).toBe(mockEvent1.teamsDetails.homeTeam);
     expect(component.selectedBets[0].odds).toBe(mockEvent1.h2hEventOdds.homeOdds);
     expect(component.selectedBets[0].startTime).toBe(mockEvent1.startTime);
-    expect(component.selectedBets[0].compType).toBe(mockEvent1.competition);
+    expect(component.selectedBets[0].compType).toBe(mockEvent1.compType);
     expect(component.selectedBets[1].eventId).toBe(mockEvent2.eventId);
     expect(component.selectedBets[1].eventDesc).toBe(mockEvent2.eventDesc);
     expect(component.selectedBets[1].betTypeCd).toBe(component.sharedVar.BET_TYPE_CD_H2H);
@@ -199,7 +199,7 @@ describe('OddsLandingComponent', () => {
     expect(component.selectedBets[1].betSelectionName).toBe("Draw");
     expect(component.selectedBets[1].odds).toBe(mockEvent2.h2hEventOdds.drawOdds);
     expect(component.selectedBets[1].startTime).toBe(mockEvent2.startTime);
-    expect(component.selectedBets[1].compType).toBe(mockEvent2.competition);
+    expect(component.selectedBets[1].compType).toBe(mockEvent2.compType);
     expect(component.selectedBets[2].eventId).toBe(mockEvent3.eventId);
     expect(component.selectedBets[2].eventDesc).toBe(mockEvent3.eventDesc);
     expect(component.selectedBets[2].betTypeCd).toBe(component.sharedVar.BET_TYPE_CD_H2H);
@@ -207,7 +207,7 @@ describe('OddsLandingComponent', () => {
     expect(component.selectedBets[2].betSelectionName).toBe(mockEvent3.teamsDetails.awayTeam);
     expect(component.selectedBets[2].odds).toBe(mockEvent3.h2hEventOdds.awayOdds);
     expect(component.selectedBets[2].startTime).toBe(mockEvent3.startTime);
-    expect(component.selectedBets[2].compType).toBe(mockEvent3.competition);
+    expect(component.selectedBets[2].compType).toBe(mockEvent3.compType);
   });
 
   it('should remove bet selection from the bet slip for unselecting a bet from UI', () => {
@@ -371,7 +371,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1000001,
           eventDesc: 'Event 1',
           startTime: new Date(),
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {homeTeam: "", awayTeam: ""},
           h2hEventOdds: {eventId: 1000001, homeOdds: 1.50, drawOdds: 3.55, awayOdds: 5.60},
           betSelection: {homeSelected: true, drawSelected: false, awaySelected: false}
@@ -380,7 +380,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1000002,
           eventDesc: 'Event 2',
           startTime: new Date(),
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {homeTeam: "", awayTeam: ""},
           h2hEventOdds: {eventId: 1000002, homeOdds: 1.50, drawOdds: 3.55, awayOdds: 5.60},
           betSelection: {homeSelected: false, drawSelected: true, awaySelected: false}
@@ -389,7 +389,7 @@ describe('OddsLandingComponent', () => {
           eventId: 1000003,
           eventDesc: 'Event 3',
           startTime: new Date(),
-          competition: 'EPL',
+          compType: 'EPL',
           teamsDetails: {homeTeam: "", awayTeam: ""},
           h2hEventOdds: {eventId: 1000003, homeOdds: 1.50, drawOdds: 3.55, awayOdds: 5.60},
           betSelection: {homeSelected: false, drawSelected: false, awaySelected: true}
@@ -467,7 +467,7 @@ describe('OddsLandingComponent', () => {
       eventId: 1000001,
       eventDesc: 'Event 1',
       startTime: new Date(),
-      competition: 'EPL',
+      compType: 'EPL',
       teamsDetails: {homeTeam: "", awayTeam: ""},
       h2hEventOdds: {eventId: 1000001, homeOdds: 1.50, drawOdds: 3.55, awayOdds: 5.60},
       betSelection: {homeSelected: false, drawSelected: false, awaySelected: false}
@@ -479,7 +479,7 @@ describe('OddsLandingComponent', () => {
       eventId: 1000001,
       eventDesc: 'Event 1',
       startTime: new Date(),
-      competition: 'EPL',
+      compType: 'EPL',
       teamsDetails: {homeTeam: "", awayTeam: ""},
       h2hEventOdds: {eventId: 1000001, homeOdds: 1.50, drawOdds: 3.55, awayOdds: 5.60},
       betSelection: {homeSelected: true, drawSelected: false, awaySelected: false}
