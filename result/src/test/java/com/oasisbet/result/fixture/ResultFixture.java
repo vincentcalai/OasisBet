@@ -1,5 +1,6 @@
 package com.oasisbet.result.fixture;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEvent;
+import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.Score;
 
 public class ResultFixture {
@@ -471,12 +473,12 @@ public class ResultFixture {
 
 	public static List<ResultEvent> createMockResultEvents() {
 
-		ResultEvent resultEvent1 = new ResultEvent(1000088L, "English Premier League", "Brentford vs Aston Villa",
-				new Date(), true, "Brentford", "Aston Villa", "1-1", new Date());
-		ResultEvent resultEvent2 = new ResultEvent(1000089L, "English Premier League", "Burnley vs West Ham United",
-				new Date(), true, "Burnley", "West Ham United", "2-2", new Date());
-		ResultEvent resultEvent3 = new ResultEvent(1000090L, "English Premier League", "Southampton vs Arsenal",
-				new Date(), true, "Southampton", "Arsenal", "0-4", new Date());
+		ResultEvent resultEvent1 = new ResultEvent(BigInteger.valueOf(1000088L), "English Premier League",
+				"Brentford vs Aston Villa", new Date(), true, "Brentford", "Aston Villa", "1-1", new Date());
+		ResultEvent resultEvent2 = new ResultEvent(BigInteger.valueOf(1000089L), "English Premier League",
+				"Burnley vs West Ham United", new Date(), true, "Burnley", "West Ham United", "2-2", new Date());
+		ResultEvent resultEvent3 = new ResultEvent(BigInteger.valueOf(1000090L), "English Premier League",
+				"Southampton vs Arsenal", new Date(), true, "Southampton", "Arsenal", "0-4", new Date());
 		List<ResultEvent> resultEvents = new ArrayList<>();
 		resultEvents.add(resultEvent1);
 		resultEvents.add(resultEvent2);
@@ -485,31 +487,101 @@ public class ResultFixture {
 
 	}
 
+	public static List<ResultEventMapping> createMockEplResultEventMappingIdsNotInSportsEventMapping() {
+		List<ResultEventMapping> mockList = new ArrayList<>();
+		ResultEventMapping resultEvent1 = new ResultEventMapping();
+		resultEvent1.setEventId(BigInteger.valueOf(9999997L));
+		resultEvent1.setApiEventId("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		resultEvent1.setCompType("EPL");
+		resultEvent1.setOutcome("01");
+		resultEvent1.setScore("4-1");
+		resultEvent1.setCompleted(true);
+		resultEvent1.setLastUpdatedDt(new Date());
+
+		ResultEventMapping resultEvent2 = new ResultEventMapping();
+		resultEvent2.setEventId(BigInteger.valueOf(9999998L));
+		resultEvent2.setApiEventId("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+		resultEvent2.setCompType("EPL");
+		resultEvent2.setOutcome("01");
+		resultEvent2.setScore("4-0");
+		resultEvent2.setCompleted(true);
+		resultEvent2.setLastUpdatedDt(new Date());
+
+		ResultEventMapping resultEvent3 = new ResultEventMapping();
+		resultEvent3.setEventId(BigInteger.valueOf(9999999L));
+		resultEvent3.setApiEventId("cccccccccccccccccccccccccccccccc");
+		resultEvent3.setCompType("EPL");
+		resultEvent3.setOutcome("02");
+		resultEvent3.setScore("1-1");
+		resultEvent3.setCompleted(true);
+		resultEvent3.setLastUpdatedDt(new Date());
+
+		mockList.add(resultEvent1);
+		mockList.add(resultEvent2);
+		mockList.add(resultEvent3);
+		return mockList;
+	}
+
+	public static List<ResultEventMapping> createMockEplResultEventMapping() {
+		List<ResultEventMapping> mockList = new ArrayList<>();
+		ResultEventMapping resultEvent1 = new ResultEventMapping();
+		resultEvent1.setEventId(BigInteger.valueOf(1000003L));
+		resultEvent1.setApiEventId("e306340bed661722ad957e5d8c15f798");
+		resultEvent1.setCompType("EPL");
+		resultEvent1.setOutcome("01");
+		resultEvent1.setScore("4-1");
+		resultEvent1.setCompleted(true);
+		resultEvent1.setLastUpdatedDt(new Date());
+
+		ResultEventMapping resultEvent2 = new ResultEventMapping();
+		resultEvent2.setEventId(BigInteger.valueOf(1000004L));
+		resultEvent2.setApiEventId("2ad957e5d8661722ad957e5d8c15f798");
+		resultEvent2.setCompType("EPL");
+		resultEvent2.setOutcome("01");
+		resultEvent2.setScore("4-0");
+		resultEvent2.setCompleted(true);
+		resultEvent2.setLastUpdatedDt(new Date());
+
+		ResultEventMapping resultEvent3 = new ResultEventMapping();
+		resultEvent3.setEventId(BigInteger.valueOf(1000005L));
+		resultEvent3.setApiEventId("1722ad957e661722ad957e5d8c15f798");
+		resultEvent3.setCompType("EPL");
+		resultEvent3.setOutcome("02");
+		resultEvent3.setScore("1-1");
+		resultEvent3.setCompleted(true);
+		resultEvent3.setLastUpdatedDt(new Date());
+
+		mockList.add(resultEvent1);
+		mockList.add(resultEvent2);
+		mockList.add(resultEvent3);
+		return mockList;
+	}
+
 	public static List<ResultEvent> createMappedSuccessEplResultApiResponse() throws ParseException {
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		Date startTime1 = dateFormat.parse("2023-04-28T18:45:00Z");
+		Date startTime1 = dateFormat.parse("2023-05-28T18:45:00Z");
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(startTime1);
 		calendar.add(Calendar.HOUR_OF_DAY, 8);
 		startTime1 = calendar.getTime();
 
-		Date startTime2 = dateFormat.parse("2023-04-29T18:45:00Z");
+		Date startTime2 = dateFormat.parse("2023-05-29T18:45:00Z");
 		calendar.setTime(startTime2);
 		calendar.add(Calendar.HOUR_OF_DAY, 8);
 		startTime2 = calendar.getTime();
 
-		Date startTime3 = dateFormat.parse("2023-04-30T19:45:00Z");
+		Date startTime3 = dateFormat.parse("2023-05-30T19:45:00Z");
 		calendar.setTime(startTime3);
 		calendar.add(Calendar.HOUR_OF_DAY, 8);
 		startTime3 = calendar.getTime();
 
-		ResultEvent resultEvent1 = new ResultEvent(1000003L, "English Premier League",
+		ResultEvent resultEvent1 = new ResultEvent(BigInteger.valueOf(1000003L), "EPL",
 				"Tottenham Hotspur vs Leicester City", startTime1, true, "Tottenham Hotspur", "Leicester City", "4-1",
 				new Date());
-		ResultEvent resultEvent2 = new ResultEvent(1000004L, "English Premier League", "Arsenal vs Sheffield United",
+		ResultEvent resultEvent2 = new ResultEvent(BigInteger.valueOf(1000004L), "EPL", "Arsenal vs Sheffield United",
 				startTime2, true, "Arsenal", "Sheffield United", "4-0", new Date());
-		ResultEvent resultEvent3 = new ResultEvent(1000005L, "English Premier League",
+		ResultEvent resultEvent3 = new ResultEvent(BigInteger.valueOf(1000005L), "EPL",
 				"Newcastle United vs Manchester United", startTime3, true, "Newcastle United", "Manchester United",
 				"1-1", new Date());
 		List<ResultEvent> resultEvents = new ArrayList<>();

@@ -18,4 +18,6 @@ public interface IResultEventMappingDao extends MongoRepository<ResultEventMappi
 
 	ResultEventMapping findByApiEventId(String apiEventId);
 
+	List<ResultEventMapping> findByCompType(String compType);
+
 }

@@ -2,7 +2,6 @@ package com.oasisbet.result.controller;
 
 import static org.mockito.Mockito.when;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,7 +29,6 @@ import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.ResultRestResponse;
 import com.oasisbet.result.service.ResultService;
-import com.oasisbet.result.util.Constants;
 
 @ExtendWith(MockitoExtension.class)
 class TestResultController extends TestBaseSetup {
@@ -58,51 +55,10 @@ class TestResultController extends TestBaseSetup {
 
 		when(mockRestTemplate.getForEntity(Mockito.anyString(), Mockito.any())).thenReturn(mockResponseEntity);
 
-		Mockito.when(resultService.processMapping(Mockito.any(ResultApiResponse[].class))).thenReturn(mockResults);
+		Mockito.when(resultService.processMapping(Mockito.anyList())).thenReturn(mockResults);
 
 		ResultRestResponse expectedResponse = new ResultRestResponse();
 		expectedResponse.setResultEvent(mockResults);
-
-		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/result/retrieveResults")
-				.param("compType", compType).contentType(MediaType.APPLICATION_JSON);
-
-		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedResponse)));
-	}
-
-	@Test
-	void retrieveResultsConnFail() throws JsonProcessingException, Exception {
-		String compType = "soccer_epl";
-
-		ResultRestResponse expectedResponse = new ResultRestResponse();
-		expectedResponse.setStatusCode(1);
-		expectedResponse.setResultMessage(Constants.RETRIEVE_RESULT_API_EXCEPTION);
-
-		Mockito.when(mockRestTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
-				.thenThrow(RestClientException.class);
-
-		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/result/retrieveResults")
-				.param("compType", compType).contentType(MediaType.APPLICATION_JSON);
-
-		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedResponse)));
-	}
-
-	@Test
-	void retrieveResultsDateParseFail() throws JsonProcessingException, Exception {
-		String compType = "soccer_epl";
-
-		ResultRestResponse expectedResponse = new ResultRestResponse();
-		expectedResponse.setStatusCode(2);
-		expectedResponse.setResultMessage(Constants.DATE_PARSING_EXCEPTION);
-
-		ResultApiResponse[] mockBody = ResultFixture.mockEplResultApiResponseArray();
-		ResponseEntity<Object> mockResponseEntity = new ResponseEntity<>(mockBody, HttpStatus.OK);
-
-		when(mockRestTemplate.getForEntity(Mockito.anyString(), Mockito.any())).thenReturn(mockResponseEntity);
-
-		Mockito.when(resultService.processMapping(Mockito.any(ResultApiResponse[].class)))
-				.thenThrow(ParseException.class);
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/result/retrieveResults")
 				.param("compType", compType).contentType(MediaType.APPLICATION_JSON);

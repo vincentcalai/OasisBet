@@ -1,47 +1,48 @@
 package com.oasisbet.result.model;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class ResultEvent {
 
-	public long eventId;
-	public String competition;
-	public String eventDesc;
-	public Date startTime;
-	public boolean completed;
-	public String homeTeam;
-	public String awayTeam;
-	public String score;
-	public Date lastUpdated;
+	private BigInteger eventId;
+	private String compType;
+	private String eventDesc;
+	private Date startTime;
+	private boolean completed;
+	private String homeTeam;
+	private String awayTeam;
+	private String score;
+	private Date lastUpdatedDt;
 
-	public ResultEvent(long eventId, String competition, String eventDesc, Date startTime, boolean completed,
-			String homeTeam, String awayTeam, String score, Date lastUpdated) {
+	public ResultEvent(BigInteger eventId, String compType, String eventDesc, Date startTime, boolean completed,
+			String homeTeam, String awayTeam, String score, Date lastUpdatedDt) {
 		super();
 		this.eventId = eventId;
-		this.competition = competition;
+		this.compType = compType;
 		this.eventDesc = eventDesc;
 		this.startTime = startTime;
 		this.completed = completed;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 		this.score = score;
-		this.lastUpdated = lastUpdated;
+		this.lastUpdatedDt = lastUpdatedDt;
 	}
 
-	public long getEventId() {
+	public BigInteger getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(long eventId) {
+	public void setEventId(BigInteger eventId) {
 		this.eventId = eventId;
 	}
 
-	public String getCompetition() {
-		return competition;
+	public String getCompType() {
+		return compType;
 	}
 
-	public void setCompetition(String competition) {
-		this.competition = competition;
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 	public String getEventDesc() {
@@ -92,11 +93,11 @@ public class ResultEvent {
 		this.score = score;
 	}
 
-	public Date getLastUpdated() {
-		return lastUpdated;
+	public Date getLastUpdatedDt() {
+		return lastUpdatedDt;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public void setLastUpdatedDt(Date lastUpdatedDt) {
+		this.lastUpdatedDt = lastUpdatedDt;
 	}
 }
