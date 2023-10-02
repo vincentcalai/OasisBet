@@ -26,7 +26,6 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.ResultEventMapping;
-import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.proxy.ResultProxy;
@@ -200,8 +199,10 @@ public class AccountService {
 		return response;
 	}
 
-	public StatusResponse processBet(Long accId, List<BetSubmissionVO> betSubmissionList) {
-		StatusResponse response = new StatusResponse();
+	public AccountRestResponse processBet(Long accId, List<BetSubmissionVO> betSubmissionList) {
+		AccountRestResponse response = new AccountRestResponse();
+		AccountVO account = new AccountVO();
+		account.setAccId(accId);
 		Optional<AccountView> accountViewOptional = this.accountDao.findById(accId);
 		double accountBal = 0.0;
 		if (accountViewOptional.isPresent()) {
@@ -260,6 +261,10 @@ public class AccountService {
 			accountBetProcessTrxDao.saveAll(betProcessTrxList);
 			// persist user account balance in db
 			this.accountDao.save(accountView);
+
+			account.setBalance(accountBal);
+			response.setAccount(account);
+
 			Date betPlacedDateTime = new Date();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, h:mma");
 			String formattedBetPlacedDateTime = dateFormat.format(betPlacedDateTime);

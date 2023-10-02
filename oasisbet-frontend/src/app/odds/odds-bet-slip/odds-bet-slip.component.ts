@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { AccountModel } from 'src/app/model/account.model';
 import { BetSlip } from 'src/app/model/bet-slip.model';
 import { BetsModel } from 'src/app/model/bets.model';
 import { ResponseModel } from 'src/app/model/response.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -108,7 +109,7 @@ export class OddsBetSlipComponent implements OnInit {
   onFinalConfirmPlaceBets(){
     // call backend api here to place bet
     this.sharedVar.submitBetsModel.betSlip = this.betSelections;
-    const account: any = this.authService.getRetrievedAccDetails();
+    const account: AccountModel = this.authService.getRetrievedAccDetails();
     if(!account || !account.accId){
       this.sharedVar.changeShowUserNotLoginMsg(this.sharedVar.USER_NOT_LOGGED_IN);
       this.router.navigate(['account']);
@@ -116,7 +117,7 @@ export class OddsBetSlipComponent implements OnInit {
     }
     this.sharedVar.submitBetsModel.userId = account.accId;
     this.subscriptions.add(
-      this.apiService.postSubmitBets().subscribe( (resp: ResponseModel) => {
+      this.apiService.postSubmitBets().subscribe( (resp: any) => {
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
           resp.resultMessage = "";
@@ -126,6 +127,11 @@ export class OddsBetSlipComponent implements OnInit {
 
           this.responseMsg = resp.resultMessage;
           this.placedBetStatus = 3;
+
+          let accountModel: AccountModel = new AccountModel();
+          accountModel = this.authService.getRetrievedAccDetails();
+          accountModel.balance = resp.account.balance;
+          sessionStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
         }
       } ,
         error => {

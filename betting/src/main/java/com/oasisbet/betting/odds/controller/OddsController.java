@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
+import com.oasisbet.betting.odds.model.response.AccountRestResponse;
 import com.oasisbet.betting.odds.model.response.BettingRestResponse;
-import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.proxy.AccountProxy;
 import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.odds.util.Constants;
@@ -42,13 +42,13 @@ public class OddsController {
 	}
 
 	@PostMapping(value = "/bets")
-	public StatusResponse submitBet(@RequestBody BetSlipRest betsInput) {
+	public AccountRestResponse submitBet(@RequestBody BetSlipRest betsInput) {
 		// Make the API call to the Account microservice using the Feign Client
-		StatusResponse response = null;
+		AccountRestResponse response = null;
 		try {
 			response = proxy.processBet(betsInput);
 		} catch (Exception e) {
-			response = new StatusResponse();
+			response = new AccountRestResponse();
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.BET_PROCESS_ERROR);
 			logger.error("error while processing bet ", e);

@@ -20,6 +20,7 @@ import com.oasisbet.betting.TestBaseSetup;
 import com.oasisbet.betting.fixture.BettingFixture;
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
+import com.oasisbet.betting.odds.model.response.AccountRestResponse;
 import com.oasisbet.betting.odds.model.response.StatusResponse;
 import com.oasisbet.betting.odds.proxy.AccountProxy;
 import com.oasisbet.betting.odds.service.OddsService;
@@ -60,7 +61,7 @@ class TestOddsController extends TestBaseSetup {
 	void testSubmitBetSuccess() throws Exception {
 		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
-		StatusResponse expectedResponse = new StatusResponse();
+		AccountRestResponse expectedResponse = new AccountRestResponse();
 
 		Mockito.when(proxy.processBet(Mockito.any(BetSlipRest.class))).thenReturn(expectedResponse);
 

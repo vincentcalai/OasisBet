@@ -48,8 +48,8 @@ export class ApiService {
     );
   }
 
-  postSubmitBets(): Observable<ResponseModel> {
-    return this.http.post<ResponseModel>(this.commonApiPrefix + '/odds/bets/', this.sharedVar.submitBetsModel).pipe(
+  postSubmitBets(): Observable<Object> {
+    return this.http.post<Object>(this.commonApiPrefix + '/odds/bets/', this.sharedVar.submitBetsModel).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );
