@@ -50,4 +50,9 @@ export class ResultsLandingComponent implements OnInit {
     this.ngOnInit();
   }
 
+  isEventOver(startTime: Date): boolean{
+    const currentTime = new Date();
+    return currentTime > startTime;
+  }
+
 }

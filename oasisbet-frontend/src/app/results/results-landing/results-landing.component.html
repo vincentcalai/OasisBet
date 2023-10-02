@@ -25,7 +25,9 @@
                   <tr *ngFor="let event of events">
                     <td>{{event.startTime | date:'EEE, dd MMM yyyy, h:mm a'}}</td>
                     <td>{{event.eventDesc}}</td>
-                    <td>{{event.score}}</td>
+                    <td *ngIf="event.score">{{ event.score }}</td>
+                    <td *ngIf="!event.score && isEventOver(event.startTime)">Pending</td>
+                    <td *ngIf="!event.score && !isEventOver(event.startTime)">Not Started</td>
                   </tr>
                   <tr *ngIf='!events || events.length == 0'>
                     <td class='text-center' colspan=12>
