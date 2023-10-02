@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.account.TestWithSpringBoot;
 import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.request.BetSlipRest;
@@ -200,8 +201,8 @@ public class TestAccountController extends TestWithSpringBoot {
 
 		BetSlipRest betSlipRest = AccountFixture.createMockBetSubmissionRestData();
 
-		AccountRestResponse expectedResponse = new AccountRestResponse();
-		Mockito.when(accountService.processBet(Mockito.any(AccountVO.class), Mockito.any(List.class)))
+		StatusResponse expectedResponse = new StatusResponse();
+		Mockito.when(accountService.processBet(Mockito.any(Long.class), Mockito.any(List.class)))
 				.thenReturn(expectedResponse);
 
 		String request = objectMapper.writeValueAsString(betSlipRest);

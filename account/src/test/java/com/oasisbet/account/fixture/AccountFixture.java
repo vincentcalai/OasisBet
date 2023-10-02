@@ -10,9 +10,8 @@ import com.oasisbet.account.model.request.BetSlipRest;
 
 public class AccountFixture {
 	public static BetSlipRest createMockBetSubmissionRestData() {
-		AccountVO account = new AccountVO();
 		BetSlipRest betsInput = new BetSlipRest();
-		betsInput.setAccount(account);
+		betsInput.setUserId(22L);
 		List<BetSubmissionVO> betSubmissionVOlist = new ArrayList<>();
 		BetSubmissionVO betSubmission = new BetSubmissionVO();
 		betSubmission.setEventId(1000001L);

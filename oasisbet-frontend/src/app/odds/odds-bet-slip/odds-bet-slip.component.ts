@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { AccountModel } from 'src/app/model/account.model';
 import { BetSlip } from 'src/app/model/bet-slip.model';
 import { BetsModel } from 'src/app/model/bets.model';
 import { ResponseModel } from 'src/app/model/response.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -115,10 +114,9 @@ export class OddsBetSlipComponent implements OnInit {
       this.router.navigate(['account']);
       return;
     }
-    console.log(account);
-    this.sharedVar.submitBetsModel.account = account;
+    this.sharedVar.submitBetsModel.userId = account.accId;
     this.subscriptions.add(
-      this.apiService.postSubmitBets().subscribe( (resp: any) => {
+      this.apiService.postSubmitBets().subscribe( (resp: ResponseModel) => {
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
           resp.resultMessage = "";
@@ -128,8 +126,6 @@ export class OddsBetSlipComponent implements OnInit {
 
           this.responseMsg = resp.resultMessage;
           this.placedBetStatus = 3;
-        
-          sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
         }
       } ,
         error => {

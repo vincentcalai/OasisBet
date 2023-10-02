@@ -214,11 +214,9 @@ class TestAccountService extends TestWithSpringBoot {
 
 	@Test
 	void testProcessBetFail_userNotFound() throws Exception {
-		AccountVO accountVO = new AccountVO();
-		accountVO.setAccId(100004L);
-
+		Long userId = 100004L;
 		List<BetSubmissionVO> betSubmissionList = AccountFixture.createMockBetSubmissionData();
-		StatusResponse response = accountService.processBet(accountVO, betSubmissionList);
+		StatusResponse response = accountService.processBet(userId, betSubmissionList);
 
 		assertEquals(1, response.getStatusCode());
 		assertEquals(Constants.ERR_USER_ACC_NOT_FOUND, response.getResultMessage());
@@ -226,10 +224,9 @@ class TestAccountService extends TestWithSpringBoot {
 
 	@Test
 	void testProcessBetFail_insufficientBalanace() throws Exception {
-		AccountVO accountVO = new AccountVO();
-		accountVO.setAccId(100001L);
+		Long userId = 100001L;
 		List<BetSubmissionVO> betSubmissionList = AccountFixture.createMockBetSubmissionData();
-		StatusResponse response = accountService.processBet(accountVO, betSubmissionList);
+		StatusResponse response = accountService.processBet(userId, betSubmissionList);
 
 		assertEquals(2, response.getStatusCode());
 		assertEquals(Constants.ERR_INSUFFICIENT_BAL, response.getResultMessage());
@@ -237,10 +234,9 @@ class TestAccountService extends TestWithSpringBoot {
 
 	@Test
 	void testProcessBetSuccess() throws Exception {
-		AccountVO accountVO = new AccountVO();
-		accountVO.setAccId(100002L);
+		Long userId = 100002L;
 		List<BetSubmissionVO> betSubmissionList = AccountFixture.createMockBetSubmissionData();
-		AccountRestResponse response = accountService.processBet(accountVO, betSubmissionList);
+		StatusResponse response = accountService.processBet(userId, betSubmissionList);
 
 		Optional<AccountBetTrxView> optionalBetTrxView1 = accountBetTrxDao.findById("B/100002/100051");
 		AccountBetTrxView betTrxView1 = optionalBetTrxView1.get();
