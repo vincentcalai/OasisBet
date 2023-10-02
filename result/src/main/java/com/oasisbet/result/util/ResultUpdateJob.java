@@ -108,10 +108,16 @@ public class ResultUpdateJob implements Job {
 					if (resultEvent != null) {
 						log.info("result event is found in db, api_event_id: {}", apiEventId);
 
-						Boolean completed = false;
+						boolean completed = false;
 						boolean updateResultFlag = resultService.validateUpdateResultFlag(resultEvent);
 
 						completed = resultEvent.isCompleted();
+						// update sports_event_mapping that event has completed
+						if (sportsEvent != null && !sportsEvent.getCompleted() && completed) {
+							sportsEvent.setCompleted(Constants.TRUE);
+							sportsEventMappingDao.save(sportsEvent);
+						}
+
 						// if event is completed - Update score, outcome, completed flag &
 						// last_updated_dt
 						if (!completed && updateResultFlag && (finalScore != null && !finalScore.isEmpty())
@@ -121,12 +127,6 @@ public class ResultUpdateJob implements Job {
 							resultEvent.setCompleted(Constants.TRUE);
 							resultEvent.setOutcome(outcomeResult);
 							resultEventMappingDao.save(resultEvent);
-
-							// update sports_event_mapping that event has completed
-							if (sportsEvent != null) {
-								sportsEvent.setCompleted(Constants.TRUE);
-								sportsEventMappingDao.save(sportsEvent);
-							}
 						}
 					} else {
 						log.info("result NOT found in db, api_event_id: {}", apiEventId);
