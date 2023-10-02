@@ -16,7 +16,6 @@ import com.oasisbet.result.dao.ISportsEventMappingDao;
 import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.SportsEventMapping;
-import com.oasisbet.result.util.Constants;
 
 @Service
 public class ResultService {
@@ -71,7 +70,7 @@ public class ResultService {
 	}
 
 	public List<ResultEventMapping> retrieveCompletedResults() {
-		return resultEventMappingDao.findByCompleted(Constants.TRUE);
+		return resultEventMappingDao.findByCompletedTrue();
 	}
 
 	public List<ResultEventMapping> retrieveByCompType(String compType) {

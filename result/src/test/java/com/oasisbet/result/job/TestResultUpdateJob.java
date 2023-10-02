@@ -39,7 +39,7 @@ class TestResultUpdateJob extends TestBaseSetup {
 	private IResultEventMappingDao resultEventMappingDao;
 
 	@Test
-	void testResultUpdateJob1NewEplEventInsertedSuccess() throws SchedulerException, InterruptedException {
+	void testResultUpdateJob3NewEplEventInsertedSuccess() throws SchedulerException, InterruptedException {
 
 		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
 		assertEquals(23, resultEventList.size());

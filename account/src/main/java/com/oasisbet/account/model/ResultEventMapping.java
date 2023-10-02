@@ -1,21 +1,22 @@
 package com.oasisbet.account.model;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class ResultEventMapping {
-	private long eventId;
+	private BigInteger eventId;
 	private String apiEventId;
 	private String compType;
 	private String score;
 	private String outcome;
 	private boolean completed;
-	private Date lastUpdateDt;
+	private Date lastUpdatedDt;
 
-	public long getEventId() {
+	public BigInteger getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(long eventId) {
+	public void setEventId(BigInteger eventId) {
 		this.eventId = eventId;
 	}
 
@@ -60,10 +61,10 @@ public class ResultEventMapping {
 	}
 
 	public Date getLastUpdatedDt() {
-		return lastUpdateDt;
+		return lastUpdatedDt;
 	}
 
-	public void setLastUpdatedDt(Date lastUpdateDt) {
-		this.lastUpdateDt = lastUpdateDt;
+	public void setLastUpdatedDt(Date lastUpdatedDt) {
+		this.lastUpdatedDt = lastUpdatedDt;
 	}
 }

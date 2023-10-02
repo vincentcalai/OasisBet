@@ -1,5 +1,6 @@
 package com.oasisbet.account.service;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -372,9 +373,9 @@ public class AccountService {
 		return startDate;
 	}
 
-	public Map<Long, ResultEventMapping> retrieveCompletedResults() throws Exception {
+	public Map<BigInteger, ResultEventMapping> retrieveCompletedResults() throws Exception {
 		List<ResultEventMapping> completedResults = proxy.retrieveCompletedResults();
-		Map<Long, ResultEventMapping> resultsMap = new HashMap<>();
+		Map<BigInteger, ResultEventMapping> resultsMap = new HashMap<>();
 		completedResults.forEach(result -> {
 			resultsMap.put(result.getEventId(), result);
 		});

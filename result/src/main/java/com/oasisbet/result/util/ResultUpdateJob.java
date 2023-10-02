@@ -76,6 +76,8 @@ public class ResultUpdateJob implements Job {
 					String awayScore = null;
 					String finalScore = null;
 					String outcomeResult = null;
+					ResultEventMapping resultEvent = null;
+					SportsEventMapping sportsEvent = null;
 					if (scoreList != null && scoreList.size() == 2) {
 						Map<String, String> homeAwayScoreMap = new HashMap<>();
 						homeAwayScoreMap.put(scoreList.get(0).getName(), scoreList.get(0).getScore());
@@ -93,7 +95,15 @@ public class ResultUpdateJob implements Job {
 						}
 					}
 
-					ResultEventMapping resultEvent = resultEventMappingDao.findByApiEventId(apiEventId);
+					List<ResultEventMapping> resultEventList = resultEventMappingDao.findByApiEventId(apiEventId);
+					if (resultEventList != null && !resultEventList.isEmpty()) {
+						resultEvent = resultEventList.get(0);
+					}
+
+					List<SportsEventMapping> sportsEventList = sportsEventMappingDao.findByApiEventId(apiEventId);
+					if (sportsEventList != null && !sportsEventList.isEmpty()) {
+						sportsEvent = sportsEventList.get(0);
+					}
 
 					if (resultEvent != null) {
 						log.info("result event is found in db, api_event_id: {}", apiEventId);
@@ -111,15 +121,18 @@ public class ResultUpdateJob implements Job {
 							resultEvent.setCompleted(Constants.TRUE);
 							resultEvent.setOutcome(outcomeResult);
 							resultEventMappingDao.save(resultEvent);
+
+							// update sports_event_mapping that event has completed
+							if (sportsEvent != null) {
+								sportsEvent.setCompleted(Constants.TRUE);
+								sportsEventMappingDao.save(sportsEvent);
+							}
 						}
 					} else {
 						log.info("result NOT found in db, api_event_id: {}", apiEventId);
 						BigInteger eventId = null;
 						// Get event ID from sports_event_mapping table
-
-						List<SportsEventMapping> sportsEventList = sportsEventMappingDao.findByApiEventId(apiEventId);
-						if (sportsEventList != null && !sportsEventList.isEmpty()) {
-							SportsEventMapping sportsEvent = sportsEventList.get(0);
+						if (sportsEvent != null) {
 							eventId = sportsEvent.getEventId();
 							// insert result into DB
 							ResultEventMapping resultEventMapping = new ResultEventMapping();

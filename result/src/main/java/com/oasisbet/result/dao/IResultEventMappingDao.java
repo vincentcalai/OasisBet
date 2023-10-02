@@ -12,11 +12,11 @@ import com.oasisbet.result.model.ResultEventMapping;
 @Repository
 public interface IResultEventMappingDao extends MongoRepository<ResultEventMapping, BigInteger> {
 
-	List<ResultEventMapping> findByCompleted(boolean completed);
+	List<ResultEventMapping> findByCompletedTrue();
 
 	List<ResultEventMapping> findByCompletedAndLastUpdatedDtBefore(boolean isCompleted, Date date);
 
-	ResultEventMapping findByApiEventId(String apiEventId);
+	List<ResultEventMapping> findByApiEventId(String apiEventId);
 
 	List<ResultEventMapping> findByCompType(String compType);
 

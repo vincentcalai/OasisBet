@@ -1,5 +1,6 @@
 package com.oasisbet.account.util;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +29,13 @@ public class AccountBetTrxUpdateJob implements Job {
 		log.info("executing AccountBetTrxUpdateJob...");
 
 		try {
-			Map<Long, ResultEventMapping> resultMap = accountService.retrieveCompletedResults();
+			Map<BigInteger, ResultEventMapping> resultMap = accountService.retrieveCompletedResults();
 			List<AccountBetTrxView> unsettledBetTrxList = accountService.retrieveNotSettledBetTrx();
 			unsettledBetTrxList.forEach(betTrx -> {
-				if (resultMap.containsKey(betTrx.getEventId())) {
+				BigInteger eventId = BigInteger.valueOf(betTrx.getEventId());
+				if (resultMap.containsKey(eventId)) {
 					// process bet trx settlement based on result outcome of completed event
-					ResultEventMapping resultEvent = resultMap.get(betTrx.getEventId());
+					ResultEventMapping resultEvent = resultMap.get(eventId);
 
 					if (Constants.BET_TYPE_1X2.equals(betTrx.getBetType())) {
 						boolean isBetTrxWin = betTrx.getBetSelection().equals(resultEvent.getOutcome());
