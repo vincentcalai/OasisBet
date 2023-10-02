@@ -78,7 +78,7 @@ class TestOddsController extends TestBaseSetup {
 	void testSubmitBetFail() throws Exception {
 		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
-		StatusResponse expectedResponse = new StatusResponse();
+		AccountRestResponse expectedResponse = new AccountRestResponse();
 		expectedResponse.setStatusCode(1);
 		expectedResponse.setResultMessage(Constants.BET_PROCESS_ERROR);
 
