@@ -2,10 +2,11 @@ package com.oasisbet.account.model.request;
 
 import java.util.List;
 
+import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 
 public class BetSlipRest {
-	private Long userId;
+	private AccountVO account;
 	private List<BetSubmissionVO> betSlip;
 
 	public List<BetSubmissionVO> getBetSlip() {
@@ -16,11 +17,12 @@ public class BetSlipRest {
 		this.betSlip = betSlip;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public AccountVO getAccount() {
+		return account;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setAccount(AccountVO account) {
+		this.account = account;
 	}
+
 }
