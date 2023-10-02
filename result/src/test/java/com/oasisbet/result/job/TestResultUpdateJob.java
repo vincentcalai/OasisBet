@@ -1,11 +1,13 @@
 package com.oasisbet.result.job;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,9 +23,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.oasisbet.result.TestBaseSetup;
 import com.oasisbet.result.dao.IResultEventMappingDao;
+import com.oasisbet.result.dao.ISportsEventMappingDao;
 import com.oasisbet.result.fixture.ResultFixture;
 import com.oasisbet.result.model.ResultApiResponse;
 import com.oasisbet.result.model.ResultEventMapping;
+import com.oasisbet.result.model.SportsEventMapping;
 import com.oasisbet.result.util.ResultUpdateJob;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +41,9 @@ class TestResultUpdateJob extends TestBaseSetup {
 
 	@Autowired
 	private IResultEventMappingDao resultEventMappingDao;
+
+	@Autowired
+	private ISportsEventMappingDao sportsEventMappingDao;
 
 	@Test
 	void testResultUpdateJob3NewEplEventInsertedSuccess() throws SchedulerException, InterruptedException {
@@ -170,6 +177,31 @@ class TestResultUpdateJob extends TestBaseSetup {
 			}
 		});
 
+	}
+
+	@Test
+	void testResultUpdateJobSportsEventCompletedStatusUpdateSuccess() throws SchedulerException, InterruptedException {
+		List<SportsEventMapping> sportsEventMappingList1 = sportsEventMappingDao.findAll();
+
+		Optional<SportsEventMapping> sportsEventOptional1 = sportsEventMappingList1.stream()
+				.filter(event -> event.getApiEventId().equals("66ca5a121b5ddc4763cf1708222be377")).findFirst();
+		assertTrue(sportsEventOptional1.isPresent());
+		assertFalse(sportsEventOptional1.get().getCompleted());
+
+		ResultApiResponse[] mockBody = ResultFixture.mockEventNotInSportsEventAndResultEvent();
+
+		when(restTemplate.getForEntity(Mockito.anyString(), Mockito.eq(ResultApiResponse[].class)))
+				.thenReturn(new ResponseEntity<>(mockBody, HttpStatus.OK));
+
+		resultUpdateJob.execute(null);
+
+		List<SportsEventMapping> sportsEventMappingList2 = sportsEventMappingDao.findAll();
+
+		Optional<SportsEventMapping> sportsEventOptional2 = sportsEventMappingList2.stream()
+				.filter(event -> event.getApiEventId().equals("66ca5a121b5ddc4763cf1708222be377")).findFirst();
+
+		assertTrue(sportsEventOptional2.isPresent());
+		assertTrue(sportsEventOptional2.get().getCompleted());
 	}
 
 }

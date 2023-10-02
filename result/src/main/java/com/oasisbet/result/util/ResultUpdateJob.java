@@ -134,6 +134,12 @@ public class ResultUpdateJob implements Job {
 						// Get event ID from sports_event_mapping table
 						if (sportsEvent != null) {
 							eventId = sportsEvent.getEventId();
+							boolean isEventCompleted = result.isCompleted();
+							if (isEventCompleted) {
+								sportsEvent.setCompleted(isEventCompleted);
+								sportsEventMappingDao.save(sportsEvent);
+							}
+
 							// insert result into DB
 							ResultEventMapping resultEventMapping = new ResultEventMapping();
 							resultEventMapping.setEventId(eventId);
@@ -141,7 +147,7 @@ public class ResultUpdateJob implements Job {
 							resultEventMapping.setCompType(result.getSport_key());
 							resultEventMapping.setScore(finalScore);
 							resultEventMapping.setOutcome(outcomeResult);
-							resultEventMapping.setCompleted(result.isCompleted());
+							resultEventMapping.setCompleted(isEventCompleted);
 							resultEventMapping.setLastUpdatedDt(new Date());
 							resultEventMappingDao.save(resultEventMapping);
 							log.info("inserting new result event, api_event_id: {}", apiEventId);

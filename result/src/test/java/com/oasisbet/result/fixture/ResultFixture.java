@@ -697,4 +697,34 @@ public class ResultFixture {
 		return array;
 	}
 
+	public static ResultApiResponse[] mockEventNotInSportsEventAndResultEvent() {
+		ResultApiResponse[] array = new ResultApiResponse[1];
+
+		ResultApiResponse mockResponse1 = new ResultApiResponse();
+
+		List<Score> scoreList1 = new ArrayList<>();
+		Score mockHomeScore1 = new Score();
+		mockHomeScore1.setName("Tottenham Hotspur");
+		mockHomeScore1.setScore("2");
+		scoreList1.add(mockHomeScore1);
+		Score mockAwayScore1 = new Score();
+		mockAwayScore1.setName("Manchester United");
+		mockAwayScore1.setScore("1");
+		scoreList1.add(mockAwayScore1);
+
+		mockResponse1.setId("66ca5a121b5ddc4763cf1708222be377");
+		mockResponse1.setSport_key("soccer_epl");
+		mockResponse1.setSport_title("English Premier League");
+		mockResponse1.setCommence_time("2023-04-30T19:45:00Z");
+		mockResponse1.setHome_team("Tottenham Hotspur");
+		mockResponse1.setAway_team("Manchester United");
+		mockResponse1.setCompleted(true);
+		mockResponse1.setLast_update("2023-04-29T18:45:00Z");
+		mockResponse1.setScores(scoreList1);
+
+		array[0] = mockResponse1;
+
+		return array;
+	}
+
 }
