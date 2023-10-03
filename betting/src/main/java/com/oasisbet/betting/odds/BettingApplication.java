@@ -1,4 +1,4 @@
-package com.oasisbet.betting;
+package com.oasisbet.betting.odds;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
