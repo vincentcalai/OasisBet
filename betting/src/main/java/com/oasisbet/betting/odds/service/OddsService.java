@@ -38,22 +38,26 @@ public class OddsService {
 	private ISportsEventMappingDao sportsEventMappingDao;
 
 	public List<BetEvent> retrieveBetEventByCompType(String compType) {
-		List<SportsEventMapping> sportsEventMappingList = sportsEventMappingDao
+		List<SportsEventMapping> sportsEventBeforeToday = sportsEventMappingDao
 				.findByCompTypeAndCompletedFalse(compType);
 
+		Date currentDate = new Date();
+		List<SportsEventMapping> sportsEventsAfterToday = sportsEventBeforeToday.stream()
+				.filter(event -> event.getCommenceTime().after(currentDate)).collect(Collectors.toList());
+
 		List<BetEvent> betEventList = new ArrayList<>();
-		for (SportsEventMapping result : sportsEventMappingList) {
-			BigInteger eventId = result.getEventId();
-			double homeOdds = result.getHomeOdds();
-			double awayOdds = result.getAwayOdds();
-			double drawOdds = result.getDrawOdds();
+		for (SportsEventMapping sportsEvent : sportsEventsAfterToday) {
+			BigInteger eventId = sportsEvent.getEventId();
+			double homeOdds = sportsEvent.getHomeOdds();
+			double awayOdds = sportsEvent.getAwayOdds();
+			double drawOdds = sportsEvent.getDrawOdds();
 			H2HEventOdds h2hEventOdds = new H2HEventOdds(homeOdds, drawOdds, awayOdds);
 			h2hEventOdds.setEventId(eventId);
 
-			Date startTime = result.getCommenceTime();
+			Date startTime = sportsEvent.getCommenceTime();
 
-			String homeTeam = result.getHomeTeam();
-			String awayTeam = result.getAwayTeam();
+			String homeTeam = sportsEvent.getHomeTeam();
+			String awayTeam = sportsEvent.getAwayTeam();
 
 			TeamsDetails teamDetails = new TeamsDetails(homeTeam, awayTeam);
 
