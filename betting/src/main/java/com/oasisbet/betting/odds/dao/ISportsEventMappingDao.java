@@ -1,6 +1,7 @@
 package com.oasisbet.betting.odds.dao;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +18,7 @@ public interface ISportsEventMappingDao extends MongoRepository<SportsEventMappi
 	Optional<SportsEventMapping> findFirstByCompTypeOrderByEventIdDesc(String compType);
 
 	List<SportsEventMapping> findByCompTypeAndCompletedFalse(String compType);
+
+	List<SportsEventMapping> findByCreateDtBefore(Date ninetyDaysAgo);
 
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -42,6 +44,21 @@ public abstract class TestBaseSetup {
 		List<SportsEventMapping> events = objectMapper.readValue(jsonData,
 				new TypeReference<List<SportsEventMapping>>() {
 				});
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		Date tomorrowDate = calendar.getTime();
+
+		calendar.add(Calendar.DAY_OF_MONTH, -95);
+		Date ninetyFiveDaysAgo = calendar.getTime();
+
+		for (int i = 0; i < 18; i++) {
+			events.get(i).setCommenceTime(tomorrowDate);
+		}
+
+		for (int i = 15; i < 18; i++) {
+			events.get(i).setCreateDt(ninetyFiveDaysAgo);
+		}
 
 		// Save the events to the collection
 		mongoTemplate.insert(events, "sports_event_mapping");

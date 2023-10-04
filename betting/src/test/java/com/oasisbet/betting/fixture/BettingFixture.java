@@ -70,7 +70,7 @@ public class BettingFixture {
 		mockResponse1.setId("a085aa8beb661722ad957e5d8c15f798");
 		mockResponse1.setSport_key("soccer_epl");
 		mockResponse1.setSport_title("EPL");
-		mockResponse1.setCommence_time("2023-04-28T18:45:00Z");
+		mockResponse1.setCommence_time("2099-04-28T18:45:00Z");
 		mockResponse1.setHome_team("Southampton");
 		mockResponse1.setAway_team("Bournemouth");
 
@@ -110,7 +110,7 @@ public class BettingFixture {
 		mockResponse2.setId("f7d5d5a141e21df15f23b5e306340bed");
 		mockResponse2.setSport_key("soccer_epl");
 		mockResponse2.setSport_title("EPL");
-		mockResponse2.setCommence_time("2023-04-29T20:45:00Z");
+		mockResponse2.setCommence_time("2099-04-29T20:45:00Z");
 		mockResponse2.setHome_team("Everton");
 		mockResponse2.setAway_team("Newcastle United");
 
@@ -150,7 +150,7 @@ public class BettingFixture {
 		mockResponse3.setId("66ca5a121b5ddc4763cf1708222be377");
 		mockResponse3.setSport_key("soccer_epl");
 		mockResponse3.setSport_title("EPL");
-		mockResponse3.setCommence_time("2023-04-27T19:15:00Z");
+		mockResponse3.setCommence_time("2099-04-27T19:15:00Z");
 		mockResponse3.setHome_team("Tottenham Hotspur");
 		mockResponse3.setAway_team("Manchester United");
 
@@ -190,7 +190,7 @@ public class BettingFixture {
 		mockResponse4.setId("0ba40aad3c918f52363117a71f5de8e8");
 		mockResponse4.setSport_key("soccer_epl");
 		mockResponse4.setSport_title("EPL");
-		mockResponse4.setCommence_time("2023-04-30T18:45:00Z");
+		mockResponse4.setCommence_time("2099-04-30T18:45:00Z");
 		mockResponse4.setHome_team("Manchester City");
 		mockResponse4.setAway_team("Nottingham Forest");
 
@@ -230,7 +230,7 @@ public class BettingFixture {
 		mockResponse5.setId("69ce6c2d85c6731d5d04a2181043ac9a");
 		mockResponse5.setSport_key("soccer_epl");
 		mockResponse5.setSport_title("EPL");
-		mockResponse5.setCommence_time("2023-04-30T20:45:00Z");
+		mockResponse5.setCommence_time("2099-04-30T20:45:00Z");
 		mockResponse5.setHome_team("Crystal Palace");
 		mockResponse5.setAway_team("Fulham");
 
