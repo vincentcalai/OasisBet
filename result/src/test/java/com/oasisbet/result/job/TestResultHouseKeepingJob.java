@@ -2,6 +2,8 @@ package com.oasisbet.result.job;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -27,8 +29,22 @@ class TestResultHouseKeepingJob extends TestBaseSetup {
 	@Test
 	void testResultHouseKeepingJobDelete3RecordsSuccess() throws SchedulerException, InterruptedException {
 
+		Date currentDate = new Date();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -95);
+		Date ninetyFiveDaysAgo = calendar.getTime();
+
 		List<ResultEventMapping> resultEventList = resultEventMappingDao.findAll();
 		assertEquals(23, resultEventList.size());
+
+		for (int i = 0; i < 20; i++) {
+			resultEventList.get(i).setLastUpdatedDt(currentDate);
+		}
+		for (int i = 20; i < 23; i++) {
+			resultEventList.get(i).setLastUpdatedDt(ninetyFiveDaysAgo);
+		}
+		resultEventMappingDao.saveAll(resultEventList);
 
 		resultHouseKeepingJob.execute(null);
 
