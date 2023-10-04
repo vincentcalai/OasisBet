@@ -19,6 +19,6 @@ public interface ISportsEventMappingDao extends MongoRepository<SportsEventMappi
 
 	List<SportsEventMapping> findByCompTypeAndCompletedFalse(String compType);
 
-	List<SportsEventMapping> findByCreateDtBefore(Date ninetyDaysAgo);
+	List<SportsEventMapping> findByCompletedAndCreateDtBefore(Boolean completed, Date ninetyDaysAgo);
 
 }

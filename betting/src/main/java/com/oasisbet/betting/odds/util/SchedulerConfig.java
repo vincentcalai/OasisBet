@@ -43,6 +43,26 @@ public class SchedulerConfig {
 		return propertiesFactoryBean.getObject();
 	}
 
+	// Setup Cron Job bettingHouseKeepingJobTrigger
+	@Bean
+	public CronTriggerFactoryBean bettingHouseKeepingJobTrigger(
+			@Qualifier("bettingHouseKeepingJobDetail") JobDetail jobDetail) {
+		CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
+		factoryBean.setJobDetail(jobDetail);
+		factoryBean.setStartDelay(0L);
+		factoryBean.setCronExpression("0 0 9 * * ?");
+		// factoryBean.setCronExpression("0 */2 * ? * *");
+		return factoryBean;
+	}
+
+	@Bean
+	public JobDetailFactoryBean bettingHouseKeepingJobDetail() {
+		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+		factoryBean.setJobClass(BettingHouseKeepingJob.class);
+		factoryBean.setDurability(true);
+		return factoryBean;
+	}
+
 	// Setup Cron Job betEventUpdateJobTrigger
 
 	@Bean

@@ -34,7 +34,7 @@ public class BettingHouseKeepingJob implements Job {
 		Date ninetyDaysAgo = calendar.getTime();
 
 		List<SportsEventMapping> ninetyDaysAgoSportsEventList = sportsEventMappingDao
-				.findByCreateDtBefore(ninetyDaysAgo);
+				.findByCompletedAndCreateDtBefore(Constants.TRUE, ninetyDaysAgo);
 
 		List<BigInteger> deleteIdList = ninetyDaysAgoSportsEventList.stream().map(event -> event.getEventId())
 				.collect(Collectors.toList());
