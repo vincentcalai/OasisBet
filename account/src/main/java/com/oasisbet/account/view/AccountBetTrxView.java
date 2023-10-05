@@ -50,6 +50,9 @@ public class AccountBetTrxView {
 	@Column(name = "trx_dt")
 	private Date trxDateTime;
 
+	@Column(name = "settled_dt")
+	private Date settledDateTime;
+
 	public String getTrxId() {
 		return trxId;
 	}
@@ -152,6 +155,14 @@ public class AccountBetTrxView {
 
 	public void setTrxDateTime(Date trxDateTime) {
 		this.trxDateTime = trxDateTime;
+	}
+
+	public Date getSettledDateTime() {
+		return settledDateTime;
+	}
+
+	public void setSettledDateTime(Date settledDateTime) {
+		this.settledDateTime = settledDateTime;
 	}
 
 }
