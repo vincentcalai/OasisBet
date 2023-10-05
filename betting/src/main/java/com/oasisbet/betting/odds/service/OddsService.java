@@ -157,6 +157,8 @@ public class OddsService {
 					}
 				} catch (ParseException e) {
 					logger.error("error parsing date ", e);
+				} catch (Exception e) {
+					logger.error("other exception while trying to insert new betting event", e);
 				}
 			}
 		}
