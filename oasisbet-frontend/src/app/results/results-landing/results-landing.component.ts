@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 import { ResultEvent } from 'src/app/model/result-event.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-results-landing',
@@ -55,5 +55,7 @@ export class ResultsLandingComponent implements OnInit {
     const currentTime = new Date();
     return currentTime > startTime;
   }
+
+  
 
 }

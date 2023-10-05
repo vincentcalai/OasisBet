@@ -21,13 +21,25 @@ label{
 }
 
 .dates-dropdown {
-  width: 200px;
+  height: 50px;
+  width: 240px;
   border-radius: 5px;
   background-color: #f2f2f2;
   border: none;
   color: #8d8d8d;
   padding: 5px 10px;
-  font-size: 16px;
+  font-size: 14px;
+  box-shadow: none;
+}
+
+.dates-input {
+  height: 50px;
+  width: 140px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border: none;
+  color: #8d8d8d;
+  padding: 5px 10px;
   box-shadow: none;
 }
 
@@ -51,17 +63,28 @@ label{
   background-color: #ccc;
 }
 
-.dropdown-section {
+.filter-section {
   position: relative;
+  font-size: 14px;
 }
 
 .dropdown-icon {
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: -18px;
   font-size: 24px;
   transform: translateY(-50%);
   pointer-events: none;
+}
+
+.calendar-icon{
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  font-size: 20px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: gray;
 }
 
 

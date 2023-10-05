@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   public title = 'oasisbet-frontend';
   public subscriptions: Subscription = new Subscription();

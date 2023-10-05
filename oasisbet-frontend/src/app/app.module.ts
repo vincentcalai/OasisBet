@@ -25,6 +25,10 @@ import { TrxHistComponent } from './account/trx-hist/trx-hist.component';
 import { DepositsComponent } from './account/deposits/deposits.component';
 import { WithdrawalsComponent } from './account/withdrawals/withdrawals.component';
 import { OddsBetSlipComponent } from './odds/odds-bet-slip/odds-bet-slip.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -54,9 +58,15 @@ import { OddsBetSlipComponent } from './odds/odds-bet-slip/odds-bet-slip.compone
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
     ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
