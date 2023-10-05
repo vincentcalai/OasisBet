@@ -11,6 +11,26 @@
           <div class="text-left">
             <h1 class="card-header">{{competitionTypeHdr}}</h1>
           </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-3 offset-md-1">
+                <label class="control-label dates-section-label-width">Dates</label>
+                <div class="dropdown-section">
+                    <select [(ngModel)]="selectedDates" (ngModelChange)="ngOnInit()" id="datesDropdown"
+                      class="form-control dates-dropdown">
+                        <option value="last24Hrs">Last 24 Hours</option>
+                        <option value="last3Days">Last 3 Days</option>
+                        <option value="custom">Custom Period (up to 7 days)</option>
+                    </select>
+                    <span class="dropdown-icon"><i class="fas fa-angle-down"></i></span>
+                </div>
+            </div>
+          </div>
+
+          <br/>
+
           <div class="card-body">
             <div class="container-fluid">
               <table class="table" style="table-layout: fixed; width: 100%;">

@@ -8,3 +8,60 @@
   font-weight: bold;
 }
 
+label{
+  font-weight: bold;
+}
+
+.dates-section-label-width{
+  font-weight: bold;
+}
+
+.dates-section-selection-width{
+  margin-left: 10px;
+}
+
+.dates-dropdown {
+  width: 200px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border: none;
+  color: #8d8d8d;
+  padding: 5px 10px;
+  font-size: 16px;
+  box-shadow: none;
+}
+
+.dates-dropdown option {
+  background-color: #f2f2f2;
+  color: #8d8d8d;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: none;
+}
+
+.dates-dropdown.show {
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+
+.dates-dropdown.show option:hover {
+  background-color: #ccc;
+}
+
+.dropdown-section {
+  position: relative;
+}
+
+.dropdown-icon {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  font-size: 24px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+
