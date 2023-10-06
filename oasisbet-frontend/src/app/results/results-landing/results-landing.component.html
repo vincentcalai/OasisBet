@@ -30,7 +30,7 @@
             <div class='col-md-2 offset-md-1'>
               <label class="control-label dates-section-label-width">Date From</label>
               <div class="filter-section">
-                <mat-form-field class="dates-input">
+                <mat-form-field class="dates-input" [floatLabel]="'never'">
                   <input matInput [matDatepicker]="dateFromPicker" placeholder="DD/MM/YYYY" 
                   (click)="dateFromPicker.open()">
                   <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
@@ -41,7 +41,7 @@
             <div class='col-md-2'>
               <label class="control-label dates-section-label-width">Date To</label>
               <div class="filter-section">
-                <mat-form-field class="dates-input">
+                <mat-form-field class="dates-input" [floatLabel]="'never'">
                   <input matInput [matDatepicker]="dateToPicker" placeholder="DD/MM/YYYY" 
                   (click)="dateToPicker.open()">
                   <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
