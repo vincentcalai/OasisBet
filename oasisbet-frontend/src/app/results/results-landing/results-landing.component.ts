@@ -21,6 +21,7 @@ export class ResultsLandingComponent implements OnInit {
   public events : ResultEvent[];
 
   public selectedDates: string = 'last24Hrs';
+  public currentDate: Date = new Date();
   public dateFrom: Date;
   public dateTo: Date;
   public minDate: Date = new Date();
@@ -29,13 +30,14 @@ export class ResultsLandingComponent implements OnInit {
 
   constructor(public sharedVar: SharedVarService,
     public apiService: ApiService) {
-    const currentDate = new Date().getDate();
-    this.minDate.setDate(currentDate - 7);
-    this.maxDate.setDate(currentDate + 14);
+    this.minDate.setDate(this.currentDate.getDate() - 7);
+    this.maxDate.setDate(this.currentDate.getDate() + 14);
     this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
   }
 
   ngOnInit(): void {
+      this.mapDateFromAndDateTo(this.selectedDates);
+
       this.subscriptions.add(
         this.apiService.retrieveResults(this.compType).subscribe((resp: any) => {
           this.events = resp.resultEvent;
@@ -49,6 +51,21 @@ export class ResultsLandingComponent implements OnInit {
         }
       )
     );
+  }
+
+  mapDateFromAndDateTo(selectedDates: string) {
+    if (selectedDates === this.sharedVar.LAST_24_HRS) {
+      const last24Hours = this.sharedVar.MILLI_SEC_24_HRS; 
+      this.dateFrom = new Date(this.currentDate.getTime() - last24Hours);
+      this.dateTo = this.currentDate;
+    } else if (selectedDates === this.sharedVar.LAST_3_DAYS) {
+      const last3Days = this.sharedVar.MILLI_SEC_3_DAYS;
+      this.dateFrom = new Date(this.currentDate.getTime() - last3Days);
+      this.dateTo = this.currentDate;
+    } else {
+      this.dateFrom = null;
+      this.dateTo = null;
+    }
   }
 
   ngOnDestroy(){
