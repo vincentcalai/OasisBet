@@ -26,7 +26,7 @@ import { DepositsComponent } from './account/deposits/deposits.component';
 import { WithdrawalsComponent } from './account/withdrawals/withdrawals.component';
 import { OddsBetSlipComponent } from './odds/odds-bet-slip/odds-bet-slip.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 
@@ -65,7 +65,8 @@ import {MatInputModule} from '@angular/material/input';
     ModalModule.forRoot()
   ],
   providers: [
-    MatDatepickerModule
+    MatDatepickerModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })

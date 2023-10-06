@@ -4,6 +4,8 @@ import { ResultEvent } from 'src/app/model/result-event.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { moment } from 'ngx-bootstrap/chronos/test/chain';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-results-landing',
@@ -19,9 +21,17 @@ export class ResultsLandingComponent implements OnInit {
   public events : ResultEvent[];
 
   public selectedDates: string = 'last24Hrs';
+  public dateFrom: Date;
+  public dateTo: Date;
+  public minDate: Date = new Date();
+  public maxDate: Date = new Date();
+  dateErrorMsg:string = "";
 
   constructor(public sharedVar: SharedVarService,
     public apiService: ApiService) {
+    const currentDate = new Date().getDate();
+    this.minDate.setDate(currentDate - 7);
+    this.maxDate.setDate(currentDate + 14);
     this.competitionTypeHdr = this.sharedVar.COMP_HEADER_EPL;
   }
 
@@ -56,6 +66,19 @@ export class ResultsLandingComponent implements OnInit {
     return currentTime > startTime;
   }
 
-  
+  filterResult(dateFrom: Date, dateTo: Date){
+    console.log("dateFrom: ", dateFrom);
+    console.log("dateTo: ", dateTo);
+    // const checkValidDate = this.validateDateFromLaterThanDateTo(dateFrom, dateTo);
+    // console.log("checkValidDate: ", checkValidDate);
+  }
+
+  validateDateFromLaterThanDateTo(dateFrom: Date, dateTo: Date) {
+    if(dateFrom && dateTo && dateFrom > dateTo){
+      this.dateErrorMsg = '"From" date cannot be later than "To" date.';
+    } else {
+      this.dateErrorMsg = "";
+    }
+  }
 
 }
