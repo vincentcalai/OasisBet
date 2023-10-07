@@ -28,25 +28,29 @@ public class ResultService {
 
 	private Logger logger = LoggerFactory.getLogger(ResultService.class);
 
-	public List<ResultEvent> processMapping(List<ResultEventMapping> resultEventMappingList) {
+	public List<ResultEvent> processMapping(List<ResultEventMapping> resultEventMappingList, Date dateFrom,
+			Date dateTo) {
 		List<ResultEvent> resultEventList = new ArrayList<>();
 		for (ResultEventMapping resultEvent : resultEventMappingList) {
 			BigInteger eventId = resultEvent.getEventId();
 			Optional<SportsEventMapping> sportsEventOptional = sportsEventMappingDao.findById(eventId);
-			if (sportsEventOptional.isPresent()) {
-				SportsEventMapping sportsEvent = sportsEventOptional.get();
-				String competition = resultEvent.getCompType();
-				String eventDesc = sportsEvent.getHomeTeam() + " vs " + sportsEvent.getAwayTeam();
-				Date startTime = sportsEvent.getCommenceTime();
-				boolean completed = resultEvent.isCompleted();
-				String homeTeam = sportsEvent.getHomeTeam();
-				String awayTeam = sportsEvent.getAwayTeam();
-				String score = resultEvent.getScore();
-				Date lastUpdatedDt = resultEvent.getLastUpdatedDt();
-				ResultEvent resultEventBean = new ResultEvent(eventId, competition, eventDesc, startTime, completed,
-						homeTeam, awayTeam, score, lastUpdatedDt);
-				resultEventList.add(resultEventBean);
-			}
+			sportsEventOptional.ifPresent(sportEvent -> {
+				Date commenceTime = sportEvent.getCommenceTime();
+				if (commenceTime.after(dateFrom) && commenceTime.before(dateTo)) {
+					SportsEventMapping sportsEvent = sportsEventOptional.get();
+					String competition = resultEvent.getCompType();
+					String eventDesc = sportsEvent.getHomeTeam() + " vs " + sportsEvent.getAwayTeam();
+					Date startTime = sportsEvent.getCommenceTime();
+					boolean completed = resultEvent.isCompleted();
+					String homeTeam = sportsEvent.getHomeTeam();
+					String awayTeam = sportsEvent.getAwayTeam();
+					String score = resultEvent.getScore();
+					Date lastUpdatedDt = resultEvent.getLastUpdatedDt();
+					ResultEvent resultEventBean = new ResultEvent(eventId, competition, eventDesc, startTime, completed,
+							homeTeam, awayTeam, score, lastUpdatedDt);
+					resultEventList.add(resultEventBean);
+				}
+			});
 		}
 		return resultEventList;
 	}

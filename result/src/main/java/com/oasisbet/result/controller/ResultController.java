@@ -1,10 +1,12 @@
 package com.oasisbet.result.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +31,9 @@ public class ResultController {
 	RestTemplate restTemplate;
 
 	@GetMapping(value = "/retrieveResults")
-	public ResultRestResponse retrieveResults(@RequestParam("compType") String compType) {
+	public ResultRestResponse retrieveResults(@RequestParam String compType,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateFrom,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateTo) {
 		ResultRestResponse response = new ResultRestResponse();
 		List<ResultEventMapping> resultEventMappingList = resultService.retrieveByCompType(compType);
 //			if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
@@ -43,7 +47,7 @@ public class ResultController {
 //			} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
 //				results = MockData.mockLigueOneOddsApiResponseArray();
 //			}
-		List<ResultEvent> resultEventList = resultService.processMapping(resultEventMappingList);
+		List<ResultEvent> resultEventList = resultService.processMapping(resultEventMappingList, dateFrom, dateTo);
 		response.setResultEvent(resultEventList);
 		return response;
 	}

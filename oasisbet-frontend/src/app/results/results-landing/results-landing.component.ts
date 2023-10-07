@@ -39,18 +39,18 @@ export class ResultsLandingComponent implements OnInit {
       this.mapDateFromAndDateTo(this.selectedDates);
 
       this.subscriptions.add(
-        this.apiService.retrieveResults(this.compType).subscribe((resp: any) => {
-          this.events = resp.resultEvent;
+        this.apiService.retrieveResults(this.compType, this.dateFrom, this.dateTo).subscribe((resp: any) => {
+            this.events = resp.resultEvent;
 
-          //convert json response from String to Date format
-          this.events.map(event => event.startTime = new Date(event.startTime));
-        } ,
-          error => {
-          console.log(error);
-          this.sharedVar.changeException(error);
-        }
-      )
-    );
+            //convert json response from String to Date format
+            this.events.map(event => event.startTime = new Date(event.startTime));
+          } ,
+            error => {
+            console.log(error);
+            this.sharedVar.changeException(error);
+          }
+        )
+      );
   }
 
   mapDateFromAndDateTo(selectedDates: string) {
@@ -82,12 +82,21 @@ export class ResultsLandingComponent implements OnInit {
     const currentTime = new Date();
     return currentTime > startTime;
   }
+  
+  filterResult(){
+    this.subscriptions.add(
+      this.apiService.retrieveResults(this.compType, this.dateFrom, this.dateTo).subscribe((resp: any) => {
+          this.events = resp.resultEvent;
 
-  filterResult(dateFrom: Date, dateTo: Date){
-    console.log("dateFrom: ", dateFrom);
-    console.log("dateTo: ", dateTo);
-    // const checkValidDate = this.validateDateFromLaterThanDateTo(dateFrom, dateTo);
-    // console.log("checkValidDate: ", checkValidDate);
+          //convert json response from String to Date format
+          this.events.map(event => event.startTime = new Date(event.startTime));
+        } ,
+          error => {
+          console.log(error);
+          this.sharedVar.changeException(error);
+        }
+      )
+    );
   }
 
   validateDateFromLaterThanDateTo(dateFrom: Date, dateTo: Date) {

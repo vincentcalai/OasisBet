@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -99,7 +100,9 @@ class TestResultService extends TestBaseSetup {
 
 		List<ResultEvent> expectedResponse = ResultFixture.createMappedSuccessEplResultApiResponse();
 
-		List<ResultEvent> result = resultService.processMapping(inputList);
+		Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
+		Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse("2099-01-01");
+		List<ResultEvent> result = resultService.processMapping(inputList, dateFrom, dateTo);
 
 		ResultEvent expectedResponse1 = expectedResponse.get(0);
 		ResultEvent expectedResponse2 = expectedResponse.get(1);
@@ -134,8 +137,9 @@ class TestResultService extends TestBaseSetup {
 	@Test
 	void testProcessMappingNotFoundInSportsEventVerifyNotRetrieved() throws ParseException {
 		List<ResultEventMapping> inputList = ResultFixture.createMockEplResultEventMappingIdsNotInSportsEventMapping();
-
-		List<ResultEvent> result = resultService.processMapping(inputList);
+		Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
+		Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse("2099-01-01");
+		List<ResultEvent> result = resultService.processMapping(inputList, dateFrom, dateTo);
 
 		assertEquals(0, result.size());
 	}

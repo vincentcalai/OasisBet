@@ -55,8 +55,16 @@ export class ApiService {
     );
   }
 
-  retrieveResults(compType: string): Observable<Object> {
-    return this.http.get(this.commonApiPrefix + '/result/retrieveResults?compType=' + compType).pipe(
+  retrieveResults(compType: string, dateFrom: Date, dateTo: Date): Observable<Object> {
+    const formattedDateFrom = dateFrom.toISOString();
+    const formattedDateTo = dateTo.toISOString();
+  
+    const params = new HttpParams()
+    .set('compType', compType)
+    .set('dateFrom', formattedDateFrom)
+    .set('dateTo', formattedDateTo);
+
+    return this.http.get(this.commonApiPrefix + '/result/retrieveResults?', {params}).pipe(
       timeout(this.timeout),
       catchError(this.handleError)
     );

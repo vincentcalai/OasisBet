@@ -18,7 +18,7 @@
             <div class="col-md-3 offset-md-1">
                 <label class="control-label dates-section-label-width">Dates</label>
                 <div class="filter-section">
-                    <select [(ngModel)]="selectedDates" (ngModelChange)="ngOnInit()" id="datesDropdown"
+                    <select [(ngModel)]="selectedDates" (ngModelChange)="mapDateFromAndDateTo(selectedDates)" id="datesDropdown"
                       class="form-control dates-dropdown">
                         <option value="last24Hrs">Last 24 Hours</option>
                         <option value="last3Days">Last 3 Days</option>
@@ -52,7 +52,7 @@
               </div>
             </div>
             <div class='col-md-2'>
-              <button type="button" class="btn-filter btn btn-default" (click)="filterResult(dateFrom, dateTo)" [disabled]="(!dateFrom || !dateTo) || dateErrorMsg">Filter</button>
+              <button type="button" class="btn-filter btn btn-default" (click)="filterResult()" [disabled]="(!dateFrom || !dateTo) || dateErrorMsg">Filter</button>
             </div>
           </div>
 
