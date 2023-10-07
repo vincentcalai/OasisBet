@@ -1,6 +1,7 @@
 package com.oasisbet.result.controller;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,8 +33,11 @@ public class ResultController {
 
 	@GetMapping(value = "/retrieveResults")
 	public ResultRestResponse retrieveResults(@RequestParam String compType,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateFrom,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateTo) {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo) {
+		dateFrom = dateFrom.with(LocalTime.MIN);
+		dateTo = dateTo.with(LocalTime.MAX);
+
 		ResultRestResponse response = new ResultRestResponse();
 		List<ResultEventMapping> resultEventMappingList = resultService.retrieveByCompType(compType);
 //			if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {

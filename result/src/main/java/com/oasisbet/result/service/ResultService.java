@@ -1,6 +1,8 @@
 package com.oasisbet.result.service;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,15 +30,16 @@ public class ResultService {
 
 	private Logger logger = LoggerFactory.getLogger(ResultService.class);
 
-	public List<ResultEvent> processMapping(List<ResultEventMapping> resultEventMappingList, Date dateFrom,
-			Date dateTo) {
+	public List<ResultEvent> processMapping(List<ResultEventMapping> resultEventMappingList, LocalDateTime dateFrom,
+			LocalDateTime dateTo) {
 		List<ResultEvent> resultEventList = new ArrayList<>();
 		for (ResultEventMapping resultEvent : resultEventMappingList) {
 			BigInteger eventId = resultEvent.getEventId();
 			Optional<SportsEventMapping> sportsEventOptional = sportsEventMappingDao.findById(eventId);
 			sportsEventOptional.ifPresent(sportEvent -> {
-				Date commenceTime = sportEvent.getCommenceTime();
-				if (commenceTime.after(dateFrom) && commenceTime.before(dateTo)) {
+				LocalDateTime commenceTime = sportEvent.getCommenceTime().toInstant().atZone(ZoneId.systemDefault())
+						.toLocalDateTime();
+				if (commenceTime.isAfter(dateFrom) && commenceTime.isBefore(dateTo)) {
 					SportsEventMapping sportsEvent = sportsEventOptional.get();
 					String competition = resultEvent.getCompType();
 					String eventDesc = sportsEvent.getHomeTeam() + " vs " + sportsEvent.getAwayTeam();

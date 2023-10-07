@@ -2,6 +2,7 @@ package com.oasisbet.result.controller;
 
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,8 @@ class TestResultController extends TestBaseSetup {
 
 		when(mockRestTemplate.getForEntity(Mockito.anyString(), Mockito.any())).thenReturn(mockResponseEntity);
 
-		Mockito.when(resultService.processMapping(Mockito.anyList())).thenReturn(mockResults);
+		Mockito.when(resultService.processMapping(Mockito.anyList(), Mockito.any(LocalDateTime.class),
+				Mockito.any(LocalDateTime.class))).thenReturn(mockResults);
 
 		ResultRestResponse expectedResponse = new ResultRestResponse();
 		expectedResponse.setResultEvent(mockResults);

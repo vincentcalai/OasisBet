@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigInteger;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -100,9 +100,9 @@ class TestResultService extends TestBaseSetup {
 
 		List<ResultEvent> expectedResponse = ResultFixture.createMappedSuccessEplResultApiResponse();
 
-		Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
-		Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse("2099-01-01");
-		List<ResultEvent> result = resultService.processMapping(inputList, dateFrom, dateTo);
+		LocalDateTime dateTimeIn2000 = LocalDateTime.of(2000, 1, 1, 0, 0, 0);
+		LocalDateTime dateTimeIn2099 = LocalDateTime.of(2099, 1, 1, 0, 0, 0);
+		List<ResultEvent> result = resultService.processMapping(inputList, dateTimeIn2000, dateTimeIn2099);
 
 		ResultEvent expectedResponse1 = expectedResponse.get(0);
 		ResultEvent expectedResponse2 = expectedResponse.get(1);
@@ -137,9 +137,9 @@ class TestResultService extends TestBaseSetup {
 	@Test
 	void testProcessMappingNotFoundInSportsEventVerifyNotRetrieved() throws ParseException {
 		List<ResultEventMapping> inputList = ResultFixture.createMockEplResultEventMappingIdsNotInSportsEventMapping();
-		Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
-		Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse("2099-01-01");
-		List<ResultEvent> result = resultService.processMapping(inputList, dateFrom, dateTo);
+		LocalDateTime dateTimeIn2000 = LocalDateTime.of(2000, 1, 1, 0, 0, 0);
+		LocalDateTime dateTimeIn2099 = LocalDateTime.of(2099, 1, 1, 0, 0, 0);
+		List<ResultEvent> result = resultService.processMapping(inputList, dateTimeIn2000, dateTimeIn2099);
 
 		assertEquals(0, result.size());
 	}
