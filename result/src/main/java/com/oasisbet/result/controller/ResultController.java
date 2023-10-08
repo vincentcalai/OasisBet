@@ -18,6 +18,7 @@ import com.oasisbet.result.model.ResultEvent;
 import com.oasisbet.result.model.ResultEventMapping;
 import com.oasisbet.result.model.ResultRestResponse;
 import com.oasisbet.result.service.ResultService;
+import com.oasisbet.result.util.Constants;
 
 @RestController
 @RequestMapping(path = "/result")
@@ -36,10 +37,10 @@ public class ResultController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo) {
 
-		if (selectedDate.equals("last3Days")) {
+		if (selectedDate.equals(Constants.RESULT_RETRIEVE_LAST_24_HRS)) {
 			dateFrom = dateFrom.with(LocalTime.MIN);
 			dateTo = dateTo.with(LocalTime.MAX);
-		} else if (selectedDate.equals("custom")) {
+		} else if (selectedDate.equals(Constants.RESULT_RETRIEVE_CUSTOM)) {
 			dateFrom = dateFrom.plusHours(8).with(LocalTime.MIN);
 			dateTo = dateTo.plusHours(8).with(LocalTime.MAX);
 		}
