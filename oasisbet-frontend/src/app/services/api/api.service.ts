@@ -55,12 +55,13 @@ export class ApiService {
     );
   }
 
-  retrieveResults(compType: string, dateFrom: Date, dateTo: Date): Observable<Object> {
+  retrieveResults(compType: string, selectedDates: string, dateFrom: Date, dateTo: Date): Observable<Object> {
     const formattedDateFrom = dateFrom.toISOString();
     const formattedDateTo = dateTo.toISOString();
   
     const params = new HttpParams()
     .set('compType', compType)
+    .set('selectedDate', selectedDates)
     .set('dateFrom', formattedDateFrom)
     .set('dateTo', formattedDateTo);
 

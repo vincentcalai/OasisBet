@@ -32,11 +32,17 @@ public class ResultController {
 	RestTemplate restTemplate;
 
 	@GetMapping(value = "/retrieveResults")
-	public ResultRestResponse retrieveResults(@RequestParam String compType,
+	public ResultRestResponse retrieveResults(@RequestParam String compType, @RequestParam String selectedDate,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo) {
-		dateFrom = dateFrom.with(LocalTime.MIN);
-		dateTo = dateTo.with(LocalTime.MAX);
+
+		if (selectedDate.equals("last3Days")) {
+			dateFrom = dateFrom.with(LocalTime.MIN);
+			dateTo = dateTo.with(LocalTime.MAX);
+		} else if (selectedDate.equals("custom")) {
+			dateFrom = dateFrom.plusHours(8).with(LocalTime.MIN);
+			dateTo = dateTo.plusHours(8).with(LocalTime.MAX);
+		}
 
 		ResultRestResponse response = new ResultRestResponse();
 		List<ResultEventMapping> resultEventMappingList = resultService.retrieveByCompType(compType);

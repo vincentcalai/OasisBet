@@ -39,7 +39,7 @@ export class ResultsLandingComponent implements OnInit {
       this.mapDateFromAndDateTo(this.selectedDates);
 
       this.subscriptions.add(
-        this.apiService.retrieveResults(this.compType, this.dateFrom, this.dateTo).subscribe((resp: any) => {
+        this.apiService.retrieveResults(this.compType, this.selectedDates, this.dateFrom, this.dateTo).subscribe((resp: any) => {
             this.events = resp.resultEvent;
 
             //convert json response from String to Date format
@@ -56,12 +56,12 @@ export class ResultsLandingComponent implements OnInit {
   mapDateFromAndDateTo(selectedDates: string) {
     if (selectedDates === this.sharedVar.LAST_24_HRS) {
       const last24Hours = this.sharedVar.MILLI_SEC_24_HRS; 
-      this.dateFrom = new Date(this.currentDate.getTime() - last24Hours);
-      this.dateTo = this.currentDate;
+      this.dateFrom = new Date(this.currentDate.getTime() - (this.currentDate.getTimezoneOffset() * 60000) - last24Hours);
+      this.dateTo = new Date(this.currentDate.getTime() - (this.currentDate.getTimezoneOffset() * 60000));
     } else if (selectedDates === this.sharedVar.LAST_3_DAYS) {
       const last3Days = this.sharedVar.MILLI_SEC_3_DAYS;
-      this.dateFrom = new Date(this.currentDate.getTime() - last3Days);
-      this.dateTo = this.currentDate;
+      this.dateFrom = new Date(this.currentDate.getTime() - (this.currentDate.getTimezoneOffset() * 60000) - last3Days);
+      this.dateTo = new Date(this.currentDate.getTime() - (this.currentDate.getTimezoneOffset() * 60000));
     } else {
       this.dateFrom = null;
       this.dateTo = null;
@@ -85,7 +85,7 @@ export class ResultsLandingComponent implements OnInit {
   
   filterResult(){
     this.subscriptions.add(
-      this.apiService.retrieveResults(this.compType, this.dateFrom, this.dateTo).subscribe((resp: any) => {
+      this.apiService.retrieveResults(this.compType, this.selectedDates, this.dateFrom, this.dateTo).subscribe((resp: any) => {
           this.events = resp.resultEvent;
 
           //convert json response from String to Date format
