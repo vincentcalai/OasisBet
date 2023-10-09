@@ -50,6 +50,8 @@ export class SharedVarService {
   public readonly CREATE_USER_DIALOG_MSG = "Are you sure to create this user?";
   public readonly CFM_DEPOSIT_DIALOG_MSG = "Are you sure to deposit?";
 
+  public readonly INVALID_DATE_FROM_AND_TO_ERR_MSG = '"From" date cannot be later than "To" date.';
+
   public readonly LAST_24_HRS = 'last24Hrs';
   public readonly LAST_3_DAYS = 'last3Days';
   public readonly MILLI_SEC_24_HRS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

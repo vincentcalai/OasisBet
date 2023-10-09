@@ -101,7 +101,7 @@ export class ResultsLandingComponent implements OnInit {
 
   validateDateFromLaterThanDateTo(dateFrom: Date, dateTo: Date) {
     if(dateFrom && dateTo && dateFrom > dateTo){
-      this.dateErrorMsg = '"From" date cannot be later than "To" date.';
+      this.dateErrorMsg = this.sharedVar.INVALID_DATE_FROM_AND_TO_ERR_MSG;
     } else {
       this.dateErrorMsg = "";
     }
