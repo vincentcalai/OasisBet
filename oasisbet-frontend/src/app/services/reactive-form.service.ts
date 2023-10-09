@@ -116,6 +116,37 @@ export class ReactiveFormService {
     })
   }
 
+  initializeLimitMgmtFormControl(): FormGroup {
+    return this.fb.group({
+      mthlyDepositLimit: this.fb.control(null, {
+        validators: [
+          Validators.required, 
+          Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),
+          Validators.max(199999.99),
+          this.notZeroValidator()
+        ],
+        updateOn: 'blur'
+      }),
+      mthlyBetLimit: this.fb.control(null, {
+        validators: [
+          Validators.required, 
+          Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),
+          Validators.max(199999.99),
+          this.notZeroValidator()
+        ],
+        updateOn: 'blur'
+      }),
+      password: this.fb.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20)
+        ],
+        updateOn: 'blur'
+      })
+    })
+  }
+
   notZeroValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = parseFloat(control.value);

@@ -3,24 +3,48 @@
         <h1 class="card-header">Limit Management</h1>
     </div>
     <div class="card-body">
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Deposited:</label>
-        <br>
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">$0.00</label>
-        <br>
-        <br>
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Change Monthly Deposit Limit:</label>
-        <br>
-        <hr>
-        <br>
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Bets:</label>
-        <br>
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">$0.00</label>
-        <br>
-        <br>
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Change Monthly Betting Limit:</label>
-        <br>
-        <hr>
-        <br>
-        <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Enter OasisBet Account Password:</label>
+        <form [formGroup]="limitMgmtForm">
+            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Deposited:</label>
+            <br>
+            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">$0.00</label>
+            <br>
+            <br>
+            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Change Monthly Deposit Limit:</label>
+            <br>
+            <hr>
+            <br>
+            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Bets:</label>
+            <br>
+            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">$0.00</label>
+            <br>
+            <br>
+            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Change Monthly Betting Limit:</label>
+            <br>
+            <hr>
+            <br>
+            <div class="form-group row">
+                <label id="PASSWORD_LABEL_1" for="password_0_Label"
+                [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="control-label col-sm-4 limit-section-label-width limit-acc-label-text">
+                <span id="PASSWORD">Enter OasisBet Account password:</span>
+                </label>
+                <div class="col-sm-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                    </div>
+                    <input type="password" class="form-control limit-section-selection-width no-spinner" formControlName="password" id="password_0" name="password" required>
+                </div>
+                <label id="password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="error-text"
+                    for="password_0">
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(password)) == 'maxlength'">Maximum length is 20
+                    characters</span>
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(password)) == 'minlength'">Minimum length is 5
+                    characters</span>
+                    <span *ngIf="password.hasError('required') && !password.value && !password.pristine">This field is
+                    required</span>
+                </label>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

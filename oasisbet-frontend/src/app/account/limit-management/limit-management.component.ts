@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 
 @Component({
   selector: 'app-limit-management',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LimitManagementComponent implements OnInit {
 
-  constructor() { }
+  public limitMgmtForm: FormGroup;
+
+  constructor(public reactiveFormService: ReactiveFormService) { }
 
   ngOnInit(): void {
+    this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }
 
+  fieldIsInvalid(field: AbstractControl): boolean {
+    return this.reactiveFormService.fieldIsInvalid(field);
+  }
+
+  get password() {
+    return this.limitMgmtForm.get('password');
+  }
 }

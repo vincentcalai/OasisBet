@@ -6,3 +6,13 @@ label{
     text-align: right;
     font-weight: bold;
 }
+
+.limit-acc-label-text{
+    margin-top: 10px;
+}
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
