@@ -37,6 +37,7 @@ export class SharedVarService {
 
   public readonly NAV_MENU_SELECT_ACCOUNT_OVERVIEW = "account_overview";
   public readonly NAV_MENU_SELECT_TRX_HIST = "trx_hist";
+  public readonly NAV_MENU_SELECT_LIMIT_MGMT = 'limit_mgmt';
   public readonly NAV_MENU_SELECT_DEPOSITS = "desposits";
   public readonly NAV_MENU_SELECT_WITHDRAWALS= "withdrawals";
 

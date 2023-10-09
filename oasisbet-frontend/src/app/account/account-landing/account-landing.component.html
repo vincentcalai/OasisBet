@@ -16,6 +16,9 @@
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_TRX_HIST">
             <app-trx-hist></app-trx-hist>
           </div>
+          <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_LIMIT_MGMT">
+            <app-limit-management></app-limit-management>
+          </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_DEPOSITS">
             <app-deposits (onSelectTrxMenu)="navToAccountMenu($event)"></app-deposits>
           </div>

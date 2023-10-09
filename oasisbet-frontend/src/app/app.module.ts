@@ -29,6 +29,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { LimitManagementComponent } from './account/limit-management/limit-management.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatInputModule} from '@angular/material/input';
     TrxHistComponent,
     DepositsComponent,
     WithdrawalsComponent,
-    OddsBetSlipComponent
+    OddsBetSlipComponent,
+    LimitManagementComponent
   ],
   imports: [
     BrowserModule,
