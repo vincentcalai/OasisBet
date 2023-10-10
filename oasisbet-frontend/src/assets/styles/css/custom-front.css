@@ -75,6 +75,11 @@ input{
     color: red;
 }
 
+.highlightSideNav {
+    color: white;
+    background-color: #337ab7;
+}
+
 .allCaps {
     text-transform: uppercase;
 }

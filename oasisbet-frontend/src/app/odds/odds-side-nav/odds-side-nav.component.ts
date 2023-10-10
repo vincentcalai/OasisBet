@@ -10,6 +10,7 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class OddsSideNavComponent implements OnInit {
 
   @Output() onSelectCompType : EventEmitter<string>;
+  compType: string = this.sharedVar.API_SOURCE_COMP_TYPE_EPL;
 
   constructor(public sharedVar: SharedVarService) { 
     this.onSelectCompType = new EventEmitter<string>();
@@ -19,6 +20,7 @@ export class OddsSideNavComponent implements OnInit {
   }
 
   selectCompType(compType: string){
+    this.compType = compType;
     this.onSelectCompType.emit(compType);
   }
 
