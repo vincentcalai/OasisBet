@@ -2,7 +2,9 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.card .card-header {
+    background-color: #337ab7;
+    color: white;
+}
