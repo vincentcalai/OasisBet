@@ -2,8 +2,19 @@ label{
     font-weight: bold;
 }
 
-.limit-section-label-width{
+.limit-left-section-label-width{
     text-align: right;
+    font-weight: bold;
+}
+
+.limit-right-section-label-width{
+    text-align: left;
+    font-weight: bold;
+}
+
+
+.limit-right-section-label-width{
+    text-align: left;
     font-weight: bold;
 }
 

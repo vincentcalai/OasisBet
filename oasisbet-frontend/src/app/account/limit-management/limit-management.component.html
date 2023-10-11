@@ -4,24 +4,26 @@
     </div>
     <div class="card-body">
         <form [formGroup]="limitMgmtForm">
-            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Deposited:</label>
-            <br>
-            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">$0.00</label>
-            <br>
+            <div class="row">
+                <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">Deposited</label>
+                <label class="control-label col-sm-6 col-md-6"></label>
+                <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">Current Limit</label>
+            </div>
+            <div class="row">
+                <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
+                <label class="control-label col-sm-6 col-md-6"></label>
+                <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">$200.00</label>
+            </div>
             <br>
             <div class="row">
-                <div class="col-md-3 offset-md-1">
-                    <label class="control-label limit-section-label-width">Change Monthly Deposit Limit:</label>
-                </div>
+                <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">Change Monthly Deposit Limit</label>
                 <div class="col-md-3">
                     <div class="dropdown-section">
                         <select id="depositLimitDropdown"
                           class="form-control limit-dropdown">
-                            <option value="deposit_limit_100">$100</option>
-                            <option value="deposit_limit_200">$200</option>
                             <option value="deposit_limit_300">$300</option>
-                            <option value="deposit_limit_400">$400</option>
                             <option value="deposit_limit_500">$500</option>
+                            <option value="deposit_limit_1000">$1000</option>
                             <option value="other">Other</option>
                         </select>
                         <span class="dropdown-icon"><i class="fas fa-angle-down"></i></span>
@@ -30,9 +32,9 @@
                 <div class="col-md-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                          <span class="input-group-text limit-section-selection-width">$</span>
+                          <span class="input-group-text">$</span>
                         </div>
-                    <input type="" class="form-control limit-section-selection-width no-spinner" formControlName="depositLimit" id="deposit_limit_0" name="deposit_limit" required>
+                    <input type="" class="form-control limit-left-section-selection-width no-spinner" formControlName="depositLimit" id="deposit_limit_0" name="deposit_limit" required>
                     </div>
                     <label id="deposit_limit_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(depositLimit)}" class="error-text"
                         for="deposit_limit_0">
@@ -48,15 +50,19 @@
             <br>
             <hr>
             <br>
-            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">Bets:</label>
-            <br>
-            <label class="control-label col-xs-6 col-sm-3 col-md-3 limit-section-label-width">$0.00</label>
-            <br>
+            <div class="row">
+                <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">Bets</label>
+                <label class="control-label col-sm-6 col-md-6"></label>
+                <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">Current Limit</label>
+            </div>
+            <div class="row">
+                <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
+                <label class="control-label col-sm-6 col-md-6"></label>
+                <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">$200.00</label>
+            </div>
             <br>
             <div class="row">
-                <div class="col-md-3 offset-md-1">
-                    <label class="control-label limit-section-label-width">Change Monthly Betting Limit:</label>
-                </div>
+                <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">Change Monthly Betting Limit</label>
                 <div class="col-md-3">
                     <div class="dropdown-section">
                         <select id="betLimitDropdown"
@@ -94,8 +100,8 @@
             <br>
             <div class="form-group row">
                 <label id="PASSWORD_LABEL_1" for="password_0_Label"
-                [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="control-label col-sm-4 limit-section-label-width limit-acc-label-text">
-                <span id="PASSWORD">Enter OasisBet Account password:</span>
+                [ngClass]="{'highlightLabel' : fieldIsInvalid(password)}" class="control-label col-sm-4 limit-left-section-label-width limit-acc-label-text">
+                <span id="PASSWORD">Enter OasisBet Account password</span>
                 </label>
                 <div class="col-md-3">
                 <input type="password" class="form-control limit-section-selection-width no-spinner" formControlName="password" id="password_0" name="password" required>
