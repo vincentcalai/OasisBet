@@ -30,6 +30,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { LimitManagementComponent } from './account/limit-management/limit-management.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { LimitManagementComponent } from './account/limit-management/limit-manag
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule,
     ModalModule.forRoot()
   ],
   providers: [

@@ -6,12 +6,14 @@
         <form [formGroup]="limitMgmtForm">
             <div class="row">
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">Deposited</label>
-                <label class="control-label col-sm-6 col-md-6"></label>
+                <label class="control-label col-sm-6 col-md-6"> </label>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">Current Limit</label>
             </div>
             <div class="row">
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
-                <label class="control-label col-sm-6 col-md-6"></label>
+                <div class="col-sm-6 col-md-6">
+                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                </div>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">$200.00</label>
             </div>
             <br>
@@ -57,7 +59,9 @@
             </div>
             <div class="row">
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
-                <label class="control-label col-sm-6 col-md-6"></label>
+                <div class="col-sm-6 col-md-6">
+                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                </div>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">$200.00</label>
             </div>
             <br>
@@ -117,5 +121,15 @@
                 </div>
             </div>
         </form>
+        <hr>
+        <div mat-dialog-actions align="end">
+            <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelSetLimit()">
+                Cancel
+            </button>
+            <button class="btn btn-success btn-confirm" type="button" (click)="onConfirmSetLimit()">
+                Confirm
+            </button>
+        </div>
+        <br>
     </div>
 </div>

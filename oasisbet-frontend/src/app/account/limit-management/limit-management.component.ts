@@ -9,6 +9,8 @@ import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 })
 export class LimitManagementComponent implements OnInit {
 
+  errorMsg : string = "";
+  responseMsg: string = "";
   public limitMgmtForm: FormGroup;
 
   constructor(public reactiveFormService: ReactiveFormService) { }
@@ -19,6 +21,17 @@ export class LimitManagementComponent implements OnInit {
 
   fieldIsInvalid(field: AbstractControl): boolean {
     return this.reactiveFormService.fieldIsInvalid(field);
+  }
+
+  onCancelSetLimit(){
+    this.depositLimit.setValue(null);
+    this.betLimit.setValue(null);
+    this.password.setValue(null);
+  }
+
+  onConfirmSetLimit(){
+    this.errorMsg = "";
+    this.responseMsg = "";
   }
 
   get password() {
