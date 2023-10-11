@@ -24,4 +24,12 @@ export class LimitManagementComponent implements OnInit {
   get password() {
     return this.limitMgmtForm.get('password');
   }
+
+  get depositLimit() {
+    return this.limitMgmtForm.get('depositLimit');
+  }
+
+  get betLimit() {
+    return this.limitMgmtForm.get('betLimit');
+  }
 }

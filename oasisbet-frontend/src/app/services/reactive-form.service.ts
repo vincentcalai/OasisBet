@@ -118,7 +118,7 @@ export class ReactiveFormService {
 
   initializeLimitMgmtFormControl(): FormGroup {
     return this.fb.group({
-      mthlyDepositLimit: this.fb.control(null, {
+      depositLimit: this.fb.control(null, {
         validators: [
           Validators.required, 
           Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),
@@ -127,7 +127,7 @@ export class ReactiveFormService {
         ],
         updateOn: 'blur'
       }),
-      mthlyBetLimit: this.fb.control(null, {
+      betLimit: this.fb.control(null, {
         validators: [
           Validators.required, 
           Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),

@@ -11,6 +11,10 @@ label{
     margin-top: 10px;
 }
 
+.limit-section-selection-width{
+    height: 35px;
+}
+
 .no-spinner::-webkit-outer-spin-button,
 .no-spinner::-webkit-inner-spin-button {
   -webkit-appearance: none;

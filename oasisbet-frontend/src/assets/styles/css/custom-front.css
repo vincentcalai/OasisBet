@@ -3,6 +3,11 @@ input{
     padding: 5px;
 }
 
+.card .card-header {
+    background-color: #337ab7;
+    color: white;
+}
+
 .alert-text {
     background-color: #fc4444;
     -webkit-box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.75);
@@ -78,6 +83,7 @@ input{
 .highlightSideNav {
     color: white;
     background-color: #337ab7;
+    pointer-events: none;
 }
 
 .allCaps {
