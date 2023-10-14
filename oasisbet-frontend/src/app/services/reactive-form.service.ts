@@ -120,7 +120,7 @@ export class ReactiveFormService {
     return this.fb.group({
       depositLimitSelection: this.fb.control(300),
       betLimitSelection: this.fb.control(100),
-      depositLimit: this.fb.control({value: null, disabled: true}, {
+      depositLimit: this.fb.control({value: 300, disabled: true}, {
         validators: [
           Validators.required, 
           Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),
@@ -129,7 +129,7 @@ export class ReactiveFormService {
         ],
         updateOn: 'blur'
       }),
-      betLimit: this.fb.control({value: null, disabled: true}, {
+      betLimit: this.fb.control({value: 100, disabled: true}, {
         validators: [
           Validators.required, 
           Validators.pattern(/^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/),

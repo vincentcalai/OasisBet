@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
+import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 
 @Component({
   selector: 'app-limit-management',
@@ -14,13 +16,12 @@ export class LimitManagementComponent implements OnInit {
 
   public limitMgmtForm: FormGroup;
 
-  constructor(public reactiveFormService: ReactiveFormService) { }
+  constructor(public reactiveFormService: ReactiveFormService, 
+    public sharedMethod: SharedMethodsService, 
+    public authService: AuthService) { }
 
   ngOnInit(): void {
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
-
-    this.depositLimit.setValue(300);
-    this.betLimit.setValue(100);
   }
 
   onChangesDepositLimit(depositLimitSelection: AbstractControl){
@@ -48,16 +49,49 @@ export class LimitManagementComponent implements OnInit {
   }
 
   onCancelSetLimit(){
-    this.depositLimit.setValue(null);
-    this.betLimit.setValue(null);
+    this.depositLimitSelection.setValue(300);
+    this.betLimitSelection.setValue(100);
     this.password.setValue(null);
   }
 
   onConfirmSetLimit(){
-    console.log(this.depositLimit.value);
-    console.log(this.betLimit.value);
     this.errorMsg = "";
     this.responseMsg = "";
+    const username = this.authService.getAuthenticationUser();
+    if(this.limitMgmtForm.valid){
+      console.log("limit management form front end validation passed!");
+      this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
+        console.log(isLoginSuccess);
+         if(isLoginSuccess){
+        //   const withdrawalAmt: number = parseFloat(this.withdrawalAmt.value);
+        //   let accountModel: AccountModel = new AccountModel();
+        //   accountModel = this.authService.getRetrievedAccDetails();
+        //   accountModel.withdrawalAmt = withdrawalAmt;
+        //   accountModel.actionType = 'W';
+        //   this.sharedVar.updateAccountModel.account = accountModel;
+        //   this.subscriptions.add(
+        //     this.apiService.updateAccDetails().subscribe( (resp: any) => {
+        //       if (resp.statusCode != 0) {
+        //         this.errorMsg = resp.resultMessage;
+        //       } else {
+        //         this.responseMsg = resp.resultMessage;
+        //         sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+        //         this.accountModelInput = this.authService.getRetrievedAccDetails();
+        //       }
+        //     } ,
+        //       error => {
+        //       this.sharedVar.changeException(error);
+        //     })
+        //   );
+        } else {
+          console.log("show incorrect password msg");
+              this.errorMsg = "Incorrect Password. Please enter correct password.";
+        }
+      });
+    } else{
+      console.log("limit management form front end validation failed!");
+      this.reactiveFormService.displayValidationErrors(this.limitMgmtForm);
+    }
   }
 
   get depositLimitSelection() {
