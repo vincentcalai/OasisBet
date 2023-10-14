@@ -6,6 +6,7 @@ import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
+import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class WithdrawalsComponent implements OnInit {
       public sharedVar: SharedVarService,
       public authService: AuthService,
       public reactiveFormService: ReactiveFormService,
+      public sharedMethod: SharedMethodsService,
       public apiService: ApiService
     ) {
     this.onSelectTrxMenu = new EventEmitter<string>();
@@ -57,7 +59,7 @@ export class WithdrawalsComponent implements OnInit {
 
     if(this.withdrawalForm.valid){
       console.log("withdrawal amount front end validation passed!");
-      this.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
+      this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
         console.log(isLoginSuccess);
         if(isLoginSuccess){
           const withdrawalAmt: number = parseFloat(this.withdrawalAmt.value);
@@ -89,21 +91,6 @@ export class WithdrawalsComponent implements OnInit {
       console.log("withdrawal amount front end validation failed!");
       this.reactiveFormService.displayValidationErrors(this.withdrawalForm);
     }
-  }
-
-  handleJWTAuthLogin(username: string, password: string): Observable<boolean> {
-    return this.authService.jwtAuthenticate(username, password)
-      .pipe(
-        map(data => {
-          console.log("correct login credentials.");
-          console.log(data);
-          return true; // Login passed
-        }),
-        catchError(error => {
-          console.log("incorrect login credentials. withdrawal failed.");
-          return of(false); // Login failed
-        })
-      );
   }
 
   get withdrawalAmt() {
