@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 
 @Component({
@@ -11,12 +11,36 @@ export class LimitManagementComponent implements OnInit {
 
   errorMsg : string = "";
   responseMsg: string = "";
+
   public limitMgmtForm: FormGroup;
 
   constructor(public reactiveFormService: ReactiveFormService) { }
 
   ngOnInit(): void {
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
+
+    this.depositLimit.setValue(300);
+    this.betLimit.setValue(100);
+  }
+
+  onChangesDepositLimit(depositLimitSelection: AbstractControl){
+    if(depositLimitSelection.value != 'other'){
+      this.depositLimit.disable();
+      this.depositLimit.setValue(depositLimitSelection.value);
+    } else {
+      this.depositLimit.enable();
+      this.depositLimit.setValue(null);
+    }
+  }
+
+  onChangesBetLimit(betLimitSelection: AbstractControl){
+    if(betLimitSelection.value != 'other'){
+      this.betLimit.disable();
+      this.betLimit.setValue(betLimitSelection.value);
+    } else {
+      this.betLimit.enable();
+      this.betLimit.setValue(null);
+    }
   }
 
   fieldIsInvalid(field: AbstractControl): boolean {
@@ -30,8 +54,18 @@ export class LimitManagementComponent implements OnInit {
   }
 
   onConfirmSetLimit(){
+    console.log(this.depositLimit.value);
+    console.log(this.betLimit.value);
     this.errorMsg = "";
     this.responseMsg = "";
+  }
+
+  get depositLimitSelection() {
+    return this.limitMgmtForm.get('depositLimitSelection');
+  }
+
+  get betLimitSelection() {
+    return this.limitMgmtForm.get('betLimitSelection');
   }
 
   get password() {
