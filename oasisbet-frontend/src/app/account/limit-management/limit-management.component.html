@@ -40,12 +40,10 @@
                     </div>
                     <label id="deposit_limit_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(depositLimit)}" class="error-text"
                         for="deposit_limit_0">
-                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositLimit)) == 'maxlength'">Maximum length is 20
-                        characters</span>
-                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositLimit)) == 'minlength'">Minimum length is 5
-                        characters</span>
-                        <span *ngIf="depositLimit.hasError('required') && !depositLimit.value && !depositLimit.pristine">This field is
-                        required</span>
+                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositLimit)) == 'pattern'">Please enter correct format</span>
+                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(depositLimit)) == 'maxAmount'">Maximum amount limit is $199999.99</span>
+                        <span *ngIf="depositLimit.hasError('notZero')">Limit amount cannot be 0</span>
+                        <span *ngIf="depositLimit.hasError('required') && !depositLimit.value && !depositLimit.pristine">This field is required</span>
                     </label>
                 </div>
             </div>
@@ -90,12 +88,10 @@
                     </div>
                     <label id="bet_limit_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(betLimit)}" class="error-text"
                         for="bet_limit_0">
-                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(betLimit)) == 'maxlength'">Maximum length is 20
-                        characters</span>
-                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(betLimit)) == 'minlength'">Minimum length is 5
-                        characters</span>
-                        <span *ngIf="betLimit.hasError('required') && !betLimit.value && !betLimit.pristine">This field is
-                        required</span>
+                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(betLimit)) == 'pattern'">Please enter correct format</span>
+                        <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(betLimit)) == 'maxAmount'">Maximum amount limit is $199999.99</span>
+                        <span *ngIf="betLimit.hasError('notZero')">Limit amount cannot be 0</span>
+                        <span *ngIf="betLimit.hasError('required') && !betLimit.value && !betLimit.pristine">This field is required</span>
                     </label>
                 </div>
             </div>
