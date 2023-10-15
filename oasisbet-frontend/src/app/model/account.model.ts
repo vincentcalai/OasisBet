@@ -9,6 +9,7 @@ export class AccountModel {
     public usrId: number;
     public balance: number;
     public depositLimit: number;
+    public betLimit: number;
     public depositAmt: number;
     public withdrawalAmt: number;
     public actionType: string;

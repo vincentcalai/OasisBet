@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { Subscription } from 'rxjs';
+import { AccountModel } from 'src/app/model/account.model';
+import { ApiService } from 'src/app/services/api/api.service';
+import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-limit-management',
@@ -14,11 +18,16 @@ export class LimitManagementComponent implements OnInit {
   errorMsg : string = "";
   responseMsg: string = "";
 
+  public accountModelInput: AccountModel;
+  private subscriptions: Subscription = new Subscription();
+
   public limitMgmtForm: FormGroup;
 
-  constructor(public reactiveFormService: ReactiveFormService, 
+  constructor(public reactiveFormService: ReactiveFormService,
+    public sharedVar: SharedVarService, 
     public sharedMethod: SharedMethodsService, 
-    public authService: AuthService) { }
+    public authService: AuthService,
+    public apiService: ApiService) { }
 
   ngOnInit(): void {
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
@@ -63,26 +72,27 @@ export class LimitManagementComponent implements OnInit {
       this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
         console.log(isLoginSuccess);
          if(isLoginSuccess){
-        //   const withdrawalAmt: number = parseFloat(this.withdrawalAmt.value);
-        //   let accountModel: AccountModel = new AccountModel();
-        //   accountModel = this.authService.getRetrievedAccDetails();
-        //   accountModel.withdrawalAmt = withdrawalAmt;
-        //   accountModel.actionType = 'W';
-        //   this.sharedVar.updateAccountModel.account = accountModel;
-        //   this.subscriptions.add(
-        //     this.apiService.updateAccDetails().subscribe( (resp: any) => {
-        //       if (resp.statusCode != 0) {
-        //         this.errorMsg = resp.resultMessage;
-        //       } else {
-        //         this.responseMsg = resp.resultMessage;
-        //         sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
-        //         this.accountModelInput = this.authService.getRetrievedAccDetails();
-        //       }
-        //     } ,
-        //       error => {
-        //       this.sharedVar.changeException(error);
-        //     })
-        //   );
+          const depositLimitAmt: number = parseFloat(this.depositLimit.value);
+          const betLimitAmt: number = parseFloat(this.betLimit.value);
+          let accountModel: AccountModel = new AccountModel();
+          accountModel = this.authService.getRetrievedAccDetails();
+          accountModel.depositLimit = depositLimitAmt;
+          accountModel.betLimit = betLimitAmt;
+          this.sharedVar.updateAccountModel.account = accountModel;
+          this.subscriptions.add(
+            this.apiService.updateAccDetails().subscribe( (resp: any) => {
+              if (resp.statusCode != 0) {
+                this.errorMsg = resp.resultMessage;
+              } else {
+                this.responseMsg = resp.resultMessage;
+                sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+                this.accountModelInput = this.authService.getRetrievedAccDetails();
+              }
+            } ,
+              error => {
+              this.sharedVar.changeException(error);
+            })
+          );
         } else {
           console.log("show incorrect password msg");
               this.errorMsg = "Incorrect Password. Please enter correct password.";

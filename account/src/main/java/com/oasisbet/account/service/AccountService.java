@@ -200,6 +200,11 @@ public class AccountService {
 		return response;
 	}
 
+	public AccountRestResponse processLimitAction(AccountVO account) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public AccountRestResponse processBet(Long accId, List<BetSubmissionVO> betSubmissionList) {
 		AccountRestResponse response = new AccountRestResponse();
 		AccountVO account = new AccountVO();

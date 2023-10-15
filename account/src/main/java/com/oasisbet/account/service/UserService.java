@@ -54,6 +54,7 @@ public class UserService {
 		account.setUsrId(user.getId());
 		account.setBalance(Constants.INIT_BAL_AMT);
 		account.setDepositLimit(Constants.INIT_DEPOSIT_LIMIT);
+		account.setBetLimit(Constants.INIT_BET_LIMIT);
 		this.accountDao.save(account);
 
 		response.setResultMessage(Constants.USER_CREATE_SUCCESS);

@@ -14,6 +14,7 @@ public class AccountView {
 	private Long usrId;
 	private Double balance;
 	private Double depositLimit;
+	private Double betLimit;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +52,15 @@ public class AccountView {
 
 	public void setDepositLimit(Double depositLimit) {
 		this.depositLimit = depositLimit;
+	}
+
+	@Column(name = "betLimit", nullable = false, precision = 10, scale = 2)
+	public Double getBetLimit() {
+		return betLimit;
+	}
+
+	public void setBetLimit(Double betLimit) {
+		this.betLimit = betLimit;
 	}
 
 }

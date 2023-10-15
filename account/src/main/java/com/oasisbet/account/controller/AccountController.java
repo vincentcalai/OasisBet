@@ -68,8 +68,13 @@ public class AccountController {
 	public AccountRestResponse updateAccDetails(@RequestBody AccountRest accountRest) {
 		AccountVO account = accountRest.getAccount();
 		String actionType = account.getActionType();
-		return actionType.equals("D") ? accountService.processDepositAction(account)
-				: accountService.processWithdrawalAction(account);
+		if (actionType.equals("D")) {
+			return accountService.processDepositAction(account);
+		} else if (actionType.equals("W")) {
+			return accountService.processWithdrawalAction(account);
+		} else {
+			return accountService.processLimitAction(account);
+		}
 	}
 
 	@PostMapping(value = "/processBet")
