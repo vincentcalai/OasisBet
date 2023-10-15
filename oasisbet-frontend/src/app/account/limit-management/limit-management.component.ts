@@ -19,6 +19,8 @@ export class LimitManagementComponent implements OnInit {
   responseMsg: string = "";
 
   public accountModelInput: AccountModel;
+  public currentDepositLimit: number;
+  public currentBetLimit: number;
   private subscriptions: Subscription = new Subscription();
 
   public limitMgmtForm: FormGroup;
@@ -31,6 +33,8 @@ export class LimitManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
+    this.currentDepositLimit = this.accountModelInput.depositLimit;
+    this.currentBetLimit = this.accountModelInput.betLimit;
     console.log(this.accountModelInput);
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }
