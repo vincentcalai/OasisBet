@@ -78,6 +78,7 @@ public class AccountService {
 			accountVo.setUsrId(accountView.getUsrId());
 			accountVo.setBalance(accountView.getBalance());
 			accountVo.setDepositLimit(accountView.getDepositLimit());
+			accountVo.setBetLimit(accountView.getBetLimit());
 		}
 		return accountVo;
 	}

@@ -10,6 +10,7 @@ public class AccountVO {
 	private String actionType;
 	private Double ytdDepositAmt;
 	private Double ytdWithdrawalAmt;
+	private Double betLimit;
 	private Double mtdBetAmount;
 	private Double mthPayout;
 
@@ -83,6 +84,14 @@ public class AccountVO {
 
 	public void setYtdWithdrawalAmt(Double ytdWithdrawalAmt) {
 		this.ytdWithdrawalAmt = ytdWithdrawalAmt;
+	}
+
+	public Double getBetLimit() {
+		return betLimit;
+	}
+
+	public void setBetLimit(Double betLimit) {
+		this.betLimit = betLimit;
 	}
 
 	public Double getMtdBetAmount() {

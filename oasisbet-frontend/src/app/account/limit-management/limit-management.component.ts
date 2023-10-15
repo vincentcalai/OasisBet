@@ -30,6 +30,8 @@ export class LimitManagementComponent implements OnInit {
     public apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.accountModelInput = this.authService.getRetrievedAccDetails();
+    console.log(this.accountModelInput);
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }
 
