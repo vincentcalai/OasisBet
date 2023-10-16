@@ -16,6 +16,7 @@
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
                 <div class="col-sm-6 col-md-6">
                     <mat-progress-bar mode="determinate" [value]="depositProgress"></mat-progress-bar>
+                    <span>{{depositProgress}}%</span>
                 </div>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">${{currentDepositLimit | number: '1.2-2' }}</label>
             </div>
@@ -66,6 +67,7 @@
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
                 <div class="col-sm-6 col-md-6">
                     <mat-progress-bar mode="determinate" [value]="betProgress"></mat-progress-bar>
+                    <span>{{betProgress}}%</span>
                 </div>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">${{currentBetLimit | number: '1.2-2' }}</label>
             </div>
