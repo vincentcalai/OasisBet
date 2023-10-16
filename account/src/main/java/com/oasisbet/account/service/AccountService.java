@@ -119,8 +119,17 @@ public class AccountService {
 		AccountRestResponse response = new AccountRestResponse();
 		double depositAmt = account.getDepositAmt();
 		double depositLimit = account.getDepositLimit();
+
+		Long accId = account.getAccId();
+		LocalDate today = LocalDate.now();
+		LocalDate startOfMonth = today.withDayOfMonth(1);
+		LocalDateTime startOfDay = startOfMonth.atStartOfDay();
+		Date startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+		Double mtdDepositAmount = accountOtherTrxDao.findMtdDeposit(accId, startDate);
+		mtdDepositAmount = mtdDepositAmount == null ? 0.0 : mtdDepositAmount;
+
 		final double newBalanceAmt = account.getBalance() + depositAmt;
-		final double newDepositLimit = depositLimit - depositAmt;
+		final double newDepositLimit = depositLimit - mtdDepositAmount - depositAmt;
 
 		if (newBalanceAmt > Constants.MAX_BAL_AMT) { // validation failed - new balance cannot be more than 199999.99
 			response.setStatusCode(1);
@@ -132,8 +141,6 @@ public class AccountService {
 			return response;
 		} else { // update new balance to database
 			account.setBalance(newBalanceAmt);
-
-			Long accId = account.getAccId();
 
 			// update account details
 			AccountView accountView = new AccountView();
