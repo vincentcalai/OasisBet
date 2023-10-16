@@ -21,6 +21,8 @@ export class DepositsComponent implements OnInit {
   public errorMsg: string = '';
   private subscriptions: Subscription = new Subscription();
 
+  public depositRemLimit: number;
+  public mtdDepositAmt: number;
   public depositControl: FormControl;
   public accountModelInput: AccountModel;
   @Output() onSelectTrxMenu: EventEmitter<string>;
@@ -39,6 +41,19 @@ export class DepositsComponent implements OnInit {
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
     this.depositControl = this.reactiveFormService.initializeDepositFormControl();
+
+    const accId = this.accountModelInput.accId;
+    this.subscriptions.add(
+      this.apiService.retrieveMtdAmounts(accId).subscribe((resp: any) => {
+            this.mtdDepositAmt = resp.account.mtdDepositAmt;
+            this.depositRemLimit = this.accountModelInput.depositLimit - this.mtdDepositAmt;
+        } ,
+          error => {
+          console.log(error);
+          this.sharedVar.changeException(error);
+        }
+       )
+    )
   }
 
   navToTrxHistMenu(){
