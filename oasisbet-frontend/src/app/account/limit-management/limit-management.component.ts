@@ -23,8 +23,8 @@ export class LimitManagementComponent implements OnInit {
   public currentBetLimit: number;
   public mtdDepositAmt: number;
   public mtdBetAmt: number;
-  public progressDepositLimit: number;
-  public progressBetLimit: number;
+  public depositProgress: number;
+  public betProgress: number;
   private subscriptions: Subscription = new Subscription();
 
   public limitMgmtForm: FormGroup;
@@ -46,6 +46,9 @@ export class LimitManagementComponent implements OnInit {
       this.apiService.retrieveMtdAmounts(accId).subscribe((resp: any) => {
             this.mtdDepositAmt = resp.account.mtdDepositAmt;
             this.mtdBetAmt = resp.account.mtdBetAmount;
+            this.depositProgress = (this.mtdDepositAmt/this.currentDepositLimit) * 100;
+            this.betProgress = (this.mtdBetAmt/this.currentBetLimit) * 100;
+
         } ,
           error => {
           console.log(error);
@@ -53,8 +56,7 @@ export class LimitManagementComponent implements OnInit {
         }
        )
     )
-    // this.progressDepositLimit = 
-    // this.progressBetLimit = 
+    
     console.log(this.accountModelInput);
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }
