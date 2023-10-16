@@ -21,6 +21,10 @@ export class LimitManagementComponent implements OnInit {
   public accountModelInput: AccountModel;
   public currentDepositLimit: number;
   public currentBetLimit: number;
+  public mtdDepositAmt: number;
+  public mtdBetAmt: number;
+  public progressDepositLimit: number;
+  public progressBetLimit: number;
   private subscriptions: Subscription = new Subscription();
 
   public limitMgmtForm: FormGroup;
@@ -35,6 +39,22 @@ export class LimitManagementComponent implements OnInit {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
     this.currentDepositLimit = this.accountModelInput.depositLimit;
     this.currentBetLimit = this.accountModelInput.betLimit;
+
+    let accId = this.accountModelInput.accId;
+
+    this.subscriptions.add(
+      this.apiService.retrieveMtdAmounts(accId).subscribe((resp: any) => {
+            this.mtdDepositAmt = resp.account.mtdDepositAmt;
+            this.mtdBetAmt = resp.account.mtdBetAmount;
+        } ,
+          error => {
+          console.log(error);
+          this.sharedVar.changeException(error);
+        }
+       )
+    )
+    // this.progressDepositLimit = 
+    // this.progressBetLimit = 
     console.log(this.accountModelInput);
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }

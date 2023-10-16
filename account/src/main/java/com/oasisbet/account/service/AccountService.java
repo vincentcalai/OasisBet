@@ -108,7 +108,10 @@ public class AccountService {
 
 		Double mtdBetAmount = accountBetTrxDao.findMtdBetAmount(accId, startDate);
 		mtdBetAmount = mtdBetAmount == null ? 0.0 : mtdBetAmount;
+		Double mtdDepositAmount = accountOtherTrxDao.findMtdDeposit(accId, startDate);
+		mtdDepositAmount = mtdDepositAmount == null ? 0.0 : mtdDepositAmount;
 		accountVo.setMtdBetAmount(mtdBetAmount);
+		accountVo.setMtdDepositAmt(mtdDepositAmount);
 		return accountVo;
 	}
 
@@ -127,9 +130,8 @@ public class AccountService {
 			response.setStatusCode(2);
 			response.setResultMessage(Constants.ERR_OVER_DEPOSIT_LIMIT);
 			return response;
-		} else { // update new balance and deposit limit to database
+		} else { // update new balance to database
 			account.setBalance(newBalanceAmt);
-			account.setDepositLimit(newDepositLimit);
 
 			Long accId = account.getAccId();
 
@@ -139,6 +141,7 @@ public class AccountService {
 			accountView.setUsrId(account.getUsrId());
 			accountView.setBalance(account.getBalance());
 			accountView.setDepositLimit(account.getDepositLimit());
+			accountView.setBetLimit(account.getBetLimit());
 			accountDao.save(accountView);
 
 			// update deposit transaction

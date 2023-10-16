@@ -11,6 +11,7 @@ public class AccountVO {
 	private Double ytdDepositAmt;
 	private Double ytdWithdrawalAmt;
 	private Double betLimit;
+	private Double mtdDepositAmt;
 	private Double mtdBetAmount;
 	private Double mthPayout;
 
@@ -92,6 +93,14 @@ public class AccountVO {
 
 	public void setBetLimit(Double betLimit) {
 		this.betLimit = betLimit;
+	}
+
+	public Double getMtdDepositAmt() {
+		return mtdDepositAmt;
+	}
+
+	public void setMtdDepositAmt(Double mtdDepositAmt) {
+		this.mtdDepositAmt = mtdDepositAmt;
 	}
 
 	public Double getMtdBetAmount() {
