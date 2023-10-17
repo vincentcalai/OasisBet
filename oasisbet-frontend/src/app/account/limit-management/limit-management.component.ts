@@ -48,7 +48,6 @@ export class LimitManagementComponent implements OnInit {
             this.mtdBetAmt = resp.account.mtdBetAmount;
             this.depositProgress = (this.mtdDepositAmt/this.currentDepositLimit) * 100;
             this.betProgress = (this.mtdBetAmt/this.currentBetLimit) * 100;
-
         } ,
           error => {
           console.log(error);
