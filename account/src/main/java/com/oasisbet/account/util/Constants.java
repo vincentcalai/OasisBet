@@ -44,9 +44,10 @@ public class Constants {
 	// Bet Response Message
 	public static final String BET_PLACED_SUCCESS = "Bet placed successfully at ";
 
-	// Deposit/Withdraw Account Response Message
+	// Deposit/Withdraw/Change Limit Account Response Message
 	public static final String DEPOSIT_ACC_SUCCESS = "Deposit was successful.";
 	public static final String WITHDRAW_ACC_SUCCESS = "Withdrawal was successful.";
+	public static final String CHANGE_LIMIT_ACC_SUCCESS = "Deposit/Bet Limit Change was successful.";
 
 	// Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";

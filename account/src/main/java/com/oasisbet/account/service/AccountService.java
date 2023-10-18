@@ -212,8 +212,21 @@ public class AccountService {
 	}
 
 	public AccountRestResponse processLimitAction(AccountVO account) {
-		// TODO Auto-generated method stub
-		return null;
+		AccountRestResponse response = new AccountRestResponse();
+		Long accId = account.getAccId();
+
+		// update account details
+		AccountView accountView = new AccountView();
+		accountView.setAccId(accId);
+		accountView.setUsrId(account.getUsrId());
+		accountView.setBalance(account.getBalance());
+		accountView.setDepositLimit(account.getDepositLimit());
+		accountView.setBetLimit(account.getBetLimit());
+		accountDao.save(accountView);
+
+		response.setAccount(account);
+		response.setResultMessage(Constants.CHANGE_LIMIT_ACC_SUCCESS);
+		return response;
 	}
 
 	public AccountRestResponse processBet(Long accId, List<BetSubmissionVO> betSubmissionList) {

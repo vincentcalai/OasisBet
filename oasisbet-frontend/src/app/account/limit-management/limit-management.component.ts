@@ -105,6 +105,7 @@ export class LimitManagementComponent implements OnInit {
           accountModel = this.authService.getRetrievedAccDetails();
           accountModel.depositLimit = depositLimitAmt;
           accountModel.betLimit = betLimitAmt;
+          accountModel.actionType = 'L';
           this.sharedVar.updateAccountModel.account = accountModel;
           this.subscriptions.add(
             this.apiService.updateAccDetails().subscribe( (resp: any) => {
@@ -115,6 +116,7 @@ export class LimitManagementComponent implements OnInit {
                 sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
                 this.accountModelInput = this.authService.getRetrievedAccDetails();
               }
+              this.ngOnInit();
             } ,
               error => {
               this.sharedVar.changeException(error);
