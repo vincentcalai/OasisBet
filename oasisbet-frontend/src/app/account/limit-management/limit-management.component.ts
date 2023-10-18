@@ -116,6 +116,7 @@ export class LimitManagementComponent implements OnInit {
                 sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
                 this.accountModelInput = this.authService.getRetrievedAccDetails();
               }
+              this.onCancelSetLimit();
               this.ngOnInit();
             } ,
               error => {

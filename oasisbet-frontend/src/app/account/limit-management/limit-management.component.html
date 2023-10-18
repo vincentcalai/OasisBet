@@ -16,7 +16,7 @@
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
                 <div class="col-sm-6 col-md-6">
                     <mat-progress-bar [matTooltip]="'$' + mtdDepositAmt" matTooltipPosition="above" mode="determinate" [value]="depositProgress"></mat-progress-bar>
-                    <span [matTooltip]="'$' + mtdDepositAmt">{{depositProgress}}%</span>
+                    <span [matTooltip]="'$' + mtdDepositAmt">{{depositProgress | number:'1.0-2'}}%</span>
                 </div>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">${{currentDepositLimit | number: '1.2-2' }}</label>
             </div>
@@ -67,7 +67,7 @@
                 <label class="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
                 <div class="col-sm-6 col-md-6">
                     <mat-progress-bar [matTooltip]="'$' + mtdBetAmt" matTooltipPosition="above" mode="determinate" [value]="betProgress"></mat-progress-bar>
-                    <span [matTooltip]="'$' + mtdBetAmt">{{betProgress}}%</span>
+                    <span [matTooltip]="'$' + mtdBetAmt">{{betProgress | number:'1.0-2' }}%</span>
                 </div>
                 <label class="control-label col-sm-3 col-md-3 limit-right-section-label-width">${{currentBetLimit | number: '1.2-2' }}</label>
             </div>
