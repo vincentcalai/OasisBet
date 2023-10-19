@@ -10,7 +10,7 @@
         <br>
         <br>
         <label class="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Deposit Remaining Limit:</label>
-        <span class="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">${{depositRemLimit}}</span>
+        <span class="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">{{ depositRemLimit < 0 ? '-$' + -depositRemLimit : '$' + depositRemLimit }}</span>
         <br>
         <br>
         <span class="control-label check-trx-hist-note">Note: Check <a (click)="navToTrxHistMenu()">transaction history</a> for more details.</span>
