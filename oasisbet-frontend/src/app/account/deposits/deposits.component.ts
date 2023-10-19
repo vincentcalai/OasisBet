@@ -64,8 +64,10 @@ export class DepositsComponent implements OnInit {
     return this.reactiveFormService.fieldIsInvalid(field);
   }
 
-  onCancelDeposit(){
+  clearDeposit(){
     this.depositControl.setValue(null);
+    this.depositControl.setErrors(null);
+    this.depositControl.markAsPristine();
   }
 
   onConfirmDeposit(){
@@ -85,7 +87,7 @@ export class DepositsComponent implements OnInit {
           } else {
             this.responseMsg = resp.resultMessage;
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
-            this.accountModelInput = this.authService.getRetrievedAccDetails();
+            this.ngOnInit();
           }
         } ,
           error => {
