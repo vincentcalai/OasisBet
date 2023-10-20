@@ -1,12 +1,19 @@
-<h2 mat-dialog-title>{{dialogTitle}}</h2>
-<div mat-dialog-content>
-  <p>{{dialogMessage}}</p>
+
+<div class="card">
+  <h1 class="card-header" cdkFocusInitial>
+    {{dialogTitle}}
+  </h1>
+  <div class="card-body">
+      <div class="row" align="center">
+        <h4>{{dialogMessage}}</h4>
+      </div>
+      <div class="row justify-content-center">
+        <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelClick()">
+          Cancel
+        </button>
+        <button class="btn btn-success btn-confirm" type="button" (click)="onConfirmClick()">
+          Confirm
+        </button>
+      </div>
 </div>
-<div mat-dialog-actions align="end">
-  <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelClick()">
-    Cancel
-  </button>
-  <button class="btn btn-success btn-confirm" type="button" (click)="onConfirmClick()">
-    Confirm
-  </button>
 </div>

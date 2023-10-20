@@ -133,7 +133,7 @@ export class LimitManagementComponent implements OnInit {
   confirmClicked(){
     if(this.limitMgmtForm.valid){
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
+        width: '600px',
         data: { type: this.sharedVar.CFM_CHANGE_LIMIT_DIALOG_TYPE, title: this.sharedVar.CFM_CHANGE_LIMIT_DIALOG_TITLE }
       });
 
