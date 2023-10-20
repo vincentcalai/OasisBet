@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
@@ -32,6 +34,7 @@ export class LimitManagementComponent implements OnInit {
   constructor(public reactiveFormService: ReactiveFormService,
     public sharedVar: SharedVarService, 
     public sharedMethod: SharedMethodsService, 
+    public dialog: MatDialog,
     public authService: AuthService,
     public apiService: ApiService) { }
 
@@ -130,6 +133,25 @@ export class LimitManagementComponent implements OnInit {
       });
     } else{
       console.log("limit management form front end validation failed!");
+      this.reactiveFormService.displayValidationErrors(this.limitMgmtForm);
+    }
+  }
+
+  confirmClicked(){
+    if(this.limitMgmtForm.valid){
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: { type: this.sharedVar.CFM_CHANGE_LIMIT_DIALOG_TYPE, title: this.sharedVar.CFM_CHANGE_LIMIT_DIALOG_TITLE }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          console.log("confirm change limit");
+          this.onConfirmSetLimit();
+        }
+      });
+    } else{
+      console.log("change limit failed!");
       this.reactiveFormService.displayValidationErrors(this.limitMgmtForm);
     }
   }

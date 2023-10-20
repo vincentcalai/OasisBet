@@ -46,10 +46,13 @@ export class SharedVarService {
 
   public readonly CREATE_USER_DIALOG_TYPE = "create_user";
   public readonly CFM_DEPOSIT_DIALOG_TYPE = "cfm_deposit";
+  public readonly CFM_CHANGE_LIMIT_DIALOG_TYPE = "cfm_change_limit";
   public readonly CREATE_USER_DIALOG_TITLE = "Confirm Create User";
   public readonly CFM_DEPOSIT_DIALOG_TITLE = "Confirm Deposit";
+  public readonly CFM_CHANGE_LIMIT_DIALOG_TITLE = "Confirm Change Limit";
   public readonly CREATE_USER_DIALOG_MSG = "Are you sure to create this user?";
   public readonly CFM_DEPOSIT_DIALOG_MSG = "Are you sure to deposit?";
+  public readonly CFM_CHANGE_LIMIT_DIALOG_MSG = "Are you sure to change Monthly Deposit and Monthly Betting limit?";
 
   public readonly INVALID_DATE_FROM_AND_TO_ERR_MSG = '"From" date cannot be later than "To" date.';
 
