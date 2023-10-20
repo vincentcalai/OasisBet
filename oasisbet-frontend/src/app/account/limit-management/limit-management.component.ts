@@ -97,44 +97,37 @@ export class LimitManagementComponent implements OnInit {
     this.errorMsg = "";
     this.responseMsg = "";
     const username = this.authService.getAuthenticationUser();
-    if(this.limitMgmtForm.valid){
-      console.log("limit management form front end validation passed!");
-      this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
-        console.log(isLoginSuccess);
-         if(isLoginSuccess){
-          const depositLimitAmt: number = parseFloat(this.depositLimit.value);
-          const betLimitAmt: number = parseFloat(this.betLimit.value);
-          let accountModel: AccountModel = new AccountModel();
-          accountModel = this.authService.getRetrievedAccDetails();
-          accountModel.depositLimit = depositLimitAmt;
-          accountModel.betLimit = betLimitAmt;
-          accountModel.actionType = 'L';
-          this.sharedVar.updateAccountModel.account = accountModel;
-          this.subscriptions.add(
-            this.apiService.updateAccDetails().subscribe( (resp: any) => {
-              if (resp.statusCode != 0) {
-                this.errorMsg = resp.resultMessage;
-              } else {
-                this.responseMsg = resp.resultMessage;
-                sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
-                this.accountModelInput = this.authService.getRetrievedAccDetails();
-              }
-              this.onCancelSetLimit();
-              this.ngOnInit();
-            } ,
-              error => {
-              this.sharedVar.changeException(error);
-            })
-          );
-        } else {
-          console.log("show incorrect password msg");
-              this.errorMsg = "Incorrect Password. Please enter correct password.";
-        }
-      });
-    } else{
-      console.log("limit management form front end validation failed!");
-      this.reactiveFormService.displayValidationErrors(this.limitMgmtForm);
-    }
+    this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
+      console.log(isLoginSuccess);
+        if(isLoginSuccess){
+        const depositLimitAmt: number = parseFloat(this.depositLimit.value);
+        const betLimitAmt: number = parseFloat(this.betLimit.value);
+        let accountModel: AccountModel = new AccountModel();
+        accountModel = this.authService.getRetrievedAccDetails();
+        accountModel.depositLimit = depositLimitAmt;
+        accountModel.betLimit = betLimitAmt;
+        accountModel.actionType = 'L';
+        this.sharedVar.updateAccountModel.account = accountModel;
+        this.subscriptions.add(
+          this.apiService.updateAccDetails().subscribe( (resp: any) => {
+            if (resp.statusCode != 0) {
+              this.errorMsg = resp.resultMessage;
+            } else {
+              this.responseMsg = resp.resultMessage;
+              sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+              this.accountModelInput = this.authService.getRetrievedAccDetails();
+            }
+            this.onCancelSetLimit();
+            this.ngOnInit();
+          } ,
+            error => {
+            this.sharedVar.changeException(error);
+          })
+        );
+      } else {
+        this.errorMsg = "Incorrect Password. Please enter correct password.";
+      }
+    });
   }
 
   confirmClicked(){
