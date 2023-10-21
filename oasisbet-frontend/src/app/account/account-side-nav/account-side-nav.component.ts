@@ -9,6 +9,7 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class AccountSideNavComponent implements OnInit {
 
   @Output() onSelectAccountMenu : EventEmitter<string>;
+  accountMenuSelect: string = this.sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW;
 
   constructor(public sharedVar: SharedVarService) { 
     this.onSelectAccountMenu = new EventEmitter<string>();
@@ -19,6 +20,7 @@ export class AccountSideNavComponent implements OnInit {
 
   selectAccountMenu(accountMenuSelect: string){
     this.onSelectAccountMenu.emit(accountMenuSelect);
+    this.accountMenuSelect = accountMenuSelect;
   }
 
 }
