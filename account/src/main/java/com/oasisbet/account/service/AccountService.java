@@ -205,7 +205,6 @@ public class AccountService {
 			withdrawalView.setType(Constants.TRX_TYPE_WITHDRAWAL);
 			withdrawalView.setTrxDt(currentDateTime);
 			accountOtherTrxDao.save(withdrawalView);
-
 		}
 		response.setAccount(account);
 		response.setResultMessage(Constants.WITHDRAW_ACC_SUCCESS);

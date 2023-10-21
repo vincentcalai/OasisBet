@@ -36,6 +36,8 @@ export class ConfirmDialogComponent implements OnInit {
         return this.sharedVarService.CREATE_USER_DIALOG_MSG;
       case this.sharedVarService.CFM_DEPOSIT_DIALOG_TYPE:
         return this.sharedVarService.CFM_DEPOSIT_DIALOG_MSG;
+      case this.sharedVarService.CFM_WITHDRAW_DIALOG_TYPE:
+        return this.sharedVarService.CFM_WITHDRAW_DIALOG_MSG;
       case this.sharedVarService.CFM_CHANGE_LIMIT_DIALOG_TYPE:
         return this.sharedVarService.CFM_CHANGE_LIMIT_DIALOG_MSG;
       default:

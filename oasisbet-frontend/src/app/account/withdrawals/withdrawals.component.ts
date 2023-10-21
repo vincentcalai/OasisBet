@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
@@ -28,6 +30,7 @@ export class WithdrawalsComponent implements OnInit {
       public sharedVar: SharedVarService,
       public authService: AuthService,
       public reactiveFormService: ReactiveFormService,
+      public dialog: MatDialog,
       public sharedMethod: SharedMethodsService,
       public apiService: ApiService
     ) {
@@ -57,38 +60,52 @@ export class WithdrawalsComponent implements OnInit {
     this.responseMsg = "";
     const username = this.authService.getAuthenticationUser();
 
+    this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
+      console.log(isLoginSuccess);
+      if(isLoginSuccess){
+        const withdrawalAmt: number = parseFloat(this.withdrawalAmt.value);
+        let accountModel: AccountModel = new AccountModel();
+        accountModel = this.authService.getRetrievedAccDetails();
+        accountModel.withdrawalAmt = withdrawalAmt;
+        accountModel.actionType = 'W';
+        this.sharedVar.updateAccountModel.account = accountModel;
+        this.subscriptions.add(
+          this.apiService.updateAccDetails().subscribe( (resp: any) => {
+            if (resp.statusCode != 0) {
+              this.errorMsg = resp.resultMessage;
+            } else {
+              this.responseMsg = resp.resultMessage;
+              sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+              this.accountModelInput = this.authService.getRetrievedAccDetails();
+              this.ngOnInit();
+            }
+          } ,
+            error => {
+            this.sharedVar.changeException(error);
+          })
+        );
+      } else {
+        console.log("show incorrect password msg");
+            this.errorMsg = "Incorrect Password. Please enter correct password.";
+      }
+    });
+  }
+
+  confirmClicked(){
     if(this.withdrawalForm.valid){
-      console.log("withdrawal amount front end validation passed!");
-      this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
-        console.log(isLoginSuccess);
-        if(isLoginSuccess){
-          const withdrawalAmt: number = parseFloat(this.withdrawalAmt.value);
-          let accountModel: AccountModel = new AccountModel();
-          accountModel = this.authService.getRetrievedAccDetails();
-          accountModel.withdrawalAmt = withdrawalAmt;
-          accountModel.actionType = 'W';
-          this.sharedVar.updateAccountModel.account = accountModel;
-          this.subscriptions.add(
-            this.apiService.updateAccDetails().subscribe( (resp: any) => {
-              if (resp.statusCode != 0) {
-                this.errorMsg = resp.resultMessage;
-              } else {
-                this.responseMsg = resp.resultMessage;
-                sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
-                this.accountModelInput = this.authService.getRetrievedAccDetails();
-              }
-            } ,
-              error => {
-              this.sharedVar.changeException(error);
-            })
-          );
-        } else {
-          console.log("show incorrect password msg");
-              this.errorMsg = "Incorrect Password. Please enter correct password.";
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: { type: this.sharedVar.CFM_WITHDRAW_DIALOG_TYPE, title: this.sharedVar.CFM_WITHDRAW_DIALOG_TITLE }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          console.log("confirm withdrawal");
+          this.onConfirmWithdrawal();
         }
       });
     } else{
-      console.log("withdrawal amount front end validation failed!");
+      console.log("withdrawal amount failed!");
       this.reactiveFormService.displayValidationErrors(this.withdrawalForm);
     }
   }
