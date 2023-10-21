@@ -130,8 +130,10 @@ export class OddsBetSlipComponent implements OnInit {
 
           let accountModel: AccountModel = new AccountModel();
           accountModel = this.authService.getRetrievedAccDetails();
-          accountModel.balance = resp.account.balance;
-          sessionStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
+          if (resp && resp.account && accountModel) {
+            accountModel.balance = resp.account.balance;
+            sessionStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
+          }
         }
       } ,
         error => {

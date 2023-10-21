@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AUTH_USER } from 'src/app/services/auth/auth.service';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('WithdrawalsComponent', () => {
   let component: WithdrawalsComponent;
@@ -15,6 +16,9 @@ describe('WithdrawalsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ WithdrawalsComponent ],
+      providers: [
+        { provide: MatDialog, useValue: {} }, // Provide a mock MatDialog
+      ],
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
@@ -64,13 +68,14 @@ describe('WithdrawalsComponent', () => {
     component.withdrawalAmt.setValue(withdrawalAmount);
     component.password.setValue(password);
     const mockAccountModel = {"accId": 1000001, "withdrawalAmt": 0, "actionType": ""};
+    spyOn(component, 'ngOnInit');
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
     const username = sessionStorage.getItem(AUTH_USER);
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
-    spyOn(component, 'handleJWTAuthLogin').and.returnValue(of(true));
+    spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(of({ statusCode: 0, resultMessage: 'Withdrawal successful', account: {} }));
     component.onConfirmWithdrawal();
-    expect(component.withdrawalForm.valid).toBeTruthy();
+    expect(component.ngOnInit).toHaveBeenCalled();
     expect(component.errorMsg).toBe('');
     expect(component.responseMsg).toBe('Withdrawal successful');
   });
@@ -78,9 +83,11 @@ describe('WithdrawalsComponent', () => {
   it('should not handle withdrawal when form validation fails', () => {
     component.withdrawalAmt.setValue(null);
     component.password.setValue(null);
-    spyOn(component.reactiveFormService, 'displayValidationErrors')
-    component.onConfirmWithdrawal();
+    spyOn(component.reactiveFormService, 'displayValidationErrors');
+    spyOn(component, 'onConfirmWithdrawal');
+    component.confirmClicked();
     expect(component.withdrawalForm.valid).toBeFalsy();
+    expect(component.onConfirmWithdrawal).not.toHaveBeenCalled();
     expect(component.reactiveFormService.displayValidationErrors).toHaveBeenCalled();
   });
 
@@ -93,7 +100,7 @@ describe('WithdrawalsComponent', () => {
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
     const username = sessionStorage.getItem(AUTH_USER);
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
-    spyOn(component, 'handleJWTAuthLogin').and.returnValue(of(true));
+    spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(of({ statusCode: 1, resultMessage: 'Withdrawal failed', account: {} }));
     component.onConfirmWithdrawal();
     expect(component.withdrawalForm.valid).toBeTruthy();
@@ -106,7 +113,7 @@ describe('WithdrawalsComponent', () => {
     const password = 'password123';
     component.withdrawalAmt.setValue(withdrawalAmount);
     component.password.setValue(password);
-    spyOn(component, 'handleJWTAuthLogin').and.returnValue(of(false));
+    spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(false));
     component.onConfirmWithdrawal();
     expect(component.withdrawalForm.valid).toBeTruthy();
     expect(component.errorMsg).toBe('Incorrect Password. Please enter correct password.');
@@ -123,7 +130,7 @@ describe('WithdrawalsComponent', () => {
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
     const username = sessionStorage.getItem(AUTH_USER);
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
-    spyOn(component, 'handleJWTAuthLogin').and.returnValue(of(true));
+    spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.sharedVar, 'changeException');
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(throwError(error));
     component.onConfirmWithdrawal();
@@ -137,7 +144,7 @@ describe('WithdrawalsComponent', () => {
     const username = 'testuser';
     const password = 'password123';
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of({}));
-    component.handleJWTAuthLogin(username, password).subscribe(result => {
+    component.sharedMethod.handleJWTAuthLogin(username, password).subscribe(result => {
       expect(result).toBeTrue();
     });
   });
@@ -146,7 +153,7 @@ describe('WithdrawalsComponent', () => {
     const username = sessionStorage.getItem(AUTH_USER);
     const password = 'incorrectpassword';
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(throwError('Incorrect credentials'));
-    component.handleJWTAuthLogin(username, password).subscribe(result => {
+    component.sharedMethod.handleJWTAuthLogin(username, password).subscribe(result => {
       expect(result).toBeFalse();
     });
   });

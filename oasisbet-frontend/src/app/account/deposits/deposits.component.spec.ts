@@ -8,6 +8,7 @@ import { of, throwError } from 'rxjs';
 import { AccountModel } from 'src/app/model/account.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { AUTH_USER, TOKEN, ACC_DETAILS } from 'src/app/services/auth/auth.service';
 
 describe('DepositsComponent', () => {
   let component: DepositsComponent;
@@ -31,10 +32,15 @@ describe('DepositsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DepositsComponent);
     component = fixture.componentInstance;
+    const mockAccountModel = {"accId": 1};
+    spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
     fixture.detectChanges();
   });
 
   afterEach(() => {
+    sessionStorage.removeItem(AUTH_USER);
+    sessionStorage.removeItem(TOKEN);
+    sessionStorage.removeItem(ACC_DETAILS);
     component.ngOnDestroy();
   })
 
@@ -53,7 +59,7 @@ describe('DepositsComponent', () => {
   });
 
   it('when cancel deposit, deposit value should be null', () => {
-    component.onCancelDeposit();
+    component.clearDeposit();
     expect(component.depositControl.value).toBeNull();
   });
 
@@ -72,37 +78,35 @@ describe('DepositsComponent', () => {
   });
 
   it('should update account details when depositControl is valid', () => {
-    const mockAccountModel = {};
     const accountModel: any = {"depositAmt": "200"};
     component.depositControl.setValue(100.00);
     component.depositControl.markAsTouched();
-    spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
+    spyOn(component, 'ngOnInit');
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(of({"statusCode":0,"resultMessage": 'Deposit Successful', "account": accountModel}));
     component.onConfirmDeposit();
+    expect(component.ngOnInit).toHaveBeenCalled();
     expect(component.apiService.updateAccDetails).toHaveBeenCalled();
     expect(component.errorMsg).toBe('');
     expect(component.responseMsg).toBe('Deposit Successful');
   });
 
-  it('should update account details when depositControl is valid', () => {
-    const mockAccountModel = {};
+  it('should not update account details when depositControl is invalid', () => {
     const accountModel: any = {"depositAmt": "200"};
     component.depositControl.setValue(100.00);
     component.depositControl.markAsTouched();
-    spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
+    spyOn(component, 'ngOnInit');
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(of({"statusCode":1,"resultMessage": 'Deposit Failed', "account": accountModel}));
     component.onConfirmDeposit();
+    expect(component.ngOnInit).not.toHaveBeenCalled();
     expect(component.apiService.updateAccDetails).toHaveBeenCalled();
     expect(component.errorMsg).toBe('Deposit Failed');
     expect(component.responseMsg).toBe('');
   });
 
   it('when fail to update account details due to error, should throw error exception', () => {
-    const mockAccountModel = {};
     component.depositControl.setValue(100.00);
     component.depositControl.markAsTouched();
     const error = new HttpErrorResponse({ status: 500 });
-    spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');
     component.onConfirmDeposit();

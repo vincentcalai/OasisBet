@@ -39,7 +39,7 @@ describe('ApiService', () => {
   });
 
   it('retrieveResults method test case', () => {
-    expect(service.retrieveResults('soccer_epl')).toBeTruthy();
+    expect(service.retrieveResults('soccer_epl', 'last24hrs', new Date(), new Date())).toBeTruthy();
   });
 
   it('retrieveAccDetails method test case', () => {

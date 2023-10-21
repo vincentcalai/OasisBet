@@ -120,7 +120,7 @@ describe('OddsBetSlipComponent', () => {
 
   it('should submit bets successfully and handle the response', () => {
     const betSelections: BetSlip[] = mockBetSlip();
-    const account: any = { accId: 100001 };
+    const account: any = { accId: 100001, balance: 1000 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);
     spyOn(component.apiService, 'postSubmitBets').and.returnValue(of({ statusCode: 0, resultMessage: 'Bet Submission Success' }));
     spyOn(component.sharedVar, 'changeShowUserNotLoginMsg');
@@ -140,7 +140,7 @@ describe('OddsBetSlipComponent', () => {
 
   it('should submit bets and handle the fail response, when bet submission fail due to status code not 0', () => {
     const betSelections: BetSlip[] = mockBetSlip();
-    const account: any = { accId: 100001 };
+    const account: any = { accId: 100001, balance: 1000 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);
     spyOn(component.apiService, 'postSubmitBets').and.returnValue(of({ statusCode: 1, resultMessage: 'Bet Submission Failure' }));
     spyOn(component.sharedVar, 'changeShowUserNotLoginMsg');
@@ -160,7 +160,7 @@ describe('OddsBetSlipComponent', () => {
   it('should throw error, when api call postSubmitBets failed', () => {
     const error = new HttpErrorResponse({ status: 500 });
     const betSelections: BetSlip[] = mockBetSlip();
-    const account: any = { accId: 100001 };
+    const account: any = { accId: 100001, balance: 1000 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);
     spyOn(component.apiService, 'postSubmitBets').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');

@@ -75,11 +75,9 @@ export class DepositsComponent implements OnInit {
       this.responseMsg = "";
       console.log("deposit amount success!");
       const depositAmount: number = parseFloat(this.depositControl.value);
-      let accountModel: AccountModel = new AccountModel();
-      accountModel = this.authService.getRetrievedAccDetails();
-      accountModel.depositAmt = depositAmount;
-      accountModel.actionType = 'D';
-      this.sharedVar.updateAccountModel.account = accountModel;
+      this.accountModelInput.depositAmt = depositAmount;
+      this.accountModelInput.actionType = 'D';
+      this.sharedVar.updateAccountModel.account = this.accountModelInput;
       this.subscriptions.add(
         this.apiService.updateAccDetails().subscribe( (resp: any) => {
           if (resp.statusCode != 0) {
