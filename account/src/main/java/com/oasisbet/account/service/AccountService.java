@@ -189,6 +189,7 @@ public class AccountService {
 			accountView.setUsrId(account.getUsrId());
 			accountView.setBalance(account.getBalance());
 			accountView.setDepositLimit(account.getDepositLimit());
+			accountView.setBetLimit(account.getBetLimit());
 			accountDao.save(accountView);
 
 			Date currentDateTime = new Date();
