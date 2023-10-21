@@ -47,19 +47,18 @@ export class LimitManagementComponent implements OnInit {
 
     this.subscriptions.add(
       this.apiService.retrieveMtdAmounts(accId).subscribe((resp: any) => {
-            this.mtdDepositAmt = resp.account.mtdDepositAmt;
-            this.mtdBetAmt = resp.account.mtdBetAmount;
-            this.depositProgress = (this.mtdDepositAmt/this.currentDepositLimit) * 100;
-            this.betProgress = (this.mtdBetAmt/this.currentBetLimit) * 100;
-        } ,
-          error => {
-          console.log(error);
-          this.sharedVar.changeException(error);
-        }
-       )
+          this.mtdDepositAmt = resp.account.mtdDepositAmt;
+          this.mtdBetAmt = resp.account.mtdBetAmount;
+          this.depositProgress = (this.mtdDepositAmt/this.currentDepositLimit) * 100;
+          this.betProgress = (this.mtdBetAmt/this.currentBetLimit) * 100;
+      } ,
+        error => {
+        console.log(error);
+        this.sharedVar.changeException(error);
+      }
+      )
     )
     
-    console.log(this.accountModelInput);
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }
 
@@ -115,7 +114,6 @@ export class LimitManagementComponent implements OnInit {
             } else {
               this.responseMsg = resp.resultMessage;
               sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
-              this.accountModelInput = this.authService.getRetrievedAccDetails();
             }
             this.onCancelSetLimit();
             this.ngOnInit();

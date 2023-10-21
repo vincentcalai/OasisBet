@@ -34,7 +34,7 @@ describe('ResultsLandingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should retrieve results and convert the response to Date format', () => {
+  it('should retrieve results and convert the response to Date format for last24Hrs', () => {
     const mockResponse = mockResultsResponse();
     spyOn(component.apiService, 'retrieveResults').and.returnValue(of(mockResponse));
     component.ngOnInit();
@@ -42,6 +42,34 @@ describe('ResultsLandingComponent', () => {
     expect(component.events.length).toBe(2);
     expect(component.events[0].startTime instanceof Date).toBeTrue();
     expect(component.events[1].startTime instanceof Date).toBeTrue();
+    expect(component.dateFrom).not.toBe(null);
+    expect(component.dateTo).not.toBe(null);
+  });
+
+  it('should retrieve results and convert the response to Date format for last3Days', () => {
+    const mockResponse = mockResultsResponse();
+    component.selectedDates = 'last3Days';
+    spyOn(component.apiService, 'retrieveResults').and.returnValue(of(mockResponse));
+    component.ngOnInit();
+    expect(component.apiService.retrieveResults).toHaveBeenCalled();
+    expect(component.events.length).toBe(2);
+    expect(component.events[0].startTime instanceof Date).toBeTrue();
+    expect(component.events[1].startTime instanceof Date).toBeTrue();
+    expect(component.dateFrom).not.toBe(null);
+    expect(component.dateTo).not.toBe(null);
+  });
+
+  it('should retrieve results and convert the response to Date format for others', () => {
+    const mockResponse = mockResultsResponse();
+    component.selectedDates = 'others';
+    spyOn(component.apiService, 'retrieveResults').and.returnValue(of(mockResponse));
+    component.ngOnInit();
+    expect(component.apiService.retrieveResults).toHaveBeenCalled();
+    expect(component.events.length).toBe(2);
+    expect(component.events[0].startTime instanceof Date).toBeTrue();
+    expect(component.events[1].startTime instanceof Date).toBeTrue();
+    expect(component.dateFrom).toBe(null);
+    expect(component.dateTo).toBe(null);
   });
 
   it('should throw error, when api call retrieveResults failed', () => {
@@ -61,6 +89,58 @@ describe('ResultsLandingComponent', () => {
     expect(component.compType).toBe(competitionName);
     expect(component.competitionTypeHdr).toBe('English Premier League');
     expect(component.ngOnInit).toHaveBeenCalled();
+  });
+
+  it('should return true when the current time is greater than the start time', () => {
+    const startTime = new Date('2023-08-28T12:00:00');
+    const result = component.isEventOver(startTime);
+    expect(result).toBeTrue(); 
+  });
+
+  it('should return false when the current time is less than the start time', () => {
+    const startTime = new Date('2099-08-30T12:00:00'); // Set a start time in the future
+    const result = component.isEventOver(startTime);
+    expect(result).toBeFalse(); // The event should not be over
+  });
+
+  it('should set dateErrorMsg when dateFrom is later than dateTo', () => {
+    const dateFrom = new Date('2023-08-30T12:00:00');
+    const dateTo = new Date('2023-08-28T12:00:00');
+    component.validateDateFromLaterThanDateTo(dateFrom, dateTo);
+    expect(component.dateErrorMsg).toEqual(component.sharedVar.INVALID_DATE_FROM_AND_TO_ERR_MSG);
+  });
+
+  it('should not set dateErrorMsg when dateFrom is earlier than dateTo', () => {
+    const dateFrom = new Date('2023-08-28T12:00:00');
+    const dateTo: Date = new Date('2023-08-30T12:00:00');
+    component.validateDateFromLaterThanDateTo(dateFrom, dateTo);
+    expect(component.dateErrorMsg).toEqual('');
+  });
+
+  it('should not set dateErrorMsg when either dateFrom or dateTo is not defined', () => {
+    const dateFrom = new Date('2023-08-28T12:00:00');
+    const dateTo: Date = undefined;
+    component.validateDateFromLaterThanDateTo(dateFrom, dateTo);
+    expect(component.dateErrorMsg).toEqual('');
+  });
+
+  it('should retrieve results and convert the response to Date format when performing filter', () => {
+    const mockResponse = mockResultsResponse();
+    spyOn(component.apiService, 'retrieveResults').and.returnValue(of(mockResponse));
+    component.filterResult();
+    expect(component.apiService.retrieveResults).toHaveBeenCalled();
+    expect(component.events.length).toBe(2);
+    expect(component.events[0].startTime instanceof Date).toBeTrue();
+    expect(component.events[1].startTime instanceof Date).toBeTrue();
+  })
+
+  it('should throw error, when api call when performing filter failed', () => {
+    const error = new HttpErrorResponse({ status: 500 });
+    spyOn(component.apiService, 'retrieveResults').and.returnValue(throwError(error));
+    spyOn(component.sharedVar, 'changeException');
+    component.filterResult();
+    expect(component.apiService.retrieveResults).toHaveBeenCalled();
+    expect(component.sharedVar.changeException).toHaveBeenCalled();
   });
 
   function mockResultsResponse(): any {
