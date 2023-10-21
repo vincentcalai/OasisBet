@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResultsSideNavComponent } from './results-side-nav.component';
+import { CompSideNavComponent } from './comp-side-nav.component';
 
-describe('ResultsSideNavComponent', () => {
-  let component: ResultsSideNavComponent;
-  let fixture: ComponentFixture<ResultsSideNavComponent>;
+describe('CompSideNavComponent', () => {
+  let component: CompSideNavComponent;
+  let fixture: ComponentFixture<CompSideNavComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResultsSideNavComponent ]
+      declarations: [ CompSideNavComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResultsSideNavComponent);
+    fixture = TestBed.createComponent(CompSideNavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

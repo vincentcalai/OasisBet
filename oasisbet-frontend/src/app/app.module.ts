@@ -8,8 +8,6 @@ import { MainMenuComponent } from './views/c-main-menu/main-menu.component';
 import { OddsLandingComponent } from './odds/odds-landing/odds-landing.component';
 import { ResultsLandingComponent } from './results/results-landing/results-landing.component';
 import { AccountLandingComponent } from './account/account-landing/account-landing.component';
-import { OddsSideNavComponent } from './odds/odds-side-nav/odds-side-nav.component';
-import { ResultsSideNavComponent } from './results/results-side-nav/results-side-nav.component';
 import { AccountSideNavComponent } from './account/account-side-nav/account-side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +30,7 @@ import {MatInputModule} from '@angular/material/input';
 import { LimitManagementComponent } from './account/limit-management/limit-management.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav/comp-side-nav.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +40,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     OddsLandingComponent,
     ResultsLandingComponent,
     AccountLandingComponent,
-    OddsSideNavComponent,
-    ResultsSideNavComponent,
     AccountSideNavComponent,
     AccountLoginComponent,
     CreateUserComponent,
@@ -52,7 +49,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     DepositsComponent,
     WithdrawalsComponent,
     OddsBetSlipComponent,
-    LimitManagementComponent
+    LimitManagementComponent,
+    CompSideNavComponent
   ],
   imports: [
     BrowserModule,
