@@ -1,5 +1,6 @@
 package com.oasisbet.account.fixture;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.request.BetSlipRest;
 import com.oasisbet.account.view.AccountBetTrxView;
 
@@ -143,5 +145,40 @@ public class AccountFixture {
 		accountBetTrx.setTrxDateTime(trxDateTime);
 		accountBetTrx.setTrxId("B/100002/100037");
 		return accountBetTrx;
+	}
+
+	public static List<ResultEventMapping> createMockEplResultEventMapping() {
+		List<ResultEventMapping> mockList = new ArrayList<>();
+		ResultEventMapping resultEvent1 = new ResultEventMapping();
+		resultEvent1.setEventId(BigInteger.valueOf(1000003L));
+		resultEvent1.setApiEventId("e306340bed661722ad957e5d8c15f798");
+		resultEvent1.setCompType("EPL");
+		resultEvent1.setOutcome("01");
+		resultEvent1.setScore("4-1");
+		resultEvent1.setCompleted(true);
+		resultEvent1.setLastUpdatedDt(new Date());
+
+		ResultEventMapping resultEvent2 = new ResultEventMapping();
+		resultEvent2.setEventId(BigInteger.valueOf(1000004L));
+		resultEvent2.setApiEventId("2ad957e5d8661722ad957e5d8c15f798");
+		resultEvent2.setCompType("EPL");
+		resultEvent2.setOutcome("01");
+		resultEvent2.setScore("4-0");
+		resultEvent2.setCompleted(true);
+		resultEvent2.setLastUpdatedDt(new Date());
+
+		ResultEventMapping resultEvent3 = new ResultEventMapping();
+		resultEvent3.setEventId(BigInteger.valueOf(1000005L));
+		resultEvent3.setApiEventId("1722ad957e661722ad957e5d8c15f798");
+		resultEvent3.setCompType("EPL");
+		resultEvent3.setOutcome("02");
+		resultEvent3.setScore("1-1");
+		resultEvent3.setCompleted(true);
+		resultEvent3.setLastUpdatedDt(new Date());
+
+		mockList.add(resultEvent1);
+		mockList.add(resultEvent2);
+		mockList.add(resultEvent3);
+		return mockList;
 	}
 }

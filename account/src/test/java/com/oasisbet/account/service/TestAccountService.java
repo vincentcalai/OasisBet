@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.oasisbet.account.TestWithSpringBoot;
 import com.oasisbet.account.dao.IAccountBetProcessTrxDao;
@@ -34,9 +37,11 @@ import com.oasisbet.account.dao.IAccountOtherTrxDao;
 import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
+import com.oasisbet.account.proxy.ResultProxy;
 import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
@@ -66,6 +71,9 @@ class TestAccountService extends TestWithSpringBoot {
 
 	@Mock
 	private IAccountBetTrxDao mockAccountBetTrxDao;
+
+	@MockBean
+	private ResultProxy proxy;
 
 	@Autowired
 	private IAccountDao accountDao;
@@ -537,7 +545,19 @@ class TestAccountService extends TestWithSpringBoot {
 
 		assertEquals(100002L, accountView.getAccId());
 		assertEquals(expectedNewBalance, accountView.getBalance());
+	}
 
+	@Test
+	void testRetrieveCompletedResultMapSuccess() throws Exception {
+		List<ResultEventMapping> mockCompletedResults = AccountFixture.createMockEplResultEventMapping();
+		Mockito.when(proxy.retrieveCompletedResults()).thenReturn(mockCompletedResults);
+
+		Map<BigInteger, ResultEventMapping> completedResultsMap = accountService.retrieveCompletedResults();
+
+		assertEquals(3, completedResultsMap.size());
+		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(1000003L)));
+		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(1000004L)));
+		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(1000005L)));
 	}
 
 }
