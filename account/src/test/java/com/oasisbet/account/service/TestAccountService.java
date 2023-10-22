@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -510,6 +511,33 @@ class TestAccountService extends TestWithSpringBoot {
 		assertEquals(100002L, view.getAccId());
 		assertTrue(view.getSettled());
 		assertTrue(timeDiff < 1000);
+	}
+
+	@Test
+	void testProcess1X2BetTrxSettlement() throws ParseException {
+		double potentialReturn = 14.05;
+		double balance = 960.00;
+		double expectedNewBalance = balance + potentialReturn;
+		String expectedWinType = "C";
+		String newTrxId = "C/100002/100051";
+
+		AccountBetTrxView request = AccountFixture.createMockBetTransaction();
+
+		accountService.process1X2BetTrxSettlement(request);
+
+		Optional<AccountView> optionalAccView = accountDao.findById(request.getAccId());
+		AccountView accountView = optionalAccView.get();
+
+		Optional<AccountBetProcessTrxView> optionalAccBetProcessTrxView = accountBetProcessTrxDao.findById(5L);
+		AccountBetProcessTrxView accountBetProcessTrxView = optionalAccBetProcessTrxView.get();
+
+		assertEquals(newTrxId, accountBetProcessTrxView.getTrxId());
+		assertEquals(expectedWinType, accountBetProcessTrxView.getType());
+		assertEquals(potentialReturn, accountBetProcessTrxView.getAmount());
+
+		assertEquals(100002L, accountView.getAccId());
+		assertEquals(expectedNewBalance, accountView.getBalance());
+
 	}
 
 }
