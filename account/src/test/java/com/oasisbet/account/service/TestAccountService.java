@@ -2,6 +2,7 @@ package com.oasisbet.account.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -475,6 +476,40 @@ class TestAccountService extends TestWithSpringBoot {
 	void testRetrieveNotSettledBetTrx() throws Exception {
 		List<AccountBetTrxView> accountBetTrxList = accountService.retrieveNotSettledBetTrx();
 		assertEquals(26, accountBetTrxList.size());
+	}
+
+	@Test
+	void testProcessChangeLimitActionSuccess() throws Exception {
+		AccountVO request = AccountFixture.createMockChangeLimitAction();
+
+		AccountRestResponse response = accountService.processLimitAction(request);
+		Optional<AccountView> optionalAccView = accountDao.findById(request.getAccId());
+		AccountView view = optionalAccView.get();
+
+		assertEquals(100002L, view.getAccId());
+		assertEquals(800.00, view.getDepositLimit());
+		assertEquals(1200.00, view.getBetLimit());
+		assertEquals(0, response.getStatusCode());
+		assertEquals(Constants.CHANGE_LIMIT_ACC_SUCCESS, response.getResultMessage());
+	}
+
+	@Test
+	void testUpdateBetTrxSettlementStatusAndDateSuccess() throws Exception {
+		AccountBetTrxView request = AccountFixture.createMockBetTransaction();
+		request.setSettled(true);
+		request.setSettledDateTime(new Date());
+
+		accountService.updateBetTrx(request);
+		Optional<AccountBetTrxView> optionalAccBetTrxView = accountBetTrxDao.findById(request.getTrxId());
+		AccountBetTrxView view = optionalAccBetTrxView.get();
+
+		long expectedTime = request.getSettledDateTime().getTime();
+		long actualTime = view.getSettledDateTime().getTime();
+		long timeDiff = Math.abs(actualTime - expectedTime);
+
+		assertEquals(100002L, view.getAccId());
+		assertTrue(view.getSettled());
+		assertTrue(timeDiff < 1000);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.oasisbet.account.fixture;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.request.BetSlipRest;
+import com.oasisbet.account.view.AccountBetTrxView;
 
 public class AccountFixture {
 	public static BetSlipRest createMockBetSubmissionRestData() {
@@ -104,5 +107,41 @@ public class AccountFixture {
 		accountVo.setYtdDepositAmt(399.10);
 		accountVo.setYtdWithdrawalAmt(672.50);
 		return accountVo;
+	}
+
+	public static AccountVO createMockChangeLimitAction() {
+		AccountVO accountVo = new AccountVO();
+		accountVo.setAccId(100002L);
+		accountVo.setActionType("L");
+		accountVo.setBalance(2000.00);
+		accountVo.setDepositLimit(800.00);
+		accountVo.setBetLimit(1200.00);
+		accountVo.setUsrId(1L);
+		return accountVo;
+	}
+
+	public static AccountBetTrxView createMockBetTransaction() throws ParseException {
+		String trxDateTimeStr = "2023-05-31 11:25:49";
+		String startTimeStr = "2023-04-28 03:15:00";
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date trxDateTime = formatter.parse(trxDateTimeStr);
+		Date startTime = formatter.parse(startTimeStr);
+
+		AccountBetTrxView accountBetTrx = new AccountBetTrxView();
+		accountBetTrx.setAccId(100002L);
+		accountBetTrx.setBetAmount(5.00);
+		accountBetTrx.setBetSelection("01");
+		accountBetTrx.setBetType("01");
+		accountBetTrx.setCompType("EPL");
+		accountBetTrx.setEventDesc("Tottenham Hotspur vs Manchester United");
+		accountBetTrx.setEventId(100000L);
+		accountBetTrx.setOdds(2.81);
+		accountBetTrx.setPotentialReturn(14.05);
+		accountBetTrx.setSettled(false);
+		accountBetTrx.setSettledDateTime(null);
+		accountBetTrx.setStartTime(startTime);
+		accountBetTrx.setTrxDateTime(trxDateTime);
+		accountBetTrx.setTrxId("B/100002/100037");
+		return accountBetTrx;
 	}
 }
