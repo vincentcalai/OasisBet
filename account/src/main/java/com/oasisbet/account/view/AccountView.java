@@ -54,7 +54,7 @@ public class AccountView {
 		this.depositLimit = depositLimit;
 	}
 
-	@Column(name = "betLimit", nullable = false, precision = 10, scale = 2)
+	@Column(name = "bet_limit", nullable = false, precision = 10, scale = 2)
 	public Double getBetLimit() {
 		return betLimit;
 	}

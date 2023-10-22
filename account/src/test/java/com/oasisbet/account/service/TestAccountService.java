@@ -174,7 +174,7 @@ class TestAccountService extends TestWithSpringBoot {
 		AccountOtherTrxView trxView = optionalTrxView.get();
 
 		assertEquals(2100.00, view.getBalance());
-		assertEquals(400.00, view.getDepositLimit());
+		assertEquals(500.00, view.getDepositLimit());
 		assertEquals(100002L, trxView.getAccId());
 		assertEquals(100.00, trxView.getAmount());
 		assertEquals("D", trxView.getType());

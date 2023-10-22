@@ -14,6 +14,7 @@ CREATE TABLE `tb_acc` (
   `usr_id` bigint NOT NULL,
   `balance` decimal(10,2) NOT NULL,
   `deposit_limit` decimal(10,2) NOT NULL,
+  `bet_limit` decimal(10,2) NOT NULL,
   PRIMARY KEY (`acc_id`)
 );
 
@@ -46,6 +47,7 @@ CREATE TABLE `tb_bet_trx` (
   `potential_return` double NOT NULL,
   `is_settled` tinyint DEFAULT NULL,
   `trx_dt` datetime DEFAULT NULL,
+  `settled_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`trx_id`)
 );
 

@@ -81,6 +81,7 @@ public class AccountFixture {
 		accountVo.setBalance(2000.00);
 		accountVo.setDepositAmt(100.00);
 		accountVo.setDepositLimit(500.00);
+		accountVo.setBetLimit(500.00);
 		accountVo.setMtdBetAmount(58.88);
 		accountVo.setMthPayout(62.99);
 		accountVo.setUsrId(1L);
@@ -95,6 +96,7 @@ public class AccountFixture {
 		accountVo.setActionType("W");
 		accountVo.setBalance(2000.00);
 		accountVo.setDepositLimit(500.00);
+		accountVo.setBetLimit(200.00);
 		accountVo.setMtdBetAmount(58.88);
 		accountVo.setMthPayout(62.99);
 		accountVo.setUsrId(1L);
