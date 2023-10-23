@@ -555,9 +555,9 @@ class TestAccountService extends TestWithSpringBoot {
 		Map<BigInteger, ResultEventMapping> completedResultsMap = accountService.retrieveCompletedResults();
 
 		assertEquals(3, completedResultsMap.size());
-		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(1000003L)));
-		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(1000004L)));
-		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(1000005L)));
+		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(100000L)));
+		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(100001L)));
+		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(100002L)));
 	}
 
 }

@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
@@ -147,10 +149,86 @@ public class AccountFixture {
 		return accountBetTrx;
 	}
 
+	public static List<AccountBetTrxView> createMockBetTransactionsList() throws ParseException {
+		List<AccountBetTrxView> accountBetTrxList = new ArrayList<>();
+
+		String trxDateTimeStr = "2023-05-31 11:25:49";
+		String startTimeStr = "2023-04-28 03:15:00";
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date trxDateTime = formatter.parse(trxDateTimeStr);
+		Date startTime = formatter.parse(startTimeStr);
+
+		AccountBetTrxView accountBetTrx = new AccountBetTrxView();
+		accountBetTrx.setAccId(100002L);
+		accountBetTrx.setBetAmount(5.00);
+		accountBetTrx.setBetSelection("01");
+		accountBetTrx.setBetType("01");
+		accountBetTrx.setCompType("EPL");
+		accountBetTrx.setEventDesc("Tottenham Hotspur vs Manchester United");
+		accountBetTrx.setEventId(100000L);
+		accountBetTrx.setOdds(2.81);
+		accountBetTrx.setPotentialReturn(14.05);
+		accountBetTrx.setSettled(false);
+		accountBetTrx.setSettledDateTime(null);
+		accountBetTrx.setStartTime(startTime);
+		accountBetTrx.setTrxDateTime(trxDateTime);
+		accountBetTrx.setTrxId("B/100002/100037");
+
+		String trxDateTimeStr2 = "2023-05-31 11:25:49";
+		String startTimeStr2 = "2023-04-29 02:45:00";
+		SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date trxDateTime2 = formatter2.parse(trxDateTimeStr2);
+		Date startTime2 = formatter2.parse(startTimeStr2);
+
+		AccountBetTrxView accountBetTrx2 = new AccountBetTrxView();
+		accountBetTrx2.setAccId(100002L);
+		accountBetTrx2.setBetAmount(9.00);
+		accountBetTrx2.setBetSelection("02");
+		accountBetTrx2.setBetType("01");
+		accountBetTrx2.setCompType("EPL");
+		accountBetTrx2.setEventDesc("Southampton vs Bournemouth");
+		accountBetTrx2.setEventId(100001L);
+		accountBetTrx2.setOdds(3.46);
+		accountBetTrx2.setPotentialReturn(31.14);
+		accountBetTrx2.setSettled(false);
+		accountBetTrx2.setSettledDateTime(null);
+		accountBetTrx2.setStartTime(startTime2);
+		accountBetTrx2.setTrxDateTime(trxDateTime2);
+		accountBetTrx2.setTrxId("B/100002/100038");
+
+		String trxDateTimeStr3 = "2023-03-24 13:36:31";
+		String startTimeStr3 = "2023-04-30 04:45:00";
+		SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date trxDateTime3 = formatter3.parse(trxDateTimeStr3);
+		Date startTime3 = formatter3.parse(startTimeStr3);
+
+		AccountBetTrxView accountBetTrx3 = new AccountBetTrxView();
+		accountBetTrx3.setAccId(100002L);
+		accountBetTrx3.setBetAmount(20.00);
+		accountBetTrx3.setBetSelection("02");
+		accountBetTrx3.setBetType("01");
+		accountBetTrx3.setCompType("EPL");
+		accountBetTrx3.setEventDesc("Everton vs Newcastle United");
+		accountBetTrx3.setEventId(100002L);
+		accountBetTrx3.setOdds(5.17);
+		accountBetTrx3.setPotentialReturn(103.4);
+		accountBetTrx3.setSettled(false);
+		accountBetTrx3.setSettledDateTime(null);
+		accountBetTrx3.setStartTime(startTime3);
+		accountBetTrx3.setTrxDateTime(trxDateTime3);
+		accountBetTrx3.setTrxId("B/100002/100040");
+
+		accountBetTrxList.add(accountBetTrx);
+		accountBetTrxList.add(accountBetTrx2);
+		accountBetTrxList.add(accountBetTrx3);
+
+		return accountBetTrxList;
+	}
+
 	public static List<ResultEventMapping> createMockEplResultEventMapping() {
 		List<ResultEventMapping> mockList = new ArrayList<>();
 		ResultEventMapping resultEvent1 = new ResultEventMapping();
-		resultEvent1.setEventId(BigInteger.valueOf(1000003L));
+		resultEvent1.setEventId(BigInteger.valueOf(100000L));
 		resultEvent1.setApiEventId("e306340bed661722ad957e5d8c15f798");
 		resultEvent1.setCompType("EPL");
 		resultEvent1.setOutcome("01");
@@ -159,7 +237,7 @@ public class AccountFixture {
 		resultEvent1.setLastUpdatedDt(new Date());
 
 		ResultEventMapping resultEvent2 = new ResultEventMapping();
-		resultEvent2.setEventId(BigInteger.valueOf(1000004L));
+		resultEvent2.setEventId(BigInteger.valueOf(100001L));
 		resultEvent2.setApiEventId("2ad957e5d8661722ad957e5d8c15f798");
 		resultEvent2.setCompType("EPL");
 		resultEvent2.setOutcome("01");
@@ -168,7 +246,7 @@ public class AccountFixture {
 		resultEvent2.setLastUpdatedDt(new Date());
 
 		ResultEventMapping resultEvent3 = new ResultEventMapping();
-		resultEvent3.setEventId(BigInteger.valueOf(1000005L));
+		resultEvent3.setEventId(BigInteger.valueOf(100002L));
 		resultEvent3.setApiEventId("1722ad957e661722ad957e5d8c15f798");
 		resultEvent3.setCompType("EPL");
 		resultEvent3.setOutcome("02");
@@ -180,5 +258,14 @@ public class AccountFixture {
 		mockList.add(resultEvent2);
 		mockList.add(resultEvent3);
 		return mockList;
+	}
+
+	public static Map<BigInteger, ResultEventMapping> createMockMapEplResultEventMapping() {
+		Map<BigInteger, ResultEventMapping> resultEventMap = new HashMap<>();
+		List<ResultEventMapping> mockList = AccountFixture.createMockEplResultEventMapping();
+		resultEventMap.put(BigInteger.valueOf(100000L), mockList.get(0));
+		resultEventMap.put(BigInteger.valueOf(100001L), mockList.get(1));
+		resultEventMap.put(BigInteger.valueOf(100002L), mockList.get(2));
+		return resultEventMap;
 	}
 }
