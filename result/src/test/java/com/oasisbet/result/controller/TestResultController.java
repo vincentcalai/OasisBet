@@ -3,6 +3,7 @@ package com.oasisbet.result.controller;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,13 @@ class TestResultController extends TestBaseSetup {
 	@Test
 	void retrieveResultsSuccess() throws JsonProcessingException, Exception {
 		String compType = "soccer_epl";
+		String selectedDate = "last24Hrs";
+		LocalDateTime dateFrom = LocalDateTime.now();
+		LocalDateTime dateTo = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+		String formattedDateFrom = dateFrom.format(formatter);
+		String formattedDateTo = dateTo.format(formatter);
+
 		List<ResultEvent> mockResults = ResultFixture.createMockResultEvents();
 
 		ResultApiResponse[] mockBody = ResultFixture.mockEplResultApiResponseArray();
@@ -63,7 +71,8 @@ class TestResultController extends TestBaseSetup {
 		expectedResponse.setResultEvent(mockResults);
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/result/retrieveResults")
-				.param("compType", compType).contentType(MediaType.APPLICATION_JSON);
+				.param("compType", compType).param("selectedDate", selectedDate).param("dateFrom", formattedDateFrom)
+				.param("dateTo", formattedDateTo).contentType(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedResponse)));
