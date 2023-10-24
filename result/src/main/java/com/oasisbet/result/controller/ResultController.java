@@ -37,10 +37,10 @@ public class ResultController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo) {
 
-		if (selectedDate.equals(Constants.RESULT_RETRIEVE_LAST_24_HRS)) {
+		if (Constants.RESULT_RETRIEVE_LAST_24_HRS.equals(selectedDate)) {
 			dateFrom = dateFrom.with(LocalTime.MIN);
 			dateTo = dateTo.with(LocalTime.MAX);
-		} else if (selectedDate.equals(Constants.RESULT_RETRIEVE_CUSTOM)) {
+		} else if (Constants.RESULT_RETRIEVE_CUSTOM.equals(selectedDate)) {
 			dateFrom = dateFrom.plusHours(8).with(LocalTime.MIN);
 			dateTo = dateTo.plusHours(8).with(LocalTime.MAX);
 		}
