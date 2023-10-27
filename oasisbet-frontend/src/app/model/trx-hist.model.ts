@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 export class TrxHistModel {
 
     public dateTime: Date;
-    public desc: number;
+    public desc: string;
+    public type: string;
     public amount: number;
 }
