@@ -350,10 +350,9 @@ public class AccountService {
 		} else {
 			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(accId, typeCd, startDate);
 
-			if (otherTrxView != null && otherTrxView.size() > 0) {
+			if (otherTrxView != null && !otherTrxView.isEmpty()) {
 				otherTrxView.forEach(trx -> {
-					Double amt = trx.getAmount();
-					String fullDesc = trx.getType().equals("D")
+					String fullDesc = Constants.TRX_TYPE_DEPOSIT.equals(trx.getType())
 							? Constants.DEPOSIT_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
 									+ String.format("%.2f", amt)
 							: Constants.WITHDRAWAL_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
