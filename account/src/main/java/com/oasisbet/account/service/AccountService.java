@@ -331,7 +331,8 @@ public class AccountService {
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setDateTime((Date) trx[0]);
 					trxHistVo.setDesc((String) trx[1]);
-					trxHistVo.setAmount((Double) trx[2]);
+					trxHistVo.setType((String) trx[2]);
+					trxHistVo.setAmount((Double) trx[3]);
 					trxHistList.add(trxHistVo);
 				});
 			}
@@ -341,6 +342,7 @@ public class AccountService {
 			if (betTrxView != null && betTrxView.size() > 0) {
 				betTrxView.forEach(trx -> {
 					TrxHistVO trxHistVo = new TrxHistVO();
+					trxHistVo.setType(Constants.TRX_TYPE_SPORTS_BET);
 					trxHistVo.setDateTime(trx.getTrxDateTime());
 					trxHistVo.setDesc(trx.getEventDesc());
 					trxHistVo.setAmount(trx.getBetAmount());
@@ -352,6 +354,7 @@ public class AccountService {
 
 			if (otherTrxView != null && !otherTrxView.isEmpty()) {
 				otherTrxView.forEach(trx -> {
+					Double amt = trx.getAmount();
 					String fullDesc = Constants.TRX_TYPE_DEPOSIT.equals(trx.getType())
 							? Constants.DEPOSIT_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
 									+ String.format("%.2f", amt)
@@ -359,6 +362,7 @@ public class AccountService {
 									+ String.format("%.2f", amt);
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setAmount(amt);
+					trxHistVo.setType(trx.getType());
 					trxHistVo.setDateTime(trx.getTrxDt());
 					trxHistVo.setDesc(fullDesc);
 					trxHistList.add(trxHistVo);

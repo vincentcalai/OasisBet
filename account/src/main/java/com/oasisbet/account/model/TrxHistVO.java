@@ -5,6 +5,7 @@ import java.util.Date;
 public class TrxHistVO {
 	private Date dateTime;
 	private String desc;
+	private String type;
 	private Double amount;
 
 	public Date getDateTime() {
@@ -21,6 +22,14 @@ public class TrxHistVO {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Double getAmount() {
