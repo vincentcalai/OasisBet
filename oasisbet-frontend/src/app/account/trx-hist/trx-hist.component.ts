@@ -45,7 +45,10 @@ export class TrxHistComponent implements OnInit {
         this.trxHistList = resp.trxHistList;
       })
     );
+  }
 
+  toggleShowDetails(trx: TrxHistModel){
+    trx.showDetails = !trx.showDetails;
   }
 
 }

@@ -44,17 +44,22 @@
         <table class="table" style="table-layout: fixed; width: 100%;">
             <thead class= "table-header">
                 <tr>
-                  <th style="text-align:center; width: 30%;">Date & Time</th>
-                  <th style="text-align:center; width: 50%;">Description</th>
+                  <th style="text-align:center; width: 25%;">Date & Time</th>
+                  <th style="text-align:center; width: 45%;">Description</th>
                   <th style="text-align:center; width: 20%;">Amount</th>
+                  <th style="text-align:center; width: 10%;"></th>
                 </tr>
             </thead>
             <tbody>
               <ng-container *ngFor="let trx of trxHistList">
                 <tr>
-                  <td style="text-align:center; width: 30%;">{{trx.dateTime | date:'medium'}}</td>
-                  <td style="text-align:center; width: 50%;">{{trx.desc}}</td>
+                  <td style="text-align:center; width: 25%;">{{trx.dateTime | date:'medium'}}</td>
+                  <td style="text-align:center; width: 45%;">{{trx.desc}}</td>
                   <td style="text-align:center; width: 20%;">{{trx.type == 'W' || trx.type == 'S' ? '-$' + (trx.amount | number : '1.2-2') : '$' + (trx.amount | number : '1.2-2') }}</td>
+                  <td style="text-align:center; width: 10%;">
+                    <i *ngIf="!trx.showDetails" class="fas fa-angle-right" (click)="toggleShowDetails(trx)" ></i>
+                    <i *ngIf="trx.showDetails" class="fas fa-angle-down" (click)="toggleShowDetails(trx)"></i>
+                  </td>
                 </tr>
                 <tr *ngIf="trx.showDetails">
                   <td colspan="3">
