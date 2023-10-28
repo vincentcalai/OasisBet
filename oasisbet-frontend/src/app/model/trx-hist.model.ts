@@ -9,4 +9,5 @@ export class TrxHistModel {
     public desc: string;
     public type: string;
     public amount: number;
+    public showDetails: boolean;
 }
