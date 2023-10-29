@@ -350,7 +350,7 @@ public class AccountService {
 
 					TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
 					trxBetDetailsVO.setStartTime(trx.getStartTime());
-					trxBetDetailsVO.setCompetition(trx.getCompType());
+					trxBetDetailsVO.setCompType(trx.getCompType());
 					trxBetDetailsVO.setBetDetails(trx.getEventDesc());
 					trxBetDetailsVO.setBetType(trx.getBetType());
 					trxBetDetailsVO.setStatus(trx.getSettled());

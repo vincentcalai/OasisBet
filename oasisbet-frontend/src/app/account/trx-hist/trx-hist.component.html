@@ -77,10 +77,10 @@
                       <tbody>
                         <tr>
                           <td style="text-align:center; width: 20%;">{{trx.trxBetDetails.startTime | date:'medium'}}</td>
-                          <td style="text-align:center; width: 15%;">{{trx.trxBetDetails.competition}}</td>
+                          <td style="text-align:center; width: 15%;">{{trx.trxBetDetails.compType}}</td>
                           <td style="text-align:center; width: 25%;">{{trx.trxBetDetails.betDetails}}</td>
-                          <td style="text-align:center; width: 10%;">{{trx.trxBetDetails.betType}}</td>
-                          <td style="text-align:center; width: 10%;">{{trx.trxBetDetails.status}}</td>
+                          <td style="text-align:center; width: 10%;">{{sharedVar.mapBetTypeCd(trx.trxBetDetails.betType)}}</td>
+                          <td style="text-align:center; width: 10%;">{{trx.trxBetDetails.status ? sharedVar.SETTLED : sharedVar.NOT_SETTLED}}</td>
                           <td style="text-align:center; width: 20%;">{{trx.trxBetDetails.trxId}}</td>
                         </tr>
                       </tbody>

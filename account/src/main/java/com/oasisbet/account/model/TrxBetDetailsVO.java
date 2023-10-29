@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TrxBetDetailsVO {
 	private Date startTime;
-	private String competition;
+	private String compType;
 	private String betDetails;
 	private String betType;
 	private Boolean status;
@@ -18,12 +18,12 @@ public class TrxBetDetailsVO {
 		this.startTime = startTime;
 	}
 
-	public String getCompetition() {
-		return competition;
+	public String getCompType() {
+		return compType;
 	}
 
-	public void setCompetition(String competition) {
-		this.competition = competition;
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 	public String getBetDetails() {
