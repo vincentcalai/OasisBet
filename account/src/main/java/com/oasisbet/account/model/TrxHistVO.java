@@ -7,6 +7,7 @@ public class TrxHistVO {
 	private String desc;
 	private String type;
 	private Double amount;
+	private TrxBetDetailsVO trxBetDetails;
 
 	public Date getDateTime() {
 		return dateTime;
@@ -38,6 +39,14 @@ public class TrxHistVO {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public TrxBetDetailsVO getTrxBetDetails() {
+		return trxBetDetails;
+	}
+
+	public void setTrxBetDetails(TrxBetDetailsVO trxBetDetails) {
+		this.trxBetDetails = trxBetDetails;
 	}
 
 }

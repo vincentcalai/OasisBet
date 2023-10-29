@@ -43,6 +43,7 @@ export class TrxHistComponent implements OnInit {
     this.subscriptions.add(
       this.apiService.retrieveTrx(accId, this.selectedTrxType, this.selectedPeriod).subscribe((resp: any) => {
         this.trxHistList = resp.trxHistList;
+        console.log(this.trxHistList);
       })
     );
   }

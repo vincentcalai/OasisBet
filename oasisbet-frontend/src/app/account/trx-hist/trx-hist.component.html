@@ -61,7 +61,7 @@
                     (click)="toggleShowDetails(trx)" ></i>
                   </td>
                 </tr>
-                <tr *ngIf="trx.showDetails">
+                <tr *ngIf="trx.showDetails && trx.trxBetDetails">
                   <td colspan="4">
                     <table class="table" style="table-layout: fixed; width: 100%;">
                       <thead class="table-header">
@@ -76,12 +76,12 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td style="text-align:center; width: 20%;">Dummy Start Time</td>
-                          <td style="text-align:center; width: 15%;">Dummy Competition</td>
-                          <td style="text-align:center; width: 25%;">Dummy Details</td>
-                          <td style="text-align:center; width: 10%;">Dummy Type</td>
-                          <td style="text-align:center; width: 10%;">Dummy Status</td>
-                          <td style="text-align:center; width: 20%;">Dummy Receipt</td>
+                          <td style="text-align:center; width: 20%;">{{trx.trxBetDetails.startTime | date:'medium'}}</td>
+                          <td style="text-align:center; width: 15%;">{{trx.trxBetDetails.competition}}</td>
+                          <td style="text-align:center; width: 25%;">{{trx.trxBetDetails.betDetails}}</td>
+                          <td style="text-align:center; width: 10%;">{{trx.trxBetDetails.betType}}</td>
+                          <td style="text-align:center; width: 10%;">{{trx.trxBetDetails.status}}</td>
+                          <td style="text-align:center; width: 20%;">{{trx.trxBetDetails.trxId}}</td>
                         </tr>
                       </tbody>
                     </table>

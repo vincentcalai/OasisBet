@@ -27,6 +27,7 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.ResultEventMapping;
+import com.oasisbet.account.model.TrxBetDetailsVO;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.proxy.ResultProxy;
@@ -326,7 +327,7 @@ public class AccountService {
 		if (Constants.TRX_TYPE_ALL_FUNDS.equals(typeCd)) {
 			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(accId, startDate);
 
-			if (allFundsTrx != null && allFundsTrx.size() > 0) {
+			if (allFundsTrx != null && !allFundsTrx.isEmpty()) {
 				allFundsTrx.forEach(trx -> {
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setDateTime((Date) trx[0]);
@@ -339,13 +340,23 @@ public class AccountService {
 		} else if (Constants.TRX_TYPE_SPORTS_BET.equals(typeCd)) {
 			betTrxView = this.accountBetTrxDao.getByDateRange(accId, startDate);
 
-			if (betTrxView != null && betTrxView.size() > 0) {
+			if (betTrxView != null && !betTrxView.isEmpty()) {
 				betTrxView.forEach(trx -> {
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setType(Constants.TRX_TYPE_SPORTS_BET);
 					trxHistVo.setDateTime(trx.getTrxDateTime());
 					trxHistVo.setDesc(trx.getEventDesc());
 					trxHistVo.setAmount(trx.getBetAmount());
+
+					TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
+					trxBetDetailsVO.setStartTime(trx.getStartTime());
+					trxBetDetailsVO.setCompetition(trx.getCompType());
+					trxBetDetailsVO.setBetDetails(trx.getEventDesc());
+					trxBetDetailsVO.setBetType(trx.getBetType());
+					trxBetDetailsVO.setStatus(trx.getSettled());
+					trxBetDetailsVO.setTrxId(trx.getTrxId());
+					trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+
 					trxHistList.add(trxHistVo);
 				});
 			}
