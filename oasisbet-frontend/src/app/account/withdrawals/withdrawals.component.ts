@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, take, finalize } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -69,8 +69,11 @@ export class WithdrawalsComponent implements OnInit {
         accountModel.withdrawalAmt = withdrawalAmt;
         accountModel.actionType = 'W';
         this.sharedVar.updateAccountModel.account = accountModel;
+        this.sharedVar.changeSpinner('block');
         this.subscriptions.add(
-          this.apiService.updateAccDetails().subscribe( (resp: any) => {
+          this.apiService.updateAccDetails()
+          .pipe(take(1), finalize(() => this.sharedVar.changeSpinner('none')))
+          .subscribe( (resp: any) => {
             if (resp.statusCode != 0) {
               this.errorMsg = resp.resultMessage;
             } else {

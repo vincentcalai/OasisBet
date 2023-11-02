@@ -86,6 +86,9 @@ export class SharedVarService {
   public showUserNotLoginSource = new BehaviorSubject<string>(null);
   showUserNotLogin = this.showUserNotLoginSource.asObservable();
 
+  public spinnerSource = new BehaviorSubject<string>('none');
+  currentSpinner = this.spinnerSource.asObservable();
+
   changeResponse(resp: ResponseModel) {
     this.responseSource.next(resp);
   }
@@ -96,6 +99,10 @@ export class SharedVarService {
 
   changeShowUserNotLoginMsg(msg: string) {
     this.showUserNotLoginSource.next(msg);
+  }
+
+  changeSpinner(status: string) {
+    this.spinnerSource.next(status);
   }
 
   mapBetTypeCd(betType: string){
