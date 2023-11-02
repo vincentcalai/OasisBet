@@ -44,17 +44,51 @@
         <table class="table" style="table-layout: fixed; width: 100%;">
             <thead class= "table-header">
                 <tr>
-                  <th style="text-align:center; width: 30%;">Date & Time</th>
-                  <th style="text-align:center; width: 50%;">Description</th>
+                  <th style="text-align:center; width: 25%;">Date & Time</th>
+                  <th style="text-align:center; width: 45%;">Description</th>
                   <th style="text-align:center; width: 20%;">Amount</th>
+                  <th style="text-align:center; width: 10%;"></th>
                 </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let trx of trxHistList">
-                <td style="text-align:center; width: 30%;">{{trx.dateTime | date:'medium'}}</td>
-                <td style="text-align:center; width: 50%;">{{trx.desc}}</td>
-                <td style="text-align:center; width: 20%;">${{trx.amount | number : '1.2-2' }}</td>
-              </tr>
+              <ng-container *ngFor="let trx of trxHistList">
+                <tr>
+                  <td style="text-align:center; width: 25%;">{{trx.dateTime | date:'medium'}}</td>
+                  <td style="text-align:center; width: 45%;">{{trx.desc}}</td>
+                  <td style="text-align:center; width: 20%;">{{trx.type == 'W' || trx.type == 'S' ? '-$' + (trx.amount | number : '1.2-2') : '$' + (trx.amount | number : '1.2-2') }}</td>
+                  <td style="text-align:center; width: 10%;">
+                    <i class="fas" *ngIf="trx.type == 'S'" [ngClass]="{'fa-angle-right': !trx.showDetails, 'fa-angle-down': trx.showDetails}"  
+                    (click)="toggleShowDetails(trx)" ></i>
+                  </td>
+                </tr>
+                <tr *ngIf="trx.showDetails && trx.trxBetDetails">
+                  <td colspan="4">
+                    <table class="table" style="table-layout: fixed; width: 100%;">
+                      <thead class="table-header">
+                        <tr>
+                          <th style="text-align:center; width: 20%;">Start Time</th>
+                          <th style="text-align:center; width: 15%;">Competition</th>
+                          <th style="text-align:center; width: 25%;">Bet Details</th>
+                          <th style="text-align:center; width: 10%;">Bet Type</th>
+                          <th style="text-align:center; width: 10%;">Status</th>
+                          <th style="text-align:center; width: 20%;">Bet Receipt</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="text-align:center; width: 20%;">{{trx.trxBetDetails.startTime | date:'medium'}}</td>
+                          <td style="text-align:center; width: 15%;">{{trx.trxBetDetails.compType}}</td>
+                          <td style="text-align:center; width: 25%;">{{trx.trxBetDetails.betDetails}}</td>
+                          <td style="text-align:center; width: 10%;">{{sharedVar.mapBetTypeCd(trx.trxBetDetails.betType)}}</td>
+                          <td style="text-align:center; width: 10%;">{{trx.trxBetDetails.status ? sharedVar.SETTLED : sharedVar.NOT_SETTLED}}</td>
+                          <td style="text-align:center; width: 20%;">{{trx.trxBetDetails.trxId}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </ng-container>
+              
               <tr *ngIf='!trxHistList || trxHistList.length == 0'>
                 <td class='text-center' colspan=12>
                   No Transaction(s) Found.

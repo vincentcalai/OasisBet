@@ -27,6 +27,7 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.ResultEventMapping;
+import com.oasisbet.account.model.TrxBetDetailsVO;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.proxy.ResultProxy;
@@ -326,40 +327,53 @@ public class AccountService {
 		if (Constants.TRX_TYPE_ALL_FUNDS.equals(typeCd)) {
 			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(accId, startDate);
 
-			if (allFundsTrx != null && allFundsTrx.size() > 0) {
+			if (allFundsTrx != null && !allFundsTrx.isEmpty()) {
 				allFundsTrx.forEach(trx -> {
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setDateTime((Date) trx[0]);
 					trxHistVo.setDesc((String) trx[1]);
-					trxHistVo.setAmount((Double) trx[2]);
+					trxHistVo.setType((String) trx[2]);
+					trxHistVo.setAmount((Double) trx[3]);
 					trxHistList.add(trxHistVo);
 				});
 			}
 		} else if (Constants.TRX_TYPE_SPORTS_BET.equals(typeCd)) {
 			betTrxView = this.accountBetTrxDao.getByDateRange(accId, startDate);
 
-			if (betTrxView != null && betTrxView.size() > 0) {
+			if (betTrxView != null && !betTrxView.isEmpty()) {
 				betTrxView.forEach(trx -> {
 					TrxHistVO trxHistVo = new TrxHistVO();
+					trxHistVo.setType(Constants.TRX_TYPE_SPORTS_BET);
 					trxHistVo.setDateTime(trx.getTrxDateTime());
 					trxHistVo.setDesc(trx.getEventDesc());
 					trxHistVo.setAmount(trx.getBetAmount());
+
+					TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
+					trxBetDetailsVO.setStartTime(trx.getStartTime());
+					trxBetDetailsVO.setCompType(trx.getCompType());
+					trxBetDetailsVO.setBetDetails(trx.getEventDesc());
+					trxBetDetailsVO.setBetType(trx.getBetType());
+					trxBetDetailsVO.setStatus(trx.getSettled());
+					trxBetDetailsVO.setTrxId(trx.getTrxId());
+					trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+
 					trxHistList.add(trxHistVo);
 				});
 			}
 		} else {
 			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(accId, typeCd, startDate);
 
-			if (otherTrxView != null && otherTrxView.size() > 0) {
+			if (otherTrxView != null && !otherTrxView.isEmpty()) {
 				otherTrxView.forEach(trx -> {
 					Double amt = trx.getAmount();
-					String fullDesc = trx.getType().equals("D")
+					String fullDesc = Constants.TRX_TYPE_DEPOSIT.equals(trx.getType())
 							? Constants.DEPOSIT_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
 									+ String.format("%.2f", amt)
 							: Constants.WITHDRAWAL_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
 									+ String.format("%.2f", amt);
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setAmount(amt);
+					trxHistVo.setType(trx.getType());
 					trxHistVo.setDateTime(trx.getTrxDt());
 					trxHistVo.setDesc(fullDesc);
 					trxHistList.add(trxHistVo);

@@ -5,7 +5,9 @@ import java.util.Date;
 public class TrxHistVO {
 	private Date dateTime;
 	private String desc;
+	private String type;
 	private Double amount;
+	private TrxBetDetailsVO trxBetDetails;
 
 	public Date getDateTime() {
 		return dateTime;
@@ -23,12 +25,28 @@ public class TrxHistVO {
 		this.desc = desc;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public Double getAmount() {
 		return amount;
 	}
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public TrxBetDetailsVO getTrxBetDetails() {
+		return trxBetDetails;
+	}
+
+	public void setTrxBetDetails(TrxBetDetailsVO trxBetDetails) {
+		this.trxBetDetails = trxBetDetails;
 	}
 
 }
