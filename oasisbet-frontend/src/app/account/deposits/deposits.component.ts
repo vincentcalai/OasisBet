@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { take, finalize } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -78,8 +79,11 @@ export class DepositsComponent implements OnInit {
       this.accountModelInput.depositAmt = depositAmount;
       this.accountModelInput.actionType = 'D';
       this.sharedVar.updateAccountModel.account = this.accountModelInput;
+      this.sharedVar.changeSpinner('block');
       this.subscriptions.add(
-        this.apiService.updateAccDetails().subscribe( (resp: any) => {
+        this.apiService.updateAccDetails()
+        .pipe(take(1), finalize(() => this.sharedVar.changeSpinner('none')))
+        .subscribe( (resp: any) => {
           if (resp.statusCode != 0) {
             this.errorMsg = resp.resultMessage;
           } else {

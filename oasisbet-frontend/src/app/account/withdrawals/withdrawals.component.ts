@@ -61,7 +61,6 @@ export class WithdrawalsComponent implements OnInit {
     const username = this.authService.getAuthenticationUser();
 
     this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
-      console.log(isLoginSuccess);
       if(isLoginSuccess){
         const withdrawalAmt: number = parseFloat(this.withdrawalAmt.value);
         let accountModel: AccountModel = new AccountModel();
