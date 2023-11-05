@@ -55,7 +55,7 @@ export class AccountLoginComponent implements OnInit {
       },
       error => {
         console.log("login fail");
-        this.errorMsg = "Please enter a valid credential. Login failed.";
+        this.errorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
       }
     )
   }

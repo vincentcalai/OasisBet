@@ -88,7 +88,7 @@ export class WithdrawalsComponent implements OnInit {
         );
       } else {
         console.log("show incorrect password msg");
-            this.errorMsg = "Incorrect Password. Please enter correct password.";
+            this.errorMsg = this.sharedVar.INCORRECT_PW_ERR_MSG;
       }
     });
   }

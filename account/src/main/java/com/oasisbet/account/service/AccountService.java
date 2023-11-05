@@ -348,10 +348,13 @@ public class AccountService {
 					trxHistVo.setDesc(trx.getEventDesc());
 					trxHistVo.setAmount(trx.getBetAmount());
 
+					String betDetails = trx.getEventDesc();
+					betDetails = retrieveBetSelectionResult(betDetails, trx.getBetSelection());
+
 					TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
 					trxBetDetailsVO.setStartTime(trx.getStartTime());
 					trxBetDetailsVO.setCompType(trx.getCompType());
-					trxBetDetailsVO.setBetDetails(trx.getEventDesc());
+					trxBetDetailsVO.setBetDetails(betDetails);
 					trxBetDetailsVO.setBetType(trx.getBetType());
 					trxBetDetailsVO.setStatus(trx.getSettled());
 					trxBetDetailsVO.setTrxId(trx.getTrxId());
@@ -382,6 +385,18 @@ public class AccountService {
 		}
 
 		return trxHistList;
+	}
+
+	private String retrieveBetSelectionResult(String betDetails, String betSelection) {
+		String[] teams = betDetails.split(" vs ");
+		if (teams.length == 2 && Constants.BET_SELECT_HOME.equals(betSelection)) {
+			betDetails += Constants.SPACE + Constants.AT_SIGN + Constants.SPACE + teams[0];
+		} else if (teams.length == 2 && Constants.BET_SELECT_DRAW.equals(betSelection)) {
+			betDetails += Constants.SPACE + Constants.AT_SIGN + Constants.SPACE + Constants.DRAW;
+		} else if (teams.length == 2 && Constants.BET_SELECT_AWAY.equals(betSelection)) {
+			betDetails += Constants.SPACE + Constants.AT_SIGN + Constants.SPACE + teams[1];
+		}
+		return betDetails;
 	}
 
 	public Date genStartDate(String period) {

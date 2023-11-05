@@ -9,6 +9,7 @@ public class Constants {
 	public static final String SLASH = "/";
 	public static final String SPACE = " ";
 	public static final String DOLLAR_SIGN = "$";
+	public static final String AT_SIGN = "@";
 
 	public static final Double INIT_BAL_AMT = 0.00;
 	public static final Double INIT_DEPOSIT_LIMIT = 1000.00;
@@ -37,6 +38,12 @@ public class Constants {
 	public static final String LAST_6_MTH = "last6mth";
 
 	public static final String BET_TYPE_1X2 = "01";
+
+	public static final String BET_SELECT_HOME = "01";
+	public static final String BET_SELECT_DRAW = "02";
+	public static final String BET_SELECT_AWAY = "03";
+
+	public static final String DRAW = "DRAW";
 
 	// User Response Message
 	public static final String USER_CREATE_SUCCESS = "User was created successfully.";

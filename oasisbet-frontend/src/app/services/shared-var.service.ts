@@ -61,7 +61,9 @@ export class SharedVarService {
   public readonly CFM_CHANGE_LIMIT_DIALOG_MSG = "Are you sure to change Monthly Deposit and Monthly Betting limit?";
 
   public readonly INVALID_DATE_FROM_AND_TO_ERR_MSG = '"From" date cannot be later than "To" date.';
-
+  public readonly INCORRECT_PW_ERR_MSG = 'Incorrect Password. Please enter correct password.';
+  public readonly INVALID_LOGIN_ERR_MSG = 'Please enter a valid credential. Login failed.';
+  
   public readonly LAST_24_HRS = 'last24Hrs';
   public readonly LAST_3_DAYS = 'last3Days';
   public readonly MILLI_SEC_24_HRS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

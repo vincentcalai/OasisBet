@@ -123,7 +123,7 @@ export class LimitManagementComponent implements OnInit {
           })
         );
       } else {
-        this.errorMsg = "Incorrect Password. Please enter correct password.";
+        this.errorMsg = this.sharedVar.INCORRECT_PW_ERR_MSG;
       }
     });
   }
