@@ -13,6 +13,8 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 })
 export class TrxHistComponent implements OnInit {
 
+  public errorMsg: string;
+
   public mtdBetAmount: string;
   public mtdPayout: string;
 
@@ -25,13 +27,14 @@ export class TrxHistComponent implements OnInit {
   constructor(public apiService: ApiService, public sharedVar: SharedVarService, public authService: AuthService) { }
 
   ngOnInit(): void {
+    this.errorMsg = "";
     this.accountModelInput = this.authService.getRetrievedAccDetails();
     let accId = this.accountModelInput.accId;
 
     this.subscriptions.add(
         this.apiService.retrieveMtdAmounts(accId).subscribe((resp: any) => {
-              this.mtdBetAmount = resp.account.mtdBetAmount;
-              this.mtdPayout = resp.account.mtdPayout;
+            this.mtdBetAmount = resp.account.mtdBetAmount;
+            this.mtdPayout = resp.account.mtdPayout;
           } ,
             error => {
             console.log(error);
@@ -42,8 +45,12 @@ export class TrxHistComponent implements OnInit {
 
     this.subscriptions.add(
       this.apiService.retrieveTrx(accId, this.selectedTrxType, this.selectedPeriod).subscribe((resp: any) => {
-        this.trxHistList = resp.trxHistList;
-        console.log(this.trxHistList);
+        if (resp.statusCode != 0) {
+          this.errorMsg = resp.resultMessage;
+        } else {
+          this.trxHistList = resp.trxHistList;
+          console.log(this.trxHistList);
+        }
       },
         error => {
         console.log(error);
