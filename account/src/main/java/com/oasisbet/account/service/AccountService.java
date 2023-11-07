@@ -334,6 +334,34 @@ public class AccountService {
 					trxHistVo.setDesc((String) trx[1]);
 					trxHistVo.setType((String) trx[2]);
 					trxHistVo.setAmount((Double) trx[3]);
+
+					if (Constants.TRX_TYPE_SPORTS_BET.equals(trx[2])) {
+						Date startTime = (Date) trx[4];
+						String compType = (String) trx[5];
+						String betType = (String) trx[6];
+
+						Boolean isSettled = false;
+						if (trx[7] != null && ((Number) trx[7]).intValue() == 1) {
+							isSettled = true;
+						}
+
+						String trxId = (String) trx[8];
+						String betSelection = (String) trx[9];
+						Double odds = (Double) trx[10];
+
+						String betDetails = (String) trx[1];
+						betDetails = retrieveBetSelectionResult(betDetails, betSelection, odds);
+
+						TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
+						trxBetDetailsVO.setStartTime(startTime);
+						trxBetDetailsVO.setCompType(compType);
+						trxBetDetailsVO.setBetDetails(betDetails);
+						trxBetDetailsVO.setBetType(betType);
+						trxBetDetailsVO.setStatus(isSettled);
+						trxBetDetailsVO.setTrxId(trxId);
+						trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+					}
+
 					trxHistList.add(trxHistVo);
 				});
 			}
