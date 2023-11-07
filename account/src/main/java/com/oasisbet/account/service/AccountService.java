@@ -305,7 +305,7 @@ public class AccountService {
 		return response;
 	}
 
-	public List<TrxHistVO> retrieveTrxHist(Long accId, String type, String period) {
+	public List<TrxHistVO> retrieveTrxHist(Long accId, String type, String period) throws Exception {
 		String typeCd = Constants.EMPTY_STRING;
 		if (Constants.DEPOSIT_CD.equals(type)) {
 			typeCd = Constants.TRX_TYPE_DEPOSIT;

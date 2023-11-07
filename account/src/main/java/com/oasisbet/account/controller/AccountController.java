@@ -59,8 +59,15 @@ public class AccountController {
 	@GetMapping(value = "/retrieveTrx")
 	public TrxHistRestResponse retrieveTrx(@RequestParam Long accId, String type, String period) {
 		TrxHistRestResponse response = new TrxHistRestResponse();
-		List<TrxHistVO> trxHistVo = this.accountService.retrieveTrxHist(accId, type, period);
-		response.setTrxHistList(trxHistVo);
+		List<TrxHistVO> trxHistVo = null;
+		try {
+			trxHistVo = this.accountService.retrieveTrxHist(accId, type, period);
+			response.setTrxHistList(trxHistVo);
+		} catch (Exception e) {
+			response.setStatusCode(1);
+			response.setResultMessage(Constants.ERR_RETRIEVE_TRX);
+			e.printStackTrace();
+		}
 		return response;
 	}
 
