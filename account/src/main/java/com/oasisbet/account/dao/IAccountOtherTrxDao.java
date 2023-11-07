@@ -19,7 +19,7 @@ public interface IAccountOtherTrxDao extends JpaRepository<AccountOtherTrxView, 
 			+ "start_time, comp_type, bet_type, is_settled, trx_id, bet_selection, odds from tb_bet_trx "
 			+ "where acc_id = :accId and trx_dt >= :startDate union "
 			+ "select trx_dt, CONCAT(IF(type = 'D', 'Deposit $', 'Withdrawal $'), amount), type, amount,"
-			+ " '', null, null, null, null, null, null from tb_other_trx "
+			+ " null, null, null, null, null, null, null from tb_other_trx "
 			+ "where acc_id = :accId and trx_dt >= :startDate order by dateTime desc", nativeQuery = true)
 	List<Object[]> getAllFundsInOutTrx(Long accId, Date startDate);
 
