@@ -19,6 +19,12 @@ public class AccountBetProcessTrxView {
 	@Column(name = "trx_id", length = 15, nullable = false)
 	private String trxId;
 
+	@Column(name = "event_id", nullable = false)
+	private Long eventId;
+
+	@Column(name = "event_desc", length = 100, nullable = false)
+	private String eventDesc;
+
 	@Column(name = "acc_id", nullable = false)
 	private Long accId;
 
@@ -45,6 +51,22 @@ public class AccountBetProcessTrxView {
 
 	public void setTrxId(String trxId) {
 		this.trxId = trxId;
+	}
+
+	public Long getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
+	}
+
+	public String getEventDesc() {
+		return eventDesc;
+	}
+
+	public void setEventDesc(String eventDesc) {
+		this.eventDesc = eventDesc;
 	}
 
 	public Long getAccId() {
