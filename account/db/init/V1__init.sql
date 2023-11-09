@@ -54,8 +54,6 @@ CREATE TABLE `tb_bet_trx` (
 CREATE TABLE `tb_bet_process_trx` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `trx_id` varchar(15) NOT NULL,
-  `event_id` bigint NOT NULL,
-  `event_desc` varchar(100) NOT NULL,
   `acc_id` bigint NOT NULL,
   `amount` double NOT NULL,
   `type` varchar(1) NOT NULL,
