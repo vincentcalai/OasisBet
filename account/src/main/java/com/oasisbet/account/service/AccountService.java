@@ -337,7 +337,8 @@ public class AccountService {
 					trxHistVo.setType((String) trx[2]);
 					trxHistVo.setAmount((Double) trx[3]);
 
-					if (Constants.TRX_TYPE_SPORTS_BET.equals(trx[2])) {
+					if (Constants.TRX_TYPE_SPORTS_BET.equals(trx[2])
+							|| Constants.TRX_TYPE_WINNING_CREDIT.equals(trx[2])) {
 						Date startTime = (Date) trx[4];
 						String compType = (String) trx[5];
 						String betType = (String) trx[6];
