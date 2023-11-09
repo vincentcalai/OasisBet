@@ -370,14 +370,15 @@ public class AccountService {
 
 			if (betTrxView != null && !betTrxView.isEmpty()) {
 				betTrxView.forEach(trx -> {
+					String eventDesc = trx.getEventDesc();
+
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setType(Constants.TRX_TYPE_SPORTS_BET);
 					trxHistVo.setDateTime(trx.getTrxDateTime());
-					trxHistVo.setDesc(trx.getEventDesc());
+					trxHistVo.setDesc(eventDesc);
 					trxHistVo.setAmount(trx.getBetAmount());
 
-					String betDetails = trx.getEventDesc();
-					betDetails = retrieveBetSelectionResult(betDetails, trx.getBetSelection(), trx.getOdds());
+					String betDetails = retrieveBetSelectionResult(eventDesc, trx.getBetSelection(), trx.getOdds());
 
 					TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
 					trxBetDetailsVO.setStartTime(trx.getStartTime());
@@ -389,6 +390,29 @@ public class AccountService {
 					trxHistVo.setTrxBetDetails(trxBetDetailsVO);
 
 					trxHistList.add(trxHistVo);
+
+					if (Boolean.TRUE.equals(trx.getSettled())) {
+						AccountBetProcessTrxView accountBetProcessTrxView = trx.getAccountBetProcessTrxView();
+						if (accountBetProcessTrxView != null) {
+							trxHistVo = new TrxHistVO();
+							trxHistVo.setType(Constants.TRX_TYPE_WINNING_CREDIT);
+							trxHistVo.setDateTime(accountBetProcessTrxView.getTrxDt());
+							trxHistVo.setDesc(eventDesc);
+							trxHistVo.setAmount(accountBetProcessTrxView.getAmount());
+
+							trxBetDetailsVO = new TrxBetDetailsVO();
+							trxBetDetailsVO.setStartTime(trx.getStartTime());
+							trxBetDetailsVO.setCompType(trx.getCompType());
+							trxBetDetailsVO.setBetDetails(betDetails);
+							trxBetDetailsVO.setBetType(trx.getBetType());
+							trxBetDetailsVO.setStatus(trx.getSettled());
+							trxBetDetailsVO.setTrxId(trx.getTrxId());
+							trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+
+							trxHistList.add(trxHistVo);
+						}
+					}
+
 				});
 			}
 		} else {
