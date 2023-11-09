@@ -56,9 +56,9 @@
                 <tr>
                   <td style="text-align:center; width: 25%;">{{trx.dateTime | date:'medium'}}</td>
                   <td style="text-align:center; width: 45%;">{{trx.desc}}</td>
-                  <td style="text-align:center; width: 20%;">{{trx.type == 'W' || trx.type == 'S' ? '-$' + (trx.amount | number : '1.2-2') : '$' + (trx.amount | number : '1.2-2') }}</td>
+                  <td style="text-align:center; width: 20%;">{{trx.type == 'W' || trx.type == 'S' ? '-$' + (trx.amount | number : '1.2-2') : '+$' + (trx.amount | number : '1.2-2') }}</td>
                   <td style="text-align:center; width: 10%;">
-                    <i class="fas" *ngIf="trx.type == 'S'" [ngClass]="{'fa-angle-right': !trx.showDetails, 'fa-angle-down': trx.showDetails}"  
+                    <i class="fas" *ngIf="trx.type == 'S' || trx.type == 'C'" [ngClass]="{'fa-angle-right': !trx.showDetails, 'fa-angle-down': trx.showDetails}"  
                     (click)="toggleShowDetails(trx)" ></i>
                   </td>
                 </tr>

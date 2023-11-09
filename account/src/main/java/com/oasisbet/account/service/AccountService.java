@@ -7,11 +7,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -328,7 +330,7 @@ public class AccountService {
 			allFundsTrx = this.accountOtherTrxDao.getAllFundsInOutTrx(accId, startDate);
 
 			if (allFundsTrx != null && !allFundsTrx.isEmpty()) {
-				allFundsTrx.forEach(trx -> {
+				for (Object[] trx : allFundsTrx) {
 					TrxHistVO trxHistVo = new TrxHistVO();
 					trxHistVo.setDateTime((Date) trx[0]);
 					trxHistVo.setDesc((String) trx[1]);
@@ -352,24 +354,17 @@ public class AccountService {
 						String betDetails = (String) trx[1];
 						betDetails = retrieveBetSelectionResult(betDetails, betSelection, odds);
 
-						TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
-						trxBetDetailsVO.setStartTime(startTime);
-						trxBetDetailsVO.setCompType(compType);
-						trxBetDetailsVO.setBetDetails(betDetails);
-						trxBetDetailsVO.setBetType(betType);
-						trxBetDetailsVO.setStatus(isSettled);
-						trxBetDetailsVO.setTrxId(trxId);
-						trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+						setTrxHistBean(trxHistVo, startTime, compType, betType, isSettled, trxId, betDetails);
 					}
 
 					trxHistList.add(trxHistVo);
-				});
+				}
 			}
 		} else if (Constants.TRX_TYPE_SPORTS_BET.equals(typeCd)) {
 			betTrxView = this.accountBetTrxDao.getByDateRange(accId, startDate);
 
 			if (betTrxView != null && !betTrxView.isEmpty()) {
-				betTrxView.forEach(trx -> {
+				for (AccountBetTrxView trx : betTrxView) {
 					String eventDesc = trx.getEventDesc();
 
 					TrxHistVO trxHistVo = new TrxHistVO();
@@ -380,14 +375,8 @@ public class AccountService {
 
 					String betDetails = retrieveBetSelectionResult(eventDesc, trx.getBetSelection(), trx.getOdds());
 
-					TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
-					trxBetDetailsVO.setStartTime(trx.getStartTime());
-					trxBetDetailsVO.setCompType(trx.getCompType());
-					trxBetDetailsVO.setBetDetails(betDetails);
-					trxBetDetailsVO.setBetType(trx.getBetType());
-					trxBetDetailsVO.setStatus(trx.getSettled());
-					trxBetDetailsVO.setTrxId(trx.getTrxId());
-					trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+					setTrxHistBean(trxHistVo, trx.getStartTime(), trx.getCompType(), trx.getBetType(), trx.getSettled(),
+							trx.getTrxId(), betDetails);
 
 					trxHistList.add(trxHistVo);
 
@@ -400,26 +389,19 @@ public class AccountService {
 							trxHistVo.setDesc(eventDesc);
 							trxHistVo.setAmount(accountBetProcessTrxView.getAmount());
 
-							trxBetDetailsVO = new TrxBetDetailsVO();
-							trxBetDetailsVO.setStartTime(trx.getStartTime());
-							trxBetDetailsVO.setCompType(trx.getCompType());
-							trxBetDetailsVO.setBetDetails(betDetails);
-							trxBetDetailsVO.setBetType(trx.getBetType());
-							trxBetDetailsVO.setStatus(trx.getSettled());
-							trxBetDetailsVO.setTrxId(trx.getTrxId());
-							trxHistVo.setTrxBetDetails(trxBetDetailsVO);
+							setTrxHistBean(trxHistVo, trx.getStartTime(), trx.getCompType(), trx.getBetType(),
+									trx.getSettled(), accountBetProcessTrxView.getTrxId(), betDetails);
 
 							trxHistList.add(trxHistVo);
 						}
 					}
-
-				});
+				}
 			}
 		} else {
 			otherTrxView = this.accountOtherTrxDao.getByTypeByDateRange(accId, typeCd, startDate);
 
 			if (otherTrxView != null && !otherTrxView.isEmpty()) {
-				otherTrxView.forEach(trx -> {
+				for (AccountOtherTrxView trx : otherTrxView) {
 					Double amt = trx.getAmount();
 					String fullDesc = Constants.TRX_TYPE_DEPOSIT.equals(trx.getType())
 							? Constants.DEPOSIT_DESC + Constants.SPACE + Constants.DOLLAR_SIGN
@@ -432,11 +414,26 @@ public class AccountService {
 					trxHistVo.setDateTime(trx.getTrxDt());
 					trxHistVo.setDesc(fullDesc);
 					trxHistList.add(trxHistVo);
-				});
+				}
 			}
 		}
 
+		trxHistList = trxHistList.stream().sorted(Comparator.comparing(TrxHistVO::getDateTime).reversed())
+				.collect(Collectors.toList());
+
 		return trxHistList;
+	}
+
+	private void setTrxHistBean(TrxHistVO trxHistVo, Date startTime, String compType, String betType, Boolean isSettled,
+			String trxId, String betDetails) {
+		TrxBetDetailsVO trxBetDetailsVO = new TrxBetDetailsVO();
+		trxBetDetailsVO.setStartTime(startTime);
+		trxBetDetailsVO.setCompType(compType);
+		trxBetDetailsVO.setBetDetails(betDetails);
+		trxBetDetailsVO.setBetType(betType);
+		trxBetDetailsVO.setStatus(isSettled);
+		trxBetDetailsVO.setTrxId(trxId);
+		trxHistVo.setTrxBetDetails(trxBetDetailsVO);
 	}
 
 	private String retrieveBetSelectionResult(String betDetails, String betSelection, Double odds) {
