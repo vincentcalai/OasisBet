@@ -2,11 +2,14 @@ package com.oasisbet.account.view;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,10 @@ public class AccountBetProcessTrxView {
 
 	@Column(name = "trx_id", length = 15, nullable = false)
 	private String trxId;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ref_trx_id", referencedColumnName = "trx_id")
+	private AccountBetTrxView accountBetTrxView;
 
 	@Column(name = "acc_id", nullable = false)
 	private Long accId;
@@ -45,6 +52,14 @@ public class AccountBetProcessTrxView {
 
 	public void setTrxId(String trxId) {
 		this.trxId = trxId;
+	}
+
+	public AccountBetTrxView getAccountBetTrxView() {
+		return accountBetTrxView;
+	}
+
+	public void setAccountBetTrxView(AccountBetTrxView accountBetTrxView) {
+		this.accountBetTrxView = accountBetTrxView;
 	}
 
 	public Long getAccId() {

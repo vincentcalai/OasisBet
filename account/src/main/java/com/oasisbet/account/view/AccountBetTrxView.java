@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -52,6 +53,9 @@ public class AccountBetTrxView {
 
 	@Column(name = "settled_dt")
 	private Date settledDateTime;
+
+	@OneToOne(mappedBy = "accountBetTrxView")
+	private AccountBetProcessTrxView accountBetProcessTrxView;
 
 	public String getTrxId() {
 		return trxId;
@@ -163,6 +167,14 @@ public class AccountBetTrxView {
 
 	public void setSettledDateTime(Date settledDateTime) {
 		this.settledDateTime = settledDateTime;
+	}
+
+	public AccountBetProcessTrxView getAccountBetProcessTrxView() {
+		return accountBetProcessTrxView;
+	}
+
+	public void setAccountBetProcessTrxView(AccountBetProcessTrxView accountBetProcessTrxView) {
+		this.accountBetProcessTrxView = accountBetProcessTrxView;
 	}
 
 }
