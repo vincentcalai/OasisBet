@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -8,9 +10,17 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class MainMenuComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  public spinme: string = 'none';
+
+  public subscriptions: Subscription = new Subscription();
+
+  constructor(public authService: AuthService,
+    public sharedVar: SharedVarService) { }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.sharedVar.currentSpinner.subscribe(status => this.spinme = status)
+    );
   }
 
   logout(): void {
