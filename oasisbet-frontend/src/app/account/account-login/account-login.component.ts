@@ -55,6 +55,7 @@ export class AccountLoginComponent implements OnInit {
       },
       error => {
         console.log("login fail");
+        this.sharedVar.changeSpinner('none');
         this.errorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
       }
     )

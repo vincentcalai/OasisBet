@@ -93,6 +93,7 @@ export class DepositsComponent implements OnInit {
           }
         } ,
           error => {
+          this.sharedVar.changeSpinner('none');
           this.sharedVar.changeException(error);
         })
       );
