@@ -293,22 +293,8 @@ class TestAccountService extends TestWithSpringBoot {
 
 		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
 
-		List<Object[]> trxList = new ArrayList<>();
-		Object[] trx1 = new Object[3];
-		trx1[0] = new Date();
-		trx1[1] = "Manchester United vs Chelsea";
-		trx1[2] = 10.00;
-		Object[] trx2 = new Object[3];
-		trx2[0] = new Date();
-		trx2[1] = "Desposit $100";
-		trx2[2] = 100.00;
-		Object[] trx3 = new Object[3];
-		trx3[0] = new Date();
-		trx3[1] = "Withdrawal $40";
-		trx3[2] = 40.00;
-		trxList.add(trx1);
-		trxList.add(trx2);
-		trxList.add(trx3);
+		List<Object[]> trxList = AccountFixture.createMockAllFundsTrxList();
+
 		Mockito.when(mockAccountOtherTrxDao.getAllFundsInOutTrx(anyLong(), any(Date.class))).thenReturn(trxList);
 
 		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
@@ -406,23 +392,14 @@ class TestAccountService extends TestWithSpringBoot {
 
 		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
 
-		List<AccountBetTrxView> trxList = new ArrayList<>();
-		AccountBetTrxView trx1 = new AccountBetTrxView();
-		trx1.setAccId(100000L);
-		trx1.setEventId(100008L);
-		trx1.setTrxId("B/100000/100034");
-		AccountBetTrxView trx2 = new AccountBetTrxView();
-		trx2.setAccId(100000L);
-		trx2.setEventId(100009L);
-		trx2.setTrxId("B/100000/100035");
-		trxList.add(trx1);
-		trxList.add(trx2);
+		List<AccountBetTrxView> trxList = AccountFixture.createMockSportsBetTrxList(accId);
+
 		Mockito.when(this.mockAccountBetTrxDao.getByDateRange(anyLong(), any(Date.class))).thenReturn(trxList);
 
 		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
 
 		Mockito.verify(mockAccountBetTrxDao).getByDateRange(eq(accId), eq(date));
-		assertEquals(2, list.size());
+		assertEquals(6, list.size());
 	}
 
 	@Test

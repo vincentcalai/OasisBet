@@ -13,6 +13,7 @@ import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.request.BetSlipRest;
+import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
 
 public class AccountFixture {
@@ -267,5 +268,93 @@ public class AccountFixture {
 		resultEventMap.put(BigInteger.valueOf(100001L), mockList.get(1));
 		resultEventMap.put(BigInteger.valueOf(100002L), mockList.get(2));
 		return resultEventMap;
+	}
+
+	public static List<Object[]> createMockAllFundsTrxList() {
+		List<Object[]> trxList = new ArrayList<>();
+		Object[] trx1 = new Object[11];
+		trx1[0] = new Date();
+		trx1[1] = "Manchester United vs Chelsea";
+		trx1[2] = "S";
+		trx1[3] = 10.00;
+		trx1[4] = new Date();
+		trx1[5] = "EPL";
+		trx1[6] = "01";
+		trx1[7] = 1;
+		trx1[8] = "B/100002/100051";
+		trx1[9] = "02";
+		trx1[10] = 3.25;
+		Object[] trx2 = new Object[11];
+		trx2[0] = new Date();
+		trx2[1] = "Desposit $100";
+		trx2[2] = "D";
+		trx2[3] = 100.00;
+		Object[] trx3 = new Object[11];
+		trx3[0] = new Date();
+		trx3[1] = "Withdrawal $40";
+		trx3[2] = "W";
+		trx3[3] = 40.00;
+		trxList.add(trx1);
+		trxList.add(trx2);
+		trxList.add(trx3);
+		return trxList;
+	}
+
+	public static List<AccountBetTrxView> createMockSportsBetTrxList(Long accId) {
+		List<AccountBetTrxView> trxList = new ArrayList<>();
+		AccountBetTrxView trx1 = new AccountBetTrxView();
+		trx1.setAccId(100000L);
+		trx1.setEventDesc("Chelsea vs Manchester United");
+		trx1.setEventId(100008L);
+		trx1.setTrxId("B/100000/100034");
+		trx1.setTrxDateTime(new Date());
+		trx1.setSettled(true);
+		AccountBetTrxView trx2 = new AccountBetTrxView();
+		trx2.setAccId(100000L);
+		trx2.setEventDesc("Tottenham Hotspurs vs Arsenal");
+		trx2.setEventId(100009L);
+		trx2.setTrxId("B/100000/100035");
+		trx2.setTrxDateTime(new Date());
+		trx2.setSettled(true);
+		AccountBetTrxView trx3 = new AccountBetTrxView();
+		trx3.setAccId(100000L);
+		trx3.setEventDesc("Tottenham Hotspurs vs Arsenal");
+		trx3.setEventId(100009L);
+		trx3.setTrxId("B/100000/100035");
+		trx3.setTrxDateTime(new Date());
+		trx3.setSettled(true);
+
+		AccountBetProcessTrxView betProcessTrx1 = new AccountBetProcessTrxView();
+		betProcessTrx1.setAccId(accId);
+		betProcessTrx1.setAmount(10.00);
+		betProcessTrx1.setId(1L);
+		betProcessTrx1.setTrxDt(new Date());
+		betProcessTrx1.setTrxId("B/100000/100034");
+		betProcessTrx1.setType("B");
+
+		AccountBetProcessTrxView betProcessTrx2 = new AccountBetProcessTrxView();
+		betProcessTrx2.setAccId(accId);
+		betProcessTrx2.setAmount(15.00);
+		betProcessTrx2.setId(2L);
+		betProcessTrx2.setTrxDt(new Date());
+		betProcessTrx2.setTrxId("B/100000/100035");
+		betProcessTrx2.setType("B");
+
+		AccountBetProcessTrxView betProcessTrx3 = new AccountBetProcessTrxView();
+		betProcessTrx3.setAccId(accId);
+		betProcessTrx3.setAmount(30.00);
+		betProcessTrx3.setId(3L);
+		betProcessTrx3.setTrxDt(new Date());
+		betProcessTrx3.setTrxId("C/100000/100099");
+		betProcessTrx3.setType("C");
+
+		trx1.setAccountBetProcessTrxView(betProcessTrx1);
+		trx2.setAccountBetProcessTrxView(betProcessTrx2);
+		trx3.setAccountBetProcessTrxView(betProcessTrx3);
+
+		trxList.add(trx1);
+		trxList.add(trx2);
+		trxList.add(trx3);
+		return trxList;
 	}
 }
