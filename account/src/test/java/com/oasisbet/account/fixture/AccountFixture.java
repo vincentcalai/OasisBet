@@ -300,7 +300,7 @@ public class AccountFixture {
 		return trxList;
 	}
 
-	public static List<AccountBetTrxView> createMockSportsBetTrxList(Long accId) {
+	public static List<AccountBetTrxView> createMockSportsBetTrxListWith3Wins(Long accId) {
 		List<AccountBetTrxView> trxList = new ArrayList<>();
 		AccountBetTrxView trx1 = new AccountBetTrxView();
 		trx1.setAccId(100000L);
@@ -308,6 +308,8 @@ public class AccountFixture {
 		trx1.setEventId(100008L);
 		trx1.setTrxId("B/100000/100034");
 		trx1.setTrxDateTime(new Date());
+		trx1.setBetSelection("01");
+		trx1.setOdds(3.05);
 		trx1.setSettled(true);
 		AccountBetTrxView trx2 = new AccountBetTrxView();
 		trx2.setAccId(100000L);
@@ -315,34 +317,38 @@ public class AccountFixture {
 		trx2.setEventId(100009L);
 		trx2.setTrxId("B/100000/100035");
 		trx2.setTrxDateTime(new Date());
+		trx2.setBetSelection("02");
+		trx2.setOdds(3.25);
 		trx2.setSettled(true);
 		AccountBetTrxView trx3 = new AccountBetTrxView();
 		trx3.setAccId(100000L);
-		trx3.setEventDesc("Tottenham Hotspurs vs Arsenal");
-		trx3.setEventId(100009L);
-		trx3.setTrxId("B/100000/100035");
+		trx3.setEventDesc("Burnley vs Manchester City");
+		trx3.setEventId(100010L);
+		trx3.setTrxId("B/100000/100036");
 		trx3.setTrxDateTime(new Date());
+		trx3.setBetSelection("03");
+		trx3.setOdds(1.18);
 		trx3.setSettled(true);
 
 		AccountBetProcessTrxView betProcessTrx1 = new AccountBetProcessTrxView();
 		betProcessTrx1.setAccId(accId);
-		betProcessTrx1.setAmount(10.00);
+		betProcessTrx1.setAmount(30.50);
 		betProcessTrx1.setId(1L);
 		betProcessTrx1.setTrxDt(new Date());
-		betProcessTrx1.setTrxId("B/100000/100034");
-		betProcessTrx1.setType("B");
+		betProcessTrx1.setTrxId("C/100000/100097");
+		betProcessTrx1.setType("C");
 
 		AccountBetProcessTrxView betProcessTrx2 = new AccountBetProcessTrxView();
 		betProcessTrx2.setAccId(accId);
-		betProcessTrx2.setAmount(15.00);
+		betProcessTrx2.setAmount(32.5);
 		betProcessTrx2.setId(2L);
 		betProcessTrx2.setTrxDt(new Date());
-		betProcessTrx2.setTrxId("B/100000/100035");
-		betProcessTrx2.setType("B");
+		betProcessTrx2.setTrxId("C/100000/100098");
+		betProcessTrx2.setType("C");
 
 		AccountBetProcessTrxView betProcessTrx3 = new AccountBetProcessTrxView();
 		betProcessTrx3.setAccId(accId);
-		betProcessTrx3.setAmount(30.00);
+		betProcessTrx3.setAmount(118.0);
 		betProcessTrx3.setId(3L);
 		betProcessTrx3.setTrxDt(new Date());
 		betProcessTrx3.setTrxId("C/100000/100099");
@@ -350,6 +356,52 @@ public class AccountFixture {
 
 		trx1.setAccountBetProcessTrxView(betProcessTrx1);
 		trx2.setAccountBetProcessTrxView(betProcessTrx2);
+		trx3.setAccountBetProcessTrxView(betProcessTrx3);
+
+		trxList.add(trx1);
+		trxList.add(trx2);
+		trxList.add(trx3);
+		return trxList;
+	}
+
+	public static List<AccountBetTrxView> createMockSportsBetTrxListWith1Win(Long accId) {
+		List<AccountBetTrxView> trxList = new ArrayList<>();
+		AccountBetTrxView trx1 = new AccountBetTrxView();
+		trx1.setAccId(100000L);
+		trx1.setEventDesc("Chelsea vs Manchester United");
+		trx1.setEventId(100008L);
+		trx1.setTrxId("B/100000/100034");
+		trx1.setTrxDateTime(new Date());
+		trx1.setBetSelection("02");
+		trx1.setOdds(3.45);
+		trx1.setSettled(true);
+		AccountBetTrxView trx2 = new AccountBetTrxView();
+		trx2.setAccId(100000L);
+		trx2.setEventDesc("Tottenham Hotspurs vs Arsenal");
+		trx2.setEventId(100009L);
+		trx2.setTrxId("B/100000/100035");
+		trx2.setTrxDateTime(new Date());
+		trx2.setBetSelection("01");
+		trx2.setOdds(2.25);
+		trx2.setSettled(true);
+		AccountBetTrxView trx3 = new AccountBetTrxView();
+		trx3.setAccId(100000L);
+		trx3.setEventDesc("Burnley vs Manchester City");
+		trx3.setEventId(100010L);
+		trx3.setTrxId("B/100000/100036");
+		trx3.setTrxDateTime(new Date());
+		trx3.setBetSelection("03");
+		trx3.setOdds(1.18);
+		trx3.setSettled(true);
+
+		AccountBetProcessTrxView betProcessTrx3 = new AccountBetProcessTrxView();
+		betProcessTrx3.setAccId(accId);
+		betProcessTrx3.setAmount(118.0);
+		betProcessTrx3.setId(3L);
+		betProcessTrx3.setTrxDt(new Date());
+		betProcessTrx3.setTrxId("C/100000/100099");
+		betProcessTrx3.setType("C");
+
 		trx3.setAccountBetProcessTrxView(betProcessTrx3);
 
 		trxList.add(trx1);

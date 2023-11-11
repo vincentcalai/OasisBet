@@ -439,12 +439,12 @@ public class AccountService {
 
 	private String retrieveBetSelectionResult(String betDetails, String betSelection, Double odds) {
 		String[] teams = betDetails.split(" vs ");
-		if (teams.length == 2 && Constants.BET_SELECT_HOME.equals(betSelection)) {
+		if (teams.length == 2 && Constants.BET_SELECT_HOME.equals(betSelection) && odds != 0) {
 			betDetails += Constants.SPACE + Constants.AT_SIGN + Constants.SPACE + teams[0] + Constants.SPACE + odds;
-		} else if (teams.length == 2 && Constants.BET_SELECT_DRAW.equals(betSelection)) {
+		} else if (teams.length == 2 && Constants.BET_SELECT_DRAW.equals(betSelection) && odds != 0) {
 			betDetails += Constants.SPACE + Constants.AT_SIGN + Constants.SPACE + Constants.DRAW + Constants.SPACE
 					+ odds;
-		} else if (teams.length == 2 && Constants.BET_SELECT_AWAY.equals(betSelection)) {
+		} else if (teams.length == 2 && Constants.BET_SELECT_AWAY.equals(betSelection) && odds != 0) {
 			betDetails += Constants.SPACE + Constants.AT_SIGN + Constants.SPACE + teams[1] + Constants.SPACE + odds;
 		}
 		return betDetails;

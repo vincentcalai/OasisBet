@@ -380,7 +380,7 @@ class TestAccountService extends TestWithSpringBoot {
 	}
 
 	@Test
-	void testRetrieveTrxHistSportsBet() throws Exception {
+	void testRetrieveTrxHistSportsBet_Given3WinBets_VerifyTotalTransactionIs6() throws Exception {
 		Long accId = 100002L;
 		String type = "sportsbet";
 		String period = "last6mth";
@@ -392,7 +392,7 @@ class TestAccountService extends TestWithSpringBoot {
 
 		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
 
-		List<AccountBetTrxView> trxList = AccountFixture.createMockSportsBetTrxList(accId);
+		List<AccountBetTrxView> trxList = AccountFixture.createMockSportsBetTrxListWith3Wins(accId);
 
 		Mockito.when(this.mockAccountBetTrxDao.getByDateRange(anyLong(), any(Date.class))).thenReturn(trxList);
 
@@ -400,6 +400,29 @@ class TestAccountService extends TestWithSpringBoot {
 
 		Mockito.verify(mockAccountBetTrxDao).getByDateRange(eq(accId), eq(date));
 		assertEquals(6, list.size());
+	}
+
+	@Test
+	void testRetrieveTrxHistSportsBet_Given1WinBet_VerifyTotalTransactionIs4() throws Exception {
+		Long accId = 100002L;
+		String type = "sportsbet";
+		String period = "last6mth";
+
+		LocalDate localDate = LocalDate.of(2023, 1, 1);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
+		Date date = calendar.getTime();
+
+		Mockito.doReturn(date).when(mockAccountService).genStartDate(anyString());
+
+		List<AccountBetTrxView> trxList = AccountFixture.createMockSportsBetTrxListWith1Win(accId);
+
+		Mockito.when(this.mockAccountBetTrxDao.getByDateRange(anyLong(), any(Date.class))).thenReturn(trxList);
+
+		List<TrxHistVO> list = mockAccountService.retrieveTrxHist(accId, type, period);
+
+		Mockito.verify(mockAccountBetTrxDao).getByDateRange(eq(accId), eq(date));
+		assertEquals(4, list.size());
 	}
 
 	@Test
