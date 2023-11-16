@@ -20,7 +20,7 @@ export class ResultsLandingComponent implements OnInit {
   competitionTypeHdr: string;
   public events : ResultEvent[];
 
-  public selectedDates: string = 'last24Hrs';
+  public selectedDates: string = this.sharedVar.LAST_24_HRS;
   public currentDate: Date = new Date();
   public dateFrom: Date;
   public dateTo: Date;
@@ -36,6 +36,7 @@ export class ResultsLandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      this.selectedDates = this.sharedVar.LAST_24_HRS;
       this.mapDateFromAndDateTo(this.selectedDates);
 
       this.subscriptions.add(
@@ -55,7 +56,7 @@ export class ResultsLandingComponent implements OnInit {
 
   mapDateFromAndDateTo(selectedDates: string) {
     if (selectedDates === this.sharedVar.LAST_24_HRS) {
-      const last24Hours = this.sharedVar.MILLI_SEC_24_HRS; 
+      const last24Hours = this.sharedVar.MILLI_SEC_24_HRS;
       this.dateFrom = new Date(this.currentDate.getTime() - (this.currentDate.getTimezoneOffset() * 60000) - last24Hours);
       this.dateTo = new Date(this.currentDate.getTime() - (this.currentDate.getTimezoneOffset() * 60000));
     } else if (selectedDates === this.sharedVar.LAST_3_DAYS) {
@@ -82,7 +83,7 @@ export class ResultsLandingComponent implements OnInit {
     const currentTime = new Date();
     return currentTime > startTime;
   }
-  
+
   filterResult(){
     this.subscriptions.add(
       this.apiService.retrieveResults(this.compType, this.selectedDates, this.dateFrom, this.dateTo).subscribe((resp: any) => {
