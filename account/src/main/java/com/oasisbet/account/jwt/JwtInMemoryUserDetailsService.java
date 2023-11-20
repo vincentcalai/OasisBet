@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.oasisbet.account.dao.IUserDao;
+import com.oasisbet.account.util.Constants;
 import com.oasisbet.account.view.UserView;
 
 @Service
@@ -19,15 +20,13 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 	@Autowired
 	private IUserDao userDao;
 
-	private final String NO = "N";
-
 	static List<JwtUserDetails> inMemoryUserList = new ArrayList<>();
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //    Optional<JwtUserDetails> findFirst = inMemoryUserList.stream()
 //        .filter(user -> user.getUsername().equals(username)).findFirst();
-		Optional<UserView> findFirst = userDao.findByUsernameAndDelIndOrderByIdAsc(username, NO);
+		Optional<UserView> findFirst = userDao.findByUsernameAndDelIndOrderByIdAsc(username, Constants.NO);
 
 		if (!findFirst.isPresent()) {
 			throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", username));
