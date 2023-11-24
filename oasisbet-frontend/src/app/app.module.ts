@@ -31,6 +31,7 @@ import { LimitManagementComponent } from './account/limit-management/limit-manag
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav/comp-side-nav.component';
+import { InterceptorModule } from './services/api/interceptor.module';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav/comp
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    InterceptorModule,
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
