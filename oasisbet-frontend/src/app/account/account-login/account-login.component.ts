@@ -46,7 +46,9 @@ export class AccountLoginComponent implements OnInit {
   handleJWTAuthLogin(){
     this.responseMsg = "";
     this.sharedVar.changeSpinner('block');
-    this.authService.jwtAuthenticate(this.username,this.password)
+    this.sharedVar.loginCredentialsModel.username = this.username;
+    this.sharedVar.loginCredentialsModel.password = this.password;
+    this.authService.jwtAuthenticate()
     .pipe(take(1), finalize(() => this.sharedVar.changeSpinner('none')))
     .subscribe(
       data => {

@@ -144,7 +144,7 @@ describe('WithdrawalsComponent', () => {
     const username = 'testuser';
     const password = 'password123';
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of({}));
-    component.sharedMethod.handleJWTAuthLogin(username, password).subscribe(result => {
+    component.sharedMethod.handleJWTAuthLogin().subscribe(result => {
       expect(result).toBeTrue();
     });
   });
@@ -153,7 +153,7 @@ describe('WithdrawalsComponent', () => {
     const username = sessionStorage.getItem(AUTH_USER);
     const password = 'incorrectpassword';
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(throwError('Incorrect credentials'));
-    component.sharedMethod.handleJWTAuthLogin(username, password).subscribe(result => {
+    component.sharedMethod.handleJWTAuthLogin().subscribe(result => {
       expect(result).toBeFalse();
     });
   });

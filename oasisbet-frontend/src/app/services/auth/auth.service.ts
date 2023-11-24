@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Router } from '@angular/router';
+import { LoginCredentialsModel } from 'src/app/model/login-credentials.model';
 
 export const AUTH_USER = 'authenticateUser';
 export const TOKEN = 'token';
@@ -14,8 +15,8 @@ export class AuthService {
 
   constructor(public apiService: ApiService, public router: Router) { }
 
-    jwtAuthenticate(username: string, password: string) {
-      return this.apiService.jwtAuthenticate(username, password);
+    jwtAuthenticate() {
+      return this.apiService.jwtAuthenticate();
     }
 
     isUserLoggedIn(){

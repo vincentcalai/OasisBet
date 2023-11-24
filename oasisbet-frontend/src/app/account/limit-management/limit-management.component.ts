@@ -96,7 +96,11 @@ export class LimitManagementComponent implements OnInit {
     this.errorMsg = "";
     this.responseMsg = "";
     const username = this.authService.getAuthenticationUser();
-    this.sharedMethod.handleJWTAuthLogin(username, this.password.value).subscribe(isLoginSuccess => {
+
+    this.sharedVar.loginCredentialsModel.username = username;
+    this.sharedVar.loginCredentialsModel.password = this.password.value;
+
+    this.sharedMethod.handleJWTAuthLogin().subscribe(isLoginSuccess => {
       console.log(isLoginSuccess);
         if(isLoginSuccess){
         const depositLimitAmt: number = parseFloat(this.depositLimit.value);

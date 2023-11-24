@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { timeout, catchError, map } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { SharedVarService } from '../shared-var.service';
+import { LoginCredentialsModel } from 'src/app/model/login-credentials.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,8 @@ export class ApiService {
     this.commonApiPrefix = environment.commonApiUrl;
   }
 
-  jwtAuthenticate(username: string, password: string) {
-    return this.http.post<any>( this.commonApiPrefix + "/user/authenticate",{
-      username,
-      password
-    })
+  jwtAuthenticate() {
+    return this.http.post<any>( this.commonApiPrefix + "/user/authenticate", this.sharedVar.loginCredentialsModel)
     .pipe(
       map(
         data => {

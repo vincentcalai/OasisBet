@@ -5,6 +5,7 @@ import { UserModel } from '../model/user.model';
 import { AuthService } from './auth/auth.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { LoginCredentialsModel } from '../model/login-credentials.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class SharedMethodsService {
     this.sharedVar.createUserModel.user = new UserModel();
   }
 
-  handleJWTAuthLogin(username: string, password: string): Observable<boolean> {
-    return this.authService.jwtAuthenticate(username, password)
+  handleJWTAuthLogin(): Observable<boolean> {
+    return this.authService.jwtAuthenticate()
       .pipe(
         map(data => {
           console.log("correct login credentials.");
