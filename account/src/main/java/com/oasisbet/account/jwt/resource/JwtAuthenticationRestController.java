@@ -1,7 +1,5 @@
 package com.oasisbet.account.jwt.resource;
 
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -36,8 +34,8 @@ public class JwtAuthenticationRestController {
 	private UserDetailsService jwtInMemoryUserDetailsService;
 
 	@RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
-			throws AuthenticationException {
+	public ResponseEntity<JwtTokenResponse> createAuthenticationToken(
+			@RequestBody JwtTokenRequest authenticationRequest) throws AuthenticationException {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
@@ -70,9 +68,6 @@ public class JwtAuthenticationRestController {
 	}
 
 	private void authenticate(String username, String password) {
-		Objects.requireNonNull(username);
-		Objects.requireNonNull(password);
-
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
