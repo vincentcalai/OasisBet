@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ACC_DETAILS, AUTH_USER, AuthService, TOKEN } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService } from 'src/app/services/auth/auth.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
@@ -57,7 +57,6 @@ export class AccountLoginComponent implements OnInit {
       },
       error => {
         console.log("login fail");
-        this.sharedVar.changeSpinner('none');
         this.errorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
       }
     )
@@ -75,7 +74,7 @@ export class AccountLoginComponent implements OnInit {
               this.errorMsg = resp.resultMessage;
             } else {
               sessionStorage.setItem(AUTH_USER, username);
-              sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
+              sessionStorage.setItem(AUTHORIZATION, `Bearer ${data.token}`);
               sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
               console.log("login successful");
             }

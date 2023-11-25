@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Router } from '@angular/router';
-import { LoginCredentialsModel } from 'src/app/model/login-credentials.model';
 
 export const AUTH_USER = 'authenticateUser';
-export const TOKEN = 'token';
+export const AUTHORIZATION = 'authorization';
 export const ACC_DETAILS = 'accountDetails';
 
 @Injectable({
@@ -30,7 +29,7 @@ export class AuthService {
 
     getAuthenticationToken(){
       if(this.getAuthenticationUser()){
-        return sessionStorage.getItem(TOKEN);
+        return sessionStorage.getItem(AUTHORIZATION);
       }
       return null;
     }
@@ -43,7 +42,7 @@ export class AuthService {
       if(confirm("Are you sure to logout?")) {
         console.log("logout ok");
         sessionStorage.removeItem(AUTH_USER);
-        sessionStorage.removeItem(TOKEN);
+        sessionStorage.removeItem(AUTHORIZATION);
         sessionStorage.removeItem(ACC_DETAILS);
         this.router.navigate(['/']);
       }

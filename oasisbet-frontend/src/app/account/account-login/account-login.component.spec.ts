@@ -4,9 +4,9 @@ import { AccountLoginComponent } from './account-login.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedVarService } from 'src/app/services/shared-var.service';
-import { BehaviorSubject, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ACC_DETAILS, AUTH_USER, TOKEN } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AUTHORIZATION, AUTH_USER } from 'src/app/services/auth/auth.service';
 import { AccountModel } from 'src/app/model/account.model';
 
 describe('AccountLoginComponent', () => {
@@ -35,7 +35,7 @@ describe('AccountLoginComponent', () => {
 
   afterEach(() => {
     sessionStorage.removeItem(AUTH_USER);
-    sessionStorage.removeItem(TOKEN);
+    sessionStorage.removeItem(AUTHORIZATION);
     sessionStorage.removeItem(ACC_DETAILS);
     component.ngOnDestroy();
   })
@@ -96,7 +96,7 @@ describe('AccountLoginComponent', () => {
     component.retrieveAccDetails(user, data);
     expect(component.errorMsg).toBe(message);
     expect(sessionStorage.getItem(AUTH_USER)).toBeNull();
-    expect(sessionStorage.getItem(TOKEN)).toBeNull();
+    expect(sessionStorage.getItem(AUTHORIZATION)).toBeNull();
     expect(sessionStorage.getItem(ACC_DETAILS)).toBeNull();
   });
 
@@ -109,7 +109,7 @@ describe('AccountLoginComponent', () => {
     component.retrieveAccDetails(user, data);
     expect(component.errorMsg).toBe(null);
     expect(sessionStorage.getItem(AUTH_USER)).toBe(user);
-    expect(sessionStorage.getItem(TOKEN)).toBe('Bearer ' + data.token);
+    expect(sessionStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
     expect(sessionStorage.getItem(ACC_DETAILS)).not.toBeNull();
   });
 
