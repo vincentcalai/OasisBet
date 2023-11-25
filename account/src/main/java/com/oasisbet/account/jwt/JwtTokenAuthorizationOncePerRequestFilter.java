@@ -62,7 +62,8 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 
 			UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
 
-			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+			boolean isTokenValid = jwtTokenUtil.validateToken(jwtToken, userDetails);
+			if (isTokenValid) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
