@@ -1,6 +1,8 @@
 package com.oasisbet.account.jwt;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,6 +28,8 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	List<String> shouldNotFilterPath = Arrays.asList("/user/authenticate");
+
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
 
@@ -38,7 +42,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		logger.debug("Authentication Request For '{}'", request.getRequestURL());
+		logger.info("Authentication Request For '{}'", request.getRequestURL());
 
 		final String requestTokenHeader = request.getHeader(this.tokenHeader);
 
@@ -57,7 +61,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 			logger.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
 		}
 
-		logger.debug("JWT_TOKEN_USERNAME_VALUE '{}'", username);
+		logger.info("JWT_TOKEN_USERNAME_VALUE '{}'", username);
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
@@ -73,5 +77,10 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 		}
 
 		chain.doFilter(request, response);
+	}
+
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
+		return shouldNotFilterPath.stream().anyMatch(path -> path.equals(request.getServletPath()));
 	}
 }
