@@ -58,7 +58,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 
 				logger.info("JWT_TOKEN_USERNAME_VALUE '{}'", username);
-				if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+				if (username != null) {
 
 					UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
 
@@ -72,13 +72,12 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 					}
 				}
 
+			} catch (ExpiredJwtException e) {
+				throw new ExpiredJwtException(null, null, "Token Expired!", e);
 			} catch (IllegalArgumentException | UnsupportedJwtException | MalformedJwtException
 					| SignatureException e) {
 				logger.error("JWT_TOKEN_UNABLE_TO_GET_USERNAME", e);
 				throw new BadCredentialsException("Invalid Token received!");
-			} catch (ExpiredJwtException e) {
-				logger.error("JWT_TOKEN_EXPIRED", e);
-				throw new ExpiredJwtException(null, null, "Token Expired!", e);
 			}
 		} else {
 			logger.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
