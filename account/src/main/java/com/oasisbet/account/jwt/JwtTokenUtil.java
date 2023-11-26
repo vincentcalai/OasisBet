@@ -12,8 +12,12 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.impl.DefaultClock;
 
 @Component
@@ -47,7 +51,8 @@ public class JwtTokenUtil implements Serializable {
 		return claimsResolver.apply(claims);
 	}
 
-	private Claims getAllClaimsFromToken(String token) {
+	private Claims getAllClaimsFromToken(String token) throws ExpiredJwtException, UnsupportedJwtException,
+			MalformedJwtException, SignatureException, IllegalArgumentException {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	}
 
