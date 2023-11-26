@@ -20,7 +20,9 @@ export class AuthService {
 
     isUserLoggedIn(){
       let user =  sessionStorage.getItem(AUTH_USER);
-      return !(user === null);
+      let authorizationHeader = sessionStorage.getItem(AUTHORIZATION);
+      let accDetails = sessionStorage.getItem(ACC_DETAILS)
+      return user !== null && authorizationHeader !== null && accDetails !== null;
     }
 
     getAuthenticationUser(){

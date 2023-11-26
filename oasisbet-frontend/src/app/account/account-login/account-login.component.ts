@@ -58,6 +58,8 @@ export class AccountLoginComponent implements OnInit {
         (data: any) => {
           this.token = data.token;
           console.log("token value: " + this.token);
+          sessionStorage.setItem(AUTH_USER, this.username);
+          sessionStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
           return this.apiService.retrieveAccDetails(this.username)
         }
       )
@@ -68,8 +70,6 @@ export class AccountLoginComponent implements OnInit {
           if (resp.statusCode !== 0) {
             this.errorMsg = resp.resultMessage;
           } else {
-            sessionStorage.setItem(AUTH_USER, this.username);
-            sessionStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             console.log("login successful");
           }
@@ -83,27 +83,6 @@ export class AccountLoginComponent implements OnInit {
 
   signUpUser(){
     this.router.navigate(['create-user'], {skipLocationChange: true});
-  }
-
-  retrieveAccDetails(username: string, data: any){
-     this.subscriptions.add(
-        this.apiService.retrieveAccDetails(username).subscribe((resp: any) => {
-          console.log(resp);
-            if (resp.statusCode != 0) {
-              this.errorMsg = resp.resultMessage;
-            } else {
-              sessionStorage.setItem(AUTH_USER, username);
-              sessionStorage.setItem(AUTHORIZATION, `Bearer ${data.token}`);
-              sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
-              console.log("login successful");
-            }
-          } ,
-            error => {
-            console.log(error);
-            this.sharedVar.changeException(error);
-          }
-         )
-    )
   }
 
   ngOnDestroy(){
