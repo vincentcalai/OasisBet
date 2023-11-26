@@ -57,7 +57,6 @@ export class AccountLoginComponent implements OnInit {
       switchMap(
         (data: any) => {
           this.token = data.token;
-          console.log("token value: " + this.token);
           sessionStorage.setItem(AUTH_USER, this.username);
           sessionStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
           return this.apiService.retrieveAccDetails(this.username)

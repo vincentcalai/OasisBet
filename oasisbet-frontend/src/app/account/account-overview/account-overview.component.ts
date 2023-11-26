@@ -25,6 +25,11 @@ export class AccountOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
 
+    if (!this.accountModelInput) {
+      this.sharedVar.changeException('Account details are null.');
+      throw new Error('Account details are null.');
+    }
+  
     let accId = this.accountModelInput.accId;
 
     this.subscriptions.add(
