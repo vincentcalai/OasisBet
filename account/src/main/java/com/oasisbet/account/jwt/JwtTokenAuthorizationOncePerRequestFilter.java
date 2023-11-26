@@ -1,8 +1,6 @@
 package com.oasisbet.account.jwt;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -30,9 +28,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFilter {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	List<String> shouldNotFilterPath = Arrays.asList("/user/authenticate");
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
@@ -46,7 +42,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		logger.info("Authentication Request For '{}'", request.getRequestURL());
+		log.info("Authentication Request For '{}'", request.getRequestURL());
 
 		final String requestTokenHeader = request.getHeader(this.tokenHeader);
 		String username = null;
@@ -57,7 +53,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 
-				logger.info("JWT_TOKEN_USERNAME_VALUE '{}'", username);
+				log.info("JWT_TOKEN_USERNAME_VALUE '{}'", username);
 				if (username != null) {
 
 					UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
@@ -76,11 +72,11 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 				throw new ExpiredJwtException(null, null, "Token Expired!", e);
 			} catch (IllegalArgumentException | UnsupportedJwtException | MalformedJwtException
 					| SignatureException e) {
-				logger.error("JWT_TOKEN_UNABLE_TO_GET_USERNAME", e);
+				log.error("JWT_TOKEN_UNABLE_TO_GET_USERNAME", e);
 				throw new BadCredentialsException("Invalid Token received!");
 			}
 		} else {
-			logger.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
+			log.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
 			throw new BadCredentialsException("Invalid Token received!");
 		}
 
@@ -89,6 +85,6 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return shouldNotFilterPath.stream().anyMatch(path -> path.equals(request.getServletPath()));
+		return request.getServletPath().startsWith("/user");
 	}
 }
