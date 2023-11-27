@@ -74,7 +74,7 @@ export class AccountLoginComponent implements OnInit {
           }
         },
         (error) => {
-          console.log("login fail");
+          console.log("login fail", error);
           this.errorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
         }
     )
