@@ -29,7 +29,7 @@ export class AccountOverviewComponent implements OnInit {
       this.sharedVar.changeException('Account details are null.');
       throw new Error('Account details are null.');
     }
-  
+
     let accId = this.accountModelInput.accId;
 
     this.subscriptions.add(
@@ -38,8 +38,8 @@ export class AccountOverviewComponent implements OnInit {
             this.ytdWithdrawalAmt = resp.account.ytdWithdrawalAmt;
         } ,
           error => {
-          console.log(error);
-          this.sharedVar.changeException(error);
+            console.log(error);
+            this.authService.clearSession(error);
         }
        )
     )

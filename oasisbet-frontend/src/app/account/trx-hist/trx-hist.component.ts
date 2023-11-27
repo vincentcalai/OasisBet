@@ -37,8 +37,8 @@ export class TrxHistComponent implements OnInit {
             this.mtdPayout = resp.account.mtdPayout;
           } ,
             error => {
-            console.log(error);
-            this.sharedVar.changeException(error);
+              console.log(error);
+              this.authService.clearSession(error);
           }
         )
     );
@@ -53,8 +53,8 @@ export class TrxHistComponent implements OnInit {
         }
       },
         error => {
-        console.log(error);
-        this.sharedVar.changeException(error);
+          console.log(error);
+          this.authService.clearSession(error);
       })
     );
   }

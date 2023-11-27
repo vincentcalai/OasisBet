@@ -32,8 +32,8 @@ export class LimitManagementComponent implements OnInit {
   public limitMgmtForm: FormGroup;
 
   constructor(public reactiveFormService: ReactiveFormService,
-    public sharedVar: SharedVarService, 
-    public sharedMethod: SharedMethodsService, 
+    public sharedVar: SharedVarService,
+    public sharedMethod: SharedMethodsService,
     public dialog: MatDialog,
     public authService: AuthService,
     public apiService: ApiService) { }
@@ -53,12 +53,12 @@ export class LimitManagementComponent implements OnInit {
           this.betProgress = (this.mtdBetAmt/this.currentBetLimit) * 100;
       } ,
         error => {
-        console.log(error);
-        this.sharedVar.changeException(error);
+          console.log(error);
+          this.authService.clearSession(error);
       }
       )
     )
-    
+
     this.limitMgmtForm = this.reactiveFormService.initializeLimitMgmtFormControl();
   }
 
@@ -123,7 +123,8 @@ export class LimitManagementComponent implements OnInit {
             this.ngOnInit();
           } ,
             error => {
-            this.sharedVar.changeException(error);
+              console.log(error);
+              this.authService.clearSession(error);
           })
         );
       } else {

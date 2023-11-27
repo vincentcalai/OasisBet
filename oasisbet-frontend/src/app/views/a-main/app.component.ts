@@ -11,7 +11,8 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class AppComponent {
   public title = 'oasisbet-frontend';
   public subscriptions: Subscription = new Subscription();
-  public errorMsg: String = this.sharedVar.GENERAL_SYS_DOWN_ERR_MSG;
+  public generalErrMsg: String = this.sharedVar.GENERAL_SYS_DOWN_ERR_MSG;
+  public errorMsg: String = '';
   public showError: boolean = false;
 
   constructor(
@@ -26,7 +27,7 @@ export class AppComponent {
         .subscribe(error => {
           if(error != ''){
             this.showError = true;
-            this.errorMsg = this.errorMsg + "<br />" + "Error: " + error;
+            this.errorMsg = this.generalErrMsg + "<br />" + "Error: " + error;
             window.scroll(0, 0);
           } else {
             this.showError = false;

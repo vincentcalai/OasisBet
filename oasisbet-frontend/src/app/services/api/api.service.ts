@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { timeout, catchError, map } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { SharedVarService } from '../shared-var.service';
-import { LoginCredentialsModel } from 'src/app/model/login-credentials.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +55,7 @@ export class ApiService {
   retrieveResults(compType: string, selectedDates: string, dateFrom: Date, dateTo: Date): Observable<Object> {
     const formattedDateFrom = dateFrom.toISOString();
     const formattedDateTo = dateTo.toISOString();
-  
+
     const params = new HttpParams()
     .set('compType', compType)
     .set('selectedDate', selectedDates)
@@ -71,29 +70,25 @@ export class ApiService {
 
   retrieveAccDetails(user: string): Observable<Object> {
     return this.http.get(this.commonApiPrefix + '/account/retrieveAccDetails?user=' + user).pipe(
-      timeout(this.timeout),
-      catchError(this.handleError)
+      timeout(this.timeout)
     );
   }
 
   retrieveYtdAmounts(accId: number): Observable<Object> {
     return this.http.get(this.commonApiPrefix + '/account/retrieveYtdAmounts?accId=' + accId).pipe(
-      timeout(this.timeout),
-      catchError(this.handleError)
+      timeout(this.timeout)
     );
   }
 
   retrieveMtdAmounts(accId: number): Observable<Object> {
     return this.http.get(this.commonApiPrefix + '/account/retrieveMtdAmounts?accId=' + accId).pipe(
-      timeout(this.timeout),
-      catchError(this.handleError)
+      timeout(this.timeout)
     );
   }
 
   updateAccDetails(): Observable<ResponseModel> {
     return this.http.put<ResponseModel>(this.commonApiPrefix + '/account/updateAccDetails', this.sharedVar.updateAccountModel).pipe(
-      timeout(this.timeout),
-      catchError(this.handleError)
+      timeout(this.timeout)
     );
   }
 
@@ -103,8 +98,7 @@ export class ApiService {
     .set('type', trxType)
     .set('period', period);
     return this.http.get(this.commonApiPrefix + '/account/retrieveTrx', { params }).pipe(
-      timeout(this.timeout),
-      catchError(this.handleError)
+      timeout(this.timeout)
     );
   }
 

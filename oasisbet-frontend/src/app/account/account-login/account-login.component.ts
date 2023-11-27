@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { finalize, switchMap, take } from 'rxjs/operators';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, finalize, switchMap, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService } from 'src/app/services/auth/auth.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
@@ -61,7 +61,12 @@ export class AccountLoginComponent implements OnInit {
           sessionStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
           return this.apiService.retrieveAccDetails(this.username)
         }
-      )
+      ),
+      catchError((error) => {
+        console.error('Authentication error:', error);
+        this.sharedVar.changeException(error.message);
+        return throwError('Authentication failed');
+      })
     )
     .subscribe(
         (resp: any) => {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SharedVarService } from '../shared-var.service';
 
 export const AUTH_USER = 'authenticateUser';
 export const AUTHORIZATION = 'authorization';
@@ -12,7 +14,11 @@ export const ACC_DETAILS = 'accountDetails';
 
 export class AuthService {
 
-  constructor(public apiService: ApiService, public router: Router) { }
+  constructor(
+    public apiService: ApiService,
+    public sharedVar: SharedVarService,
+    public router: Router
+  ) { }
 
     jwtAuthenticate() {
       return this.apiService.jwtAuthenticate();
@@ -50,4 +56,17 @@ export class AuthService {
       }
     }
 
+    clearSession(error: any){
+      if (error instanceof HttpErrorResponse) {
+        if (error.status !== 401) {
+          this.sharedVar.changeException(error.message);
+          return;
+        }
+        sessionStorage.removeItem(AUTH_USER);
+        sessionStorage.removeItem(AUTHORIZATION);
+        sessionStorage.removeItem(ACC_DETAILS);
+        this.router.navigate(['account']);
+        this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
+      }
+    }
 }

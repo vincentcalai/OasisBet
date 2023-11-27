@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,7 +8,7 @@ import { take, finalize } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
@@ -50,8 +51,8 @@ export class DepositsComponent implements OnInit {
             this.depositRemLimit = this.accountModelInput.depositLimit - this.mtdDepositAmt;
         } ,
           error => {
-          console.log(error);
-          this.sharedVar.changeException(error);
+            console.log(error);
+            this.authService.clearSession(error);
         }
        )
     )
