@@ -49,10 +49,10 @@ public class JwtUserDetails implements UserDetails {
 //		this.authorities = authorities;
 //	}
 //
-//	@JsonIgnore
-//	public Long getId() {
-//		return id;
-//	}
+	@JsonIgnore
+	public Long getId() {
+		return id;
+	}
 
 	@Override
 	public String getUsername() {
