@@ -3,9 +3,6 @@ import { Subscription } from 'rxjs';
 import { ResultEvent } from 'src/app/model/result-event.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { moment } from 'ngx-bootstrap/chronos/test/chain';
-import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-results-landing',

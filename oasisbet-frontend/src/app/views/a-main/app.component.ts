@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,6 +17,7 @@ export class AppComponent {
   public showError: boolean = false;
 
   constructor(
+    private cdref: ChangeDetectorRef,
     public sharedVar: SharedVarService,
     public apiService: ApiService){
 
@@ -31,6 +33,7 @@ export class AppComponent {
             window.scroll(0, 0);
           } else {
             this.showError = false;
+            this.cdref.detectChanges();
           }
       }));
   }
