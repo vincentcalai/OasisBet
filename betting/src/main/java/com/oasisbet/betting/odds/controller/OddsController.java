@@ -59,8 +59,8 @@ public class OddsController {
 			response = new AccountRestResponse();
 			response.setStatusCode(4);
 			response.setResultMessage(Constants.UNAUTHORIZED_ACCESS_ERROR);
-			logger.error("Unauthorized access ", e);
-		} catch (Exception e) {
+			logger.error("unauthorized access ", e);
+		} catch (FeignException e) {
 			response = new AccountRestResponse();
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.BET_PROCESS_ERROR);
