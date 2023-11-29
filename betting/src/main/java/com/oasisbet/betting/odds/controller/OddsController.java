@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.oasisbet.betting.odds.model.BetEvent;
 import com.oasisbet.betting.odds.model.request.BetSlipRest;
@@ -43,10 +45,14 @@ public class OddsController {
 
 	@PostMapping(value = "/bets")
 	public AccountRestResponse submitBet(@RequestBody BetSlipRest betsInput) {
+		// Retrieve the Authorization header from the incoming request
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		String authorizationHeader = attributes.getRequest().getHeader("Authorization");
+
 		// Make the API call to the Account microservice using the Feign Client
 		AccountRestResponse response = null;
 		try {
-			response = proxy.processBet(betsInput);
+			response = proxy.processBet(authorizationHeader, betsInput);
 		} catch (Exception e) {
 			response = new AccountRestResponse();
 			response.setStatusCode(1);

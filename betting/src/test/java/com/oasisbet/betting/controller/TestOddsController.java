@@ -63,7 +63,8 @@ class TestOddsController extends TestBaseSetup {
 
 		AccountRestResponse expectedResponse = new AccountRestResponse();
 
-		Mockito.when(proxy.processBet(Mockito.any(BetSlipRest.class))).thenReturn(expectedResponse);
+		Mockito.when(proxy.processBet(Mockito.anyString(), Mockito.any(BetSlipRest.class)))
+				.thenReturn(expectedResponse);
 
 		String request = objectMapper.writeValueAsString(betsInput);
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")
@@ -82,7 +83,7 @@ class TestOddsController extends TestBaseSetup {
 		expectedResponse.setStatusCode(1);
 		expectedResponse.setResultMessage(Constants.BET_PROCESS_ERROR);
 
-		Mockito.when(proxy.processBet(Mockito.any(BetSlipRest.class))).thenThrow(new Exception());
+		Mockito.when(proxy.processBet(Mockito.anyString(), Mockito.any(BetSlipRest.class))).thenThrow(new Exception());
 
 		String request = objectMapper.writeValueAsString(betsInput);
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")
