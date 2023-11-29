@@ -247,10 +247,10 @@ public class AccountService {
 
 		if (!accountViewOptional.isPresent()) {
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
-			response.setStatusCode(1);
+			response.setStatusCode(2);
 		} else if (totalStake > accountBal) {
 			response.setResultMessage(Constants.ERR_INSUFFICIENT_BAL);
-			response.setStatusCode(2);
+			response.setStatusCode(3);
 		} else {
 			// update account balance
 			AccountView accountView = accountViewOptional.get();

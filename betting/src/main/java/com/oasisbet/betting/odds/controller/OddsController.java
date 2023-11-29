@@ -22,6 +22,8 @@ import com.oasisbet.betting.odds.proxy.AccountProxy;
 import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.odds.util.Constants;
 
+import feign.FeignException;
+
 @RestController
 @RequestMapping(path = "/odds")
 public class OddsController {
@@ -53,6 +55,11 @@ public class OddsController {
 		AccountRestResponse response = null;
 		try {
 			response = proxy.processBet(authorizationHeader, betsInput);
+		} catch (FeignException.Unauthorized e) {
+			response = new AccountRestResponse();
+			response.setStatusCode(4);
+			response.setResultMessage(Constants.UNAUTHORIZED_ACCESS_ERROR);
+			logger.error("Unauthorized access ", e);
 		} catch (Exception e) {
 			response = new AccountRestResponse();
 			response.setStatusCode(1);
