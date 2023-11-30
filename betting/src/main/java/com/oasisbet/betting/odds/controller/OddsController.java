@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +50,7 @@ public class OddsController {
 	public AccountRestResponse submitBet(@RequestBody BetSlipRest betsInput) {
 		// Retrieve the Authorization header from the incoming request
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		String authorizationHeader = attributes.getRequest().getHeader("Authorization");
+		String authorizationHeader = attributes.getRequest().getHeader(HttpHeaders.AUTHORIZATION);
 
 		// Make the API call to the Account microservice using the Feign Client
 		AccountRestResponse response = null;
