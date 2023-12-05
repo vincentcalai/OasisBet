@@ -31,6 +31,18 @@ export class ApiService {
     );
   }
 
+  refreshJwtToken() {
+    return this.http.get<any>( this.commonApiPrefix + "/user/refreshToken")
+    .pipe(
+      map(
+        data => {
+          console.log(data);
+          return data;
+        }
+      )
+    );
+  }
+
   postCreateUser(): Observable<ResponseModel> {
     return this.http.post<ResponseModel>(this.commonApiPrefix + "/user/createUser", this.sharedVar.createUserModel).pipe(
       timeout(this.timeout),

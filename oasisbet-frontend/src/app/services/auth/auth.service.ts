@@ -3,6 +3,7 @@ import { ApiService } from '../api/api.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SharedVarService } from '../shared-var.service';
+import { Subscription } from 'rxjs';
 
 export const AUTH_USER = 'authenticateUser';
 export const AUTHORIZATION = 'authorization';
@@ -13,6 +14,8 @@ export const ACC_DETAILS = 'accountDetails';
 })
 
 export class AuthService {
+
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     public apiService: ApiService,
@@ -64,7 +67,13 @@ export class AuthService {
         }
         console.log("msg: ", error.error.message);
         if(error.error.message == "Access Token Expired"){
-          console.log("token expired...");
+          console.log("Token Expired. Retrying refresh token");
+          this.subscriptions.add(
+              this.refreshJwtToken().subscribe((resp: any) => {
+                console.log("refresh resp:", resp);
+              }
+            )
+          );
         }
         sessionStorage.removeItem(AUTH_USER);
         sessionStorage.removeItem(AUTHORIZATION);
@@ -73,4 +82,10 @@ export class AuthService {
         this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
       }
     }
+
+    refreshJwtToken() {
+      return this.apiService.refreshJwtToken();
+    }
+
+
 }
