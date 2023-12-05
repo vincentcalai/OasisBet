@@ -1,7 +1,6 @@
 import { Injectable, NgModule} from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS, HttpHeaders} from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { AUTHORIZATION } from '../auth/auth.service';
 import { SharedVarService } from '../shared-var.service';
 

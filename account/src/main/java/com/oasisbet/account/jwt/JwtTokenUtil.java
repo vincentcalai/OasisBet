@@ -23,8 +23,8 @@ import io.jsonwebtoken.impl.DefaultClock;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-//	static final String CLAIM_KEY_USERNAME = "sub";
-//	static final String CLAIM_KEY_CREATED = "iat";
+	static final String CLAIM_KEY_USERNAME = "sub";
+	static final String CLAIM_KEY_CREATED = "iat";
 	private static final long serialVersionUID = -3301605591108950415L;
 	private final Clock clock = DefaultClock.INSTANCE;
 
@@ -38,10 +38,10 @@ public class JwtTokenUtil implements Serializable {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
-//	public Date getIssuedAtDateFromToken(String token) {
-//		return getClaimFromToken(token, Claims::getIssuedAt);
-//	}
-//
+	public Date getIssuedAtDateFromToken(String token) {
+		return getClaimFromToken(token, Claims::getIssuedAt);
+	}
+
 	public Date getExpirationDateFromToken(String token) {
 		return getClaimFromToken(token, Claims::getExpiration);
 	}
@@ -60,11 +60,11 @@ public class JwtTokenUtil implements Serializable {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(clock.now());
 	}
-//
-//	private Boolean ignoreTokenExpiration(String token) {
-//		// here you specify tokens, for that the expiration is ignored
-//		return false;
-//	}
+
+	private Boolean ignoreTokenExpiration(String token) {
+		// here you specify tokens, for that the expiration is ignored
+		return false;
+	}
 
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
@@ -79,22 +79,21 @@ public class JwtTokenUtil implements Serializable {
 				.setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 
-//
-//	public Boolean canTokenBeRefreshed(String token) {
-//		return (!isTokenExpired(token) || ignoreTokenExpiration(token));
-//	}
-//
-//	public String refreshToken(String token) {
-//		final Date createdDate = clock.now();
-//		final Date expirationDate = calculateExpirationDate(createdDate);
-//
-//		final Claims claims = getAllClaimsFromToken(token);
-//		claims.setIssuedAt(createdDate);
-//		claims.setExpiration(expirationDate);
-//
-//		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
-//	}
-//
+	public Boolean canTokenBeRefreshed(String token) {
+		return (!isTokenExpired(token) || ignoreTokenExpiration(token));
+	}
+
+	public String refreshToken(String token) {
+		final Date createdDate = clock.now();
+		final Date expirationDate = calculateExpirationDate(createdDate);
+
+		final Claims claims = getAllClaimsFromToken(token);
+		claims.setIssuedAt(createdDate);
+		claims.setExpiration(expirationDate);
+
+		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
+	}
+
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		JwtUserDetails user = (JwtUserDetails) userDetails;
 		final String username = getUsernameFromToken(token);

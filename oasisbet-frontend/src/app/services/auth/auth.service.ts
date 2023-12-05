@@ -62,6 +62,10 @@ export class AuthService {
           this.sharedVar.changeException(error.message);
           return;
         }
+        console.log("msg: ", error.error.message);
+        if(error.error.message == "Access Token Expired"){
+          console.log("token expired...");
+        }
         sessionStorage.removeItem(AUTH_USER);
         sessionStorage.removeItem(AUTHORIZATION);
         sessionStorage.removeItem(ACC_DETAILS);

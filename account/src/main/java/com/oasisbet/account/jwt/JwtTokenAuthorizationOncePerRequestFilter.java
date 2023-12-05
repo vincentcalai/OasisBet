@@ -68,17 +68,17 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 				}
 
 			} catch (ExpiredJwtException e) {
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Expired!");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Token Expired");
 				return;
 			} catch (IllegalArgumentException | UnsupportedJwtException | MalformedJwtException
 					| SignatureException e) {
 				log.error("JWT_TOKEN_UNABLE_TO_GET_USERNAME", e);
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Token received!");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Access Token received");
 				return;
 			}
 		} else {
 			log.error("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Token received!");
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Access Token received");
 			return;
 		}
 
