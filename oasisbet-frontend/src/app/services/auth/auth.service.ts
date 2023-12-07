@@ -21,7 +21,11 @@ export class AuthService {
     public apiService: ApiService,
     public sharedVar: SharedVarService,
     public router: Router
-  ) { }
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+  }
 
     jwtAuthenticate() {
       return this.apiService.jwtAuthenticate();
@@ -63,15 +67,16 @@ export class AuthService {
       if (error instanceof HttpErrorResponse) {
         if (error.status !== 401) {
           this.sharedVar.changeException(error.message);
-          return;
         }
-        console.log("msg: ", error.error.message);
+        console.log("Error Message: ", error.error.message);
         if(error.error.message == "Access Token Expired"){
           console.log("Token Expired. Retrying refresh token");
           this.subscriptions.add(
               this.refreshJwtToken().subscribe((resp: any) => {
                 if(resp.token){
                   sessionStorage.setItem(AUTHORIZATION, `Bearer ${resp.token}`);
+                  //refresh Account Landing page when there is a successful token refresh
+                  this.router.navigate(['account']);
                 } else {
                   this.clearSessionStorage(error);
                 }
@@ -83,7 +88,6 @@ export class AuthService {
         } else {
           this.clearSessionStorage(error);
         }
-
       }
     }
 
