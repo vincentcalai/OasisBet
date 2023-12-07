@@ -70,21 +70,38 @@ export class AuthService {
           console.log("Token Expired. Retrying refresh token");
           this.subscriptions.add(
               this.refreshJwtToken().subscribe((resp: any) => {
-                console.log("refresh resp:", resp);
+                if(resp.token){
+                  sessionStorage.setItem(AUTHORIZATION, `Bearer ${resp.token}`);
+                } else {
+                  this.clearSessionStorage(error);
+                }
+              }, error => {
+                this.clearSessionStorage(error);
               }
             )
           );
+        } else {
+          this.clearSessionStorage(error);
         }
-        sessionStorage.removeItem(AUTH_USER);
-        sessionStorage.removeItem(AUTHORIZATION);
-        sessionStorage.removeItem(ACC_DETAILS);
-        this.router.navigate(['account']);
-        this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
+
       }
+    }
+
+    private clearSessionStorage(error: HttpErrorResponse) {
+      console.log(error);
+      sessionStorage.removeItem(AUTH_USER);
+      sessionStorage.removeItem(AUTHORIZATION);
+      sessionStorage.removeItem(ACC_DETAILS);
+      this.router.navigate(['account']);
+      this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
     }
 
     refreshJwtToken() {
       return this.apiService.refreshJwtToken();
+    }
+
+    ngOnDestroy(){
+      this.subscriptions.unsubscribe();
     }
 
 
