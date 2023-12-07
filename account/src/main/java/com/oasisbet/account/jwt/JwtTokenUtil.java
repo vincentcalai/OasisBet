@@ -43,11 +43,16 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	public Date getExpirationDateFromToken(String token) {
-		return getClaimFromToken(token, Claims::getExpiration);
+		return getClaimFromExpiredToken(token, Claims::getExpiration);
 	}
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
+		return claimsResolver.apply(claims);
+	}
+
+	public <T> T getClaimFromExpiredToken(String token, Function<Claims, T> claimsResolver) {
+		final Claims claims = getAllClaimsFromExpiredToken(token);
 		return claimsResolver.apply(claims);
 	}
 
@@ -56,14 +61,18 @@ public class JwtTokenUtil implements Serializable {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	}
 
+	private Claims getAllClaimsFromExpiredToken(String token)
+			throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
+		try {
+			return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		} catch (ExpiredJwtException e) {
+			return e.getClaims();
+		}
+	}
+
 	private Boolean isTokenExpired(String token) {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(clock.now());
-	}
-
-	private Boolean ignoreTokenExpiration(String token) {
-		// here you specify tokens, for that the expiration is ignored
-		return false;
 	}
 
 	public String generateToken(UserDetails userDetails) {
@@ -80,14 +89,14 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	public Boolean canTokenBeRefreshed(String token) {
-		return (!isTokenExpired(token) || ignoreTokenExpiration(token));
+		return isTokenExpired(token);
 	}
 
 	public String refreshToken(String token) {
 		final Date createdDate = clock.now();
 		final Date expirationDate = calculateExpirationDate(createdDate);
 
-		final Claims claims = getAllClaimsFromToken(token);
+		final Claims claims = getAllClaimsFromExpiredToken(token);
 		claims.setIssuedAt(createdDate);
 		claims.setExpiration(expirationDate);
 

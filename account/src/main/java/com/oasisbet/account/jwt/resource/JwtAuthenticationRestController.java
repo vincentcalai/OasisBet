@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.account.jwt.JwtTokenUtil;
-import com.oasisbet.account.jwt.JwtUserDetails;
 
 @RestController
 public class JwtAuthenticationRestController {
@@ -54,8 +53,6 @@ public class JwtAuthenticationRestController {
 	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
 		String authToken = request.getHeader(tokenHeader);
 		final String token = authToken.substring(7);
-		String username = jwtTokenUtil.getUsernameFromToken(token);
-		JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
 
 		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenUtil.refreshToken(token);
