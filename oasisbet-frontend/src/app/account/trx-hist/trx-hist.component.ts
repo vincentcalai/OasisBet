@@ -38,7 +38,7 @@ export class TrxHistComponent implements OnInit {
           } ,
             error => {
               console.log(error);
-              this.authService.clearSession(error);
+              this.authService.handleError(error);
           }
         )
     );
@@ -54,7 +54,7 @@ export class TrxHistComponent implements OnInit {
       },
         error => {
           console.log(error);
-          this.authService.clearSession(error);
+          this.authService.handleError(error);
       })
     );
   }

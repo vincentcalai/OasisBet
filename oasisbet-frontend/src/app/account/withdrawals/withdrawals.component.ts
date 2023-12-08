@@ -88,7 +88,7 @@ export class WithdrawalsComponent implements OnInit {
             error => {
             this.sharedVar.changeSpinner('none');
             console.log(error);
-            this.authService.clearSession(error);
+            this.authService.handleError(error);
           })
         );
       } else {

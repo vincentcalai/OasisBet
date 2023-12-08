@@ -63,7 +63,7 @@ export class AuthService {
       }
     }
 
-    clearSession(error: any){
+    handleError(error: any){
       if (error instanceof HttpErrorResponse) {
         if (error.status !== 401) {
           this.sharedVar.changeException(error.message);
@@ -75,7 +75,7 @@ export class AuthService {
               this.refreshJwtToken().subscribe((resp: any) => {
                 if(resp.token){
                   sessionStorage.setItem(AUTHORIZATION, `Bearer ${resp.token}`);
-                  //refresh Account Landing page when there is a successful token refresh
+                  //navigate to Account Landing page when there is a successful token refresh
                   this.router.navigate(['account']);
                 } else {
                   this.clearSessionStorage(error);
