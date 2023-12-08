@@ -78,24 +78,26 @@ export class AuthService {
                   //navigate to Account Landing page when there is a successful token refresh
                   this.router.navigate(['account']);
                 } else {
-                  this.clearSessionStorage(error);
+                  console.log(error);
+                  this.clearSessionStorage();
                   this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
                 }
               }, error => {
-                this.clearSessionStorage(error);
+                console.log(error);
+                this.clearSessionStorage();
                 this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
               }
             )
           );
         } else {
-          this.clearSessionStorage(error);
+          console.log(error);
+          this.clearSessionStorage();
           this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
         }
       }
     }
 
-    public clearSessionStorage(error: HttpErrorResponse) {
-      console.log(error);
+    public clearSessionStorage() {
       sessionStorage.removeItem(AUTH_USER);
       sessionStorage.removeItem(AUTHORIZATION);
       sessionStorage.removeItem(ACC_DETAILS);

@@ -119,6 +119,13 @@ export class OddsBetSlipComponent implements OnInit {
     this.sharedVar.submitBetsModel.userId = account.accId;
     this.subscriptions.add(
       this.apiService.postSubmitBets().subscribe( (resp: any) => {
+        if(resp.statusCode == 4){
+          this.authService.clearSessionStorage();
+          this.sharedVar.changeShowUserNotLoginMsg(resp.resultMessage);
+          this.router.navigate(['account']);
+          return;
+        }
+
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
           resp.resultMessage = "";
@@ -139,12 +146,8 @@ export class OddsBetSlipComponent implements OnInit {
       } ,
         error => {
           if (error instanceof HttpErrorResponse) {
-            if (error.status !== 401) {
-              this.sharedVar.changeException(error.message);
-            } else {
-              this.authService.clearSessionStorage(error);
-              this.sharedVar.changeException(this.sharedVar.LOGIN_SESSION_EXP_ERR_MSG);
-            }
+            console.log(error);
+            this.sharedVar.changeException(error.message);
           }
       })
     );
