@@ -66,6 +66,8 @@ export class SharedVarService {
   public readonly INVALID_LOGIN_ERR_MSG = 'Please enter a valid credential. Login failed.';
   public readonly UNAUTHORIZED_ERR_MSG = 'Unauthorized response. Please login again.';
 
+  public readonly LOGIN_SESSION_EXP_ERR_MSG = 'Login session expired. Please login again and place bet again.';
+
   public readonly LAST_24_HRS = 'last24Hrs';
   public readonly LAST_3_DAYS = 'last3Days';
   public readonly MILLI_SEC_24_HRS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds

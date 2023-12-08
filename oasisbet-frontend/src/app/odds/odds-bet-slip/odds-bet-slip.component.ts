@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -137,7 +138,14 @@ export class OddsBetSlipComponent implements OnInit {
         }
       } ,
         error => {
-        this.sharedVar.changeException(error);
+          if (error instanceof HttpErrorResponse) {
+            if (error.status !== 401) {
+              this.sharedVar.changeException(error.message);
+            } else {
+              this.authService.clearSessionStorage(error);
+              this.sharedVar.changeException(this.sharedVar.LOGIN_SESSION_EXP_ERR_MSG);
+            }
+          }
       })
     );
   }

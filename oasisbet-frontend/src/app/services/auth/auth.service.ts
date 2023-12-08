@@ -79,25 +79,27 @@ export class AuthService {
                   this.router.navigate(['account']);
                 } else {
                   this.clearSessionStorage(error);
+                  this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
                 }
               }, error => {
                 this.clearSessionStorage(error);
+                this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
               }
             )
           );
         } else {
           this.clearSessionStorage(error);
+          this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
         }
       }
     }
 
-    private clearSessionStorage(error: HttpErrorResponse) {
+    public clearSessionStorage(error: HttpErrorResponse) {
       console.log(error);
       sessionStorage.removeItem(AUTH_USER);
       sessionStorage.removeItem(AUTHORIZATION);
       sessionStorage.removeItem(ACC_DETAILS);
       this.router.navigate(['account']);
-      this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
     }
 
     refreshJwtToken() {
