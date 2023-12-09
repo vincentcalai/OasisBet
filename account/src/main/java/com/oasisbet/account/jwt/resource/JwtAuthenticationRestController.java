@@ -50,7 +50,7 @@ public class JwtAuthenticationRestController {
 	}
 
 	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
-	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+	public ResponseEntity<JwtTokenResponse> refreshAndGetAuthenticationToken(HttpServletRequest request) {
 		String authToken = request.getHeader(tokenHeader);
 		final String token = authToken.substring(7);
 

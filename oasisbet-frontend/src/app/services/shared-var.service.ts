@@ -22,8 +22,8 @@ export class SharedVarService {
   public readonly BET_TYPE_H2H_NAME = "1X2";
   public readonly DRAW_RESULT = "Draw";
 
-  public readonly SETTLED = "SETTLED";
-  public readonly NOT_SETTLED = "NOT SETTLED";
+  public readonly SETTLED = "Settled";
+  public readonly NOT_SETTLED = "Not Settled";
 
   public readonly BET_SLIP_MAX_ALLOWED_BET = 5;
 
