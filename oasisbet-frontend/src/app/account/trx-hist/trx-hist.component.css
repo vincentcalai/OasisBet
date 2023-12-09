@@ -10,6 +10,10 @@ label{
     margin-left: 10px;
 }
 
+.table-header-trx{
+    background-color: #f2f2f2;
+}
+
 .trx-dropdown {
     width: 200px;
     border-radius: 5px;
