@@ -50,45 +50,45 @@ export class CreateUserComponent implements OnInit {
   }
 
   confirmClicked(){
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: { type: this.sharedVar.CREATE_USER_DIALOG_TYPE, title: this.sharedVar.CREATE_USER_DIALOG_TITLE }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'confirm') {
-        console.log("confirm create user");
-        this.confirmCreateUser();
-      }
-    });
-  }
-
-  confirmCreateUser(){
     console.log("form valid: ", this.createUserForm.valid);
     if(this.createUserForm.valid){
-      this.sharedVar.createUserModel.user.username = this.username?.value.toUpperCase();
-      this.sharedVar.createUserModel.user.password = this.password?.value;
-      this.sharedVar.createUserModel.user.contactNo = this.contactNo?.value;
-      this.sharedVar.createUserModel.user.email = this.email?.value;
-      console.log("create user success!");
-      this.subscriptions.add(
-        this.apiService.postCreateUser().subscribe( (resp: ResponseModel) => {
-          if (resp.statusCode != 0) {
-            this.errorMsg = resp.resultMessage;
-            resp.resultMessage = "";
-          } else {
-            this.sharedVar.changeResponse(resp);
-            this.backToHomeScreen();
-          }
-        } ,
-          error => {
-          this.sharedVar.changeException(error);
-        })
-      );
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: { type: this.sharedVar.CREATE_USER_DIALOG_TYPE, title: this.sharedVar.CREATE_USER_DIALOG_TITLE }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          console.log("confirm create user");
+          this.confirmCreateUser();
+        }
+      });
     } else{
       console.log("create user failed!");
       this.reactiveFormService.displayValidationErrors(this.createUserForm);
     }
+  }
+
+  confirmCreateUser(){
+    this.sharedVar.createUserModel.user.username = this.username?.value.toUpperCase();
+    this.sharedVar.createUserModel.user.password = this.password?.value;
+    this.sharedVar.createUserModel.user.contactNo = this.contactNo?.value;
+    this.sharedVar.createUserModel.user.email = this.email?.value;
+    console.log("create user success!");
+    this.subscriptions.add(
+      this.apiService.postCreateUser().subscribe( (resp: ResponseModel) => {
+        if (resp.statusCode != 0) {
+          this.errorMsg = resp.resultMessage;
+          resp.resultMessage = "";
+        } else {
+          this.sharedVar.changeResponse(resp);
+          this.backToHomeScreen();
+        }
+      } ,
+        error => {
+        this.sharedVar.changeException(error);
+      })
+    );
   }
 
   ngOnDestroy(){
