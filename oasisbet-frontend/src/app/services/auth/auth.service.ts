@@ -59,7 +59,7 @@ export class AuthService {
         sessionStorage.removeItem(AUTH_USER);
         sessionStorage.removeItem(AUTHORIZATION);
         sessionStorage.removeItem(ACC_DETAILS);
-        this.router.navigate(['/']);
+        this.router.navigate(['account']);
       }
     }
 
