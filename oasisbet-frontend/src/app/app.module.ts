@@ -32,6 +32,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav/comp-side-nav.component';
 import { InterceptorModule } from './services/api/interceptor.module';
+import { AccountUpdateComponent } from './account/account-update/account-update/account-update.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { InterceptorModule } from './services/api/interceptor.module';
     WithdrawalsComponent,
     OddsBetSlipComponent,
     LimitManagementComponent,
-    CompSideNavComponent
+    CompSideNavComponent,
+    AccountUpdateComponent
   ],
   imports: [
     BrowserModule,
