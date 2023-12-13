@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-12-13T03:49:43.665Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="FXVjGMdWcL3mHfmN7O_C" version="22.1.8" type="device" pages="11">
+<mxfile host="app.diagrams.net" modified="2023-12-13T03:55:08.838Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="MJCSp7zFgD2o8DvwTfws" version="22.1.8" type="device" pages="11">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
     <mxGraphModel dx="1232" dy="1108" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1060,7 +1060,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="a5GVMHlSd85YwFbNMGAm" name="Login Authentication Sequence Diagram">
-    <mxGraphModel dx="1027" dy="923" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1027" dy="923" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1175,6 +1175,9 @@
         </mxCell>
         <mxCell id="Jie4GH9S0SvDRS_JrA25-29" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
           <mxGeometry x="125" y="805" width="30" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="54c4J9S279O56vKRY119-1" value="Login Authentication Sequence Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=5;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="265" y="3" width="333" height="19" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -1383,6 +1386,9 @@
         </mxCell>
         <mxCell id="hSCSySnHyRVDDzipAi6r-12" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="t3xGhGMnMJsIC0VvYgjA-1">
           <mxGeometry x="125" y="869" width="30" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="dn_eksgXvfPtUVmA4e6Z-0" value="JWT Refresh Token Sequence Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=5;fontSize=14;" vertex="1" parent="t3xGhGMnMJsIC0VvYgjA-1">
+          <mxGeometry x="265" y="3" width="333" height="19" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
