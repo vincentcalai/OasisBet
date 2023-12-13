@@ -13,6 +13,9 @@
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW">
             <app-account-overview></app-account-overview>
           </div>
+          <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_ACCOUNT_UPDATE">
+            <app-account-update></app-account-update>
+          </div>
           <div class="container-fluid" *ngIf="selectAccountNavMenu == sharedVar.NAV_MENU_SELECT_TRX_HIST">
             <app-trx-hist></app-trx-hist>
           </div>

@@ -1,12 +1,16 @@
 <div class="sidebar">
     <ul>
-      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW}" 
+      <li class="sidebar-item"
+        [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW}"
         (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW)">Account Overview</li>
-      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_TRX_HIST}" 
+      <li class="sidebar-item"
+        [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_ACCOUNT_UPDATE}"
+        (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_ACCOUNT_UPDATE)">Account Update</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_TRX_HIST}"
         (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_TRX_HIST)">Transaction History</li>
-      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_LIMIT_MGMT}" 
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_LIMIT_MGMT}"
         (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_LIMIT_MGMT)">Limit Management</li>
-      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_DEPOSITS}" 
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_DEPOSITS}"
         (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_DEPOSITS)">Deposits</li>
       <li class="sidebar-item" [ngClass]="{'highlightSideNav' : accountMenuSelect == sharedVar.NAV_MENU_SELECT_WITHDRAWALS}"
         (click)="selectAccountMenu(sharedVar.NAV_MENU_SELECT_WITHDRAWALS)">Withdrawals</li>

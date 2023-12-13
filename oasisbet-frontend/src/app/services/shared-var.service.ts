@@ -40,6 +40,7 @@ export class SharedVarService {
   public readonly COMP_HEADER_LIGUE_ONE = "Ligue One";
 
   public readonly NAV_MENU_SELECT_ACCOUNT_OVERVIEW = "account_overview";
+  public readonly NAV_MENU_SELECT_ACCOUNT_UPDATE = "account_update";
   public readonly NAV_MENU_SELECT_TRX_HIST = "trx_hist";
   public readonly NAV_MENU_SELECT_LIMIT_MGMT = 'limit_mgmt';
   public readonly NAV_MENU_SELECT_DEPOSITS = "desposits";
