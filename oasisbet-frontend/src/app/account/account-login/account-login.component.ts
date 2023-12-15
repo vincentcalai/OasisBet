@@ -64,7 +64,6 @@ export class AccountLoginComponent implements OnInit {
       ),
       catchError((error) => {
         console.error('Authentication error:', error);
-        this.sharedVar.changeException(error.message);
         return throwError('Authentication failed');
       })
     )
