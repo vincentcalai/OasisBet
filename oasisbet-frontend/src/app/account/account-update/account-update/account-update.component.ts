@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountUpdateComponent implements OnInit {
 
+  public errorMsg: string;
+
   constructor() { }
 
   ngOnInit(): void {
