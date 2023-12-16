@@ -158,6 +158,22 @@ export class ReactiveFormService {
           Validators.maxLength(20)
         ],
         updateOn: 'blur'
+      }),
+      newPassword: this.fb.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20)
+        ],
+        updateOn: 'blur'
+      }),
+      cfmNewPassword: this.fb.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20)
+        ],
+        updateOn: 'blur'
       })
     })
   }

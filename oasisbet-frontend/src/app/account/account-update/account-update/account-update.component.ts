@@ -26,4 +26,12 @@ export class AccountUpdateComponent implements OnInit {
     return this.updateLoginForm.get('oldPassword');
   }
 
+  get newPassword() {
+    return this.updateLoginForm.get('newPassword');
+  }
+
+  get cfmNewPassword() {
+    return this.updateLoginForm.get('cfmNewPassword');
+  }
+
 }
