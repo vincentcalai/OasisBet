@@ -149,6 +149,19 @@ export class ReactiveFormService {
     })
   }
 
+  initializeUpdateLoginFormControl(): FormGroup {
+    return this.fb.group({
+      oldPassword: this.fb.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20)
+        ],
+        updateOn: 'blur'
+      })
+    })
+  }
+
   notZeroValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = parseFloat(control.value);
