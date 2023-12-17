@@ -70,6 +70,7 @@
               characters</span>
             <span *ngIf="cfmNewPassword.hasError('required') && !cfmNewPassword.value && !cfmNewPassword.pristine">This field is
               required</span>
+            <span *ngIf="cfmNewPassword.hasError('passwordMismatch')">Passwords does not match</span>
           </label>
         </div>
       </div>
@@ -83,5 +84,6 @@
           Confirm
       </button>
     </div>
+    <br>  
   </div>
 </div>

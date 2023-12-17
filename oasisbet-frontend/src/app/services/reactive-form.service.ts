@@ -172,7 +172,10 @@ export class ReactiveFormService {
         ],
         updateOn: 'blur'
       })
-    })
+    },
+    {
+      validator: this.passwordMatchValidator('newPassword', 'cfmNewPassword')
+    });
   }
 
   notZeroValidator(): ValidatorFn {
