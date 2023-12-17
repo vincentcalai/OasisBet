@@ -22,6 +22,21 @@ export class AccountUpdateComponent implements OnInit {
     return this.reactiveFormService.fieldIsInvalid(field);
   }
 
+  onCancelUpdate(){
+    this.oldPassword.setValue(null);
+    this.newPassword.setValue(null);
+    this.cfmNewPassword.setValue(null);
+  }
+
+  confirmClicked(){
+    if(this.updateLoginForm.valid){
+      //Implement dialog for updateLoginForm
+    } else{
+      console.log("update login form failed!");
+      this.reactiveFormService.displayValidationErrors(this.updateLoginForm);
+    }
+  }
+
   get oldPassword() {
     return this.updateLoginForm.get('oldPassword');
   }
