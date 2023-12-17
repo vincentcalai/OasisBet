@@ -153,11 +153,8 @@ export class ReactiveFormService {
     return this.fb.group({
       oldPassword: this.fb.control(null, {
         validators: [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(20)
-        ],
-        updateOn: 'blur'
+          Validators.required
+        ]
       }),
       newPassword: this.fb.control(null, {
         validators: [
