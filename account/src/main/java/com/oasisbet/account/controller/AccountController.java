@@ -3,6 +3,10 @@ package com.oasisbet.account.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.request.BetSlipRest;
+import com.oasisbet.account.model.request.UpdateAccountPwRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
@@ -27,6 +33,9 @@ public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@GetMapping(value = "/retrieveAccDetails")
 	public AccountRestResponse retrieveAccDetails(@RequestParam String user) {
@@ -82,6 +91,27 @@ public class AccountController {
 		} else {
 			return accountService.processLimitAction(account);
 		}
+	}
+
+	@PutMapping(value = "/updateAccPassword")
+	public StatusResponse updateAccPassword(@RequestBody UpdateAccountPwRest updateAccountPwRest) {
+
+		StatusResponse response = new StatusResponse();
+		String username = updateAccountPwRest.getUpdateAccountPwVO().getUsername();
+		String password = updateAccountPwRest.getUpdateAccountPwVO().getOldPassword();
+
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		} catch (DisabledException e) {
+			response.setStatusCode(1);
+			response.setResultMessage(Constants.ERR_USER_DISABLED);
+			return response;
+		} catch (BadCredentialsException e) {
+			response.setStatusCode(2);
+			response.setResultMessage(Constants.ERR_USER_INVALID_CREDENTIAL);
+			return response;
+		}
+		return response;
 	}
 
 	@PostMapping(value = "/processBet")

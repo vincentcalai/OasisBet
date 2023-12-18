@@ -65,8 +65,11 @@ export class AccountUpdateComponent implements OnInit {
   onConfirmUpdate() {
     console.log("confirm update password.");
 
-    this.sharedVar.changeAccountPwModel.oldPassword = this.oldPassword.value;
-    this.sharedVar.changeAccountPwModel.newPassword = this.newPassword.value;
+    const username = this.authService.getAuthenticationUser();
+
+    this.sharedVar.updateAccountPwModel.username = username;
+    this.sharedVar.updateAccountPwModel.oldPassword = this.oldPassword.value;
+    this.sharedVar.updateAccountPwModel.newPassword = this.newPassword.value;
 
     this.sharedVar.changeSpinner('block');
     this.subscriptions.add(

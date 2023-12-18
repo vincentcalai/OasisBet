@@ -105,7 +105,7 @@ export class ApiService {
   }
 
   updateAccPassword(): Observable<ResponseModel> {
-    return this.http.put<ResponseModel>(this.commonApiPrefix + '/account/updateAccPassword', this.sharedVar.changeAccountPwModel).pipe(
+    return this.http.put<ResponseModel>(this.commonApiPrefix + '/account/updateAccPassword', this.sharedVar.updateAccountPwModel).pipe(
       timeout(this.timeout)
     );
   }
