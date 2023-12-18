@@ -20,10 +20,6 @@
           </div>
           <label id="old_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}" class="error-text"
             for="old_password_0">
-            <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(oldPassword)) == 'maxlength'">Maximum length is 20
-              characters</span>
-            <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(oldPassword)) == 'minlength'">Minimum length is 5
-              characters</span>
             <span *ngIf="oldPassword.hasError('required') && !oldPassword.value && !oldPassword.pristine">This field is
               required</span>
           </label>
@@ -84,6 +80,6 @@
           Confirm
       </button>
     </div>
-    <br>  
+    <br>
   </div>
 </div>
