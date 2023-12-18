@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { finalize, take } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
+import { ApiService } from 'src/app/services/api/api.service';
+import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -12,13 +16,17 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 })
 export class AccountUpdateComponent implements OnInit {
 
+  public subscriptions: Subscription = new Subscription();
   public updateLoginForm: FormGroup;
-  public errorMsg: string;
+  public responseMsg: string = '';
+  public errorMsg: string = '';
 
   constructor(
-    public reactiveFormService: ReactiveFormService, 
+    public reactiveFormService: ReactiveFormService,
+    public apiService: ApiService,
     public dialog: MatDialog,
-    public sharedVar: SharedVarService
+    public sharedVar: SharedVarService,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +64,27 @@ export class AccountUpdateComponent implements OnInit {
 
   onConfirmUpdate() {
     console.log("confirm update password.");
+
+    this.sharedVar.changeAccountPwModel.oldPassword = this.oldPassword.value;
+    this.sharedVar.changeAccountPwModel.newPassword = this.newPassword.value;
+
+    this.sharedVar.changeSpinner('block');
+    this.subscriptions.add(
+      this.apiService.updateAccPassword()
+      .pipe(finalize(() => this.sharedVar.changeSpinner('none')))
+      .subscribe( (resp: any) => {
+        if (resp.statusCode != 0) {
+          this.errorMsg = resp.resultMessage;
+        } else {
+          this.responseMsg = resp.resultMessage;
+        }
+      } , error => {
+            console.log(error);
+            this.authService.handleError(error);
+        }
+      )
+    );
+
   }
 
   get oldPassword() {

@@ -104,6 +104,12 @@ export class ApiService {
     );
   }
 
+  updateAccPassword(): Observable<ResponseModel> {
+    return this.http.put<ResponseModel>(this.commonApiPrefix + '/account/updateAccPassword', this.sharedVar.changeAccountPwModel).pipe(
+      timeout(this.timeout)
+    );
+  }
+
   retrieveTrx(accId: number, trxType: string, period: string): Observable<Object> {
     const params = new HttpParams()
     .set('accId', accId)
