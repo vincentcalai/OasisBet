@@ -115,7 +115,7 @@ public class AccountController {
 
 		UserView userView = accountService.updateAccPassword(username, password);
 		if (userView == null) {
-			response.setStatusCode(1);
+			response.setStatusCode(3);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 		}
 
