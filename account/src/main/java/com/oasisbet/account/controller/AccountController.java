@@ -26,6 +26,7 @@ import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
 import com.oasisbet.account.util.Constants;
+import com.oasisbet.account.view.UserView;
 
 @RestController
 @RequestMapping(path = "/account")
@@ -111,6 +112,13 @@ public class AccountController {
 			response.setResultMessage(Constants.ERR_USER_INVALID_CREDENTIAL);
 			return response;
 		}
+
+		UserView userView = accountService.updateAccPassword(username, password);
+		if (userView == null) {
+			response.setStatusCode(1);
+			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+		}
+
 		return response;
 	}
 

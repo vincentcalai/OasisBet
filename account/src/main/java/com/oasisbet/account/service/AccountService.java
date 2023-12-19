@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,6 +59,9 @@ public class AccountService {
 
 	@Autowired
 	private IAccountOtherTrxDao accountOtherTrxDao;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private SequenceService sequenceService;
@@ -519,6 +523,15 @@ public class AccountService {
 
 	public void updateBetTrx(AccountBetTrxView betTrxView) {
 		accountBetTrxDao.save(betTrxView);
+	}
+
+	public UserView updateAccPassword(String user, String password) {
+		UserView userView = userDao.findByUsername(user);
+		if (userView != null) {
+			userView.setPassword(passwordEncoder.encode(password));
+			userDao.save(userView);
+		}
+		return userView;
 	}
 
 }
