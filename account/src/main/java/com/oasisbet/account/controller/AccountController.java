@@ -117,8 +117,10 @@ public class AccountController {
 		if (userView == null) {
 			response.setStatusCode(3);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
-		}
+			return response;
 
+		}
+		response.setResultMessage(Constants.ACC_PW_UPDATE_SUCESSS);
 		return response;
 	}
 
