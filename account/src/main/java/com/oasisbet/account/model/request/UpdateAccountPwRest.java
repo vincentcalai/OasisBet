@@ -8,5 +8,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateAccountPwRest {
-	private UpdateAccountPwVO updateAccountPwVO;
+	private UpdateAccountPwVO accountPw;
 }

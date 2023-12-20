@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
+import { AccountPwModel } from 'src/app/model/account-pw.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
@@ -67,9 +68,11 @@ export class AccountUpdateComponent implements OnInit {
 
     const username = this.authService.getAuthenticationUser();
 
-    this.sharedVar.updateAccountPwModel.username = username;
-    this.sharedVar.updateAccountPwModel.oldPassword = this.oldPassword.value;
-    this.sharedVar.updateAccountPwModel.newPassword = this.newPassword.value;
+    let accountPwModel: AccountPwModel = new AccountPwModel();
+    accountPwModel.username = username;
+    accountPwModel.oldPassword = this.oldPassword.value;
+    accountPwModel.newPassword = this.newPassword.value;
+    this.sharedVar.updateAccountPwModel.accountPw = accountPwModel;
 
     this.sharedVar.changeSpinner('block');
     this.subscriptions.add(

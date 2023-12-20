@@ -12,8 +12,6 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 })
 export class AccountLandingComponent implements OnInit {
 
-  public accountModel: AccountModel;
-
   selectAccountNavMenu = this.sharedVar.NAV_MENU_SELECT_ACCOUNT_OVERVIEW;
 
   constructor(public authService: AuthService, public sharedVar: SharedVarService, public apiService: ApiService) { }

@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
+import { AccountPwModel } from "./account-pw.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateAccountPwModel {
-    public username: string;
-    public oldPassword: string;
-    public newPassword: string;
+    public accountPw: AccountPwModel;
 }
