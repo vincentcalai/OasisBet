@@ -65,7 +65,7 @@ public class Constants {
 	public static final String ERR_OVERDRAFT_BAL = "The withdrawal amount is more than the current account balance";
 	public static final String ERR_RETRIEVE_TRX = "There is something wrong while retrieving the transaction history data. Please contact the administrator.";
 	public static final String ERR_USER_DISABLED = "Username is disabled. Please contact the administrator.";
-	public static final String ERR_USER_INVALID_CREDENTIAL = "Username old credential is incorrect. Please enter the correct old password";
+	public static final String ERR_USER_INVALID_CREDENTIAL = "Old credential is incorrect. Please enter the correct old password";
 
 	// Exception - Betting
 	public static final String ERR_INSUFFICIENT_BAL = "You have insufficient balance in your account. Please top up your account.";

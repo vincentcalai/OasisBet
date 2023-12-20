@@ -525,10 +525,10 @@ public class AccountService {
 		accountBetTrxDao.save(betTrxView);
 	}
 
-	public UserView updateAccPassword(String user, String password) {
+	public UserView updateAccPassword(String user, String newPassword) {
 		UserView userView = userDao.findByUsername(user);
 		if (userView != null) {
-			userView.setPassword(passwordEncoder.encode(password));
+			userView.setPassword(passwordEncoder.encode(newPassword));
 			userDao.save(userView);
 		}
 		return userView;

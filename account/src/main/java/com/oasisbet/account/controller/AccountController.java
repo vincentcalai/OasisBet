@@ -99,10 +99,11 @@ public class AccountController {
 
 		StatusResponse response = new StatusResponse();
 		String username = updateAccountPwRest.getAccountPw().getUsername();
-		String password = updateAccountPwRest.getAccountPw().getOldPassword();
+		String oldPassword = updateAccountPwRest.getAccountPw().getOldPassword();
+		String newPassword = updateAccountPwRest.getAccountPw().getNewPassword();
 
 		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
 		} catch (DisabledException e) {
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.ERR_USER_DISABLED);
@@ -113,7 +114,7 @@ public class AccountController {
 			return response;
 		}
 
-		UserView userView = accountService.updateAccPassword(username, password);
+		UserView userView = accountService.updateAccPassword(username, newPassword);
 		if (userView == null) {
 			response.setStatusCode(3);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);

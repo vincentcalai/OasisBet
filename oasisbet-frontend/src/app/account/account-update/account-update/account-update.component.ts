@@ -64,6 +64,9 @@ export class AccountUpdateComponent implements OnInit {
   }
 
   onConfirmUpdate() {
+    this.errorMsg = "";
+    this.responseMsg = "";
+
     console.log("confirm update password.");
 
     const username = this.authService.getAuthenticationUser();
