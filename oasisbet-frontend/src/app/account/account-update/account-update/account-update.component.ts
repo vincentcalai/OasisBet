@@ -87,6 +87,7 @@ export class AccountUpdateComponent implements OnInit {
         } else {
           this.responseMsg = resp.resultMessage;
         }
+        this.ngOnInit();
       } , error => {
             console.log(error);
             this.authService.handleError(error);
