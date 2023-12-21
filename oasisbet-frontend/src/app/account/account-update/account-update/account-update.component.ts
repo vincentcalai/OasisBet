@@ -6,7 +6,7 @@ import { finalize, take } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountPwModel } from 'src/app/model/account-pw.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ACC_DETAILS, AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 

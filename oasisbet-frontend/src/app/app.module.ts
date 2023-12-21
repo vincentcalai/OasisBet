@@ -33,6 +33,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav/comp-side-nav.component';
 import { InterceptorModule } from './services/api/interceptor.module';
 import { AccountUpdateComponent } from './account/account-update/account-update/account-update.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { AccountUpdateComponent } from './account/account-update/account-update/
     MatInputModule,
     MatProgressBarModule,
     MatTooltipModule,
+    MatTabsModule,
     ModalModule.forRoot()
   ],
   providers: [

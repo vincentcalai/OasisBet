@@ -6,72 +6,88 @@
   </div>
   <div class="card-body">
     <hr>
-    <br>
-    <form [formGroup]="updateLoginForm">
-      <div class="form-group row">
-        <label id="OLD_PASSWORD_LABEL" for="old_password_0_Label"
-          [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}" class="control-label col-sm-4 password-section-label-width password-acc-label-text">
-          <span id="OLD_PASSWORD">Current Password:</span>
-        </label>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <div class="input-group-prepend">
-            </div>
-            <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="oldPassword" id="old_password_0" name="old_password" required>
-          </div>
-          <label id="old_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}" class="error-text"
-            for="old_password_0">
-            <span *ngIf="oldPassword.hasError('required') && !oldPassword.value && !oldPassword.pristine">This field is
-              required</span>
-          </label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label id="NEW_PASSWORD_LABEL" for="new_password_0_Label"
-          [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}" class="control-label col-sm-4 password-section-label-width password-acc-label-text">
-          <span id="NEW_PASSWORD">New Password:</span>
-        </label>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <div class="input-group-prepend">
-            </div>
-            <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="newPassword" id="new_password_0" name="new_password" required>
-          </div>
-          <label id="new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}" class="error-text"
-            for="new_password_0">
-            <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(newPassword)) == 'maxlength'">Maximum length is 20
-              characters</span>
-            <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(newPassword)) == 'minlength'">Minimum length is 5
-              characters</span>
-            <span *ngIf="newPassword.hasError('required') && !newPassword.value && !newPassword.pristine">This field is
-              required</span>
-          </label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label id="CFM_NEW_PASSWORD_LABEL" for="cfm_new_password_0_Label"
-          [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}" class="control-label col-sm-4 password-section-label-width password-acc-label-text">
-          <span id="CFM_NEW_PASSWORD">Confirm New Password:</span>
-        </label>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <div class="input-group-prepend">
-            </div>
-            <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="cfmNewPassword" id="cfm_new_password_0" name="cfm_new_password" required>
-          </div>
-          <label id="cfm_new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}" class="error-text"
-            for="cfm_new_password_0">
-            <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'maxlength'">Maximum length is 20
-              characters</span>
-            <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'minlength'">Minimum length is 5
-              characters</span>
-            <span *ngIf="cfmNewPassword.hasError('required') && !cfmNewPassword.value && !cfmNewPassword.pristine">This field is
-              required</span>
-            <span *ngIf="cfmNewPassword.hasError('passwordMismatch')">Passwords does not match</span>
-          </label>
-        </div>
-      </div>
-    </form>
+    <mat-tab-group>
+      <mat-tab label="Account Details">Account Details Update</mat-tab>
+      <mat-tab label="Password">
+        <br>
+        <form [formGroup]="updateLoginForm">
+          <div class="form-group row">
+            <label id="OLD_PASSWORD_LABEL" for="old_password_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}"
+              class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+              <span id="OLD_PASSWORD">Current Password:</span>
+            </label>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                </div>
+                <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="oldPassword"
+                  id="old_password_0" name="old_password" required>
+                </div>
+                <label id="old_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}" class="error-text"
+                  for="old_password_0">
+                  <span *ngIf="oldPassword.hasError('required') && !oldPassword.value && !oldPassword.pristine">This field is
+                    required</span>
+                </label>
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label id="NEW_PASSWORD_LABEL" for="new_password_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}"
+              class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+              <span id="NEW_PASSWORD">New Password:</span>
+            </label>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                </div>
+                <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="newPassword"
+                  id="new_password_0" name="new_password" required>
+                </div>
+                <label id="new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}" class="error-text"
+                  for="new_password_0">
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(newPassword)) == 'maxlength'">Maximum length is
+                  20
+                  characters</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(newPassword)) == 'minlength'">Minimum length is 5
+                  characters</span>
+                <span *ngIf="newPassword.hasError('required') && !newPassword.value && !newPassword.pristine">This field is
+                  required</span>
+                </label>
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label id="CFM_NEW_PASSWORD_LABEL" for="cfm_new_password_0_Label"
+              [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}"
+              class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+              <span id="CFM_NEW_PASSWORD">Confirm New Password:</span>
+            </label>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                </div>
+                <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="cfmNewPassword"
+                  id="cfm_new_password_0" name="cfm_new_password" required>
+                </div>
+                <label id="cfm_new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}" class="error-text"
+                  for="cfm_new_password_0">
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'maxlength'">Maximum length
+                  is 20
+                  characters</span>
+                <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'minlength'">Minimum length
+                  is 5
+                  characters</span>
+                <span *ngIf="cfmNewPassword.hasError('required') && !cfmNewPassword.value && !cfmNewPassword.pristine">This
+                  field is
+                  required</span>
+                <span *ngIf="cfmNewPassword.hasError('passwordMismatch')">Passwords does not match</span>
+                </label>
+                </div>
+                </div>
+                </form>
+      </mat-tab>
+      </mat-tab-group>
+      <br>
     <hr>
     <div mat-dialog-actions align="end">
       <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelUpdate()">
