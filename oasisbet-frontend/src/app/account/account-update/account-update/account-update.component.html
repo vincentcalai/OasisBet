@@ -6,13 +6,12 @@
   </div>
   <div class="card-body">
     <hr>
-    <div class="col-sm-4">
       <mat-tab-group>
         <mat-tab label="Account Details">Account Details Update</mat-tab>
         <mat-tab label="Password">
           <br>
           <form [formGroup]="updateLoginForm">
-            <div class="form-group row">
+            <div class="form-group row mx-0">
               <label id="OLD_PASSWORD_LABEL" for="old_password_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}"
                 class="control-label col-sm-4 password-section-label-width password-acc-label-text">
@@ -32,7 +31,7 @@
                   </label>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mx-0">
               <label id="NEW_PASSWORD_LABEL" for="new_password_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}"
                 class="control-label col-sm-4 password-section-label-width password-acc-label-text">
@@ -57,32 +56,32 @@
                   </label>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mx-0">
               <label id="CFM_NEW_PASSWORD_LABEL" for="cfm_new_password_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}"
                 class="control-label col-sm-4 password-section-label-width password-acc-label-text">
                 <span id="CFM_NEW_PASSWORD">Confirm New Password:</span>
               </label>
-            <div class="col-sm-4">
-              <div class="input-group">
-                <div class="input-group-prepend">
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                  </div>
+                  <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="cfmNewPassword"
+                      id="cfm_new_password_0" name="cfm_new_password" required>
                 </div>
-                <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="cfmNewPassword"
-                    id="cfm_new_password_0" name="cfm_new_password" required>
-              </div>
-                <label id="cfm_new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}" class="error-text"
-                  for="cfm_new_password_0">
-                  <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'maxlength'">Maximum length
-                    is 20
-                    characters</span>
-                  <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'minlength'">Minimum length
-                    is 5
-                    characters</span>
-                  <span *ngIf="cfmNewPassword.hasError('required') && !cfmNewPassword.value && !cfmNewPassword.pristine">This
-                    field is
-                    required</span>
-                  <span *ngIf="cfmNewPassword.hasError('passwordMismatch')">Passwords does not match</span>
-                </label>
+                  <label id="cfm_new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}" class="error-text"
+                    for="cfm_new_password_0">
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'maxlength'">Maximum length
+                      is 20
+                      characters</span>
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(cfmNewPassword)) == 'minlength'">Minimum length
+                      is 5
+                      characters</span>
+                    <span *ngIf="cfmNewPassword.hasError('required') && !cfmNewPassword.value && !cfmNewPassword.pristine">This
+                      field is
+                      required</span>
+                    <span *ngIf="cfmNewPassword.hasError('passwordMismatch')">Passwords does not match</span>
+                  </label>
               </div>
             </div>
           </form>
