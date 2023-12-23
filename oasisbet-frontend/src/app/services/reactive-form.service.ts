@@ -178,6 +178,22 @@ export class ReactiveFormService {
     });
   }
 
+  initializeUpdateAccDetailsFormControl(): FormGroup {
+    return this.fb.group({
+      email: this.fb.control(null, {
+        validators: this.emailAddrValidators(),
+        updateOn: 'blur'
+      }),
+      contactNo: this.fb.control(null, {
+        validators: [
+          Validators.required,
+          Validators.pattern(this.NUMERIC),
+          Validators.maxLength(30)
+        ]
+      })
+    });
+  }
+
   notZeroValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = parseFloat(control.value);

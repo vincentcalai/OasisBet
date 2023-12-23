@@ -7,7 +7,58 @@
   <div class="card-body">
     <hr>
       <mat-tab-group>
-        <mat-tab label="Account Details">Account Details Update</mat-tab>
+        <mat-tab label="Account Details">
+          <br>
+          <form [formGroup]="updateAccDetailsForm">
+            <div class="form-group row mx-0">
+              <label id="EMAIL_LABEL" for="email_0_Label"
+                [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}"
+                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                <span id="EMAIL">Email:</span>
+              </label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                  </div>
+                  <input type="text" class="form-control password-section-selection-width no-spinner" formControlName="email"
+                    id="email_0" name="email" required>
+                </div>
+                  <label id="email_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}" class="error-text"
+                    for="email_0">
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(email)) == 'pattern'">Please enter a valid
+                      email address</span>
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(email)) == 'maxlength'">Maximum length is 100
+                      characters</span>
+                    <span *ngIf="email.hasError('required') && !email.value && !email.pristine">This field is required</span>
+                  </label>
+              </div>
+            </div>
+            <div class="form-group row mx-0">
+              <label id="CONTACT_NO_LABEL" for="contact_no_0_Label"
+                [ngClass]="{'highlightLabel' : fieldIsInvalid(contactNo)}"
+                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                <span id="CONTACT_NO">Contact No:</span>
+              </label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                  </div>
+                  <input type="text" class="form-control password-section-selection-width no-spinner" formControlName="contactNo"
+                    id="contact_no_0" name="contactNo" required>
+                </div>
+                  <label id="contact_no_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(contactNo)}" class="error-text"
+                    for="contact_no_0">
+                    <span *ngIf="contactNo.hasError('required') && !contactNo.value && !contactNo.pristine">This field is
+                      required</span>
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(contactNo)) == 'pattern'">Please enter only
+                      numeric characters</span>
+                    <span *ngIf="reactiveFormService.fieldErrorPrecedence($any(contactNo)) == 'maxlength'">Maximum length is
+                      30 characters</span>
+                  </label>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
         <mat-tab label="Password">
           <br>
           <form [formGroup]="updateLoginForm">

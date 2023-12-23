@@ -18,6 +18,7 @@ import { SharedVarService } from 'src/app/services/shared-var.service';
 export class AccountUpdateComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
+  public updateAccDetailsForm: FormGroup;
   public updateLoginForm: FormGroup;
   public responseMsg: string = '';
   public errorMsg: string = '';
@@ -31,6 +32,7 @@ export class AccountUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.updateAccDetailsForm = this.reactiveFormService.initializeUpdateAccDetailsFormControl();
     this.updateLoginForm = this.reactiveFormService.initializeUpdateLoginFormControl();
   }
 
@@ -95,6 +97,14 @@ export class AccountUpdateComponent implements OnInit {
       )
     );
 
+  }
+
+  get email() {
+    return this.updateAccDetailsForm.get('email');
+  }
+
+  get contactNo() {
+    return this.updateAccDetailsForm.get('contactNo');
   }
 
   get oldPassword() {
