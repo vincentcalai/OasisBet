@@ -7,9 +7,20 @@
   <div class="card-body">
     <hr>
       <mat-tab-group>
-        <mat-tab label="Account Details">
+        <mat-tab label="Contact Info">
           <br>
           <form [formGroup]="updateAccDetailsForm">
+            <div class="form-group row mx-0">
+              <label id="ACCOUNT_NO_LABEL" for="account_no_0_Label"
+                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                <span id="ACCOUNT_NO">ACCOUNT NO.</span>
+              </label>
+              <label id="ACCOUNT_NO_INPUT" for="account_no_0_input"
+                class="control-label col-sm-4 password-acc-label-text">
+                <span id="ACCOUNT_NO"><b>012662719</b></span>
+              </label>
+            </div>
+            <hr>
             <div class="form-group row mx-0">
               <label id="EMAIL_LABEL" for="email_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}"
@@ -59,7 +70,7 @@
             </div>
           </form>
         </mat-tab>
-        <mat-tab label="Password">
+        <mat-tab label="Login information">
           <br>
           <form [formGroup]="updateLoginForm">
             <div class="form-group row mx-0">
