@@ -60,8 +60,17 @@ export class AccountUpdateComponent implements OnInit {
     this.newPassword.setValue(null);
     this.cfmNewPassword.setValue(null);
   }
+  
+  confirmClickedUpdateAccDetails(){
+    if(this.updateAccDetailsForm.valid){
+      console.log("updateAccDetailsForm is valid");
+    } else{
+      console.log("update login form failed!");
+      this.reactiveFormService.displayValidationErrors(this.updateAccDetailsForm);
+    }
+  }
 
-  confirmClicked(){
+  confirmClickedUpdateLogin(){
     if(this.updateLoginForm.valid){
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         width: '400px',
