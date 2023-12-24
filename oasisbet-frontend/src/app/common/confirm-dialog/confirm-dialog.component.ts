@@ -42,6 +42,8 @@ export class ConfirmDialogComponent implements OnInit {
         return this.sharedVarService.CFM_CHANGE_LIMIT_DIALOG_MSG;
       case this.sharedVarService.CFM_UPDATE_PW_DIALOG_TYPE:
         return this.sharedVarService.CFM_UPDATE_PW_DIALOG_MSG;
+      case this.sharedVarService.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE:
+        return this.sharedVarService.CFM_UPDATE_ACC_DETAILS_DIALOG_MSG;
       default:
         return ''; 
     }

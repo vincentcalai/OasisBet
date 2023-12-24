@@ -63,7 +63,16 @@ export class AccountUpdateComponent implements OnInit {
   
   confirmClickedUpdateAccDetails(){
     if(this.updateAccDetailsForm.valid){
-      console.log("updateAccDetailsForm is valid");
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: { type: this.sharedVar.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE, title: this.sharedVar.CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          this.onConfirmUpdateAccDetails();
+        }
+      });
     } else{
       console.log("update login form failed!");
       this.reactiveFormService.displayValidationErrors(this.updateAccDetailsForm);
@@ -79,8 +88,7 @@ export class AccountUpdateComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'confirm') {
-          console.log("confirm update password");
-          this.onConfirmUpdate();
+          this.onConfirmUpdatePassword();
         }
       });
     } else{
@@ -89,7 +97,18 @@ export class AccountUpdateComponent implements OnInit {
     }
   }
 
-  onConfirmUpdate() {
+  onConfirmUpdateAccDetails() {
+    this.errorMsg = "";
+    this.responseMsg = "";
+
+    console.log("confirm update account details.");
+
+    const username = this.authService.getAuthenticationUser();
+
+    
+  }
+
+  onConfirmUpdatePassword() {
     this.errorMsg = "";
     this.responseMsg = "";
 
