@@ -54,6 +54,8 @@ export class AccountUpdateComponent implements OnInit {
   }
 
   onCancelUpdate(){
+    this.email.setValue(null);
+    this.contactNo.setValue(null);
     this.oldPassword.setValue(null);
     this.newPassword.setValue(null);
     this.cfmNewPassword.setValue(null);
@@ -109,7 +111,6 @@ export class AccountUpdateComponent implements OnInit {
         }
       )
     );
-
   }
 
   get email() {

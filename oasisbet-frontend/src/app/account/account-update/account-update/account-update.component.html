@@ -12,11 +12,11 @@
           <form [formGroup]="updateAccDetailsForm">
             <div class="form-group row mx-0">
               <label id="ACCOUNT_NO_LABEL" for="account_no_0_Label"
-                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                class="control-label col-sm-4 acc-update-section-label-width acc-update-label-text">
                 <span id="ACCOUNT_NO">ACCOUNT NO.</span>
               </label>
               <label id="ACCOUNT_NO_INPUT" for="account_no_0_input"
-                class="control-label col-sm-4 password-acc-label-text">
+                class="control-label col-sm-4 acc-update-label-text">
                 <span id="ACCOUNT_NO"><b>{{accountId}}</b></span>
               </label>
             </div>
@@ -24,14 +24,14 @@
             <div class="form-group row mx-0">
               <label id="EMAIL_LABEL" for="email_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}"
-                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                class="control-label col-sm-4 acc-update-section-label-width acc-update-label-text">
                 <span id="EMAIL">Email:</span>
               </label>
               <div class="col-sm-4">
                 <div class="input-group">
                   <div class="input-group-prepend">
                   </div>
-                  <input type="text" class="form-control password-section-selection-width no-spinner" formControlName="email"
+                  <input type="text" class="form-control acc-update-section-selection-width no-spinner" formControlName="email"
                     id="email_0" name="email" required>
                 </div>
                   <label id="email_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(email)}" class="error-text"
@@ -47,14 +47,14 @@
             <div class="form-group row mx-0">
               <label id="CONTACT_NO_LABEL" for="contact_no_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(contactNo)}"
-                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                class="control-label col-sm-4 acc-update-section-label-width acc-update-label-text">
                 <span id="CONTACT_NO">Contact No:</span>
               </label>
               <div class="col-sm-4">
                 <div class="input-group">
                   <div class="input-group-prepend">
                   </div>
-                  <input type="text" class="form-control password-section-selection-width no-spinner" formControlName="contactNo"
+                  <input type="text" class="form-control acc-update-section-selection-width no-spinner" formControlName="contactNo"
                     id="contact_no_0" name="contactNo" required>
                 </div>
                   <label id="contact_no_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(contactNo)}" class="error-text"
@@ -69,6 +69,16 @@
               </div>
             </div>
           </form>
+          <hr>
+          <div mat-dialog-actions align="end">
+            <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelUpdate()">
+                Cancel
+            </button>
+            <button class="btn btn-success btn-confirm" type="button" (click)="confirmClicked()">
+                Confirm
+            </button>
+          </div>
+          <br>
         </mat-tab>
         <mat-tab label="Login information">
           <br>
@@ -76,14 +86,14 @@
             <div class="form-group row mx-0">
               <label id="OLD_PASSWORD_LABEL" for="old_password_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}"
-                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                class="control-label col-sm-4 acc-update-section-label-width acc-update-label-text">
                 <span id="OLD_PASSWORD">Current Password:</span>
               </label>
               <div class="col-sm-4">
                 <div class="input-group">
                   <div class="input-group-prepend">
                   </div>
-                  <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="oldPassword"
+                  <input type="password" class="form-control acc-update-section-selection-width no-spinner" formControlName="oldPassword"
                     id="old_password_0" name="old_password" required>
                 </div>
                   <label id="old_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(oldPassword)}" class="error-text"
@@ -96,14 +106,14 @@
             <div class="form-group row mx-0">
               <label id="NEW_PASSWORD_LABEL" for="new_password_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}"
-                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                class="control-label col-sm-4 acc-update-section-label-width acc-update-label-text">
                 <span id="NEW_PASSWORD">New Password:</span>
               </label>
               <div class="col-sm-4">
                 <div class="input-group">
                   <div class="input-group-prepend">
                   </div>
-                  <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="newPassword"
+                  <input type="password" class="form-control acc-update-section-selection-width no-spinner" formControlName="newPassword"
                     id="new_password_0" name="new_password" required>
                 </div>
                   <label id="new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(newPassword)}" class="error-text"
@@ -121,14 +131,14 @@
             <div class="form-group row mx-0">
               <label id="CFM_NEW_PASSWORD_LABEL" for="cfm_new_password_0_Label"
                 [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}"
-                class="control-label col-sm-4 password-section-label-width password-acc-label-text">
+                class="control-label col-sm-4 acc-update-section-label-width acc-update-label-text">
                 <span id="CFM_NEW_PASSWORD">Confirm New Password:</span>
               </label>
               <div class="col-sm-4">
                 <div class="input-group">
                   <div class="input-group-prepend">
                   </div>
-                  <input type="password" class="form-control password-section-selection-width no-spinner" formControlName="cfmNewPassword"
+                  <input type="password" class="form-control acc-update-section-selection-width no-spinner" formControlName="cfmNewPassword"
                       id="cfm_new_password_0" name="cfm_new_password" required>
                 </div>
                   <label id="cfm_new_password_error_0" [ngClass]="{'highlightLabel' : fieldIsInvalid(cfmNewPassword)}" class="error-text"
@@ -147,18 +157,18 @@
               </div>
             </div>
           </form>
+          <hr>
+          <div mat-dialog-actions align="end">
+            <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelUpdate()">
+                Cancel
+            </button>
+            <button class="btn btn-success btn-confirm" type="button" (click)="confirmClicked()">
+                Confirm
+            </button>
+          </div>
+          <br>
         </mat-tab>
       </mat-tab-group>
-    <br>
-    <hr>
-    <div mat-dialog-actions align="end">
-      <button class="btn btn-danger btn-cancel" type="button" (click)="onCancelUpdate()">
-          Cancel
-      </button>
-      <button class="btn btn-success btn-confirm" type="button" (click)="confirmClicked()">
-          Confirm
-      </button>
-    </div>
     <br>
   </div>
 </div>
