@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountPwModel } from 'src/app/model/account-pw.model';
+import { AccountModel } from 'src/app/model/account.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
@@ -20,6 +21,9 @@ export class AccountUpdateComponent implements OnInit {
   public subscriptions: Subscription = new Subscription();
   public updateAccDetailsForm: FormGroup;
   public updateLoginForm: FormGroup;
+  public accountModelInput: AccountModel;
+
+  public accountId: number;
   public responseMsg: string = '';
   public errorMsg: string = '';
 
@@ -32,6 +36,15 @@ export class AccountUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.accountModelInput = this.authService.getRetrievedAccDetails();
+
+    if (!this.accountModelInput) {
+      this.sharedVar.changeException('Account details are null.');
+      throw new Error('Account details are null.');
+    }
+
+    this.accountId = this.accountModelInput.accId;
+
     this.updateAccDetailsForm = this.reactiveFormService.initializeUpdateAccDetailsFormControl();
     this.updateLoginForm = this.reactiveFormService.initializeUpdateLoginFormControl();
   }
