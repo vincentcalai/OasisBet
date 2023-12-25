@@ -64,7 +64,7 @@ export class AccountUpdateComponent implements OnInit {
   confirmClickedUpdateAccDetails(){
     if(this.updateAccDetailsForm.valid){
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
+        width: '600px',
         data: { type: this.sharedVar.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE, title: this.sharedVar.CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE }
       });
 
