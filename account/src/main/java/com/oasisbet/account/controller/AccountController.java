@@ -94,8 +94,8 @@ public class AccountController {
 		}
 	}
 
-	@PutMapping(value = "/updateAccPassword")
-	public StatusResponse updateAccPassword(@RequestBody UpdateAccountPwRest updateAccountPwRest) {
+	@PutMapping(value = "/updateAccInfo")
+	public StatusResponse updateAccInfo(@RequestBody UpdateAccountPwRest updateAccountPwRest) {
 
 		StatusResponse response = new StatusResponse();
 		String username = updateAccountPwRest.getAccountDetails().getUsername();

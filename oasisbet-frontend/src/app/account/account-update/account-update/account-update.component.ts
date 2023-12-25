@@ -124,7 +124,7 @@ export class AccountUpdateComponent implements OnInit {
 
     this.sharedVar.changeSpinner('block');
     this.subscriptions.add(
-      this.apiService.updateAccPassword()
+      this.apiService.updateAccInfo()
       .pipe(finalize(() => this.sharedVar.changeSpinner('none')))
       .subscribe( (resp: any) => {
         if (resp.statusCode != 0) {
