@@ -5,7 +5,8 @@ import { CreateUserModel } from '../model/create-user.model';
 import { UpdateAccountModel } from '../model/update-account.model';
 import { SubmitBetsModel } from '../model/submit-bets.model';
 import { LoginCredentialsModel } from '../model/login-credentials.model';
-import { UpdateAccountPwModel } from '../model/update-account-pw.model';
+import { AccountDetailsModel } from '../model/account-details.model';
+import { UpdateAccountDetailsModel } from '../model/update-account-details.model';
 
 @Injectable({
   providedIn: 'root'
@@ -89,7 +90,7 @@ export class SharedVarService {
 
   public createUserModel: CreateUserModel = new CreateUserModel();
   public updateAccountModel: UpdateAccountModel = new UpdateAccountModel();
-  public updateAccountPwModel: UpdateAccountPwModel = new UpdateAccountPwModel();
+  public updateAccountDetailsModel: UpdateAccountDetailsModel = new UpdateAccountDetailsModel();
   public submitBetsModel: SubmitBetsModel = new SubmitBetsModel();
   public loginCredentialsModel: LoginCredentialsModel = new LoginCredentialsModel();
 

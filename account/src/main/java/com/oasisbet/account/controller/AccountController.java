@@ -98,9 +98,9 @@ public class AccountController {
 	public StatusResponse updateAccPassword(@RequestBody UpdateAccountPwRest updateAccountPwRest) {
 
 		StatusResponse response = new StatusResponse();
-		String username = updateAccountPwRest.getAccountPw().getUsername();
-		String oldPassword = updateAccountPwRest.getAccountPw().getOldPassword();
-		String newPassword = updateAccountPwRest.getAccountPw().getNewPassword();
+		String username = updateAccountPwRest.getAccountDetails().getUsername();
+		String oldPassword = updateAccountPwRest.getAccountDetails().getOldPassword();
+		String newPassword = updateAccountPwRest.getAccountDetails().getNewPassword();
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
