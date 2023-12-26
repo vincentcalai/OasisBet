@@ -18,6 +18,10 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +34,7 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.ResultEventMapping;
+import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxBetDetailsVO;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.response.AccountRestResponse;
@@ -65,6 +70,9 @@ public class AccountService {
 
 	@Autowired
 	private SequenceService sequenceService;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private ResultProxy proxy;
@@ -525,23 +533,47 @@ public class AccountService {
 		accountBetTrxDao.save(betTrxView);
 	}
 
-	public UserView updateAccPassword(String user, String newPassword) {
-		UserView userView = userDao.findByUsername(user);
+	public StatusResponse updateAccPassword(String username, String oldPassword, String newPassword,
+			StatusResponse response) {
+
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+		} catch (DisabledException e) {
+			response.setStatusCode(1);
+			response.setResultMessage(Constants.ERR_USER_DISABLED);
+			return response;
+		} catch (BadCredentialsException e) {
+			response.setStatusCode(2);
+			response.setResultMessage(Constants.ERR_USER_INVALID_CREDENTIAL);
+			return response;
+		}
+
+		UserView userView = userDao.findByUsername(username);
 		if (userView != null) {
 			userView.setPassword(passwordEncoder.encode(newPassword));
 			userDao.save(userView);
+
+			response.setResultMessage(Constants.ACC_PW_UPDATE_SUCESSS);
+			return response;
 		}
-		return userView;
+		response.setStatusCode(3);
+		response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+		return response;
 	}
 
-	public UserView updateAccInfo(String user, String email, String contactNo) {
-		UserView userView = userDao.findByUsername(user);
+	public StatusResponse updateAccInfo(String username, String email, String contactNo, StatusResponse response) {
+		UserView userView = userDao.findByUsername(username);
 		if (userView != null) {
 			userView.setEmail(email);
 			userView.setContactNo(contactNo);
 			userDao.save(userView);
+
+			response.setStatusCode(3);
+			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+			return response;
 		}
-		return userView;
+		response.setResultMessage(Constants.ACC_INFO_UPDATE_SUCESSS);
+		return response;
 	}
 
 }

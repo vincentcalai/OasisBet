@@ -3,10 +3,6 @@ package com.oasisbet.account.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,7 +22,6 @@ import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
 import com.oasisbet.account.util.Constants;
-import com.oasisbet.account.view.UserView;
 
 @RestController
 @RequestMapping(path = "/account")
@@ -34,9 +29,6 @@ public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
 	@GetMapping(value = "/retrieveAccDetails")
 	public AccountRestResponse retrieveAccDetails(@RequestParam String user) {
@@ -105,38 +97,11 @@ public class AccountController {
 		String contactNo = updateAccountInfoRest.getAccountDetails().getContactNo();
 
 		if (email != null && contactNo != null) {
-			UserView userView = accountService.updateAccInfo(username, email, contactNo);
-			if (userView == null) {
-				response.setStatusCode(3);
-				response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
-				return response;
-
-			}
-			response.setResultMessage(Constants.ACC_INFO_UPDATE_SUCESSS);
-			return response;
+			return accountService.updateAccInfo(username, email, contactNo, response);
 		}
 
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
-		} catch (DisabledException e) {
-			response.setStatusCode(1);
-			response.setResultMessage(Constants.ERR_USER_DISABLED);
-			return response;
-		} catch (BadCredentialsException e) {
-			response.setStatusCode(2);
-			response.setResultMessage(Constants.ERR_USER_INVALID_CREDENTIAL);
-			return response;
-		}
+		return accountService.updateAccPassword(username, oldPassword, newPassword, response);
 
-		UserView userView = accountService.updateAccPassword(username, newPassword);
-		if (userView == null) {
-			response.setStatusCode(3);
-			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
-			return response;
-
-		}
-		response.setResultMessage(Constants.ACC_PW_UPDATE_SUCESSS);
-		return response;
 	}
 
 	@PostMapping(value = "/processBet")
