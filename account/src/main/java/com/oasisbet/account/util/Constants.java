@@ -56,6 +56,7 @@ public class Constants {
 	public static final String WITHDRAW_ACC_SUCCESS = "Withdrawal was successful.";
 	public static final String CHANGE_LIMIT_ACC_SUCCESS = "Deposit/Bet Limit Change was successful.";
 	public static final String ACC_PW_UPDATE_SUCESSS = "Password has been updated successfully.";
+	public static final String ACC_INFO_UPDATE_SUCESSS = "Contact Info has been updated successfully.";
 
 	// Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";

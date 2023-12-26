@@ -101,6 +101,20 @@ public class AccountController {
 		String username = updateAccountInfoRest.getAccountDetails().getUsername();
 		String oldPassword = updateAccountInfoRest.getAccountDetails().getOldPassword();
 		String newPassword = updateAccountInfoRest.getAccountDetails().getNewPassword();
+		String email = updateAccountInfoRest.getAccountDetails().getEmail();
+		String contactNo = updateAccountInfoRest.getAccountDetails().getContactNo();
+
+		if (email != null && contactNo != null) {
+			UserView userView = accountService.updateAccInfo(username, email, contactNo);
+			if (userView == null) {
+				response.setStatusCode(3);
+				response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+				return response;
+
+			}
+			response.setResultMessage(Constants.ACC_INFO_UPDATE_SUCESSS);
+			return response;
+		}
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));

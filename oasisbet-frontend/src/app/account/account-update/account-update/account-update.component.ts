@@ -111,6 +111,24 @@ export class AccountUpdateComponent implements OnInit {
     accountDetailsModel.email = this.email.value;
     this.sharedVar.updateAccountDetailsModel.accountDetails = accountDetailsModel;
 
+    this.sharedVar.changeSpinner('block');
+    this.subscriptions.add(
+      this.apiService.updateAccInfo()
+      .pipe(finalize(() => this.sharedVar.changeSpinner('none')))
+      .subscribe( (resp: any) => {
+        if (resp.statusCode != 0) {
+          this.errorMsg = resp.resultMessage;
+        } else {
+          this.responseMsg = resp.resultMessage;
+        }
+        this.ngOnInit();
+      } , error => {
+            console.log(error);
+            this.authService.handleError(error);
+        }
+      )
+    );
+
   }
 
   onConfirmUpdatePassword() {

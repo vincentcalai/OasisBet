@@ -534,4 +534,14 @@ public class AccountService {
 		return userView;
 	}
 
+	public UserView updateAccInfo(String user, String email, String contactNo) {
+		UserView userView = userDao.findByUsername(user);
+		if (userView != null) {
+			userView.setEmail(email);
+			userView.setContactNo(contactNo);
+			userDao.save(userView);
+		}
+		return userView;
+	}
+
 }

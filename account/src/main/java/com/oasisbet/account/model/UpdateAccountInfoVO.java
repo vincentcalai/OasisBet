@@ -9,4 +9,6 @@ public class UpdateAccountInfoVO {
 	private String username;
 	private String oldPassword;
 	private String newPassword;
+	private String email;
+	private String contactNo;
 }
