@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateAccountPwVO {
+public class UpdateAccountInfoVO {
 	private String username;
 	private String oldPassword;
 	private String newPassword;

@@ -21,7 +21,7 @@ import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.request.BetSlipRest;
-import com.oasisbet.account.model.request.UpdateAccountPwRest;
+import com.oasisbet.account.model.request.UpdateAccountInfoRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
@@ -95,12 +95,12 @@ public class AccountController {
 	}
 
 	@PutMapping(value = "/updateAccInfo")
-	public StatusResponse updateAccInfo(@RequestBody UpdateAccountPwRest updateAccountPwRest) {
+	public StatusResponse updateAccInfo(@RequestBody UpdateAccountInfoRest updateAccountInfoRest) {
 
 		StatusResponse response = new StatusResponse();
-		String username = updateAccountPwRest.getAccountDetails().getUsername();
-		String oldPassword = updateAccountPwRest.getAccountDetails().getOldPassword();
-		String newPassword = updateAccountPwRest.getAccountDetails().getNewPassword();
+		String username = updateAccountInfoRest.getAccountDetails().getUsername();
+		String oldPassword = updateAccountInfoRest.getAccountDetails().getOldPassword();
+		String newPassword = updateAccountInfoRest.getAccountDetails().getNewPassword();
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));

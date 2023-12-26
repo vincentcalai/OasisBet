@@ -60,7 +60,7 @@ export class AccountUpdateComponent implements OnInit {
     this.newPassword.setValue(null);
     this.cfmNewPassword.setValue(null);
   }
-  
+
   confirmClickedUpdateAccDetails(){
     if(this.updateAccDetailsForm.valid){
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -105,7 +105,12 @@ export class AccountUpdateComponent implements OnInit {
 
     const username = this.authService.getAuthenticationUser();
 
-      
+    let accountDetailsModel: AccountDetailsModel = new AccountDetailsModel();
+    accountDetailsModel.username = username;
+    accountDetailsModel.contactNo = this.contactNo.value;
+    accountDetailsModel.email = this.email.value;
+    this.sharedVar.updateAccountDetailsModel.accountDetails = accountDetailsModel;
+
   }
 
   onConfirmUpdatePassword() {
@@ -120,7 +125,7 @@ export class AccountUpdateComponent implements OnInit {
     accountDetailsModel.username = username;
     accountDetailsModel.oldPassword = this.oldPassword.value;
     accountDetailsModel.newPassword = this.newPassword.value;
-    this.sharedVar.updateAccountDetailsModel.accountDetails = accountDetailsModel;  
+    this.sharedVar.updateAccountDetailsModel.accountDetails = accountDetailsModel;
 
     this.sharedVar.changeSpinner('block');
     this.subscriptions.add(
