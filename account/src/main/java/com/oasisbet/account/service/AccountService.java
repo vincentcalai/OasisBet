@@ -567,12 +567,12 @@ public class AccountService {
 			userView.setEmail(email);
 			userView.setContactNo(contactNo);
 			userDao.save(userView);
-
-			response.setStatusCode(3);
-			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+			response.setResultMessage(Constants.ACC_INFO_UPDATE_SUCESSS);
 			return response;
 		}
-		response.setResultMessage(Constants.ACC_INFO_UPDATE_SUCESSS);
+		response.setStatusCode(3);
+		response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+
 		return response;
 	}
 
