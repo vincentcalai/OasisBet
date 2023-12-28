@@ -1,6 +1,7 @@
 package com.oasisbet.betting.odds.util;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,10 +43,9 @@ public class Constants {
 	public static final String COMP_TYPE_SERIE_A = "SERIEA";
 	public static final String COMP_TYPE_LIGUE_ONE = "LIGUEONE";
 
-	public static final List<String> API_SOURCE_COMP_TYPE_LIST = Arrays.asList(API_SOURCE_COMP_TYPE_EPL,
-			API_SOURCE_COMP_TYPE_LALIGA, API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A,
-			API_SOURCE_COMP_TYPE_LIGUE_ONE);
-	public static final Map<String, String> API_SOURCE_COMP_TYPE_MAP = new HashMap<>();
+	public static final List<String> API_SOURCE_COMP_TYPE_LIST = Collections
+			.unmodifiableList(Arrays.asList(API_SOURCE_COMP_TYPE_EPL, API_SOURCE_COMP_TYPE_LALIGA,
+					API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A, API_SOURCE_COMP_TYPE_LIGUE_ONE));
 
 	public static final String EVENT_TYPE_1X2 = "01";
 
@@ -71,6 +71,7 @@ public class Constants {
 	public static final String RETRIEVE_ODDS_API_EXCEPTION = "Error Retrieving Odds from source API";
 	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
 
+	public static final Map<String, String> API_SOURCE_COMP_TYPE_MAP = new HashMap<>();
 	static {
 		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_EPL, COMP_TYPE_EPL);
 		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_LALIGA, COMP_TYPE_LA_LIGA);
