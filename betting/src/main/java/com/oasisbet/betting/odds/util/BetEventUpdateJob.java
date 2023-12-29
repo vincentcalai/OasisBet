@@ -43,17 +43,6 @@ public class BetEventUpdateJob implements Job {
 				ResponseEntity<OddsApiResponse[]> responseEntity = restTemplate.getForEntity(uri,
 						OddsApiResponse[].class);
 				results = responseEntity.getBody();
-//				if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
-//					results = MockData.mockEplOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
-//					results = MockData.mockLaLigaOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
-//					results = MockData.mockBundesligaOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
-//					results = MockData.mockSerieAOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
-//					results = MockData.mockLigueOneOddsApiResponseArray();
-//				}
 
 				// add new bet events to sports_event_mapping, generate new event id for new bet
 				// events

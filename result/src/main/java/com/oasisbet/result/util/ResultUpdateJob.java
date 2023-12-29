@@ -57,18 +57,6 @@ public class ResultUpdateJob implements Job {
 						ResultApiResponse[].class);
 				results = responseEntity.getBody();
 
-//				if (compType.equals(Constants.API_SOURCE_COMP_TYPE_EPL)) {
-//					results = MockData.mockEplResultApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LALIGA)) {
-//					results = MockData.mockLaLigaOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA)) {
-//					results = MockData.mockBundesligaOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_SERIE_A)) {
-//					results = MockData.mockSerieAOddsApiResponseArray();
-//				} else if (compType.equals(Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE)) {
-//					results = MockData.mockLigueOneOddsApiResponseArray();
-//				}
-
 				for (ResultApiResponse result : results) {
 					String apiEventId = result.getId();
 					List<Score> scoreList = result.getScores();
