@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  betting:
+    image: vincentlai91/oasisbet-betting:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8801:8801"
+    networks:
+      - oasis-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+  result:
+    image: vincentlai91/oasisbet-result:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8802:8802"
+    networks:
+      - oasis-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+  account:
+    image: vincentlai91/oasisbet-account:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8803:8803"
+    networks:
+      - oasis-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka 
+  api-gateway:
+    image: vincentlai91/oasisbet-api-gateway:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - oasis-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka 
+  naming-server:
+    image: vincentlai91/oasisbet-naming-server:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - oasis-network
+
+networks:
+  oasis-network:
+  
