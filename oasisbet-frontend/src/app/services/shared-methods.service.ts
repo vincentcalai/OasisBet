@@ -27,7 +27,6 @@ export class SharedMethodsService {
     this.loginTime = Date.now();
     this.timerSubscription = interval(timerInterval).subscribe(() => {
       this.timer = this.getLoggedInDuration();
-      console.log("timer: " + this.timer);
     });
   }
 
@@ -57,6 +56,10 @@ export class SharedMethodsService {
 
   stopLoginTimer(){
     this.timerSubscription.unsubscribe();
+  }
+  
+  getTimer(){
+    return this.timer;
   }
 
   handleJWTAuthLogin(): Observable<boolean> {
