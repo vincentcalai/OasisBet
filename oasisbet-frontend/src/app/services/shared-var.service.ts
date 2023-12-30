@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription, interval } from 'rxjs';
 import { ResponseModel } from '../model/response.model';
 import { CreateUserModel } from '../model/create-user.model';
 import { UpdateAccountModel } from '../model/update-account.model';
@@ -82,6 +82,8 @@ export class SharedVarService {
   public readonly MILLI_SEC_24_HRS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
   public readonly MILLI_SEC_3_DAYS = 3 * 24 * 60 * 60 * 1000;  // 3 days in milliseconds
 
+  public loginTimer: string = '00:00:00';
+
   public readonly sharedModalConfig = {
     backdrop: true,
     ignoreBackdropClick: true,
@@ -108,6 +110,8 @@ export class SharedVarService {
 
   public spinnerSource = new BehaviorSubject<string>('none');
   currentSpinner = this.spinnerSource.asObservable();
+
+  public loginTimerSource = new Subscription();
 
   changeResponse(resp: ResponseModel) {
     this.responseSource.next(resp);

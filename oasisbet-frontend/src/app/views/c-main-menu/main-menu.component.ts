@@ -27,6 +27,5 @@ export class MainMenuComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.sharedMethods.stopLoginTimer()
   }
 }

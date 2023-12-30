@@ -56,6 +56,8 @@ export class AuthService {
     logout(){
       if(confirm("Are you sure to logout?")) {
         console.log("logout ok");
+        this.sharedVar.loginTimer = '00:00:00';
+        this.sharedVar.loginTimerSource.unsubscribe();
         sessionStorage.removeItem(AUTH_USER);
         sessionStorage.removeItem(AUTHORIZATION);
         sessionStorage.removeItem(ACC_DETAILS);

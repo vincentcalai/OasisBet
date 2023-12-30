@@ -11,9 +11,9 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class SharedMethodsService {
 
-  timerSubscription: Subscription;
-  timer: string = '00:00:00';
-  loginTime: number;
+  public timerSubscription: Subscription;
+  
+  private loginTime: number;
 
   constructor(public sharedVar: SharedVarService, public authService: AuthService) { }
 
@@ -23,10 +23,9 @@ export class SharedMethodsService {
   }
 
   startLoginTimer() {
-    const timerInterval = 1000; // 1 second interval
     this.loginTime = Date.now();
-    this.timerSubscription = interval(timerInterval).subscribe(() => {
-      this.timer = this.getLoggedInDuration();
+    this.sharedVar.loginTimerSource = interval(1000).subscribe(() => {
+      this.sharedVar.loginTimer = this.getLoggedInDuration();
     });
   }
 
@@ -52,14 +51,6 @@ export class SharedMethodsService {
 
   private padNumber(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
-  }
-
-  stopLoginTimer(){
-    this.timerSubscription.unsubscribe();
-  }
-  
-  getTimer(){
-    return this.timer;
   }
 
   handleJWTAuthLogin(): Observable<boolean> {
