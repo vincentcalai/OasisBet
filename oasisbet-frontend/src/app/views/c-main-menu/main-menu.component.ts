@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class MainMenuComponent implements OnInit {
   public subscriptions: Subscription = new Subscription();
 
   constructor(public authService: AuthService,
-    public sharedVar: SharedVarService) { }
+    public sharedVar: SharedVarService,
+    public sharedMethods: SharedMethodsService) { }
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -25,5 +27,6 @@ export class MainMenuComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+    this.sharedMethods.stopLoginTimer()
   }
 }

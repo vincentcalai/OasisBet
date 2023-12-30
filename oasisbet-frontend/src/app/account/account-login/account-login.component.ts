@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, throwError } from 'rxjs';
+import { Subscription, interval, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService } from 'src/app/services/auth/auth.service';
+import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
 @Component({
@@ -22,7 +23,12 @@ export class AccountLoginComponent implements OnInit {
 
   public subscriptions: Subscription = new Subscription();
 
-  constructor(public sharedVar: SharedVarService, public apiService: ApiService, public authService: AuthService, public router: Router) {
+  constructor(
+    public sharedVar: SharedVarService, 
+    public sharedMethods: SharedMethodsService,
+    public apiService: ApiService, 
+    public authService: AuthService, 
+    public router: Router) {
   }
 
   ngOnInit(): void {
@@ -75,6 +81,7 @@ export class AccountLoginComponent implements OnInit {
           } else {
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             console.log("login successful");
+            this.sharedMethods.startLoginTimer();
           }
         },
         (error) => {
