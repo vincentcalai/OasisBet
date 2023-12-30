@@ -3,11 +3,12 @@ import { ApiService } from '../api/api.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SharedVarService } from '../shared-var.service';
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 
 export const AUTH_USER = 'authenticateUser';
 export const AUTHORIZATION = 'authorization';
 export const ACC_DETAILS = 'accountDetails';
+export const LOGIN_TIME = 'loginTime';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export const ACC_DETAILS = 'accountDetails';
 export class AuthService {
 
   private subscriptions: Subscription = new Subscription();
+
+  private loginTime: number;
 
   constructor(
     public apiService: ApiService,
@@ -52,6 +55,38 @@ export class AuthService {
     getRetrievedAccDetails(){
       return JSON.parse(sessionStorage.getItem(ACC_DETAILS));
     }
+    
+    startLoginTimer() {
+      this.loginTime = +sessionStorage.getItem(LOGIN_TIME) || 0;
+      this.sharedVar.loginTimerSource = interval(1000).subscribe(() => {
+        this.sharedVar.loginTimer = this.getLoggedInDuration();
+      });
+    }
+
+    getLoggedInDuration(): string {
+      if (this.isUserLoggedIn()) {
+        const durationInSeconds = Math.floor((Date.now() - this.loginTime) / 1000);
+        return this.formatDuration(durationInSeconds);
+      }
+      return '00:00:00';
+    }
+
+    private formatDuration(seconds: number): string {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds = seconds % 60;
+
+      const formattedHours = this.padNumber(hours);
+      const formattedMinutes = this.padNumber(minutes);
+      const formattedSeconds = this.padNumber(remainingSeconds);
+
+      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    private padNumber(num: number): string {
+      return num < 10 ? `0${num}` : `${num}`;
+    }
+
 
     logout(){
       if(confirm("Are you sure to logout?")) {
@@ -61,6 +96,7 @@ export class AuthService {
         sessionStorage.removeItem(AUTH_USER);
         sessionStorage.removeItem(AUTHORIZATION);
         sessionStorage.removeItem(ACC_DETAILS);
+        sessionStorage.removeItem(LOGIN_TIME);
         this.router.navigate(['account']);
       }
     }

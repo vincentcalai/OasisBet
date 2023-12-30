@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService, LOGIN_TIME } from 'src/app/services/auth/auth.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -20,6 +20,10 @@ export class MainMenuComponent implements OnInit {
     public sharedMethods: SharedMethodsService) { }
 
   ngOnInit(): void {
+    if(sessionStorage.getItem(LOGIN_TIME)){
+      this.authService.startLoginTimer();
+    }
+    
     this.subscriptions.add(
       this.sharedVar.currentSpinner.subscribe(status => this.spinme = status)
     );

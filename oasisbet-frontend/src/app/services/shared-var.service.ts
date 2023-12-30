@@ -82,7 +82,7 @@ export class SharedVarService {
   public readonly MILLI_SEC_24_HRS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
   public readonly MILLI_SEC_3_DAYS = 3 * 24 * 60 * 60 * 1000;  // 3 days in milliseconds
 
-  public loginTimer: string = '00:00:00';
+  public loginTimer: string;
 
   public readonly sharedModalConfig = {
     backdrop: true,
@@ -111,7 +111,7 @@ export class SharedVarService {
   public spinnerSource = new BehaviorSubject<string>('none');
   currentSpinner = this.spinnerSource.asObservable();
 
-  public loginTimerSource = new Subscription();
+  public loginTimerSource: Subscription = new Subscription();
 
   changeResponse(resp: ResponseModel) {
     this.responseSource.next(resp);

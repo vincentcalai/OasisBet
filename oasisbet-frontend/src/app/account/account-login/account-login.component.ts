@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription, interval, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService, LOGIN_TIME } from 'src/app/services/auth/auth.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -65,6 +65,8 @@ export class AccountLoginComponent implements OnInit {
           this.token = data.token;
           sessionStorage.setItem(AUTH_USER, this.username);
           sessionStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
+          sessionStorage.setItem(LOGIN_TIME, Date.now().toString());
+          this.authService.startLoginTimer();
           return this.apiService.retrieveAccDetails(this.username)
         }
       ),
@@ -81,7 +83,6 @@ export class AccountLoginComponent implements OnInit {
           } else {
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             console.log("login successful");
-            this.sharedMethods.startLoginTimer();
           }
         },
         (error) => {
