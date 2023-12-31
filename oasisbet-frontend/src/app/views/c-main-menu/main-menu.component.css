@@ -32,12 +32,21 @@
     cursor: pointer;
 }
 
+.btn-logout{
+  background-color: #34b5f8;
+  background-image: linear-gradient(to bottom, #34b5f8 0%, #3c91c9 100%);
+  background-repeat: repeat-x;
+  border-bottom: 2px solid #22597d;
+  margin-right: 10px;
+  color: #ffffff;
+}
+
 
 .login-user-textbox{
     display: flex;
     align-items: center;
     color: rgb(194, 194, 194);
-    width: 400px;
+    width: 700px;
     margin-top: 2px;
 }
 
@@ -65,6 +74,15 @@
     margin-right: 10px;
     border-right: 1px solid #ccc;
     padding-right: 10px;
+}
+
+.balance-textbox{
+  display: flex;
+  align-items: center;
+  color: rgb(194, 194, 194);
+  width: 100px;
+  margin-top: 12px;
+  margin-right: 75px;
 }
 
 #cover-spin {
