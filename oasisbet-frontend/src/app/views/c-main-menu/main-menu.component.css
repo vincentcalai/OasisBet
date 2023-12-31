@@ -120,6 +120,10 @@
   width: 80px;
 }
 
+.input-login{
+  width: 120px;
+}
+
 .user-login-form{
   display: flex; 
   align-items: center;
