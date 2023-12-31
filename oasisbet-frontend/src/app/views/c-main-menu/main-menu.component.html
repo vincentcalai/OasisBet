@@ -18,7 +18,7 @@
         <ul class="navbar-nav">
           <li class="nav-item login-user-textbox">
             <span>LOGGED IN &nbsp; {{sharedVar.loginTimer}}</span>
-            <button type="button" class="btn btn-default btn-logout" (click)="logout()">Logout</button>
+            <button type="button" class="btn btn-default btn-logout" (click)="logout()">LOGOUT</button>
             <i class="fa fa-user user-icon"></i>
             <a class="login-username-tag" routerLink="/account" routerLinkActive="active"> {{authService.getAuthenticationUser()}}</a>
           </li>

@@ -33,6 +33,8 @@
 }
 
 .btn-logout{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
   background-color: #34b5f8;
   background-image: linear-gradient(to bottom, #34b5f8 0%, #3c91c9 100%);
   background-repeat: repeat-x;
