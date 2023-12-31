@@ -5,7 +5,7 @@
 .navbar-nav {
     margin-left: 20%;
     padding-top: 5px;
-      font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .nav-item {
@@ -44,7 +44,7 @@
 }
 
 
-.login-user-textbox{
+.user-menu-display{
     display: flex;
     align-items: center;
     color: rgb(194, 194, 194);
@@ -72,7 +72,7 @@
     transform: scaleX(1.15);
 }
 
-.login-user-textbox span {
+.user-menu-display span {
     margin-right: 10px;
     border-right: 1px solid #ccc;
     padding-right: 10px;
@@ -82,9 +82,49 @@
   display: flex;
   align-items: center;
   color: rgb(194, 194, 194);
-  width: 100px;
+  width: 200px;
   margin-top: 12px;
   margin-right: 75px;
+}
+
+#login-form {
+  display: flex;
+  align-items: center;
+}
+
+.login-form-group {
+  margin-right: 10px;
+}
+
+.form-group {
+  margin-bottom: 10px; 
+}
+
+.login-container {
+  margin-right: 300px; 
+}
+
+.btn-login {
+  background-color: #87be77;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  width: 80px;
+}
+
+.btn-signup {
+  background-color: #FF8200;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  width: 80px;
+}
+
+.user-login-form{
+  display: flex; 
+  align-items: center;
+  margin-top: 2px;
+  margin-right: 100px;
 }
 
 #cover-spin {
