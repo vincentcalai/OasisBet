@@ -18,8 +18,6 @@ export class MainMenuComponent implements OnInit {
   username: string = "";
   password: string = "";
   token: string = "";
-  errorMsg: string = "";
-  responseMsg: string = "";
 
   public subscriptions: Subscription = new Subscription();
 
@@ -40,7 +38,6 @@ export class MainMenuComponent implements OnInit {
   }
 
   handleJWTAuthLogin(){
-    this.responseMsg = "";
     this.sharedVar.changeSpinner('block');
     this.sharedVar.loginCredentialsModel.username = this.username;
     this.sharedVar.loginCredentialsModel.password = this.password;
@@ -67,15 +64,17 @@ export class MainMenuComponent implements OnInit {
         (resp: any) => {
           console.log(resp);
           if (resp.statusCode !== 0) {
-            this.errorMsg = resp.resultMessage;
+            this.sharedVar.commonErrorMsg = resp.resultMessage;
           } else {
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             console.log("login successful");
+            this.username = "";
+            this.password = "";
           }
         },
         (error) => {
           console.log("login fail", error);
-          this.errorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
+          this.sharedVar.commonErrorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
         }
     )
   }

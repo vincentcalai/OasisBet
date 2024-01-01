@@ -83,6 +83,7 @@ export class SharedVarService {
   public readonly MILLI_SEC_3_DAYS = 3 * 24 * 60 * 60 * 1000;  // 3 days in milliseconds
 
   public loginTimer: string;
+  public commonErrorMsg: string;
 
   public readonly sharedModalConfig = {
     backdrop: true,
@@ -95,7 +96,6 @@ export class SharedVarService {
   public updateAccountDetailsModel: UpdateAccountDetailsModel = new UpdateAccountDetailsModel();
   public submitBetsModel: SubmitBetsModel = new SubmitBetsModel();
   public loginCredentialsModel: LoginCredentialsModel = new LoginCredentialsModel();
-
 
   constructor() { }
 
