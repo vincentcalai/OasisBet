@@ -63,18 +63,21 @@ export class MainMenuComponent implements OnInit {
     .subscribe(
         (resp: any) => {
           console.log(resp);
+          this.username = "";
+          this.password = "";
           if (resp.statusCode !== 0) {
             this.sharedVar.commonErrorMsg = resp.resultMessage;
           } else {
             sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             console.log("login successful");
-            this.username = "";
-            this.password = "";
           }
         },
         (error) => {
           console.log("login fail", error);
           this.sharedVar.commonErrorMsg = this.sharedVar.INVALID_LOGIN_ERR_MSG;
+          this.username = "";
+          this.password = "";
+          this.router.navigate(['account']);
         }
     )
   }

@@ -32,23 +32,29 @@ export class AccountLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.sharedVar.showUserNotLoginSource.subscribe(message => {
-        this.errorMsg = message
-      })
-    );
+    console.log(this.sharedVar.commonErrorMsg);
+    if(this.sharedVar.commonErrorMsg){
+      this.errorMsg = this.sharedVar.commonErrorMsg;
+      this.sharedVar.commonErrorMsg = "";
+    } else {
+      this.subscriptions.add(
+        this.sharedVar.showUserNotLoginSource.subscribe(message => {
+          this.errorMsg = message
+        })
+      );
 
-    //get response success message after creating user
-    this.subscriptions.add(
-      this.sharedVar.responseSource.pipe(take(1))
-      .subscribe(resp => {
-        if(resp){
-          this.responseMsg = resp.resultMessage;
-          resp.resultMessage = "";
-        }
-      }
-     )
-    )
+      //get response success message after creating user
+      this.subscriptions.add(
+        this.sharedVar.responseSource.pipe(take(1))
+        .subscribe(resp => {
+            if(resp){
+              this.responseMsg = resp.resultMessage;
+              resp.resultMessage = "";
+            }
+          }
+        )
+      );
+    }
   }
 
   handleJWTAuthLogin(){
