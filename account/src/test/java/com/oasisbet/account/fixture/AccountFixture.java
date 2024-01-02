@@ -17,6 +17,7 @@ import com.oasisbet.account.model.request.BetSlipRest;
 import com.oasisbet.account.model.request.UpdateAccountInfoRest;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
+import com.oasisbet.account.view.UserView;
 
 public class AccountFixture {
 	public static BetSlipRest createMockBetSubmissionRestData() {
@@ -430,5 +431,17 @@ public class AccountFixture {
 		updateAccountInfoVO.setUsername("DUMMYUSER");
 		restInput.setAccountDetails(updateAccountInfoVO);
 		return restInput;
+	}
+
+	public static UserView mockCreateUserViewData() {
+		UserView userView = new UserView();
+		userView.setContactNo("91234567");
+		userView.setCreatedDt(new Date());
+		userView.setDelInd("N");
+		userView.setEmail("test@test.com");
+		userView.setId(3L);
+		userView.setPassword("dummyPassword");
+		userView.setUsername("CHOONANN");
+		return userView;
 	}
 }

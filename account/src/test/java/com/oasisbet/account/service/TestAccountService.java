@@ -7,6 +7,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
@@ -28,12 +30,18 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.oasisbet.account.TestWithSpringBoot;
 import com.oasisbet.account.dao.IAccountBetProcessTrxDao;
 import com.oasisbet.account.dao.IAccountBetTrxDao;
 import com.oasisbet.account.dao.IAccountDao;
 import com.oasisbet.account.dao.IAccountOtherTrxDao;
+import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
@@ -47,6 +55,7 @@ import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
 import com.oasisbet.account.view.AccountOtherTrxView;
 import com.oasisbet.account.view.AccountView;
+import com.oasisbet.account.view.UserView;
 
 class TestAccountService extends TestWithSpringBoot {
 
@@ -71,6 +80,15 @@ class TestAccountService extends TestWithSpringBoot {
 
 	@Mock
 	private IAccountBetTrxDao mockAccountBetTrxDao;
+
+	@Mock
+	private AuthenticationManager authenticationManager;
+
+	@Mock
+	private PasswordEncoder passwordEncoder;
+
+	@Mock
+	private IUserDao mockUserDao;
 
 	@MockBean
 	private ResultProxy proxy;
@@ -560,4 +578,87 @@ class TestAccountService extends TestWithSpringBoot {
 		assertTrue(completedResultsMap.containsKey(BigInteger.valueOf(100002L)));
 	}
 
+	@Test
+	public void testUpdateAccPassword_Success() {
+		when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(null);
+
+		UserView userView = AccountFixture.mockCreateUserViewData();
+		when(mockUserDao.findByUsername(anyString())).thenReturn(userView);
+
+		when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
+
+		StatusResponse response = new StatusResponse();
+		response = mockAccountService.updateAccPassword("username", "oldPassword", "newPassword", response);
+
+		verify(mockUserDao, times(1)).save(userView);
+		assertEquals(0, response.getStatusCode());
+		assertEquals(Constants.ACC_PW_UPDATE_SUCESSS, response.getResultMessage());
+	}
+
+	@Test
+	public void testUpdateAccPassword_UserNotFoundFail() {
+		when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(null);
+
+		when(mockUserDao.findByUsername(anyString())).thenReturn(null);
+
+		when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
+
+		StatusResponse response = new StatusResponse();
+		response = mockAccountService.updateAccPassword("username", "oldPassword", "newPassword", response);
+
+		verify(mockUserDao, times(0)).save(Mockito.any(UserView.class));
+		assertEquals(3, response.getStatusCode());
+		assertEquals(Constants.ERR_USER_ACC_NOT_FOUND, response.getResultMessage());
+	}
+
+	@Test
+	public void testUpdateAccPassword_DisabledExceptionFail() {
+		when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+				.thenThrow(DisabledException.class);
+
+		StatusResponse response = new StatusResponse();
+		response = mockAccountService.updateAccPassword("username", "oldPassword", "newPassword", response);
+
+		verify(mockUserDao, times(0)).save(Mockito.any(UserView.class));
+		assertEquals(1, response.getStatusCode());
+		assertEquals(Constants.ERR_USER_DISABLED, response.getResultMessage());
+	}
+
+	@Test
+	public void testUpdateAccPassword_BadCredentialExceptionFail() {
+		when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+				.thenThrow(BadCredentialsException.class);
+
+		StatusResponse response = new StatusResponse();
+		response = mockAccountService.updateAccPassword("username", "oldPassword", "newPassword", response);
+
+		verify(mockUserDao, times(0)).save(Mockito.any(UserView.class));
+		assertEquals(2, response.getStatusCode());
+		assertEquals(Constants.ERR_USER_INVALID_CREDENTIAL, response.getResultMessage());
+	}
+
+	@Test
+	public void testUpdateAccInfo_Success() {
+		UserView userView = AccountFixture.mockCreateUserViewData();
+		when(mockUserDao.findByUsername(anyString())).thenReturn(userView);
+
+		StatusResponse response = new StatusResponse();
+		response = mockAccountService.updateAccInfo("username", "newemail@test.com", "98887777", response);
+
+		verify(mockUserDao, times(1)).save(Mockito.any(UserView.class));
+		assertEquals(0, response.getStatusCode());
+		assertEquals(Constants.ACC_INFO_UPDATE_SUCESSS, response.getResultMessage());
+	}
+
+	@Test
+	public void testUpdateAccInfo_UserNotFoundFail() {
+		when(mockUserDao.findByUsername(anyString())).thenReturn(null);
+
+		StatusResponse response = new StatusResponse();
+		response = mockAccountService.updateAccInfo("username", "newemail@test.com", "98887777", response);
+
+		verify(mockUserDao, times(0)).save(Mockito.any(UserView.class));
+		assertEquals(3, response.getStatusCode());
+		assertEquals(Constants.ERR_USER_ACC_NOT_FOUND, response.getResultMessage());
+	}
 }
