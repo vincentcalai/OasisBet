@@ -12,7 +12,9 @@ import java.util.Map;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
 import com.oasisbet.account.model.ResultEventMapping;
+import com.oasisbet.account.model.UpdateAccountInfoVO;
 import com.oasisbet.account.model.request.BetSlipRest;
+import com.oasisbet.account.model.request.UpdateAccountInfoRest;
 import com.oasisbet.account.view.AccountBetProcessTrxView;
 import com.oasisbet.account.view.AccountBetTrxView;
 
@@ -408,5 +410,25 @@ public class AccountFixture {
 		trxList.add(trx2);
 		trxList.add(trx3);
 		return trxList;
+	}
+
+	public static UpdateAccountInfoRest createMockUpdateAccountInfoData() {
+		UpdateAccountInfoRest restInput = new UpdateAccountInfoRest();
+		UpdateAccountInfoVO updateAccountInfoVO = new UpdateAccountInfoVO();
+		updateAccountInfoVO.setContactNo("912345678");
+		updateAccountInfoVO.setEmail("test@test.com");
+		updateAccountInfoVO.setUsername("DUMMYUSER");
+		restInput.setAccountDetails(updateAccountInfoVO);
+		return restInput;
+	}
+
+	public static UpdateAccountInfoRest createMockUpdateAccountPasswordData() {
+		UpdateAccountInfoRest restInput = new UpdateAccountInfoRest();
+		UpdateAccountInfoVO updateAccountInfoVO = new UpdateAccountInfoVO();
+		updateAccountInfoVO.setNewPassword("NEWdummypassword");
+		updateAccountInfoVO.setOldPassword("OLDdummypassword");
+		updateAccountInfoVO.setUsername("DUMMYUSER");
+		restInput.setAccountDetails(updateAccountInfoVO);
+		return restInput;
 	}
 }

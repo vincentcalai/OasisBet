@@ -21,9 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.account.TestWithSpringBoot;
 import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
 import com.oasisbet.account.model.request.BetSlipRest;
+import com.oasisbet.account.model.request.UpdateAccountInfoRest;
 import com.oasisbet.account.model.response.AccountRestResponse;
 import com.oasisbet.account.model.response.TrxHistRestResponse;
 import com.oasisbet.account.service.AccountService;
@@ -151,6 +153,28 @@ public class TestAccountController extends TestWithSpringBoot {
 	}
 
 	@Test
+	public void testRetrieveTrxFail() throws Exception {
+		Long accId = 100003L;
+		String type = "F";
+		String period = "last1mth";
+
+		TrxHistRestResponse expectedResponse = new TrxHistRestResponse();
+		expectedResponse.setStatusCode(1);
+		expectedResponse.setResultMessage(Constants.ERR_RETRIEVE_TRX);
+
+		Mockito.when(accountService.retrieveTrxHist(Mockito.any(Long.class), Mockito.any(String.class),
+				Mockito.any(String.class))).thenThrow(Exception.class);
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveTrx")
+				.contentType(MediaType.APPLICATION_JSON).param("accId", String.valueOf(accId))
+				.param("type", String.valueOf(type)).param("period", String.valueOf(period));
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
 	public void testUpdateAccDetailsOnDeposit() throws Exception {
 
 		AccountRest accountRest = new AccountRest();
@@ -192,6 +216,70 @@ public class TestAccountController extends TestWithSpringBoot {
 		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json(response));
 		verify(accountService, times(1)).processWithdrawalAction(Mockito.any(AccountVO.class));
+	}
+
+	@Test
+	public void testUpdateAccDetailsOnBetLimit() throws Exception {
+
+		AccountRest accountRest = new AccountRest();
+		AccountVO accountVo = new AccountVO();
+		accountVo.setAccId(100003L);
+		accountVo.setActionType("L");
+		accountRest.setAccount(accountVo);
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		expectedResponse.setStatusCode(0);
+		expectedResponse.setResultMessage(Constants.CHANGE_LIMIT_ACC_SUCCESS);
+		Mockito.when(accountService.processLimitAction(Mockito.any(AccountVO.class))).thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(accountRest);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/account/updateAccDetails")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+		verify(accountService, times(1)).processLimitAction(Mockito.any(AccountVO.class));
+	}
+
+	@Test
+	public void testUpdateAccPasswordInfoSuccess() throws Exception {
+		UpdateAccountInfoRest restInput = AccountFixture.createMockUpdateAccountPasswordData();
+
+		StatusResponse expectedResponse = new StatusResponse();
+		expectedResponse.setStatusCode(0);
+		expectedResponse.setResultMessage(Constants.ACC_PW_UPDATE_SUCESSS);
+
+		Mockito.when(accountService.updateAccPassword(Mockito.any(String.class), Mockito.any(String.class),
+				Mockito.any(String.class), Mockito.any(StatusResponse.class))).thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(restInput);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/account/updateAccInfo")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
+	public void testUpdateAccContactInfoSuccess() throws Exception {
+		UpdateAccountInfoRest restInput = AccountFixture.createMockUpdateAccountInfoData();
+
+		StatusResponse expectedResponse = new StatusResponse();
+		expectedResponse.setStatusCode(0);
+		expectedResponse.setResultMessage(Constants.ACC_INFO_UPDATE_SUCESSS);
+
+		Mockito.when(accountService.updateAccInfo(Mockito.any(String.class), Mockito.any(String.class),
+				Mockito.any(String.class), Mockito.any(StatusResponse.class))).thenReturn(expectedResponse);
+
+		String request = objectMapper.writeValueAsString(restInput);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/account/updateAccInfo")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
 	}
 
 	@SuppressWarnings("unchecked")
