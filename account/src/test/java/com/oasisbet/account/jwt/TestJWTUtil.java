@@ -25,6 +25,7 @@ public class TestJWTUtil extends TestWithSpringBoot {
 		String username = "TESTUSER";
 		String password = "password";
 		JwtTokenRequest jwtTokenRequest = new JwtTokenRequest(username, password);
+
 		String request = objMapper.writeValueAsString(jwtTokenRequest);
 		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/user/authenticate").content(request)
 				.contentType(MediaType.APPLICATION_JSON);
