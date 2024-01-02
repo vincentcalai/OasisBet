@@ -228,7 +228,7 @@ class TestAccountService extends TestWithSpringBoot {
 		List<BetSubmissionVO> betSubmissionList = AccountFixture.createMockBetSubmissionData();
 		StatusResponse response = accountService.processBet(userId, betSubmissionList);
 
-		assertEquals(1, response.getStatusCode());
+		assertEquals(2, response.getStatusCode());
 		assertEquals(Constants.ERR_USER_ACC_NOT_FOUND, response.getResultMessage());
 	}
 
@@ -238,7 +238,7 @@ class TestAccountService extends TestWithSpringBoot {
 		List<BetSubmissionVO> betSubmissionList = AccountFixture.createMockBetSubmissionData();
 		StatusResponse response = accountService.processBet(userId, betSubmissionList);
 
-		assertEquals(2, response.getStatusCode());
+		assertEquals(3, response.getStatusCode());
 		assertEquals(Constants.ERR_INSUFFICIENT_BAL, response.getResultMessage());
 	}
 
