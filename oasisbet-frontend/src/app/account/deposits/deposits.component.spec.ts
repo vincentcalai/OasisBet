@@ -8,7 +8,7 @@ import { of, throwError } from 'rxjs';
 import { AccountModel } from 'src/app/model/account.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { AUTH_USER, TOKEN, ACC_DETAILS } from 'src/app/services/auth/auth.service';
+import { AUTH_USER, ACC_DETAILS, AUTHORIZATION, LOGIN_TIME } from 'src/app/services/auth/auth.service';
 
 describe('DepositsComponent', () => {
   let component: DepositsComponent;
@@ -39,8 +39,9 @@ describe('DepositsComponent', () => {
 
   afterEach(() => {
     sessionStorage.removeItem(AUTH_USER);
-    sessionStorage.removeItem(TOKEN);
+    sessionStorage.removeItem(AUTHORIZATION);
     sessionStorage.removeItem(ACC_DETAILS);
+    sessionStorage.removeItem(LOGIN_TIME);
     component.ngOnDestroy();
   })
 

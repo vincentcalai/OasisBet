@@ -27,8 +27,8 @@ describe('AuthService', () => {
 
   it('should call jwtAuthenticate api once called jwtAuthenticate', () => {
     spyOn(service.apiService, 'jwtAuthenticate');
-    service.jwtAuthenticate('TESTUSER', 'password');
-    expect(service.apiService.jwtAuthenticate).toHaveBeenCalledWith('TESTUSER', 'password');
+    service.jwtAuthenticate();
+    expect(service.apiService.jwtAuthenticate).toHaveBeenCalledTimes(1);
   });
 
   it('should check if the user is logged in', () => {

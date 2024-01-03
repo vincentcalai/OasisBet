@@ -68,9 +68,9 @@ describe('ApiService', () => {
     const token = {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
-    expect(service.jwtAuthenticate(username, password)).toBeTruthy();
+    expect(service.jwtAuthenticate()).toBeTruthy();
 
-    service.jwtAuthenticate(username, password).subscribe(data => {
+    service.jwtAuthenticate().subscribe(data => {
       expect(data.token).toBe("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ");
     })
 

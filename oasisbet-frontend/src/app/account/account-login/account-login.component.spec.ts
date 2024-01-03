@@ -64,19 +64,19 @@ describe('AccountLoginComponent', () => {
     const token = {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
-    spyOn(component, 'retrieveAccDetails');
+    spyOn(component.apiService, 'retrieveAccDetails');
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of(token));
     component.handleJWTAuthLogin();
-    expect(component.retrieveAccDetails).toHaveBeenCalledTimes(1);
+    expect(component.apiService.retrieveAccDetails).toHaveBeenCalledTimes(1);
     expect(component.errorMsg).toBeNull();
   });
 
   it('when login is unsuccessful, should not retrieve account details, and should throw error', () => {
     const error = new HttpErrorResponse({ status: 500 });
-    spyOn(component, 'retrieveAccDetails');
+    spyOn(component.apiService, 'retrieveAccDetails');
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(throwError(error));
     component.handleJWTAuthLogin();
-    expect(component.retrieveAccDetails).toHaveBeenCalledTimes(0);
+    expect(component.apiService.retrieveAccDetails).toHaveBeenCalledTimes(0);
     expect(component.errorMsg).toBe("Please enter a valid credential. Login failed.");
   });
 
@@ -93,7 +93,7 @@ describe('AccountLoginComponent', () => {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
     spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(of({"statusCode":1,"resultMessage": 'Invalid Credential'}));
-    component.retrieveAccDetails(user, data);
+    component.apiService.retrieveAccDetails(user);
     expect(component.errorMsg).toBe(message);
     expect(sessionStorage.getItem(AUTH_USER)).toBeNull();
     expect(sessionStorage.getItem(AUTHORIZATION)).toBeNull();
@@ -106,7 +106,7 @@ describe('AccountLoginComponent', () => {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
     spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(of({"statusCode":0,"resultMessage": 'Login Successful', "account": new AccountModel()}));
-    component.retrieveAccDetails(user, data);
+    component.apiService.retrieveAccDetails(user);
     expect(component.errorMsg).toBe(null);
     expect(sessionStorage.getItem(AUTH_USER)).toBe(user);
     expect(sessionStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
@@ -121,7 +121,7 @@ describe('AccountLoginComponent', () => {
     const data = {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
-    component.retrieveAccDetails(user, data);
+    component.apiService.retrieveAccDetails(user);
     expect(component.sharedVar.changeException).toHaveBeenCalledTimes(1);
   });
 
