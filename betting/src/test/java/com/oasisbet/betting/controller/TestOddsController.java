@@ -26,6 +26,8 @@ import com.oasisbet.betting.odds.proxy.AccountProxy;
 import com.oasisbet.betting.odds.service.OddsService;
 import com.oasisbet.betting.odds.util.Constants;
 
+import feign.FeignException;
+
 @ExtendWith(MockitoExtension.class)
 class TestOddsController extends TestBaseSetup {
 
@@ -63,8 +65,7 @@ class TestOddsController extends TestBaseSetup {
 
 		AccountRestResponse expectedResponse = new AccountRestResponse();
 
-		Mockito.when(proxy.processBet(Mockito.anyString(), Mockito.any(BetSlipRest.class)))
-				.thenReturn(expectedResponse);
+		Mockito.when(proxy.processBet(Mockito.any(), Mockito.any(BetSlipRest.class))).thenReturn(expectedResponse);
 
 		String request = objectMapper.writeValueAsString(betsInput);
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")
@@ -76,14 +77,34 @@ class TestOddsController extends TestBaseSetup {
 	}
 
 	@Test
-	void testSubmitBetFail() throws Exception {
+	void testSubmitBet_FeignExceptionFail() throws Exception {
 		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
 
 		AccountRestResponse expectedResponse = new AccountRestResponse();
 		expectedResponse.setStatusCode(1);
 		expectedResponse.setResultMessage(Constants.BET_PROCESS_ERROR);
 
-		Mockito.when(proxy.processBet(Mockito.anyString(), Mockito.any(BetSlipRest.class))).thenThrow(new Exception());
+		Mockito.when(proxy.processBet(Mockito.any(), Mockito.any(BetSlipRest.class))).thenThrow(FeignException.class);
+
+		String request = objectMapper.writeValueAsString(betsInput);
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")
+				.contentType(MediaType.APPLICATION_JSON).content(request);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
+	void testSubmitBet_FeignExceptionUnauthorizedFail() throws Exception {
+		BetSlipRest betsInput = BettingFixture.createMockBetSubmissionData();
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		expectedResponse.setStatusCode(4);
+		expectedResponse.setResultMessage(Constants.UNAUTHORIZED_ACCESS_ERROR);
+
+		Mockito.when(proxy.processBet(Mockito.any(), Mockito.any(BetSlipRest.class)))
+				.thenThrow(FeignException.Unauthorized.class);
 
 		String request = objectMapper.writeValueAsString(betsInput);
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/odds/bets")
