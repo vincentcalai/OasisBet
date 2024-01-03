@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +35,18 @@ class TestBettingHouseKeepingJob extends TestBaseSetup {
 
 		List<SportsEventMapping> sportsEventList = sportsEventMappingDao.findAll();
 		assertEquals(18, sportsEventList.size());
+
+		// update all completed events to todays date, to avoid deletions
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -90);
+		Date ninetyDaysAgo = calendar.getTime();
+		List<SportsEventMapping> ninetyDaysAgoSportsEventList = sportsEventMappingDao
+				.findByCompletedAndCreateDtBefore(true, ninetyDaysAgo);
+		ninetyDaysAgoSportsEventList = ninetyDaysAgoSportsEventList.stream().map(event -> {
+			event.setCreateDt(new Date());
+			return event;
+		}).collect(Collectors.toList());
+		sportsEventMappingDao.saveAll(ninetyDaysAgoSportsEventList);
 
 		bettingHouseKeepingJob.execute(null);
 
@@ -60,7 +75,7 @@ class TestBettingHouseKeepingJob extends TestBaseSetup {
 		bettingHouseKeepingJob.execute(null);
 
 		List<SportsEventMapping> newSportsEventList = sportsEventMappingDao.findAll();
-		assertEquals(16, newSportsEventList.size());
+		assertEquals(13, newSportsEventList.size());
 	}
 
 }
