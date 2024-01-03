@@ -56,6 +56,19 @@ describe('CreateUserComponent', () => {
     dialogRefMock.afterClosed.and.returnValue(of('confirm'));
     mockDialog.open.and.returnValue(dialogRefMock);
 
+    const mockFormValue = {
+      username: 'test',
+      password: 'password',
+      cfmPassword: 'password',
+      contactNo: '123456789',
+      email: 'test@example.com'
+    };
+    component.createUserForm.setValue(mockFormValue);
+    component.createUserForm.get('username').setErrors(null);
+    component.createUserForm.get('password').setErrors(null);
+    component.createUserForm.get('contactNo').setErrors(null);
+    component.createUserForm.get('email').setErrors(null);
+
     spyOn(component, 'confirmCreateUser');
 
     component.confirmClicked();
@@ -69,6 +82,19 @@ describe('CreateUserComponent', () => {
     const dialogRefMock = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
     dialogRefMock.afterClosed.and.returnValue(of('cancel'));
     mockDialog.open.and.returnValue(dialogRefMock);
+
+    const mockFormValue = {
+      username: 'test',
+      password: 'password',
+      cfmPassword: 'password',
+      contactNo: '123456789',
+      email: 'test@example.com'
+    };
+    component.createUserForm.setValue(mockFormValue);
+    component.createUserForm.get('username').setErrors(null);
+    component.createUserForm.get('password').setErrors(null);
+    component.createUserForm.get('contactNo').setErrors(null);
+    component.createUserForm.get('email').setErrors(null);
 
     spyOn(component, 'confirmCreateUser');
 

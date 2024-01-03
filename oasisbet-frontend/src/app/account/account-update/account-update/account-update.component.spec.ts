@@ -1,14 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountUpdateComponent } from './account-update.component';
+import { SharedVarService } from 'src/app/services/shared-var.service';
 
 describe('AccountUpdateComponent', () => {
   let component: AccountUpdateComponent;
   let fixture: ComponentFixture<AccountUpdateComponent>;
+  let sharedVarService: SharedVarService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountUpdateComponent ]
+      declarations: [ AccountUpdateComponent ],
+      providers: [SharedVarService]
     })
     .compileComponents();
   });
@@ -16,6 +19,7 @@ describe('AccountUpdateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountUpdateComponent);
     component = fixture.componentInstance;
+    sharedVarService = TestBed.inject(SharedVarService);
     fixture.detectChanges();
   });
 

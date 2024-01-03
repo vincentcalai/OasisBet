@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { take, finalize } from 'rxjs/operators';
 import { ResponseModel } from 'src/app/model/response.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
