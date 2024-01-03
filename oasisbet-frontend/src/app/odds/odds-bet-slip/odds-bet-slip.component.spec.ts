@@ -158,7 +158,7 @@ describe('OddsBetSlipComponent', () => {
   });
 
   it('should throw error, when api call postSubmitBets failed', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     const betSelections: BetSlip[] = mockBetSlip();
     const account: any = { accId: 100001, balance: 1000 };
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(account);

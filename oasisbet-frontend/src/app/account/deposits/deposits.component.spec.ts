@@ -107,7 +107,7 @@ describe('DepositsComponent', () => {
   it('when fail to update account details due to error, should throw error exception', () => {
     component.depositControl.setValue(100.00);
     component.depositControl.markAsTouched();
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');
     component.onConfirmDeposit();

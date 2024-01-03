@@ -117,7 +117,7 @@ describe('OddsLandingComponent', () => {
   });
 
   it('should throw error, when api call retrieveOdds failed', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     spyOn(component.apiService, 'retrieveOdds').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');
     component.ngOnInit();

@@ -52,7 +52,7 @@ describe('TrxHistComponent', () => {
   });
 
   it('should throw error when retrieve mtd details is unsuccessful', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     const mockAccountModel = {"accId": 1000001};
     const accountModel: any = {"mtdBetAmount": "200", "mtdPayout": "50"};
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);

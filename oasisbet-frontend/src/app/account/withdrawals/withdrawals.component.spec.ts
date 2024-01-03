@@ -121,7 +121,7 @@ describe('WithdrawalsComponent', () => {
   });
 
   it('should throw exception when form validation passed, but api updateAccDetails throw error', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'Test error', status: 500 });
     const withdrawalAmount = 100;
     const password = 'password123';
     component.withdrawalAmt.setValue(withdrawalAmount);
@@ -133,6 +133,7 @@ describe('WithdrawalsComponent', () => {
     spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.sharedVar, 'changeException');
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(throwError(error));
+
     component.onConfirmWithdrawal();
     expect(component.withdrawalForm.valid).toBeTruthy();
     expect(component.errorMsg).toBe('');

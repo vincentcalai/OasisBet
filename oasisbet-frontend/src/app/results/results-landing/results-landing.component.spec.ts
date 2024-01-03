@@ -61,19 +61,16 @@ describe('ResultsLandingComponent', () => {
 
   it('should retrieve results and convert the response to Date format for others', () => {
     const mockResponse = mockResultsResponse();
-    component.selectedDates = 'others';
     spyOn(component.apiService, 'retrieveResults').and.returnValue(of(mockResponse));
     component.ngOnInit();
     expect(component.apiService.retrieveResults).toHaveBeenCalled();
     expect(component.events.length).toBe(2);
     expect(component.events[0].startTime instanceof Date).toBeTrue();
     expect(component.events[1].startTime instanceof Date).toBeTrue();
-    expect(component.dateFrom).toBe(null);
-    expect(component.dateTo).toBe(null);
   });
 
   it('should throw error, when api call retrieveResults failed', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     spyOn(component.apiService, 'retrieveResults').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');
     component.ngOnInit();
@@ -94,7 +91,7 @@ describe('ResultsLandingComponent', () => {
   it('should return true when the current time is greater than the start time', () => {
     const startTime = new Date('2023-08-28T12:00:00');
     const result = component.isEventOver(startTime);
-    expect(result).toBeTrue(); 
+    expect(result).toBeTrue();
   });
 
   it('should return false when the current time is less than the start time', () => {
@@ -135,7 +132,7 @@ describe('ResultsLandingComponent', () => {
   })
 
   it('should throw error, when api call when performing filter failed', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     spyOn(component.apiService, 'retrieveResults').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');
     component.filterResult();

@@ -53,7 +53,7 @@ describe('AccountOverviewComponent', () => {
   });
 
   it('when fail to retrieve account details due to error, should throw error exception', () => {
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     spyOn(component.apiService, 'retrieveYtdAmounts').and.returnValue(throwError(error));
     spyOn(component.sharedVar, 'changeException');
     component.ngOnInit();

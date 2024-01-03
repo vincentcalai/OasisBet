@@ -105,8 +105,9 @@ export class AuthService {
       if (error instanceof HttpErrorResponse) {
         if (error.status !== 401) {
           this.sharedVar.changeException(error.message);
+          return;
         }
-        console.log("Error Message: ", error.error.message);
+        console.log("Error Message: ", error.error);
         if(error.error && error.error.message == "Access Token Expired"){
           console.log("Token Expired. Retrying refresh token");
           this.subscriptions.add(
@@ -139,6 +140,7 @@ export class AuthService {
       sessionStorage.removeItem(AUTH_USER);
       sessionStorage.removeItem(AUTHORIZATION);
       sessionStorage.removeItem(ACC_DETAILS);
+      sessionStorage.removeItem(LOGIN_TIME);
       this.router.navigate(['account']);
     }
 

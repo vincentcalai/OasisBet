@@ -169,7 +169,7 @@ describe('CreateUserComponent', () => {
     component.createUserForm.setValue(mockFormValue);
 
     spyOn(component.reactiveFormService, 'displayValidationErrors');
-    component.confirmCreateUser();
+    component.confirmClicked();
 
     expect(component.createUserForm.valid).toBe(false);
     expect(component.reactiveFormService.displayValidationErrors).toHaveBeenCalled();
@@ -183,7 +183,7 @@ describe('CreateUserComponent', () => {
       contactNo: '123456789',
       email: 'test@example.com'
     };
-    const error = new HttpErrorResponse({ status: 500 });
+    const error = new HttpErrorResponse({ error: 'test error', status: 500 });
     component.createUserForm.setValue(mockFormValue);
     component.createUserForm.get('username').setErrors(null);
     component.createUserForm.get('password').setErrors(null);
