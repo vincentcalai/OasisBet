@@ -55,7 +55,7 @@ export class AuthService {
     getRetrievedAccDetails(){
       return JSON.parse(sessionStorage.getItem(ACC_DETAILS));
     }
-    
+
     startLoginTimer() {
       this.loginTime = +sessionStorage.getItem(LOGIN_TIME) || 0;
       this.sharedVar.loginTimerSource = interval(1000).subscribe(() => {
@@ -107,7 +107,7 @@ export class AuthService {
           this.sharedVar.changeException(error.message);
         }
         console.log("Error Message: ", error.error.message);
-        if(error.error.message == "Access Token Expired"){
+        if(error.error && error.error.message == "Access Token Expired"){
           console.log("Token Expired. Retrying refresh token");
           this.subscriptions.add(
               this.refreshJwtToken().subscribe((resp: any) => {

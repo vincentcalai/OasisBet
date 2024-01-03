@@ -49,7 +49,7 @@ describe('AuthService', () => {
     spyOn(service, 'getAuthenticationUser').and.returnValue('TESTUSER');
     spyOn(sessionStorage, 'getItem').and.returnValue('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ');
     const result = service.getAuthenticationToken();
-    expect(sessionStorage.getItem).toHaveBeenCalledWith('token');
+    expect(sessionStorage.getItem).toHaveBeenCalledWith('authorization');
     expect(result).toBe('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ');
   });
 
@@ -77,11 +77,12 @@ describe('AuthService', () => {
     service.logout();
     expect(mockConfirm).toHaveBeenCalledWith('Are you sure to logout?');
     expect(console.log).toHaveBeenCalledWith('logout ok');
-    expect(sessionStorage.removeItem).toHaveBeenCalledTimes(3);
+    expect(sessionStorage.removeItem).toHaveBeenCalledTimes(4);
     expect(sessionStorage.removeItem).toHaveBeenCalledWith('authenticateUser');
-    expect(sessionStorage.removeItem).toHaveBeenCalledWith('token');
+    expect(sessionStorage.removeItem).toHaveBeenCalledWith('authorization');
     expect(sessionStorage.removeItem).toHaveBeenCalledWith('accountDetails');
-    expect(service.router.navigate).toHaveBeenCalledWith(['/']);
+    expect(sessionStorage.removeItem).toHaveBeenCalledWith('loginTime');
+    expect(service.router.navigate).toHaveBeenCalledWith(['account']);
   });
 
 });
