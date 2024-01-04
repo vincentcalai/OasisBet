@@ -93,11 +93,7 @@ export class AuthService {
         console.log("logout ok");
         this.sharedVar.loginTimer = '00:00:00';
         this.sharedVar.loginTimerSource.unsubscribe();
-        sessionStorage.removeItem(AUTH_USER);
-        sessionStorage.removeItem(AUTHORIZATION);
-        sessionStorage.removeItem(ACC_DETAILS);
-        sessionStorage.removeItem(LOGIN_TIME);
-        this.router.navigate(['account']);
+        this.clearSessionStorage();
       }
     }
 
