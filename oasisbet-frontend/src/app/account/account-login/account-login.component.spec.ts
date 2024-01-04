@@ -88,28 +88,30 @@ describe('AccountLoginComponent', () => {
     expect(component.router.navigate).toHaveBeenCalledTimes(1);
   });
 
-  it('when retrieve account details fails, should not save account details into session storage, and should show error message', () => {
+  it('when login authentication succeed, but retrieve account details fails, should not save account details into session storage, and should show error message', () => {
     const message = "Invalid Credential";
-    const user = "TESTUSER";
     const data = {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
+    spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of(data));
     spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(of({"statusCode":1,"resultMessage": 'Invalid Credential'}));
-    component.apiService.retrieveAccDetails(user);
+    component.handleJWTAuthLogin();
     expect(component.errorMsg).toBe(message);
-    expect(sessionStorage.getItem(AUTH_USER)).toBeNull();
-    expect(sessionStorage.getItem(AUTHORIZATION)).toBeNull();
     expect(sessionStorage.getItem(ACC_DETAILS)).toBeNull();
   });
 
-  it('when retrieve account details succeed, should save account details into session storage', () => {
+  it('when login authentication succeed, and retrieve account details succeed, should save account details into session storage', () => {
     const user = "TESTUSER";
     const data = {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
+    component.username = user;
+    spyOn(component.authService, 'startLoginTimer');
+    spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of(data));
     spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(of({"statusCode":0,"resultMessage": 'Login Successful', "account": new AccountModel()}));
-    component.apiService.retrieveAccDetails(user);
+    component.handleJWTAuthLogin();
     expect(component.errorMsg).toBe(null);
+    expect(component.authService.startLoginTimer).toHaveBeenCalledTimes(1);
     expect(sessionStorage.getItem(AUTH_USER)).toBe(user);
     expect(sessionStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
     expect(sessionStorage.getItem(ACC_DETAILS)).not.toBeNull();

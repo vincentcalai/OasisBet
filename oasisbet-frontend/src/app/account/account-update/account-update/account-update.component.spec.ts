@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AccountModel } from 'src/app/model/account.model';
+import { ACC_DETAILS } from 'src/app/services/auth/auth.service';
 
 describe('AccountUpdateComponent', () => {
   let component: AccountUpdateComponent;
@@ -29,6 +31,9 @@ describe('AccountUpdateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountUpdateComponent);
     component = fixture.componentInstance;
+    let accountModel = new AccountModel();
+    accountModel.accId = 1;
+    sessionStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
     sharedVarService = TestBed.inject(SharedVarService);
     fixture.detectChanges();
   });
