@@ -23,7 +23,7 @@ export class MainMenuComponent implements OnInit {
 
   constructor(public authService: AuthService,
     public router: Router,
-    public apiService: ApiService, 
+    public apiService: ApiService,
     public sharedVar: SharedVarService,
     public sharedMethods: SharedMethodsService) { }
 
@@ -31,7 +31,7 @@ export class MainMenuComponent implements OnInit {
     if(sessionStorage.getItem(LOGIN_TIME)){
       this.authService.startLoginTimer();
     }
-    
+
     this.subscriptions.add(
       this.sharedVar.currentSpinner.subscribe(status => this.spinme = status)
     );
@@ -57,6 +57,7 @@ export class MainMenuComponent implements OnInit {
       ),
       catchError((error) => {
         console.error('Authentication error:', error);
+        this.sharedVar.changeException(error);
         return throwError('Authentication failed');
       })
     )

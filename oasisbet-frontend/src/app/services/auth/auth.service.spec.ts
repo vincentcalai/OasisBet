@@ -1,8 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -85,4 +87,97 @@ describe('AuthService', () => {
     expect(service.router.navigate).toHaveBeenCalledWith(['account']);
   });
 
+  it('should start login timer and update login timer source', fakeAsync(() => {
+    service.loginTime = Date.now();
+    spyOn(service, 'isUserLoggedIn').and.returnValue(true);
+    spyOn(service, 'formatDuration');
+    service.startLoginTimer();
+    tick(1000);
+    expect(service.sharedVar.loginTimerSource).toBeDefined();
+    expect(service.formatDuration).toHaveBeenCalledTimes(1);
+    service.sharedVar.loginTimerSource.unsubscribe();
+  }));
+
+  it('should format duration in HH:mm:ss format', () => {
+    const result = service.formatDuration(3665); // 1 hour, 1 minute, and 5 seconds
+    expect(result).toBe('01:01:05');
+  });
+
+  it('should pad number with leading zero when less than 10', () => {
+    const result = service.padNumber(5);
+    expect(result).toBe('05');
+  });
+
+  it('should pad number without leading zero when more than 10', () => {
+    const result = service.padNumber(12);
+    expect(result).toBe('12');
+  });
+
+  it('should call refreshJWTtoken method when there is a request to refresh JWT token', () => {
+    spyOn(service.apiService, 'refreshJwtToken');
+    service.refreshJwtToken();
+    expect(service.apiService.refreshJwtToken).toHaveBeenCalledTimes(1);
+  });
+
+  it('should change exception message when error status is not 401', () => {
+    const error = new HttpErrorResponse({ status: 500, statusText: 'Internal Server Error', error: 'Server error' });
+    spyOn(service.sharedVar, 'changeException');
+    service.handleError(error);
+    expect(service.sharedVar.changeException).toHaveBeenCalledTimes(1);
+  });
+
+  it('should handle token expiration and refresh JWT token successfully, when there is a valid token', () => {
+    const expiredTokenError = new HttpErrorResponse({ status: 401, error: { message: 'Access Token Expired' } });
+    const refreshTokenResponse = { token: 'newToken' };
+    spyOn(service.sharedVar, 'changeException');
+    spyOn(sessionStorage, 'setItem');
+    spyOn(service.router, 'navigate');
+    spyOn(service, 'refreshJwtToken').and.returnValue(of(refreshTokenResponse));
+    service.handleError(expiredTokenError);
+    expect(service.refreshJwtToken).toHaveBeenCalled();
+    expect(sessionStorage.setItem).toHaveBeenCalledWith('authorization', 'Bearer newToken');
+    expect(service.router.navigate).toHaveBeenCalledWith(['account']);
+    expect(service.sharedVar.changeException).not.toHaveBeenCalled();
+  });
+
+  it('should handle other unauthorized errors', () => {
+    const unauthorizedError = new HttpErrorResponse({ status: 401, error: { message: 'Unauthorized' } });
+    spyOn(service.sharedVar, 'changeException');
+    spyOn(service, 'clearSessionStorage');
+    spyOn(console, 'log');
+    service.handleError(unauthorizedError);
+    expect(service.clearSessionStorage).toHaveBeenCalled();
+    expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
+  });
+
+  it('should handle token expiration and fail to refresh JWT token, when there is a invalid token', () => {
+    const expiredTokenError = new HttpErrorResponse({ status: 401, error: { message: 'Access Token Expired' } });
+    const refreshTokenResponse = {};
+    spyOn(service.sharedVar, 'changeException');
+    spyOn(sessionStorage, 'setItem');
+    spyOn(service.router, 'navigate');
+    spyOn(service, 'refreshJwtToken').and.returnValue(of(refreshTokenResponse));
+    service.handleError(expiredTokenError);
+    expect(service.refreshJwtToken).toHaveBeenCalled();
+    expect(sessionStorage.setItem).not.toHaveBeenCalled();
+    expect(service.router.navigate).toHaveBeenCalled();
+    expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
+  });
+
+  it('should handle token expiration and fail to refresh JWT token, when there is other unexpected error while refreshing JWT token', () => {
+    const expiredTokenError = new HttpErrorResponse({ status: 401, error: { message: 'Access Token Expired' } });
+    const error = new HttpErrorResponse({ status: 500, statusText: 'Internal Server Error', error: 'Server error' });
+    spyOn(service.sharedVar, 'changeException');
+    spyOn(sessionStorage, 'setItem');
+    spyOn(service.router, 'navigate');
+    spyOn(service, 'refreshJwtToken').and.returnValue(throwError(error));
+    service.handleError(expiredTokenError);
+    expect(service.refreshJwtToken).toHaveBeenCalled();
+    expect(sessionStorage.setItem).not.toHaveBeenCalled();
+    expect(service.router.navigate).toHaveBeenCalled();
+    expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
+  });
+
+
 });
+

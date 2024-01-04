@@ -18,7 +18,7 @@ export class AuthService {
 
   private subscriptions: Subscription = new Subscription();
 
-  private loginTime: number;
+  public loginTime: number;
 
   constructor(
     public apiService: ApiService,
@@ -71,7 +71,7 @@ export class AuthService {
       return '00:00:00';
     }
 
-    private formatDuration(seconds: number): string {
+    public formatDuration(seconds: number): string {
       const hours = Math.floor(seconds / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
       const remainingSeconds = seconds % 60;
@@ -83,7 +83,7 @@ export class AuthService {
       return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
-    private padNumber(num: number): string {
+    public padNumber(num: number): string {
       return num < 10 ? `0${num}` : `${num}`;
     }
 
