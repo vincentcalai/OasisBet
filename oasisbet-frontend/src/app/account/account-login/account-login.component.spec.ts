@@ -117,13 +117,15 @@ describe('AccountLoginComponent', () => {
 
   it('when there is connection issue when retrieving account details, should throw error exception', () => {
     const error = new HttpErrorResponse({ error: 'test error', status: 500 });
-    spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(throwError(error));
-    spyOn(component.sharedVar, 'changeException');
-    const user = "TESTUSER";
-    const data = {
+    const token = {
       "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ"
     };
-    component.apiService.retrieveAccDetails(user);
+    spyOn(component.authService, 'startLoginTimer');
+    spyOn(component.authService, 'jwtAuthenticate').and.returnValue(of(token));
+    spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(throwError(error));
+    spyOn(component.sharedVar, 'changeException');
+    component.handleJWTAuthLogin();
+    expect(component.authService.startLoginTimer).toHaveBeenCalledTimes(1);
     expect(component.sharedVar.changeException).toHaveBeenCalledTimes(1);
   });
 

@@ -24,10 +24,10 @@ export class AccountLoginComponent implements OnInit {
   public subscriptions: Subscription = new Subscription();
 
   constructor(
-    public sharedVar: SharedVarService, 
+    public sharedVar: SharedVarService,
     public sharedMethods: SharedMethodsService,
-    public apiService: ApiService, 
-    public authService: AuthService, 
+    public apiService: ApiService,
+    public authService: AuthService,
     public router: Router) {
   }
 
@@ -78,6 +78,7 @@ export class AccountLoginComponent implements OnInit {
       ),
       catchError((error) => {
         console.error('Authentication error:', error);
+        this.sharedVar.changeException(error);
         return throwError('Authentication failed');
       })
     )
