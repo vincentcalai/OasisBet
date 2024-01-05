@@ -69,9 +69,9 @@ export class AccountLoginComponent implements OnInit {
       switchMap(
         (data: any) => {
           this.token = data.token;
-          sessionStorage.setItem(AUTH_USER, this.username);
-          sessionStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
-          sessionStorage.setItem(LOGIN_TIME, Date.now().toString());
+          localStorage.setItem(AUTH_USER, this.username);
+          localStorage.setItem(AUTHORIZATION, `Bearer ${this.token}`);
+          localStorage.setItem(LOGIN_TIME, Date.now().toString());
           this.authService.startLoginTimer();
           return this.apiService.retrieveAccDetails(this.username)
         }
@@ -88,7 +88,7 @@ export class AccountLoginComponent implements OnInit {
           if (resp.statusCode !== 0) {
             this.errorMsg = resp.resultMessage;
           } else {
-            sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+            localStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             console.log("login successful");
           }
         },

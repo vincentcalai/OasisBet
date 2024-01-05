@@ -35,29 +35,29 @@ export class AuthService {
     }
 
     isUserLoggedIn(){
-      let user =  sessionStorage.getItem(AUTH_USER);
-      let authorizationHeader = sessionStorage.getItem(AUTHORIZATION);
-      let accDetails = sessionStorage.getItem(ACC_DETAILS)
+      let user =  localStorage.getItem(AUTH_USER);
+      let authorizationHeader = localStorage.getItem(AUTHORIZATION);
+      let accDetails = localStorage.getItem(ACC_DETAILS)
       return user !== null && authorizationHeader !== null && accDetails !== null;
     }
 
     getAuthenticationUser(){
-      return sessionStorage.getItem(AUTH_USER);
+      return localStorage.getItem(AUTH_USER);
     }
 
     getAuthenticationToken(){
       if(this.getAuthenticationUser()){
-        return sessionStorage.getItem(AUTHORIZATION);
+        return localStorage.getItem(AUTHORIZATION);
       }
       return null;
     }
 
     getRetrievedAccDetails(){
-      return JSON.parse(sessionStorage.getItem(ACC_DETAILS));
+      return JSON.parse(localStorage.getItem(ACC_DETAILS));
     }
 
     startLoginTimer() {
-      this.loginTime = +sessionStorage.getItem(LOGIN_TIME) || 0;
+      this.loginTime = +localStorage.getItem(LOGIN_TIME) || 0;
       this.sharedVar.loginTimerSource = interval(1000).subscribe(() => {
         this.sharedVar.loginTimer = this.getLoggedInDuration();
       });
@@ -93,7 +93,7 @@ export class AuthService {
         console.log("logout ok");
         this.sharedVar.loginTimer = '00:00:00';
         this.sharedVar.loginTimerSource.unsubscribe();
-        this.clearSessionStorage();
+        this.clearlocalStorage();
       }
     }
 
@@ -109,34 +109,34 @@ export class AuthService {
           this.subscriptions.add(
               this.refreshJwtToken().subscribe((resp: any) => {
                 if(resp.token){
-                  sessionStorage.setItem(AUTHORIZATION, `Bearer ${resp.token}`);
+                  localStorage.setItem(AUTHORIZATION, `Bearer ${resp.token}`);
                   //navigate to Account Landing page when there is a successful token refresh
                   this.router.navigate(['account']);
                 } else {
                   console.log(error);
-                  this.clearSessionStorage();
+                  this.clearlocalStorage();
                   this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
                 }
               }, error => {
                 console.log(error);
-                this.clearSessionStorage();
+                this.clearlocalStorage();
                 this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
               }
             )
           );
         } else {
           console.log(error);
-          this.clearSessionStorage();
+          this.clearlocalStorage();
           this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
         }
       }
     }
 
-    public clearSessionStorage() {
-      sessionStorage.removeItem(AUTH_USER);
-      sessionStorage.removeItem(AUTHORIZATION);
-      sessionStorage.removeItem(ACC_DETAILS);
-      sessionStorage.removeItem(LOGIN_TIME);
+    public clearlocalStorage() {
+      localStorage.removeItem(AUTH_USER);
+      localStorage.removeItem(AUTHORIZATION);
+      localStorage.removeItem(ACC_DETAILS);
+      localStorage.removeItem(LOGIN_TIME);
       this.router.navigate(['account']);
     }
 

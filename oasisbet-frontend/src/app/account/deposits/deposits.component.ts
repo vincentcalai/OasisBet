@@ -89,7 +89,7 @@ export class DepositsComponent implements OnInit {
             this.errorMsg = resp.resultMessage;
           } else {
             this.responseMsg = resp.resultMessage;
-            sessionStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+            localStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
             this.ngOnInit();
           }
         } ,

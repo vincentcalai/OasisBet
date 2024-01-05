@@ -34,9 +34,9 @@ describe('AccountLoginComponent', () => {
   });
 
   afterEach(() => {
-    sessionStorage.removeItem(AUTH_USER);
-    sessionStorage.removeItem(AUTHORIZATION);
-    sessionStorage.removeItem(ACC_DETAILS);
+    localStorage.removeItem(AUTH_USER);
+    localStorage.removeItem(AUTHORIZATION);
+    localStorage.removeItem(ACC_DETAILS);
     component.ngOnDestroy();
   })
 
@@ -97,7 +97,7 @@ describe('AccountLoginComponent', () => {
     spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(of({"statusCode":1,"resultMessage": 'Invalid Credential'}));
     component.handleJWTAuthLogin();
     expect(component.errorMsg).toBe(message);
-    expect(sessionStorage.getItem(ACC_DETAILS)).toBeNull();
+    expect(localStorage.getItem(ACC_DETAILS)).toBeNull();
   });
 
   it('when login authentication succeed, and retrieve account details succeed, should save account details into session storage', () => {
@@ -112,9 +112,9 @@ describe('AccountLoginComponent', () => {
     component.handleJWTAuthLogin();
     expect(component.errorMsg).toBe(null);
     expect(component.authService.startLoginTimer).toHaveBeenCalledTimes(1);
-    expect(sessionStorage.getItem(AUTH_USER)).toBe(user);
-    expect(sessionStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
-    expect(sessionStorage.getItem(ACC_DETAILS)).not.toBeNull();
+    expect(localStorage.getItem(AUTH_USER)).toBe(user);
+    expect(localStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
+    expect(localStorage.getItem(ACC_DETAILS)).not.toBeNull();
   });
 
   it('when there is connection issue when retrieving account details, should throw error exception', () => {

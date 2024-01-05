@@ -20,7 +20,7 @@ describe('AuthService', () => {
   });
 
   afterEach(() => {
-    sessionStorage.clear();
+    localStorage.clear();
   })
 
   it('should be created', () => {
@@ -34,56 +34,56 @@ describe('AuthService', () => {
   });
 
   it('should check if the user is logged in', () => {
-    spyOn(sessionStorage, 'getItem');
+    spyOn(localStorage, 'getItem');
     const result = service.isUserLoggedIn();
-    expect(sessionStorage.getItem).toHaveBeenCalledWith('authenticateUser');
+    expect(localStorage.getItem).toHaveBeenCalledWith('authenticateUser');
     expect(result).toBeTrue();
   });
 
   it('should get the authentication user', () => {
-    spyOn(sessionStorage, 'getItem').and.returnValue('TESTUSER123');
+    spyOn(localStorage, 'getItem').and.returnValue('TESTUSER123');
     const result = service.getAuthenticationUser();
-    expect(sessionStorage.getItem).toHaveBeenCalledWith('authenticateUser');
+    expect(localStorage.getItem).toHaveBeenCalledWith('authenticateUser');
     expect(result).toBe('TESTUSER123');
   });
 
   it('should get the authentication token if user exists', () => {
     spyOn(service, 'getAuthenticationUser').and.returnValue('TESTUSER');
-    spyOn(sessionStorage, 'getItem').and.returnValue('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ');
+    spyOn(localStorage, 'getItem').and.returnValue('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ');
     const result = service.getAuthenticationToken();
-    expect(sessionStorage.getItem).toHaveBeenCalledWith('authorization');
+    expect(localStorage.getItem).toHaveBeenCalledWith('authorization');
     expect(result).toBe('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTY3MTA3OTg4NSwiaWF0IjoxNjcwNDc5ODg1fQ.zl_AJFETUvw1WxMjPSgmSb9tTLUjFwg6AHNwS358DQL9kLWs-zYrjG4aPXIWgRlpWM4W0rCx0S0HlFkIJBWfoQ');
   });
 
   it('should not get the authentication token if user dont exist', () => {
     spyOn(service, 'getAuthenticationUser').and.returnValue(null);
-    spyOn(sessionStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'getItem').and.returnValue(null);
     const result = service.getAuthenticationToken();
-    expect(sessionStorage.getItem).not.toHaveBeenCalled();
+    expect(localStorage.getItem).not.toHaveBeenCalled();
     expect(result).toBe(null);
   });
 
   it('should get the retrieved account details', () => {
     const mockAccountDetails = { name: 'Wayne Rooney', email: 'waynerooney@example.com' };
-    spyOn(sessionStorage, 'getItem').and.returnValue(JSON.stringify(mockAccountDetails));
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(mockAccountDetails));
     const result = service.getRetrievedAccDetails();
-    expect(sessionStorage.getItem).toHaveBeenCalledWith('accountDetails');
+    expect(localStorage.getItem).toHaveBeenCalledWith('accountDetails');
     expect(result).toEqual(mockAccountDetails);
   });
 
-  it('should logout and remove user data from sessionStorage', () => {
+  it('should logout and remove user data from localStorage', () => {
     const mockConfirm = spyOn(window, 'confirm').and.returnValue(true);
     spyOn(console, 'log');
-    spyOn(sessionStorage, 'removeItem');
+    spyOn(localStorage, 'removeItem');
     spyOn(service.router, 'navigate');
     service.logout();
     expect(mockConfirm).toHaveBeenCalledWith('Are you sure to logout?');
     expect(console.log).toHaveBeenCalledWith('logout ok');
-    expect(sessionStorage.removeItem).toHaveBeenCalledTimes(4);
-    expect(sessionStorage.removeItem).toHaveBeenCalledWith('authenticateUser');
-    expect(sessionStorage.removeItem).toHaveBeenCalledWith('authorization');
-    expect(sessionStorage.removeItem).toHaveBeenCalledWith('accountDetails');
-    expect(sessionStorage.removeItem).toHaveBeenCalledWith('loginTime');
+    expect(localStorage.removeItem).toHaveBeenCalledTimes(4);
+    expect(localStorage.removeItem).toHaveBeenCalledWith('authenticateUser');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('authorization');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('accountDetails');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('loginTime');
     expect(service.router.navigate).toHaveBeenCalledWith(['account']);
   });
 
@@ -130,12 +130,12 @@ describe('AuthService', () => {
     const expiredTokenError = new HttpErrorResponse({ status: 401, error: { message: 'Access Token Expired' } });
     const refreshTokenResponse = { token: 'newToken' };
     spyOn(service.sharedVar, 'changeException');
-    spyOn(sessionStorage, 'setItem');
+    spyOn(localStorage, 'setItem');
     spyOn(service.router, 'navigate');
     spyOn(service, 'refreshJwtToken').and.returnValue(of(refreshTokenResponse));
     service.handleError(expiredTokenError);
     expect(service.refreshJwtToken).toHaveBeenCalled();
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('authorization', 'Bearer newToken');
+    expect(localStorage.setItem).toHaveBeenCalledWith('authorization', 'Bearer newToken');
     expect(service.router.navigate).toHaveBeenCalledWith(['account']);
     expect(service.sharedVar.changeException).not.toHaveBeenCalled();
   });
@@ -143,10 +143,10 @@ describe('AuthService', () => {
   it('should handle other unauthorized errors', () => {
     const unauthorizedError = new HttpErrorResponse({ status: 401, error: { message: 'Unauthorized' } });
     spyOn(service.sharedVar, 'changeException');
-    spyOn(service, 'clearSessionStorage');
+    spyOn(service, 'clearlocalStorage');
     spyOn(console, 'log');
     service.handleError(unauthorizedError);
-    expect(service.clearSessionStorage).toHaveBeenCalled();
+    expect(service.clearlocalStorage).toHaveBeenCalled();
     expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
   });
 
@@ -154,12 +154,12 @@ describe('AuthService', () => {
     const expiredTokenError = new HttpErrorResponse({ status: 401, error: { message: 'Access Token Expired' } });
     const refreshTokenResponse = {};
     spyOn(service.sharedVar, 'changeException');
-    spyOn(sessionStorage, 'setItem');
+    spyOn(localStorage, 'setItem');
     spyOn(service.router, 'navigate');
     spyOn(service, 'refreshJwtToken').and.returnValue(of(refreshTokenResponse));
     service.handleError(expiredTokenError);
     expect(service.refreshJwtToken).toHaveBeenCalled();
-    expect(sessionStorage.setItem).not.toHaveBeenCalled();
+    expect(localStorage.setItem).not.toHaveBeenCalled();
     expect(service.router.navigate).toHaveBeenCalled();
     expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
   });
@@ -168,12 +168,12 @@ describe('AuthService', () => {
     const expiredTokenError = new HttpErrorResponse({ status: 401, error: { message: 'Access Token Expired' } });
     const error = new HttpErrorResponse({ status: 500, statusText: 'Internal Server Error', error: 'Server error' });
     spyOn(service.sharedVar, 'changeException');
-    spyOn(sessionStorage, 'setItem');
+    spyOn(localStorage, 'setItem');
     spyOn(service.router, 'navigate');
     spyOn(service, 'refreshJwtToken').and.returnValue(throwError(error));
     service.handleError(expiredTokenError);
     expect(service.refreshJwtToken).toHaveBeenCalled();
-    expect(sessionStorage.setItem).not.toHaveBeenCalled();
+    expect(localStorage.setItem).not.toHaveBeenCalled();
     expect(service.router.navigate).toHaveBeenCalled();
     expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
   });

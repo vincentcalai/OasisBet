@@ -38,10 +38,10 @@ describe('DepositsComponent', () => {
   });
 
   afterEach(() => {
-    sessionStorage.removeItem(AUTH_USER);
-    sessionStorage.removeItem(AUTHORIZATION);
-    sessionStorage.removeItem(ACC_DETAILS);
-    sessionStorage.removeItem(LOGIN_TIME);
+    localStorage.removeItem(AUTH_USER);
+    localStorage.removeItem(AUTHORIZATION);
+    localStorage.removeItem(ACC_DETAILS);
+    localStorage.removeItem(LOGIN_TIME);
     component.ngOnDestroy();
   })
 

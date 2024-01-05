@@ -28,12 +28,12 @@ describe('TrxHistComponent', () => {
     component = fixture.componentInstance;
     let account = new AccountModel;
     account.accId = 1;
-    sessionStorage.setItem(ACC_DETAILS, JSON.stringify(account));
+    localStorage.setItem(ACC_DETAILS, JSON.stringify(account));
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    sessionStorage.removeItem(ACC_DETAILS);
+    localStorage.removeItem(ACC_DETAILS);
   });
 
   it('should create', () => {

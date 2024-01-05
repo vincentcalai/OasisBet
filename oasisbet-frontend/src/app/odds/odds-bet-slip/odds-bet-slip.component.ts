@@ -120,7 +120,7 @@ export class OddsBetSlipComponent implements OnInit {
     this.subscriptions.add(
       this.apiService.postSubmitBets().subscribe( (resp: any) => {
         if(resp.statusCode == 4){
-          this.authService.clearSessionStorage();
+          this.authService.clearlocalStorage();
           this.sharedVar.changeShowUserNotLoginMsg(resp.resultMessage);
           this.router.navigate(['account']);
           return;
@@ -140,7 +140,7 @@ export class OddsBetSlipComponent implements OnInit {
           accountModel = this.authService.getRetrievedAccDetails();
           if (resp && resp.account && accountModel) {
             accountModel.balance = resp.account.balance;
-            sessionStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
+            localStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
           }
         }
       } ,

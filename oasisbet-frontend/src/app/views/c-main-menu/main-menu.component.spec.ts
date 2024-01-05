@@ -28,14 +28,14 @@ describe('MainMenuComponent', () => {
     fixture = TestBed.createComponent(MainMenuComponent);
     component = fixture.componentInstance;
     const date =
-    sessionStorage.setItem("loginTime", Date.now().toString());
+    localStorage.setItem("loginTime", Date.now().toString());
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    sessionStorage.removeItem(AUTH_USER);
-    sessionStorage.removeItem(AUTHORIZATION);
-    sessionStorage.removeItem(ACC_DETAILS);
+    localStorage.removeItem(AUTH_USER);
+    localStorage.removeItem(AUTHORIZATION);
+    localStorage.removeItem(ACC_DETAILS);
   })
 
   it('should create', () => {
@@ -89,7 +89,7 @@ describe('MainMenuComponent', () => {
     spyOn(component.apiService, 'retrieveAccDetails').and.returnValue(of({"statusCode":1,"resultMessage": 'Invalid Credential'}));
     component.handleJWTAuthLogin();
     expect(component.sharedVar.commonErrorMsg).toBe(message);
-    expect(sessionStorage.getItem(ACC_DETAILS)).toBeNull();
+    expect(localStorage.getItem(ACC_DETAILS)).toBeNull();
   });
 
   it('when login authentication succeed, and retrieve account details succeed, should save account details into session storage', () => {
@@ -104,9 +104,9 @@ describe('MainMenuComponent', () => {
     component.handleJWTAuthLogin();
     expect(component.sharedVar.commonErrorMsg).toBeUndefined;
     expect(component.authService.startLoginTimer).toHaveBeenCalledTimes(1);
-    expect(sessionStorage.getItem(AUTH_USER)).toBe(user);
-    expect(sessionStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
-    expect(sessionStorage.getItem(ACC_DETAILS)).not.toBeNull();
+    expect(localStorage.getItem(AUTH_USER)).toBe(user);
+    expect(localStorage.getItem(AUTHORIZATION)).toBe('Bearer ' + data.token);
+    expect(localStorage.getItem(ACC_DETAILS)).not.toBeNull();
   });
 
   it('when there is connection issue when retrieving account details, should throw error exception', () => {

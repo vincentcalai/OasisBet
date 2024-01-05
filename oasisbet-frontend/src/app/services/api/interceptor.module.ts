@@ -14,7 +14,7 @@ export class HttpsRequestInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.sharedVar.changeException('');
     let httpHeaders = new HttpHeaders();
-    let authorizationToken = sessionStorage.getItem(AUTHORIZATION);
+    let authorizationToken = localStorage.getItem(AUTHORIZATION);
     console.log("token: ", authorizationToken);
     if(authorizationToken){
       httpHeaders = httpHeaders.append('Authorization', authorizationToken);

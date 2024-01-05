@@ -119,7 +119,7 @@ describe('LimitManagementComponent', () => {
     const password = 'password123';
     component.password.setValue(password);
     spyOn(component, 'ngOnInit');
-    const username = sessionStorage.getItem(AUTH_USER);
+    const username = localStorage.getItem(AUTH_USER);
     spyOn(component, 'onCancelSetLimit');
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
     spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
@@ -139,7 +139,7 @@ describe('LimitManagementComponent', () => {
     const password = 'password999';
     component.password.setValue(password);
     spyOn(component, 'ngOnInit');
-    const username = sessionStorage.getItem(AUTH_USER);
+    const username = localStorage.getItem(AUTH_USER);
     spyOn(component, 'onCancelSetLimit');
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
     spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(false));

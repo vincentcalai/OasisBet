@@ -33,11 +33,11 @@ describe('WithdrawalsComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     const username = "TESTUSER";
-    sessionStorage.setItem(AUTH_USER, username);
+    localStorage.setItem(AUTH_USER, username);
   });
 
   afterEach(()=> {
-    sessionStorage.removeItem(AUTH_USER);
+    localStorage.removeItem(AUTH_USER);
   })
 
   it('should create', () => {
@@ -70,7 +70,7 @@ describe('WithdrawalsComponent', () => {
     const mockAccountModel = {"accId": 1000001, "withdrawalAmt": 0, "actionType": ""};
     spyOn(component, 'ngOnInit');
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
-    const username = sessionStorage.getItem(AUTH_USER);
+    const username = localStorage.getItem(AUTH_USER);
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
     spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(of({ statusCode: 0, resultMessage: 'Withdrawal successful', account: {} }));
@@ -98,7 +98,7 @@ describe('WithdrawalsComponent', () => {
     component.password.setValue(password);
     const mockAccountModel = {"accId": 1000001, "withdrawalAmt": 0, "actionType": ""};
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
-    const username = sessionStorage.getItem(AUTH_USER);
+    const username = localStorage.getItem(AUTH_USER);
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
     spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.apiService, 'updateAccDetails').and.returnValue(of({ statusCode: 1, resultMessage: 'Withdrawal failed', account: {} }));
@@ -128,7 +128,7 @@ describe('WithdrawalsComponent', () => {
     component.password.setValue(password);
     const mockAccountModel = {"accId": 1000001, "withdrawalAmt": 0, "actionType": ""};
     spyOn(component.authService, 'getRetrievedAccDetails').and.returnValue(mockAccountModel);
-    const username = sessionStorage.getItem(AUTH_USER);
+    const username = localStorage.getItem(AUTH_USER);
     spyOn(component.authService, 'getAuthenticationUser').and.returnValue(username);
     spyOn(component.sharedMethod, 'handleJWTAuthLogin').and.returnValue(of(true));
     spyOn(component.sharedVar, 'changeException');
@@ -151,7 +151,7 @@ describe('WithdrawalsComponent', () => {
   });
 
   it('should return false for incorrect login credentials', () => {
-    const username = sessionStorage.getItem(AUTH_USER);
+    const username = localStorage.getItem(AUTH_USER);
     const password = 'incorrectpassword';
     spyOn(component.authService, 'jwtAuthenticate').and.returnValue(throwError('Incorrect credentials'));
     component.sharedMethod.handleJWTAuthLogin().subscribe(result => {
