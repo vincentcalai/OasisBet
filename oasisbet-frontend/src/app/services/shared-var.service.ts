@@ -42,6 +42,9 @@ export class SharedVarService {
   public readonly COMP_HEADER_BUNDESLIGA = "Bundesliga";
   public readonly COMP_HEADER_SERIE_A = "Serie A";
   public readonly COMP_HEADER_LIGUE_ONE = "Ligue One";
+  public readonly COMP_HEADER_FA_CUP = "FA Cup";
+  public readonly COMP_HEADER_EFL_CUP = "EFL Cup";
+  public readonly COMP_HEADER_UCL = "UEFA Champions League";
 
   public readonly NAV_MENU_SELECT_ACCOUNT_OVERVIEW = "account_overview";
   public readonly NAV_MENU_SELECT_ACCOUNT_UPDATE = "account_update";
@@ -158,6 +161,15 @@ export class SharedVarService {
       }
       case this.API_SOURCE_COMP_TYPE_LIGUE_ONE: {
         return this.COMP_HEADER_LIGUE_ONE;
+      }
+      case this.API_SOURCE_COMP_TYPE_FA_CUP: {
+        return this.COMP_HEADER_FA_CUP;
+      }
+      case this.API_SOURCE_COMP_TYPE_EFL_CUP: {
+        return this.COMP_HEADER_EFL_CUP;
+      }
+      case this.API_SOURCE_COMP_TYPE_UCL: {
+        return this.COMP_HEADER_UCL;
       }
       default: {
         return '';
