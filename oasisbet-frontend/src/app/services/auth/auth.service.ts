@@ -93,7 +93,7 @@ export class AuthService {
         console.log("logout ok");
         this.sharedVar.loginTimer = '00:00:00';
         this.sharedVar.loginTimerSource.unsubscribe();
-        this.clearlocalStorage();
+        this.clearLocalStorage();
       }
     }
 
@@ -114,25 +114,25 @@ export class AuthService {
                   this.router.navigate(['account']);
                 } else {
                   console.log(error);
-                  this.clearlocalStorage();
+                  this.clearLocalStorage();
                   this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
                 }
               }, error => {
                 console.log(error);
-                this.clearlocalStorage();
+                this.clearLocalStorage();
                 this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
               }
             )
           );
         } else {
           console.log(error);
-          this.clearlocalStorage();
+          this.clearLocalStorage();
           this.sharedVar.changeException(this.sharedVar.UNAUTHORIZED_ERR_MSG);
         }
       }
     }
 
-    public clearlocalStorage() {
+    public clearLocalStorage() {
       localStorage.removeItem(AUTH_USER);
       localStorage.removeItem(AUTHORIZATION);
       localStorage.removeItem(ACC_DETAILS);

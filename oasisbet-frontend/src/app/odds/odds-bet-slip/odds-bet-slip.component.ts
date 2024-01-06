@@ -120,7 +120,7 @@ export class OddsBetSlipComponent implements OnInit {
     this.subscriptions.add(
       this.apiService.postSubmitBets().subscribe( (resp: any) => {
         if(resp.statusCode == 4){
-          this.authService.clearlocalStorage();
+          this.authService.clearLocalStorage();
           this.sharedVar.changeShowUserNotLoginMsg(resp.resultMessage);
           this.router.navigate(['account']);
           return;

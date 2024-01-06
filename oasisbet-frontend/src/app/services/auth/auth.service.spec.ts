@@ -143,10 +143,10 @@ describe('AuthService', () => {
   it('should handle other unauthorized errors', () => {
     const unauthorizedError = new HttpErrorResponse({ status: 401, error: { message: 'Unauthorized' } });
     spyOn(service.sharedVar, 'changeException');
-    spyOn(service, 'clearlocalStorage');
+    spyOn(service, 'clearLocalStorage');
     spyOn(console, 'log');
     service.handleError(unauthorizedError);
-    expect(service.clearlocalStorage).toHaveBeenCalled();
+    expect(service.clearLocalStorage).toHaveBeenCalled();
     expect(service.sharedVar.changeException).toHaveBeenCalledWith('Unauthorized response. Please login again.');
   });
 
