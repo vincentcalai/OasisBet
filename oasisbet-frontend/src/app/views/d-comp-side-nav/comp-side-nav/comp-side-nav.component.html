@@ -10,5 +10,11 @@
       (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_SERIE_A)">Serie A</li>
       <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_LIGUE_ONE}"
       (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_LIGUE_ONE)">Ligue One</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_FA_CUP}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_FA_CUP)">FA CUP</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_EFL_CUP}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_EFL_CUP)">EFL CUP</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_UCL}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_UCL)">UEFA Champions League</li>
     </ul>
 </div> 

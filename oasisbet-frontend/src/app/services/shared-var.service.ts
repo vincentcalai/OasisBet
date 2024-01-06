@@ -33,6 +33,9 @@ export class SharedVarService {
   public readonly API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
   public readonly API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
   public readonly API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+  public readonly API_SOURCE_COMP_TYPE_FA_CUP = "soccer_fa_cup";
+  public readonly API_SOURCE_COMP_TYPE_EFL_CUP = "soccer_efl_cup";
+  public readonly API_SOURCE_COMP_TYPE_UCL = "soccer_uefa_champs_league";
 
   public readonly COMP_HEADER_EPL = "English Premier League";
   public readonly COMP_HEADER_LALIGA = "La Liga";
