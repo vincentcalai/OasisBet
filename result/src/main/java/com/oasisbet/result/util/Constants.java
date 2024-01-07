@@ -1,6 +1,7 @@
 package com.oasisbet.result.util;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Constants {
@@ -39,7 +40,9 @@ public class Constants {
 	public static final String RESULT_RETRIEVE_LAST_24_HRS = "last24Hrs";
 	public static final String RESULT_RETRIEVE_CUSTOM = "custom";
 
-	public static final List<String> COMP_TYPE_LIST = Arrays.asList(Constants.API_SOURCE_COMP_TYPE_EPL,
-			Constants.API_SOURCE_COMP_TYPE_LALIGA, Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA,
-			Constants.API_SOURCE_COMP_TYPE_SERIE_A, Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE);
+	public static final List<String> COMP_TYPE_LIST = Collections
+			.unmodifiableList(Arrays.asList(Constants.API_SOURCE_COMP_TYPE_EPL, Constants.API_SOURCE_COMP_TYPE_LALIGA,
+					Constants.API_SOURCE_COMP_TYPE_BUNDESLIGA, Constants.API_SOURCE_COMP_TYPE_SERIE_A,
+					Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE, API_SOURCE_COMP_TYPE_FA_CUP, API_SOURCE_COMP_TYPE_EFL_CUP,
+					API_SOURCE_COMP_TYPE_UCL));
 }

@@ -36,6 +36,9 @@ public class Constants {
 	public static final String API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
 	public static final String API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
 	public static final String API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+	public static final String API_SOURCE_COMP_TYPE_FA_CUP = "soccer_fa_cup";
+	public static final String API_SOURCE_COMP_TYPE_EFL_CUP = "soccer_england_efl_cup";
+	public static final String API_SOURCE_COMP_TYPE_UCL = "soccer_uefa_champs_league";
 
 	public static final String COMP_TYPE_EPL = "EPL";
 	public static final String COMP_TYPE_LA_LIGA = "LALIGA";
@@ -45,7 +48,8 @@ public class Constants {
 
 	public static final List<String> API_SOURCE_COMP_TYPE_LIST = Collections
 			.unmodifiableList(Arrays.asList(API_SOURCE_COMP_TYPE_EPL, API_SOURCE_COMP_TYPE_LALIGA,
-					API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A, API_SOURCE_COMP_TYPE_LIGUE_ONE));
+					API_SOURCE_COMP_TYPE_BUNDESLIGA, API_SOURCE_COMP_TYPE_SERIE_A, API_SOURCE_COMP_TYPE_LIGUE_ONE,
+					API_SOURCE_COMP_TYPE_FA_CUP, API_SOURCE_COMP_TYPE_EFL_CUP, API_SOURCE_COMP_TYPE_UCL));
 
 	public static final String EVENT_TYPE_1X2 = "01";
 
