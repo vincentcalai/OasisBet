@@ -91,6 +91,12 @@ public class OddsService {
 				return BigInteger.valueOf(4000000L);
 			case Constants.API_SOURCE_COMP_TYPE_LIGUE_ONE:
 				return BigInteger.valueOf(5000000L);
+			case Constants.API_SOURCE_COMP_TYPE_FA_CUP:
+				return BigInteger.valueOf(6000000L);
+			case Constants.API_SOURCE_COMP_TYPE_EFL_CUP:
+				return BigInteger.valueOf(7000000L);
+			case Constants.API_SOURCE_COMP_TYPE_UCL:
+				return BigInteger.valueOf(8000000L);
 			default:
 				throw new IllegalArgumentException("Invalid competition type: " + compType);
 			}
