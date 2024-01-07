@@ -25,6 +25,9 @@ public class Constants {
 	public static final String API_SOURCE_COMP_TYPE_BUNDESLIGA = "soccer_germany_bundesliga";
 	public static final String API_SOURCE_COMP_TYPE_SERIE_A = "soccer_italy_serie_a";
 	public static final String API_SOURCE_COMP_TYPE_LIGUE_ONE = "soccer_france_ligue_one";
+	public static final String API_SOURCE_COMP_TYPE_FA_CUP = "soccer_fa_cup";
+	public static final String API_SOURCE_COMP_TYPE_EFL_CUP = "soccer_england_efl_cup";
+	public static final String API_SOURCE_COMP_TYPE_UCL = "soccer_uefa_champs_league";
 
 	public static final String RETRIEVE_RESULT_API_EXCEPTION = "Error Retrieving Results from source API";
 	public static final String DATE_PARSING_EXCEPTION = "Error Parsing Date";
