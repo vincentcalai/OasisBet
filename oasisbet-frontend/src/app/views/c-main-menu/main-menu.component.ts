@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription, throwError } from 'rxjs';
 import { take, finalize, switchMap, catchError } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService, LOGIN_TIME } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, AUTHORIZATION, AUTH_USER, AuthService, LOGIN_TIME, PERSONAL_DETAILS } from 'src/app/services/auth/auth.service';
 import { SharedMethodsService } from 'src/app/services/shared-methods.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -70,6 +70,7 @@ export class MainMenuComponent implements OnInit {
             this.sharedVar.commonErrorMsg = resp.resultMessage;
           } else {
             localStorage.setItem(ACC_DETAILS, JSON.stringify(resp.account));
+            localStorage.setItem(PERSONAL_DETAILS, JSON.stringify(resp.personalInfo));
             console.log("login successful");
           }
         },
