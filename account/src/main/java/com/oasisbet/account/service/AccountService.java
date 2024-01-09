@@ -33,6 +33,7 @@ import com.oasisbet.account.dao.IAccountOtherTrxDao;
 import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.PersonalInfoVO;
 import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxBetDetailsVO;
@@ -96,6 +97,18 @@ public class AccountService {
 			accountVo.setBetLimit(accountView.getBetLimit());
 		}
 		return accountVo;
+	}
+
+	public PersonalInfoVO retrieveUserByUsername(String user) {
+		UserView userView = userDao.findByUsername(user);
+		PersonalInfoVO personalInfoVo = null;
+		if (userView == null) {
+			return personalInfoVo;
+		}
+		personalInfoVo = new PersonalInfoVO();
+		personalInfoVo.setEmail(userView.getEmail());
+		personalInfoVo.setContactNo(userView.getContactNo());
+		return personalInfoVo;
 	}
 
 	public AccountVO retrieveYtdAmounts(Long accId) {

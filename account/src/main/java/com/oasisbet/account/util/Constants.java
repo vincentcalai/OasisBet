@@ -60,6 +60,7 @@ public class Constants {
 
 	// Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";
+	public static final String ERR_USER_NOT_FOUND = "User not found. Please contact the administrator.";
 	public static final String ERR_USER_ACC_NOT_FOUND = "User Account/Betting Account not found. Please contact the administrator.";
 	public static final String ERR_MAX_BAL_AMT = "The maximum balance in an account is $199999.99";
 	public static final String ERR_OVER_DEPOSIT_LIMIT = "You have reached deposit limit for this month. Please make your deposit from next month onwards";
