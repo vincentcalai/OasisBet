@@ -1,0 +1,20 @@
+<div class="sidebar">
+    <ul>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_EPL}"
+       (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_EPL)">{{sharedVar.COMP_HEADER_EPL}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_LALIGA}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_LALIGA)">{{sharedVar.COMP_HEADER_LALIGA}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_BUNDESLIGA}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_BUNDESLIGA)">{{sharedVar.COMP_HEADER_BUNDESLIGA}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_SERIE_A}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_SERIE_A)">{{sharedVar.COMP_HEADER_SERIE_A}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_LIGUE_ONE}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_LIGUE_ONE)">{{sharedVar.COMP_HEADER_LIGUE_ONE}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_FA_CUP}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_FA_CUP)">{{sharedVar.COMP_HEADER_FA_CUP}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_EFL_CUP}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_EFL_CUP)">{{sharedVar.COMP_HEADER_EFL_CUP}}</li>
+      <li class="sidebar-item" [ngClass]="{'highlightSideNav' : compType == sharedVar.API_SOURCE_COMP_TYPE_UCL}"
+      (click)="selectCompType(sharedVar.API_SOURCE_COMP_TYPE_UCL)">{{sharedVar.COMP_HEADER_UCL}}</li>
+    </ul>
+</div>
