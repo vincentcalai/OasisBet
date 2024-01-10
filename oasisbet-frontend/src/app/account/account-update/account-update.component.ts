@@ -8,7 +8,7 @@ import { AccountDetailsModel } from 'src/app/model/account-details.model';
 import { AccountModel } from 'src/app/model/account.model';
 import { PersonalDetailsModel } from 'src/app/model/personal-details.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService, PERSONAL_DETAILS } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -125,6 +125,11 @@ export class AccountUpdateComponent implements OnInit {
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
         } else {
+          const personalDetails = {
+            "email": accountDetailsModel.email,
+            "contactNo": accountDetailsModel.contactNo
+          };
+          localStorage.setItem(PERSONAL_DETAILS, JSON.stringify(personalDetails));
           this.responseMsg = resp.resultMessage;
         }
         this.ngOnInit();
