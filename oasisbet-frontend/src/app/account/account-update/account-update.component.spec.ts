@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountModel } from 'src/app/model/account.model';
-import { ACC_DETAILS } from 'src/app/services/auth/auth.service';
+import { ACC_DETAILS, PERSONAL_DETAILS } from 'src/app/services/auth/auth.service';
 import { of } from 'rxjs';
 
 describe('AccountUpdateComponent', () => {
@@ -39,7 +39,9 @@ describe('AccountUpdateComponent', () => {
     component = fixture.componentInstance;
     let accountModel = new AccountModel();
     accountModel.accId = 1;
+    let personalDetailsModel = {"email" : "test@test.com", "contactNo" : "contactNo"};
     localStorage.setItem(ACC_DETAILS, JSON.stringify(accountModel));
+    localStorage.setItem(PERSONAL_DETAILS, JSON.stringify(personalDetailsModel));
     sharedVarService = TestBed.inject(SharedVarService);
     fixture.detectChanges();
   });

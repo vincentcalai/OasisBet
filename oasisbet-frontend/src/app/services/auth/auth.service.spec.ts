@@ -79,11 +79,12 @@ describe('AuthService', () => {
     service.logout();
     expect(mockConfirm).toHaveBeenCalledWith('Are you sure to logout?');
     expect(console.log).toHaveBeenCalledWith('logout ok');
-    expect(localStorage.removeItem).toHaveBeenCalledTimes(4);
+    expect(localStorage.removeItem).toHaveBeenCalledTimes(5);
     expect(localStorage.removeItem).toHaveBeenCalledWith('authenticateUser');
     expect(localStorage.removeItem).toHaveBeenCalledWith('authorization');
     expect(localStorage.removeItem).toHaveBeenCalledWith('accountDetails');
     expect(localStorage.removeItem).toHaveBeenCalledWith('loginTime');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('personalDetails');
     expect(service.router.navigate).toHaveBeenCalledWith(['account']);
   });
 
