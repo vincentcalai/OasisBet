@@ -38,11 +38,13 @@ public class AccountController {
 		if (accountVo == null) {
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+			return response;
 		}
 		PersonalInfoVO personalInfoVo = this.accountService.retrieveUserByUsername(user);
 		if (personalInfoVo == null) {
 			response.setStatusCode(2);
 			response.setResultMessage(Constants.ERR_USER_NOT_FOUND);
+			return response;
 		}
 		response.setAccount(accountVo);
 		response.setPersonalInfo(personalInfoVo);
