@@ -1,6 +1,7 @@
 package com.oasisbet.account.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -45,6 +46,7 @@ import com.oasisbet.account.dao.IUserDao;
 import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.PersonalInfoVO;
 import com.oasisbet.account.model.ResultEventMapping;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
@@ -114,6 +116,22 @@ class TestAccountService extends TestWithSpringBoot {
 	void testRetrieveUserAccountByUsernameBettingAccountNotFound() {
 		String user = "TESTUSERA";
 		AccountVO accountVo = accountService.retrieveUserAccountByUsername(user);
+		assertEquals(null, accountVo);
+	}
+
+	@Test
+	void testRetrieveUserByUsernameSuccess() {
+		String user = "TESTUSER";
+		PersonalInfoVO personalInfoVo = accountService.retrieveUserByUsername(user);
+		assertNotNull(personalInfoVo);
+		assertEquals("test@test.com", personalInfoVo.getEmail());
+		assertEquals("11112222", personalInfoVo.getContactNo());
+	}
+
+	@Test
+	void testRetrieveUserByUsername_UsernameNotFound() {
+		String user = "TESTUSERZZZ";
+		PersonalInfoVO accountVo = accountService.retrieveUserByUsername(user);
 		assertEquals(null, accountVo);
 	}
 
