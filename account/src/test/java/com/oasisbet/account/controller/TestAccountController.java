@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.account.TestWithSpringBoot;
 import com.oasisbet.account.fixture.AccountFixture;
 import com.oasisbet.account.model.AccountVO;
+import com.oasisbet.account.model.PersonalInfoVO;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
@@ -50,7 +51,13 @@ public class TestAccountController extends TestWithSpringBoot {
 		accountVo.setUsrId(3L);
 		expectedResponse.setAccount(accountVo);
 
+		PersonalInfoVO personalInfoVo = new PersonalInfoVO();
+		personalInfoVo.setContactNo("99999999");
+		personalInfoVo.setEmail("TEST@TEST.COM");
+		expectedResponse.setPersonalInfo(personalInfoVo);
+
 		Mockito.when(accountService.retrieveUserAccountByUsername(Mockito.any(String.class))).thenReturn(accountVo);
+		Mockito.when(accountService.retrieveUserByUsername(Mockito.any(String.class))).thenReturn(personalInfoVo);
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveAccDetails")
 				.contentType(MediaType.APPLICATION_JSON).param("user", username);
@@ -61,7 +68,7 @@ public class TestAccountController extends TestWithSpringBoot {
 	}
 
 	@Test
-	public void testRetrieveAccDetailsFail() throws Exception {
+	public void testRetrieveAccDetailsFail_UserAccNotFound() throws Exception {
 		String username = "TESTUSER";
 
 		AccountRestResponse expectedResponse = new AccountRestResponse();
@@ -69,6 +76,28 @@ public class TestAccountController extends TestWithSpringBoot {
 		expectedResponse.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 
 		Mockito.when(accountService.retrieveUserAccountByUsername(Mockito.any(String.class))).thenReturn(null);
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveAccDetails")
+				.contentType(MediaType.APPLICATION_JSON).param("user", username);
+
+		String response = objectMapper.writeValueAsString(expectedResponse);
+		mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(response));
+	}
+
+	@Test
+	public void testRetrieveAccDetailsFail_UserNotFound() throws Exception {
+		String username = "TESTUSER";
+
+		AccountVO accountVo = new AccountVO();
+		accountVo.setUsrId(3L);
+
+		AccountRestResponse expectedResponse = new AccountRestResponse();
+		expectedResponse.setStatusCode(2);
+		expectedResponse.setResultMessage(Constants.ERR_USER_NOT_FOUND);
+
+		Mockito.when(accountService.retrieveUserAccountByUsername(Mockito.any(String.class))).thenReturn(accountVo);
+		Mockito.when(accountService.retrieveUserByUsername(Mockito.any(String.class))).thenReturn(null);
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/retrieveAccDetails")
 				.contentType(MediaType.APPLICATION_JSON).param("user", username);

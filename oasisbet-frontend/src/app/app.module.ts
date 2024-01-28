@@ -30,10 +30,10 @@ import {MatInputModule} from '@angular/material/input';
 import { LimitManagementComponent } from './account/limit-management/limit-management.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav/comp-side-nav.component';
 import { InterceptorModule } from './services/api/interceptor.module';
-import { AccountUpdateComponent } from './account/account-update/account-update/account-update.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { CompSideNavComponent } from './views/d-comp-side-nav/comp-side-nav.component';
+import { AccountUpdateComponent } from './account/account-update/account-update.component';
 
 @NgModule({
   declarations: [

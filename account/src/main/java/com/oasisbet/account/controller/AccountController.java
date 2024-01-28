@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
+import com.oasisbet.account.model.PersonalInfoVO;
 import com.oasisbet.account.model.StatusResponse;
 import com.oasisbet.account.model.TrxHistVO;
 import com.oasisbet.account.model.request.AccountRest;
@@ -37,8 +38,16 @@ public class AccountController {
 		if (accountVo == null) {
 			response.setStatusCode(1);
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+			return response;
+		}
+		PersonalInfoVO personalInfoVo = this.accountService.retrieveUserByUsername(user);
+		if (personalInfoVo == null) {
+			response.setStatusCode(2);
+			response.setResultMessage(Constants.ERR_USER_NOT_FOUND);
+			return response;
 		}
 		response.setAccount(accountVo);
+		response.setPersonalInfo(personalInfoVo);
 		return response;
 	}
 

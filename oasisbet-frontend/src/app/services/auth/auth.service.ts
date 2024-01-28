@@ -8,6 +8,7 @@ import { Subscription, interval } from 'rxjs';
 export const AUTH_USER = 'authenticateUser';
 export const AUTHORIZATION = 'authorization';
 export const ACC_DETAILS = 'accountDetails';
+export const PERSONAL_DETAILS = 'personalDetails';
 export const LOGIN_TIME = 'loginTime';
 
 @Injectable({
@@ -54,6 +55,10 @@ export class AuthService {
 
     getRetrievedAccDetails(){
       return JSON.parse(localStorage.getItem(ACC_DETAILS));
+    }
+
+    getRetrievedPersonalDetails(){
+      return JSON.parse(localStorage.getItem(PERSONAL_DETAILS));
     }
 
     startLoginTimer() {
@@ -136,6 +141,7 @@ export class AuthService {
       localStorage.removeItem(AUTH_USER);
       localStorage.removeItem(AUTHORIZATION);
       localStorage.removeItem(ACC_DETAILS);
+      localStorage.removeItem(PERSONAL_DETAILS);
       localStorage.removeItem(LOGIN_TIME);
       this.router.navigate(['account']);
     }

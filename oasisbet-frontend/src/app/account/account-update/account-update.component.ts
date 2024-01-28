@@ -6,8 +6,9 @@ import { finalize, take } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/common/confirm-dialog/confirm-dialog.component';
 import { AccountDetailsModel } from 'src/app/model/account-details.model';
 import { AccountModel } from 'src/app/model/account.model';
+import { PersonalDetailsModel } from 'src/app/model/personal-details.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService, PERSONAL_DETAILS } from 'src/app/services/auth/auth.service';
 import { ReactiveFormService } from 'src/app/services/reactive-form.service';
 import { SharedVarService } from 'src/app/services/shared-var.service';
 
@@ -22,6 +23,7 @@ export class AccountUpdateComponent implements OnInit {
   public updateAccDetailsForm: FormGroup;
   public updateLoginForm: FormGroup;
   public accountModelInput: AccountModel;
+  public personalDetailsModelInput: PersonalDetailsModel;
 
   public accountId: number;
   public responseMsg: string = '';
@@ -37,6 +39,7 @@ export class AccountUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountModelInput = this.authService.getRetrievedAccDetails();
+    this.personalDetailsModelInput = this.authService.getRetrievedPersonalDetails();
 
     if (!this.accountModelInput) {
       this.sharedVar.changeException('Account details are null.');
@@ -47,6 +50,9 @@ export class AccountUpdateComponent implements OnInit {
 
     this.updateAccDetailsForm = this.reactiveFormService.initializeUpdateAccDetailsFormControl();
     this.updateLoginForm = this.reactiveFormService.initializeUpdateLoginFormControl();
+
+    this.email.setValue(this.personalDetailsModelInput.email);
+    this.contactNo.setValue(this.personalDetailsModelInput.contactNo);
   }
 
   fieldIsInvalid(field: AbstractControl): boolean {
@@ -119,6 +125,11 @@ export class AccountUpdateComponent implements OnInit {
         if (resp.statusCode != 0) {
           this.errorMsg = resp.resultMessage;
         } else {
+          const personalDetails = {
+            "email": accountDetailsModel.email,
+            "contactNo": accountDetailsModel.contactNo
+          };
+          localStorage.setItem(PERSONAL_DETAILS, JSON.stringify(personalDetails));
           this.responseMsg = resp.resultMessage;
         }
         this.ngOnInit();
