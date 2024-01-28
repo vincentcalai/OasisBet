@@ -58,7 +58,7 @@ public class Constants {
 	public static final String ACC_PW_UPDATE_SUCESSS = "Password has been updated successfully.";
 	public static final String ACC_INFO_UPDATE_SUCESSS = "Contact Info has been updated successfully.";
 
-	// Exceptions
+	// General Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";
 	public static final String ERR_USER_ACC_NOT_FOUND = "User Account/Betting Account not found. Please contact the administrator.";
 	public static final String ERR_MAX_BAL_AMT = "The maximum balance in an account is $199999.99";
