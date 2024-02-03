@@ -180,11 +180,11 @@ export class ReactiveFormService {
 
   initializeUpdateAccDetailsFormControl(): FormGroup {
     return this.fb.group({
-      email: this.fb.control(null, {
+      email: this.fb.control({value: '', disabled: true}, {
         validators: this.emailAddrValidators(),
         updateOn: 'blur'
       }),
-      contactNo: this.fb.control(null, {
+      contactNo: this.fb.control({value: '', disabled: true}, {
         validators: [
           Validators.required,
           Validators.pattern(this.NUMERIC),

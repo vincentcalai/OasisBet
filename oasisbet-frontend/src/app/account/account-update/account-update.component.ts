@@ -175,6 +175,14 @@ export class AccountUpdateComponent implements OnInit {
     );
   }
 
+  enableEmailInput(){
+    this.updateAccDetailsForm.controls['email'].enable();
+  }
+
+  enableContactNoInput(){
+    this.updateAccDetailsForm.controls['contactNo'].enable();
+  }
+
   get email() {
     return this.updateAccDetailsForm.get('email');
   }
