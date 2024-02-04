@@ -65,6 +65,8 @@ export class AccountUpdateComponent implements OnInit {
     this.oldPassword.setValue(null);
     this.newPassword.setValue(null);
     this.cfmNewPassword.setValue(null);
+    this.enableEmailInput();
+    this.enableContactNoInput();
   }
 
   confirmClickedUpdateAccDetails(){
