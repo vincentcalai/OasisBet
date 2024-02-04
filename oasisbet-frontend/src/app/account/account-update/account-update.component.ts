@@ -134,7 +134,7 @@ export class AccountUpdateComponent implements OnInit {
           localStorage.setItem(PERSONAL_DETAILS, JSON.stringify(personalDetails));
           this.responseMsg = resp.resultMessage;
         }
-        this.ngOnInit();
+        this.disableAccDetailsInput();
       } , error => {
             console.log(error);
             this.authService.handleError(error);
@@ -142,6 +142,11 @@ export class AccountUpdateComponent implements OnInit {
       )
     );
 
+  }
+
+  private disableAccDetailsInput() {
+    this.email.disable();
+    this.contactNo.disable();
   }
 
   onConfirmUpdatePassword() {
@@ -168,7 +173,7 @@ export class AccountUpdateComponent implements OnInit {
         } else {
           this.responseMsg = resp.resultMessage;
         }
-        this.ngOnInit();
+        this.disableAccDetailsInput();
       } , error => {
             console.log(error);
             this.authService.handleError(error);
