@@ -1,0 +1,29 @@
+header {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #1f4877;
+}
+
+.logo-text {
+font-size: 30px;
+    margin-left: 20%;
+    padding-top: 15px;
+    color: rgb(204, 204, 204);
+    font-weight: bold;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.title-nav-bar {
+    margin-left: 300px;
+    background-color: #38749e;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    background: linear-gradient(90deg, #38749e, #1588ca);
+}
+  
