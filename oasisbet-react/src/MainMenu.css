@@ -34,12 +34,12 @@
 
 .btn-logout{
   color:white;
-  background-color: #FF8200;
+  background-color: #FF8200 !important;
   text-transform: uppercase;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   margin-right: 12px;
-  width: 80px;
+  width: 100px;
 }
 
 .btn-logout:hover {
