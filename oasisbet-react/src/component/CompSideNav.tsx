@@ -1,3 +1,4 @@
+import React from 'react';
 import './CompSideNav.css';
 
 function CompSideNav({ compType, sharedVar, selectCompType }) {

@@ -1,8 +1,9 @@
 import './OddsLanding.css';
 
 import { useState } from 'react';
-import CompSideNav from './CompSideNav.jsx';
+import CompSideNav from './CompSideNav.tsx';
 import { Card } from 'react-bootstrap';
+import React from 'react';
 
 
 export default function OddsLanding({sharedVar}){
@@ -13,17 +14,19 @@ export default function OddsLanding({sharedVar}){
         setCompType(newCompType);
     };
 
+    let competitionTypeHdr: string = sharedVar.COMP_HEADER_EPL;
+
     return (
         <>
             <div className="container">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-3">
                         <CompSideNav compType={compType} sharedVar={sharedVar} selectCompType={selectCompType}></CompSideNav>
                     </div>
-                    <div className="col-8">
-                        <Card>
-                            <Card.Header>
-                                <p>{compType}</p>
+                    <div className="col-7">
+                        <Card className="card">
+                            <Card.Header className="card-header">
+                                <p>{competitionTypeHdr}</p>
                             </Card.Header>
                             <Card.Body>
                                 <p>{compType}</p>

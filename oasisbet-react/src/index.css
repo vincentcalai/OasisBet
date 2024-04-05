@@ -11,6 +11,8 @@ input{
 .card .card-header {
     background-color: #337ab7;
     color: white;
+    font-size: 20px;
+    padding-top: 20px;
 }
 
 .alert-text {
@@ -89,6 +91,7 @@ input{
     color: white;
     background-color: #337ab7;
     pointer-events: none;
+    font-weight: bold;
 }
 
 .allCaps {

@@ -1,9 +1,8 @@
 import './MainMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
-import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-
+import React from 'react';
 
 export default function MainMenu(){
     return (
