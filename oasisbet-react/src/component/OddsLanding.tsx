@@ -8,7 +8,7 @@ import { generateSampleData } from '../constants/MockData.js';
 
 export default function OddsLanding({sharedVar}){
     
-    const [compType, setCompType] = useState(null);
+    const [compType, setCompType] = useState(sharedVar.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(sharedVar.COMP_HEADER_EPL);
 
     const selectCompType = (newCompType) => {

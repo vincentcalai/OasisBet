@@ -22,7 +22,7 @@
     transition: all 0.3s ease;
 }
 
-.main-menu-link.active{
+.nav-link.main-menu-link.active{
     background-color: white;
 }
 

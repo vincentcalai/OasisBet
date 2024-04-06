@@ -2,22 +2,40 @@ import './MainMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function MainMenu(){
+
+    const [activeMenuButton, setActiveMenuButton] = useState('odds');
+
+    function handleOnChangeMenu(menu){
+        setActiveMenuButton(menu);
+    }
+
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Button className="nav-link main-menu-link">Odds</Button>
+                        <Button className={`nav-link main-menu-link ${activeMenuButton === 'odds' ? 'active' : ''}`}
+                        onClick={() => handleOnChangeMenu('odds')}>
+                            Odds
+                        </Button>
                     </li>
+                    &nbsp;
                     <li className="nav-item">
-                        <Button className="nav-link main-menu-link">Result</Button>
+                        <Button className={`nav-link main-menu-link ${activeMenuButton === 'result' ? 'active' : ''}`}
+                        onClick={() => handleOnChangeMenu('result')}>
+                            Result
+                        </Button>
                     </li>
+                    &nbsp;
                    <li className="nav-item">
-                        <Button className="nav-link main-menu-link">Account</Button>
+                        <Button className={`nav-link main-menu-link ${activeMenuButton === 'account' ? 'active' : ''}`}
+                         onClick={() => handleOnChangeMenu('account')}>
+                            Account
+                        </Button>
                     </li>
                     </ul>
                 </div>
