@@ -16,7 +16,7 @@ export default function MainMenu(){
                     <li className="nav-item">
                         <Button className="nav-link main-menu-link">Result</Button>
                     </li>
-                    <li className="nav-item">
+                   <li className="nav-item">
                         <Button className="nav-link main-menu-link">Account</Button>
                     </li>
                     </ul>
@@ -25,10 +25,10 @@ export default function MainMenu(){
                 <div className="right-navbar">
                     <ul className="navbar-nav">
                         <li className="nav-item user-menu-display">
-                            <span>LOGGED IN &nbsp;</span>
+                            <span style={{borderRight: '1px solid #ccc'}}>LOGGED IN &nbsp;</span>
                             <Button type="button" variant="secondary" className="btn-logout">Logout</Button>
                             <FontAwesomeIcon icon={faUser} className="user-icon"/>
-                            <Button className="nav-link main-menu-link">CHOONANN</Button>
+                            <span className="login-username-tag">&nbsp; CHOONANN</span>
                         </li>
                         <li className ="nav-item">
                             <span className="balance-textbox">Balance: $99.88</span>

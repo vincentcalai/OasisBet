@@ -2,7 +2,7 @@ import './OddsLanding.css';
 
 import { useState } from 'react';
 import CompSideNav from './CompSideNav.tsx';
-import { Card, Table } from 'react-bootstrap';
+import { Button, Card, Table } from 'react-bootstrap';
 import React from 'react';
 import { generateSampleData } from '../constants/MockData.js';
 
@@ -23,49 +23,68 @@ export default function OddsLanding({sharedVar}){
         <>
             <div className="container">
                 <div className="row">
-                    <div className="col-3">
+                    <div className="col-2">
                         <CompSideNav compType={compType} sharedVar={sharedVar} selectCompType={selectCompType}></CompSideNav>
                     </div>
-                    <div className="col-7">
-                        <br></br>
-                        <Card className="card" style={{width: '100%'}}>
-                            <Card.Header className="card-header">
-                                <h2>{compTypeHdr}</h2>
-                            </Card.Header>
-                            <Card.Body className="card-body">
-                                <Table striped>
-                                    <thead>
-                                        <tr>
-                                            <th style={{width: '13%'}}>Time</th>
-                                            <th style={{width: '12%'}}>Event ID</th>
-                                            <th style={{width: '36%'}}>Event Description</th>
-                                            <th style={{width: '13%'}}>Home (1)</th>
-                                            <th style={{width: '13%'}}>Draw (X)</th>
-                                            <th style={{width: '13%'}}>Away (2)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {eventsMap.get('2024-04-06').map((event, index) => (
-                                            <tr key={index}>
-                                                <td>{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-                                                <td>{event.eventId}</td>
-                                                <td>{event.eventDesc}</td>
-                                                <td>{event.h2hEventOdds.homeOdds}</td>
-                                                <td>{event.h2hEventOdds.drawOdds}</td>
-                                                <td>{event.h2hEventOdds.awayOdds}</td>
+                    <div className="col-8">
+                        <div className="container-fluid">
+                            <br></br>
+                            <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
+                                <Card.Header className="card-header">
+                                    <h2>{compTypeHdr}</h2>
+                                </Card.Header>
+                                <Card.Body className="card-body">
+                                    <Table>
+                                        <thead>
+                                            <tr>
+                                                <th style={{width: '13%'}}>Time</th>
+                                                <th style={{width: '12%'}}>Event ID</th>
+                                                <th style={{width: '36%'}}>Event Description</th>
+                                                <th style={{width: '13%'}}>Home (1)</th>
+                                                <th style={{width: '13%'}}>Draw (X)</th>
+                                                <th style={{width: '13%'}}>Away (2)</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </Table>
-                            </Card.Body>
-                        </Card>
+                                        </thead>
+                                        <tbody>
+                                            {eventsMap.get('2024-04-06').map((event, index) => (
+                                                <tr key={index}>
+                                                    <td>{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                                                    <td>{event.eventId}</td>
+                                                    <td>{event.eventDesc}</td>
+                                                    <td>
+                                                        <Button type="button" className="btn" variant="light">
+                                                            <span className="bet-selection-text">
+                                                                01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
+                                                            </span>
+                                                        </Button>
+                                                    </td>
+                                                    <td>
+                                                        <Button type="button" className="btn" variant="light">
+                                                            <span className="bet-selection-text">
+                                                                02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
+                                                            </span>
+                                                        </Button>
+                                                    </td>
+                                                    <td>
+                                                        <Button type="button" className="btn" variant="light">
+                                                            <span className="bet-selection-text">
+                                                                03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
+                                                            </span>
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </Card.Body>
+                            </Card>
+                        </div>
                     </div>
                     <div className="col-2">
                         <p>Betting Slip</p>
                     </div>
                 </div>
             </div>
-            
         </>
     );
 }
