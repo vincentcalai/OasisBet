@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function MainMenu(){
 
@@ -18,24 +19,30 @@ export default function MainMenu(){
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Button className={`nav-link main-menu-link ${activeMenuButton === 'odds' ? 'active' : ''}`}
-                        onClick={() => handleOnChangeMenu('odds')}>
-                            Odds
-                        </Button>
+                        <Link to="odds">
+                            <Button className={`nav-link main-menu-link ${activeMenuButton === 'odds' ? 'active' : ''}`}
+                            onClick={() => handleOnChangeMenu('odds')}>
+                                Odds
+                            </Button>
+                        </Link>
                     </li>
                     &nbsp;
                     <li className="nav-item">
-                        <Button className={`nav-link main-menu-link ${activeMenuButton === 'result' ? 'active' : ''}`}
-                        onClick={() => handleOnChangeMenu('result')}>
-                            Result
-                        </Button>
+                        <Link to="result">
+                            <Button className={`nav-link main-menu-link ${activeMenuButton === 'result' ? 'active' : ''}`}
+                            onClick={() => handleOnChangeMenu('result')}>
+                                Result
+                            </Button>
+                        </Link>
                     </li>
                     &nbsp;
                    <li className="nav-item">
-                        <Button className={`nav-link main-menu-link ${activeMenuButton === 'account' ? 'active' : ''}`}
-                         onClick={() => handleOnChangeMenu('account')}>
-                            Account
-                        </Button>
+                        <Link to="account">
+                            <Button className={`nav-link main-menu-link ${activeMenuButton === 'account' ? 'active' : ''}`}
+                            onClick={() => handleOnChangeMenu('account')}>
+                                Account
+                            </Button>
+                        </Link>
                     </li>
                     </ul>
                 </div>
