@@ -5,14 +5,15 @@ import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
 import React from 'react';
 import { generateSampleData } from '../constants/MockData.js';
+import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 
-export default function OddsLanding({sharedVar}){
+export default function OddsLanding(){
     
-    const [compType, setCompType] = useState(sharedVar.API_SOURCE_COMP_TYPE_EPL);
-    const [compTypeHdr, setCompTypeHdr] = useState(sharedVar.COMP_HEADER_EPL);
+    const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
+    const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
 
     const selectCompType = (newCompType) => {
-        setCompTypeHdr(retrieveCompHdr(sharedVar, newCompType));
+        setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
         setCompType(newCompType);
     };
 
@@ -24,7 +25,7 @@ export default function OddsLanding({sharedVar}){
             <div className="container">
                 <div className="row">
                     <div className="col-2">
-                        <CompSideNav compType={compType} sharedVar={sharedVar} selectCompType={selectCompType}></CompSideNav>
+                        <CompSideNav compType={compType} selectCompType={selectCompType}></CompSideNav>
                     </div>
                     <div className="col-8">
                         <div className="container-fluid">

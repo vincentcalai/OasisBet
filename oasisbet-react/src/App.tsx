@@ -1,17 +1,36 @@
 import './App.css';
 import Header from './component/Header.tsx';
 import MainMenu from './component/MainMenu.tsx';
-import SharedVarConstants from './constants/SharedVarConstants.js';
 import OddsLanding from './component/OddsLanding.tsx';
 import React from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 function App() {
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <OddsLanding/>,
+      children: [
+        {
+          path: "odds",
+          element: <OddsLanding/>,
+        }, {
+          path: "result",
+          element: <OddsLanding/>,
+        }, {
+          path: "account",
+          element: <OddsLanding/>,
+        },
+      ],
+    },
+  ]);
 
   return (
     <div className="App">
       <Header></Header>
       <MainMenu></MainMenu>
-      <OddsLanding sharedVar={SharedVarConstants}></OddsLanding>
+      <RouterProvider router={router} />
     </div>
   );
 }
