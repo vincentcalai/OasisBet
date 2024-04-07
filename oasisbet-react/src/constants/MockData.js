@@ -51,7 +51,6 @@ export class TeamsDetails {
 export function generateSampleData() {
     const eventsMap = new Map();
 
-
         const eventId1 = 100001;
         const compType1 = 'soccer_epl';
         const eventDesc1 = 'Chelsea vs Manchester United';
@@ -90,7 +89,45 @@ export function generateSampleData() {
         eventsMap.get(date).push(betEvent2);
         eventsMap.get(date).push(betEvent3);
 
-    console.log("data generated: ", eventsMap);
+    console.log("data generated for 2024-04-06: ", eventsMap);
 
+    const eventId4 = 100001;
+        const compType4 = 'soccer_epl';
+        const eventDesc4 = 'Chelsea vs Manchester United';
+        const startTime4 = new Date(); 
+        const teamsDetails4 = new TeamsDetails('Chelsea', 'Manchester United');
+        const h2hEventOdds4 = new H2HEventOdds(100001, '2.03', '3.55', '3.20');
+        const betSelection4 = new H2HBetSelection();
+
+        const betEvent4 = new BetEvent(eventId4, compType4, eventDesc4, startTime4, teamsDetails4, h2hEventOdds4, betSelection4);
+
+        const eventId5 = 100002;
+        const compType5 = 'soccer_epl';
+        const eventDesc5 = 'Sheffield United vs Arsenal';
+        const startTime5 = new Date(); 
+        const teamsDetails5 = new TeamsDetails('Sheffield United', 'Arsenal');
+        const h2hEventOdds5 = new H2HEventOdds(100002, '10.55', '5.60', '1.15');
+        const betSelection5 = new H2HBetSelection();
+
+        const betEvent5 = new BetEvent(eventId5, compType5, eventDesc5, startTime5, teamsDetails5, h2hEventOdds5, betSelection5);
+
+        const eventId6 = 100003;
+        const compType6 = 'soccer_epl';
+        const eventDesc6 = 'Crystal Palace vs Brighton & Hove Albion';
+        const startTime6 = new Date(); 
+        const teamsDetails6 = new TeamsDetails('Crystal Palace', 'Brighton & Hove Albion');
+        const h2hEventOdds6 = new H2HEventOdds(100003, '3.05', '3.5', '2.80');
+        const betSelection6 = new H2HBetSelection();
+
+        const betEvent6 = new BetEvent(eventId6, compType6, eventDesc6, startTime6, teamsDetails6, h2hEventOdds6, betSelection6);
+
+        const date2 = '2024-04-07'; 
+
+        if (!eventsMap.has(date2)) {
+            eventsMap.set(date2, []);
+        }
+        eventsMap.get(date2).push(betEvent4);
+        eventsMap.get(date2).push(betEvent5);
+        eventsMap.get(date2).push(betEvent6);
     return eventsMap;
 }

@@ -18,7 +18,14 @@ export default function OddsLanding(){
     };
 
     const eventsMap = generateSampleData();
-    console.log("eventsMap: ", eventsMap)
+    console.log("eventsMap: ", eventsMap);
+    const eventDates = Array.from(eventsMap.keys());
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options: Intl.DateTimeFormatOptions = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    };
 
     return (
         <>
@@ -35,48 +42,53 @@ export default function OddsLanding(){
                                     <h2>{compTypeHdr}</h2>
                                 </Card.Header>
                                 <Card.Body className="card-body">
-                                    <Table>
-                                        <thead>
-                                            <tr>
-                                                <th style={{width: '13%'}}>Time</th>
-                                                <th style={{width: '12%'}}>Event ID</th>
-                                                <th style={{width: '36%'}}>Event Description</th>
-                                                <th style={{width: '13%'}}>Home (1)</th>
-                                                <th style={{width: '13%'}}>Draw (X)</th>
-                                                <th style={{width: '13%'}}>Away (2)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {eventsMap.get('2024-04-06').map((event, index) => (
-                                                <tr key={index}>
-                                                    <td>{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-                                                    <td>{event.eventId}</td>
-                                                    <td>{event.eventDesc}</td>
-                                                    <td>
-                                                        <Button type="button" className="btn" variant="light">
-                                                            <span className="bet-selection-text">
-                                                                01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
-                                                            </span>
-                                                        </Button>
-                                                    </td>
-                                                    <td>
-                                                        <Button type="button" className="btn" variant="light">
-                                                            <span className="bet-selection-text">
-                                                                02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
-                                                            </span>
-                                                        </Button>
-                                                    </td>
-                                                    <td>
-                                                        <Button type="button" className="btn" variant="light">
-                                                            <span className="bet-selection-text">
-                                                                03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
-                                                            </span>
-                                                        </Button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </Table>
+                                    {eventDates.map((date, index) => (
+                                        <>
+                                            <h3 className="card-subtitle">{formatDate(date)}</h3>
+                                            <Table key={index}>
+                                                <thead>
+                                                    <tr>
+                                                        <th style={{ width: '13%' }}>Time</th>
+                                                        <th style={{ width: '12%' }}>Event ID</th>
+                                                        <th style={{ width: '36%' }}>Event Description</th>
+                                                        <th style={{ width: '13%' }}>Home (1)</th>
+                                                        <th style={{ width: '13%' }}>Draw (X)</th>
+                                                        <th style={{ width: '13%' }}>Away (2)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {eventsMap.get(date).map((event, index) => (
+                                                        <tr key={index}>
+                                                            <td>{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                                                            <td>{event.eventId}</td>
+                                                            <td>{event.eventDesc}</td>
+                                                            <td>
+                                                                <Button type="button" className="btn" variant="light">
+                                                                    <span className="bet-selection-text">
+                                                                        01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
+                                                                    </span>
+                                                                </Button>
+                                                            </td>
+                                                            <td>
+                                                                <Button type="button" className="btn" variant="light">
+                                                                    <span className="bet-selection-text">
+                                                                        02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
+                                                                    </span>
+                                                                </Button>
+                                                            </td>
+                                                            <td>
+                                                                <Button type="button" className="btn" variant="light">
+                                                                    <span className="bet-selection-text">
+                                                                        03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
+                                                                    </span>
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
+                                        </>
+                                    ))}
                                 </Card.Body>
                             </Card>
                         </div>

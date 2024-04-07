@@ -19,7 +19,7 @@ export default function MainMenu(){
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link to="odds">
+                        <Link to="odds" style={{ textDecoration: 'none' }}>
                             <Button className={`nav-link main-menu-link ${activeMenuButton === 'odds' ? 'active' : ''}`}
                             onClick={() => handleOnChangeMenu('odds')}>
                                 Odds
@@ -28,7 +28,7 @@ export default function MainMenu(){
                     </li>
                     &nbsp;
                     <li className="nav-item">
-                        <Link to="result">
+                        <Link to="result" style={{ textDecoration: 'none' }}>
                             <Button className={`nav-link main-menu-link ${activeMenuButton === 'result' ? 'active' : ''}`}
                             onClick={() => handleOnChangeMenu('result')}>
                                 Result
@@ -37,7 +37,7 @@ export default function MainMenu(){
                     </li>
                     &nbsp;
                    <li className="nav-item">
-                        <Link to="account">
+                        <Link to="account" style={{ textDecoration: 'none' }}>
                             <Button className={`nav-link main-menu-link ${activeMenuButton === 'account' ? 'active' : ''}`}
                             onClick={() => handleOnChangeMenu('account')}>
                                 Account
