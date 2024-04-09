@@ -27,6 +27,32 @@ export default function OddsLanding(){
         return date.toLocaleDateString('en-US', options);
     };
 
+    function selectBetSelection(event: any, selection: string) {
+        console.log("event: ", event , " betSelection: ", selection);
+        let addingBetSelection = '';
+        let selectedTeam = "";
+        let odds: number = 0;
+
+        if(selection === SharedVarConstants.BET_SELECTION_H2H_HOME){
+            event.betSelection.homeSelected = !event.betSelection.homeSelected;
+            addingBetSelection = event.betSelection.homeSelected;
+            odds = event.h2hEventOdds.homeOdds;
+            selectedTeam = event.teamsDetails.homeTeam;
+        } else if(selection === SharedVarConstants.BET_SELECTION_H2H_DRAW){
+            event.betSelection.drawSelected = !event.betSelection.drawSelected;
+            addingBetSelection = event.betSelection.drawSelected;
+            odds = event.h2hEventOdds.drawOdds;
+            selectedTeam = this.sharedVar.DRAW_RESULT;
+        } else if(selection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
+            event.betSelection.awaySelected = !event.betSelection.awaySelected;
+            addingBetSelection = event.betSelection.awaySelected;
+            odds = event.h2hEventOdds.awayOdds;
+            selectedTeam = event.teamsDetails.awayTeam;
+        }
+
+        console.log("after event: ", event);
+    }
+
     return (
         <>
             <div className="container">
@@ -43,9 +69,9 @@ export default function OddsLanding(){
                                 </Card.Header>
                                 <Card.Body className="card-body">
                                     {eventDates.map((date, index) => (
-                                        <>
+                                        <div key={index}>
                                             <h3 className="card-subtitle">{formatDate(date)}</h3>
-                                            <Table key={index}>
+                                            <Table>
                                                 <thead>
                                                     <tr>
                                                         <th style={{ width: '13%' }}>Time</th>
@@ -63,21 +89,28 @@ export default function OddsLanding(){
                                                             <td>{event.eventId}</td>
                                                             <td>{event.eventDesc}</td>
                                                             <td>
-                                                                <Button type="button" className="btn" variant="light">
+                                                                <Button type="button" 
+                                                                className={`btn ${event.betSelection.homeSelected ? 'selected' : ''}`} 
+                                                                onClick={() => selectBetSelection(event, SharedVarConstants.BET_SELECTION_H2H_HOME)}
+                                                                variant="light">
                                                                     <span className="bet-selection-text">
                                                                         01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
                                                                     </span>
                                                                 </Button>
                                                             </td>
                                                             <td>
-                                                                <Button type="button" className="btn" variant="light">
+                                                                <Button type="button" 
+                                                                className={`btn ${event.betSelection.drawSelected ? 'selected' : ''}`} 
+                                                                variant="light">
                                                                     <span className="bet-selection-text">
                                                                         02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
                                                                     </span>
                                                                 </Button>
                                                             </td>
                                                             <td>
-                                                                <Button type="button" className="btn" variant="light">
+                                                                <Button type="button" 
+                                                                className={`btn ${event.betSelection.awaySelected ? 'selected' : ''}`} 
+                                                                variant="light">
                                                                     <span className="bet-selection-text">
                                                                         03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
                                                                     </span>
@@ -87,10 +120,12 @@ export default function OddsLanding(){
                                                     ))}
                                                 </tbody>
                                             </Table>
-                                        </>
+                                        </div>
                                     ))}
                                 </Card.Body>
+                                
                             </Card>
+                            
                         </div>
                     </div>
                     <div className="col-2">
