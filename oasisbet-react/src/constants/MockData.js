@@ -89,8 +89,6 @@ export function generateSampleData() {
         eventsMap.get(date).push(betEvent2);
         eventsMap.get(date).push(betEvent3);
 
-    console.log("data generated for 2024-04-06: ", eventsMap);
-
     const eventId4 = 100001;
         const compType4 = 'soccer_epl';
         const eventDesc4 = 'Chelsea vs Manchester United';

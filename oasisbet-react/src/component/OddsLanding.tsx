@@ -11,13 +11,13 @@ export default function OddsLanding(){
     
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
+    const [eventsMap, setEventsMap] = useState(generateSampleData());
 
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
         setCompType(newCompType);
     };
 
-    const eventsMap = generateSampleData();
     console.log("eventsMap: ", eventsMap);
     const eventDates = Array.from(eventsMap.keys());
 
@@ -27,30 +27,41 @@ export default function OddsLanding(){
         return date.toLocaleDateString('en-US', options);
     };
 
-    function selectBetSelection(event: any, selection: string) {
-        console.log("event: ", event , " betSelection: ", selection);
-        let addingBetSelection = '';
-        let selectedTeam = "";
-        let odds: number = 0;
+    function selectBetSelection(index: number, date: any, selection: string) {
+        const newBetEventsMap = new Map(eventsMap);
 
-        if(selection === SharedVarConstants.BET_SELECTION_H2H_HOME){
-            event.betSelection.homeSelected = !event.betSelection.homeSelected;
-            addingBetSelection = event.betSelection.homeSelected;
-            odds = event.h2hEventOdds.homeOdds;
-            selectedTeam = event.teamsDetails.homeTeam;
-        } else if(selection === SharedVarConstants.BET_SELECTION_H2H_DRAW){
-            event.betSelection.drawSelected = !event.betSelection.drawSelected;
-            addingBetSelection = event.betSelection.drawSelected;
-            odds = event.h2hEventOdds.drawOdds;
-            selectedTeam = this.sharedVar.DRAW_RESULT;
-        } else if(selection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
-            event.betSelection.awaySelected = !event.betSelection.awaySelected;
-            addingBetSelection = event.betSelection.awaySelected;
-            odds = event.h2hEventOdds.awayOdds;
-            selectedTeam = event.teamsDetails.awayTeam;
+        const betEvents = newBetEventsMap.get(date);
+        const betEvent = betEvents[index];
+
+        if (!betEvent) {
+            console.error('Invalid index or date');
+            return;
         }
 
-        console.log("after event: ", event);
+        // let addingBetSelection = '';
+        // let selectedTeam = '';
+        // let odds: number = 0;
+
+        if (selection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
+            betEvent.betSelection.homeSelected = !betEvent.betSelection.homeSelected;
+            // addingBetSelection = betEvent.betSelection.homeSelected;
+            // odds = betEvent.h2hEventOdds.homeOdds;
+            // selectedTeam = betEvent.teamsDetails.homeTeam;
+        } else if (selection === SharedVarConstants.BET_SELECTION_H2H_DRAW) {
+            betEvent.betSelection.drawSelected = !betEvent.betSelection.drawSelected;
+            // addingBetSelection = betEvent.betSelection.drawSelected;
+            // odds = betEvent.h2hEventOdds.drawOdds;
+            // selectedTeam = SharedVarConstants.DRAW_RESULT;
+        } else if (selection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
+            betEvent.betSelection.awaySelected = !betEvent.betSelection.awaySelected;
+            // addingBetSelection = betEvent.betSelection.awaySelected;
+            // odds = betEvent.h2hEventOdds.awayOdds;
+            // selectedTeam = betEvent.teamsDetails.awayTeam;
+        }
+
+        newBetEventsMap.set(date, betEvents);
+
+        setEventsMap(newBetEventsMap);
     }
 
     return (
@@ -90,28 +101,33 @@ export default function OddsLanding(){
                                                             <td>{event.eventDesc}</td>
                                                             <td>
                                                                 <Button type="button" 
-                                                                className={`btn ${event.betSelection.homeSelected ? 'selected' : ''}`} 
-                                                                onClick={() => selectBetSelection(event, SharedVarConstants.BET_SELECTION_H2H_HOME)}
-                                                                variant="light">
-                                                                    <span className="bet-selection-text">
+                                                                className={`btn ${event.betSelection.homeSelected ? 'selected' : ''}`}
+                                                                variant="light"
+                                                                onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_HOME)}
+                                                                >
+                                                                    <span className={`${event.betSelection.homeSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
                                                                     </span>
                                                                 </Button>
                                                             </td>
                                                             <td>
                                                                 <Button type="button" 
-                                                                className={`btn ${event.betSelection.drawSelected ? 'selected' : ''}`} 
-                                                                variant="light">
-                                                                    <span className="bet-selection-text">
+                                                                className={`btn ${event.betSelection.drawSelected ? 'selected' : ''}`}
+                                                                variant="light"
+                                                                onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_DRAW)}
+                                                                >
+                                                                    <span className={`${event.betSelection.drawSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
                                                                     </span>
                                                                 </Button>
                                                             </td>
                                                             <td>
                                                                 <Button type="button" 
-                                                                className={`btn ${event.betSelection.awaySelected ? 'selected' : ''}`} 
-                                                                variant="light">
-                                                                    <span className="bet-selection-text">
+                                                                className={`btn ${event.betSelection.awaySelected ? 'selected' : ''}`}
+                                                                variant="light"
+                                                                onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_AWAY)}
+                                                                >
+                                                                    <span className={`${event.betSelection.awaySelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
                                                                     </span>
                                                                 </Button>

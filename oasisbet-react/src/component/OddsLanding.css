@@ -23,6 +23,8 @@
 }
 
 .selected {
-    background-color: rgb(0, 119, 255);
-    color: white;
+    background-color: #1588ca !important; 
+    color: white !important;
+    font-size: 15px;
+    font-weight: bold;
 }
