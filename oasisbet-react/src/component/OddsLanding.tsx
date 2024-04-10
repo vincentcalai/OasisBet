@@ -38,25 +38,12 @@ export default function OddsLanding(){
             return;
         }
 
-        // let addingBetSelection = '';
-        // let selectedTeam = '';
-        // let odds: number = 0;
-
         if (selection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
             betEvent.betSelection.homeSelected = !betEvent.betSelection.homeSelected;
-            // addingBetSelection = betEvent.betSelection.homeSelected;
-            // odds = betEvent.h2hEventOdds.homeOdds;
-            // selectedTeam = betEvent.teamsDetails.homeTeam;
         } else if (selection === SharedVarConstants.BET_SELECTION_H2H_DRAW) {
             betEvent.betSelection.drawSelected = !betEvent.betSelection.drawSelected;
-            // addingBetSelection = betEvent.betSelection.drawSelected;
-            // odds = betEvent.h2hEventOdds.drawOdds;
-            // selectedTeam = SharedVarConstants.DRAW_RESULT;
         } else if (selection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
             betEvent.betSelection.awaySelected = !betEvent.betSelection.awaySelected;
-            // addingBetSelection = betEvent.betSelection.awaySelected;
-            // odds = betEvent.h2hEventOdds.awayOdds;
-            // selectedTeam = betEvent.teamsDetails.awayTeam;
         }
 
         newBetEventsMap.set(date, betEvents);
