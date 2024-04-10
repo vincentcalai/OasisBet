@@ -1,17 +1,16 @@
 import './OddsLanding.css';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
-import React from 'react';
-import { generateSampleData } from '../constants/MockData.js';
+import { BetEvent, generateSampleData } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 
 export default function OddsLanding(){
     
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
-    const [eventsMap, setEventsMap] = useState(generateSampleData());
+    const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
 
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
@@ -19,7 +18,7 @@ export default function OddsLanding(){
     };
 
     console.log("eventsMap: ", eventsMap);
-    const eventDates = Array.from(eventsMap.keys());
+    const eventDates = eventsMap ? Array.from(eventsMap.keys()) : [];
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -28,7 +27,7 @@ export default function OddsLanding(){
     };
 
     function selectBetSelection(index: number, date: any, selection: string) {
-        const newBetEventsMap = new Map(eventsMap);
+        const newBetEventsMap: any = new Map(eventsMap);
 
         const betEvents = newBetEventsMap.get(date);
         const betEvent = betEvents[index];
@@ -81,7 +80,7 @@ export default function OddsLanding(){
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {eventsMap.get(date).map((event, index) => (
+                                                    {eventsMap?.get(date)?.map((event, index) => (
                                                         <tr key={index}>
                                                             <td>{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                                                             <td>{event.eventId}</td>
@@ -125,6 +124,12 @@ export default function OddsLanding(){
                                             </Table>
                                         </div>
                                     ))}
+                                    {
+                                        (!eventsMap || eventsMap.size === 0) &&
+                                        <div className="container-fluid text-center">
+                                            <span>No Event(s) Found.</span>
+                                        </div>
+                                    }
                                 </Card.Body>
                                 
                             </Card>
