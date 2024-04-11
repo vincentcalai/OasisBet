@@ -5,6 +5,7 @@ import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
 import { BetEvent, generateSampleData } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
+import OddsBetSlip from './OddsBetSlip.tsx';
 
 export default function OddsLanding(){
     
@@ -137,7 +138,7 @@ export default function OddsLanding(){
                         </div>
                     </div>
                     <div className="col-2">
-                        <p>Betting Slip</p>
+                        <OddsBetSlip/>
                     </div>
                 </div>
             </div>
