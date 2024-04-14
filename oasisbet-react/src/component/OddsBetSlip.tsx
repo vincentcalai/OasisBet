@@ -2,10 +2,14 @@ import React from "react";
 import './OddsBetSlip.css';
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 export default function OddsBetSlip(){
+    const betSelectionCount: any = useSelector((state: any) => state.selectionCount);
+    console.log("in OddsBetSlip component betSelectionSelector: ", betSelectionCount);
+
     return (
-        <div className="bet-slip">
+        betSelectionCount > 0 && <div className="bet-slip">
             <h2 className="bet-slip-header">Bet Slip</h2>
             <div className="header-panel">
                 <h3 className="panel-header">Singles
