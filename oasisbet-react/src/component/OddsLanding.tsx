@@ -6,8 +6,11 @@ import { Button, Card, Table } from 'react-bootstrap';
 import { BetEvent, generateSampleData } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function OddsLanding(){
+    const dispatch = useDispatch();
+    const betSelections: any = useSelector((state: any) => state.betSlip);
     
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
@@ -38,13 +41,20 @@ export default function OddsLanding(){
             return;
         }
 
+        let selectionState = false;
+
         if (selection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
+            selectionState = betEvent.betSelection.homeSelected;
             betEvent.betSelection.homeSelected = !betEvent.betSelection.homeSelected;
         } else if (selection === SharedVarConstants.BET_SELECTION_H2H_DRAW) {
+            selectionState = betEvent.betSelection.drawSelected;
             betEvent.betSelection.drawSelected = !betEvent.betSelection.drawSelected;
         } else if (selection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
+            selectionState = betEvent.betSelection.awaySelected;
             betEvent.betSelection.awaySelected = !betEvent.betSelection.awaySelected;
         }
+        
+        selectionState ? dispatch({type: 'REMOVE_BET_SELECTION'}) : dispatch({type: 'ADD_BET_SELECTION'});
 
         newBetEventsMap.set(date, betEvents);
 
@@ -138,6 +148,7 @@ export default function OddsLanding(){
                         </div>
                     </div>
                     <div className="col-2">
+                        BetSelection: {betSelections}
                         <OddsBetSlip/>
                     </div>
                 </div>
