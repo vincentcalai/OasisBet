@@ -2,6 +2,7 @@
 import {createStore} from 'redux';
 
 const betSlipReducer = (state= {selectionCount: 0}, action) => {
+    
     switch (action.type) {
         case 'ADD_BET_SELECTION':
             console.log("Adding bet reducer works! Payload:", action.payload);

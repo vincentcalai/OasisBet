@@ -1,9 +1,9 @@
 import './OddsLanding.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
-import { BetEvent, generateSampleData } from '../constants/MockData.js';
+import { BetEvent, BetSlip, generateSampleData } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch } from 'react-redux';
@@ -11,10 +11,16 @@ import { useDispatch } from 'react-redux';
 export default function OddsLanding(){
     const dispatch = useDispatch();
     
+    const [selectedBets, setSelectedBets] = useState([] as BetSlip[]);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
 
+    useEffect(() => {
+        console.log("Selected bets:", selectedBets);
+        dispatch({type: 'ADD_BET_SELECTION', payload: selectedBets});
+    }, [selectedBets, dispatch]);
+    
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
         setCompType(newCompType);
@@ -41,21 +47,47 @@ export default function OddsLanding(){
         }
 
         let isRemoveBetSelection = false;
+        let selectedTeam = "";
+        let odds: number = 0;
 
         if (selection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
             isRemoveBetSelection = betEvent.betSelection.homeSelected;
             betEvent.betSelection.homeSelected = !betEvent.betSelection.homeSelected;
+            odds = betEvent.h2hEventOdds.homeOdds;
+            selectedTeam = betEvent.teamsDetails.homeTeam;
         } else if (selection === SharedVarConstants.BET_SELECTION_H2H_DRAW) {
             isRemoveBetSelection = betEvent.betSelection.drawSelected;
             betEvent.betSelection.drawSelected = !betEvent.betSelection.drawSelected;
+            odds = betEvent.h2hEventOdds.drawOdds;
+            selectedTeam = SharedVarConstants.DRAW_RESULT;
         } else if (selection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
             isRemoveBetSelection = betEvent.betSelection.awaySelected;
             betEvent.betSelection.awaySelected = !betEvent.betSelection.awaySelected;
+            odds = betEvent.h2hEventOdds.awayOdds;
+            selectedTeam = betEvent.teamsDetails.awayTeam;
         }
-        
-        const payload = {betEvent ,isRemoveBetSelection};
-        isRemoveBetSelection ? dispatch({type: 'REMOVE_BET_SELECTION', payload: payload}) : dispatch({type: 'ADD_BET_SELECTION', payload: payload});
 
+        let betSlip = new BetSlip();
+        betSlip.eventId = betEvent.eventId;
+        betSlip.eventDesc = betEvent.eventDesc;
+        betSlip.betTypeCd = SharedVarConstants.BET_TYPE_CD_H2H;
+        betSlip.betSelection = selection;
+        betSlip.betSelectionName = selectedTeam;
+        betSlip.odds = odds;
+        betSlip.startTime = betEvent.startTime;
+        betSlip.compType = betEvent.compType;
+
+        console.log("isRemoveBetSelection: ", isRemoveBetSelection);
+        console.log("bet event in OddsLanding: ", betSlip);
+
+        if (!isRemoveBetSelection) {
+            setSelectedBets(prevSelectedBets => [...prevSelectedBets, betSlip]);
+        } else {
+            setSelectedBets(prevSelectedBets => prevSelectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection)));
+        }
+
+        console.log("selectedBets in OddsLanding: ", selectedBets);
+        
         newBetEventsMap.set(date, betEvents);
 
         setEventsMap(newBetEventsMap);

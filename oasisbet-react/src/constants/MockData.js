@@ -48,6 +48,19 @@ export class TeamsDetails {
     }
 }
 
+export class BetSlip {
+    eventId;
+    eventDesc;
+    compType;
+    startTime;
+    betSelection;
+    betSelectionName;
+    betTypeCd;
+    odds;
+    betAmount = null;
+    potentialPayout = 0;
+}
+
 export function generateSampleData() {
     const eventsMap = new Map();
 
