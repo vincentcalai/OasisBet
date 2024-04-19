@@ -17,8 +17,10 @@ export default function OddsLanding(){
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
 
     useEffect(() => {
-        console.log("Selected bets:", selectedBets);
-        dispatch({type: 'ADD_BET_SELECTION', payload: selectedBets});
+        if (selectedBets && selectedBets.length > 0) {
+            console.log("Selected bets:", selectedBets);
+            dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBets });
+        }
     }, [selectedBets, dispatch]);
     
     const selectCompType = (newCompType) => {

@@ -1,23 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import './OddsBetSlip.css';
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 
 export default function OddsBetSlip(){
-    const betSelectionCount: any = useSelector((state: any) => state.selectionCount);
-    const betEvent: any = useSelector((state: any) => state.betEvent);
-    const h2hBetSelection: string = useSelector((state: any) => state.h2hBetSelection);
-    const isRemoveBetSelection: string = useSelector((state: any) => state.isRemoveBetSelection);
-
-    useEffect(() => {
-        console.log("betEvent: ", betEvent);
-        console.log("h2hBetSelection: ", h2hBetSelection);
-        console.log("isRemoveBetSelection: ", isRemoveBetSelection);
-    }, [betEvent, h2hBetSelection, isRemoveBetSelection]);
+    const betEvent = useSelector((state: any) => state.betSlip) || [];
 
     return (
-        betSelectionCount > 0 && <div className="bet-slip">
+        betEvent.length > 0 && <div className="bet-slip">
             <h2 className="bet-slip-header">Bet Slip</h2>
             <div className="header-panel">
                 <h3 className="panel-header">Singles
