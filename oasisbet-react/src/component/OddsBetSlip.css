@@ -59,23 +59,17 @@
   
 .delete-icon {
     cursor: pointer;
-    position: absolute;
-    top: 0;
-    right: 0;
 }
   
 .bet-amount-input {
     display: flex;
     align-items: center;
     position: absolute;
-    right: 0;
-    bottom: 85px;
 }
   
 .bet-amount-input input {
     width: 60px;
     height: 25px;
-    margin-left: 5px;
 }
 
 .potential-payout-text {
