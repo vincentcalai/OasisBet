@@ -11,16 +11,19 @@ import { useDispatch } from 'react-redux';
 export default function OddsLanding(){
     const dispatch = useDispatch();
     
+    const [isInitialRender, setIsInitialRender] = useState(true);
     const [selectedBets, setSelectedBets] = useState([] as BetSlip[]);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
 
     useEffect(() => {
-        if (selectedBets && selectedBets.length > 0) {
-            console.log("Selected bets:", selectedBets);
-            dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBets });
+        if (isInitialRender) {
+            setIsInitialRender(false);
+            return;
         }
+        console.log("Selected bets:", selectedBets);
+        dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBets });
     }, [selectedBets, dispatch]);
     
     const selectCompType = (newCompType) => {

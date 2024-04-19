@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './OddsBetSlip.css';
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,10 @@ import { useSelector } from "react-redux";
 
 export default function OddsBetSlip(){
     const betEvent = useSelector((state: any) => state.betSlip) || [];
+
+    useEffect(() => {
+        console.log("betEvent: ", betEvent);
+    }, [betEvent]);
 
     return (
         betEvent.length > 0 && <div className="bet-slip">

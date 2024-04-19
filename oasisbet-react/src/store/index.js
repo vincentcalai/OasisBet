@@ -6,7 +6,7 @@ const betSlipReducer = (state = { betSlip: [] }, action) => {
         case 'ADD_BET_SELECTION':
             console.log("Adding bet reducer works! Payload:", action.payload);
             return {
-                betSlip: [action.payload]
+                betSlip: action.payload
             };
         default:
             return state;
