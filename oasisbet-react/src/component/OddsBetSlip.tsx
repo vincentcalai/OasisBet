@@ -6,23 +6,31 @@ import { useSelector } from "react-redux";
 
 export default function OddsBetSlip(){
     const betEvents = useSelector((state: any) => state.betSlip);
+    const [betSlipDisplay, setBetSlipDisplay] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
 
     useEffect(() => {
         console.log("betEvent: ", betEvents);
+        setBetSlipDisplay(betEvents);
     }, [betEvents]);
 
-    function handleClick(event): void {
-        console.log("handleClick works!");
+    function handleClickSingles(event): void {
         setShowSingles(prevState => !prevState);
     }
 
+    function handleOnDelete(betEvent): void {
+        let updateBetEvents = [...betSlipDisplay];
+        updateBetEvents = updateBetEvents.filter(e => !(e.eventId === betEvent.eventId));
+        setBetSlipDisplay(updateBetEvents);
+        //update reducer to remove betevents here
+    }
+
     return (
-        betEvents.length > 0 && 
+        betSlipDisplay.length > 0 && 
         <div className="bet-slip">
             <h2 className="bet-slip-header">Bet Slip</h2>
             <div className="header-panel">
-                <h3 className="panel-header" onClick={handleClick}>Singles
+                <h3 className="panel-header" onClick={handleClickSingles}>Singles
                     <span className="dropdown-icon">
                         <FontAwesomeIcon icon={faAngleDown} />
                     </span>
@@ -32,14 +40,14 @@ export default function OddsBetSlip(){
                     <div className="selections">
                         <div className="bet-slip-container">
                             <div className="container">
-                                {betEvents.map(betEvent => {
+                                {betSlipDisplay.map(betEvent => {
                                     return (
                                         <div key={betEvent.eventId + '_' + betEvent.betSelection}>
                                             <div className="row">
                                                 <div className="col-md-10">
                                                     <p className="event-description">{betEvent.eventDesc}</p>
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-2" onClick={() => handleOnDelete(betEvent)}>
                                                     <p className="delete-icon">&#10005;</p>
                                                 </div>
                                             </div>
