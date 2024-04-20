@@ -8,11 +8,12 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     const dispatch = useDispatch();
 
     const betEvents = useSelector((state: any) => state.betSlip);
-    const [betSlipDisplay, setBetSlipDisplay] = useState([]) as any;
+    const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
+    const [totalStake, setTotalStake] = useState(0);
 
     useEffect(() => {
-        setBetSlipDisplay(betEvents);
+        setBetSlipSelections(betEvents);
     }, [betEvents]);
 
     function handleClickSingles(event): void {
@@ -20,15 +21,32 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     }
 
     function handleOnDelete(betEvent): void {
-        let updateBetEvents = [...betSlipDisplay];
+        let updateBetEvents = [...betSlipSelections];
         updateBetEvents = updateBetEvents.filter(e => !(e.eventId === betEvent.eventId && e.betSelection === betEvent.betSelection));
-        setBetSlipDisplay(updateBetEvents);
+        setBetSlipSelections(updateBetEvents);
         onBetSlipUpdate(betEvent);
         dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
     }
 
+    function handleChangeBetAmount(betEvent, event){
+        const amount = +event.target.value;
+        betEvent.betAmount = amount;
+        const odds = +betEvent.odds;
+        betEvent.potentialPayout = +(odds * amount).toFixed(2);
+        let updatedTotalStake = 0;
+        const updatedBetSlip = betSlipSelections.map(betSelection => {
+            updatedTotalStake += betSelection.betAmount;
+            if(betSelection.eventId === betEvent.eventId){
+                return betEvent;
+            }
+            return betSelection;
+        });
+        setBetSlipSelections(updatedBetSlip);
+        setTotalStake(updatedTotalStake);
+    }
+
     return (
-        betSlipDisplay.length > 0 && 
+        betSlipSelections.length > 0 && 
         <div className="bet-slip">
             <h2 className="bet-slip-header">Bet Slip</h2>
             <div className="header-panel">
@@ -42,7 +60,7 @@ export default function OddsBetSlip({onBetSlipUpdate}){
                     <div className="selections">
                         <div className="bet-slip-container">
                             <div className="container">
-                                {betSlipDisplay.map(betEvent => {
+                                {betSlipSelections.map(betEvent => {
                                     return (
                                         <div key={betEvent.eventId + '_' + betEvent.betSelection}>
                                             <div className="row">
@@ -62,17 +80,18 @@ export default function OddsBetSlip({onBetSlipUpdate}){
                                                 </div>    
                                                 <div className="col-md-4">
                                                     <span className="bet-amount-input">
-                                                        $<input type="text" maxLength={7} inputMode="numeric" />
+                                                        $<input type="text" maxLength={7} inputMode="numeric" onChange={(event) => handleChangeBetAmount(betEvent, event)}/>
                                                     </span>
                                                 </div>    
+                                            </div>
+                                            <hr />
+                                            <div className="row">
+                                                <p className="potential-payout-text">Potential Payout: ${betEvent.potentialPayout.toFixed(2)}</p>
                                             </div>
                                         </div>
                                     )
                                 })}
-                                <hr />
-                                <div className="row">
-                                    <p className="potential-payout-text">Potential Payout: $10.06</p>
-                                </div>
+                                
                             </div>
                             <br/>
                         </div>
@@ -80,7 +99,7 @@ export default function OddsBetSlip({onBetSlipUpdate}){
                 }
 
                 <div className="total-stake-panel">
-                    <span className="total-stake-section">Total Stake: $2</span>
+                    <span className="total-stake-section">Total Stake: ${totalStake}</span>
                 </div>
                 <button className="btn btn-success btn-place-bet" type="button">
                     Place Bet
