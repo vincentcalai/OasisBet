@@ -8,6 +8,11 @@ const betSlipReducer = (state = { betSlip: [] }, action) => {
             return {
                 betSlip: action.payload
             };
+        case 'REMOVE_BET_SELECTION':
+            console.log("Removing bet reducer works! Payload:", action.payload);
+            return {
+                betSlip: action.payload
+            };
         default:
             return state;
     }

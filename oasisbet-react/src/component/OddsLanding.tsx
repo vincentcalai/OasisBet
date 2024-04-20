@@ -1,26 +1,26 @@
 import './OddsLanding.css';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
 import { BetEvent, BetSlip, generateSampleData } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();
     
-    const [selectedBets, setSelectedBets] = useState([] as BetSlip[]);
+    const betSlips = useSelector((state: any) => state.betSlip);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
+    const selectedBetsRef = useRef([] as BetSlip[]);
 
     useEffect(() => {
-        console.log("Selected bets:", selectedBets);
-        dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBets });
-    }, [selectedBets, dispatch]);
-    
+        selectedBetsRef.current = betSlips;
+    }, [betSlips]);
+
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
         setCompType(newCompType);
@@ -77,20 +77,30 @@ export default function OddsLanding(){
         betSlip.startTime = betEvent.startTime;
         betSlip.compType = betEvent.compType;
 
-        console.log("isRemoveBetSelection: ", isRemoveBetSelection);
-        console.log("bet event in OddsLanding: ", betSlip);
-
         if (!isRemoveBetSelection) {
-            setSelectedBets(prevSelectedBets => [...prevSelectedBets, betSlip]);
+            selectedBetsRef.current.push(betSlip);
+            selectedBetsRef.current = [...selectedBetsRef.current];
         } else {
-            setSelectedBets(prevSelectedBets => prevSelectedBets.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection)));
+            selectedBetsRef.current = selectedBetsRef.current.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
         }
-
-        console.log("selectedBets in OddsLanding: ", selectedBets);
-        
+        dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBetsRef.current });
         newBetEventsMap.set(date, betEvents);
-
         setEventsMap(newBetEventsMap);
+    }
+
+    function handleBetSlipUpdate(deletedBetEvent){
+        eventsMap.forEach(events => {
+            const updatedEvent = events.find(event => event.eventId === deletedBetEvent.eventId) 
+            const deletedBetEventSelection = deletedBetEvent.betSelection;
+            if(updatedEvent && (deletedBetEventSelection === SharedVarConstants.BET_SELECTION_H2H_HOME)){
+                updatedEvent.betSelection.homeSelected = !updatedEvent.betSelection.homeSelected;
+            } else if(updatedEvent && (deletedBetEventSelection === SharedVarConstants.BET_SELECTION_H2H_DRAW)){
+                updatedEvent.betSelection.drawSelected= !updatedEvent.betSelection.drawSelected;
+            } else if(updatedEvent && (deletedBetEventSelection === SharedVarConstants.BET_SELECTION_H2H_AWAY)){
+                updatedEvent.betSelection.awaySelected = !updatedEvent.betSelection.awaySelected;
+            }
+        })
+        setEventsMap(new Map(eventsMap));
     }
 
     return (
@@ -180,7 +190,7 @@ export default function OddsLanding(){
                         </div>
                     </div>
                     <div className="col-2">
-                        <OddsBetSlip/>
+                        <OddsBetSlip onBetSlipUpdate={handleBetSlipUpdate}/>
                     </div>
                 </div>
             </div>

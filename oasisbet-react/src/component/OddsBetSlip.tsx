@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import './OddsBetSlip.css';
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function OddsBetSlip(){
+export default function OddsBetSlip({onBetSlipUpdate}){
+    const dispatch = useDispatch();
+
     const betEvents = useSelector((state: any) => state.betSlip);
     const [betSlipDisplay, setBetSlipDisplay] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
 
     useEffect(() => {
-        console.log("betEvent: ", betEvents);
         setBetSlipDisplay(betEvents);
     }, [betEvents]);
 
@@ -20,9 +21,10 @@ export default function OddsBetSlip(){
 
     function handleOnDelete(betEvent): void {
         let updateBetEvents = [...betSlipDisplay];
-        updateBetEvents = updateBetEvents.filter(e => !(e.eventId === betEvent.eventId));
+        updateBetEvents = updateBetEvents.filter(e => !(e.eventId === betEvent.eventId && e.betSelection === betEvent.betSelection));
         setBetSlipDisplay(updateBetEvents);
-        //update reducer to remove betevents here
+        onBetSlipUpdate(betEvent);
+        dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
     }
 
     return (
