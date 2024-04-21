@@ -94,9 +94,11 @@ export default function OddsBetSlip({onBetSlipUpdate}){
                                                 <div className="col-md-10">
                                                     <p className="event-description">{betEvent.eventDesc}</p>
                                                 </div>
-                                                <div className="col-md-2" onClick={() => handleOnDelete(betEvent)}>
-                                                    <p className="delete-icon">&#10005;</p>
-                                                </div>
+                                                {placeBetStatus !== 'D' &&  
+                                                    <div className="col-md-2" onClick={() => handleOnDelete(betEvent)}>
+                                                        <p className="delete-icon">&#10005;</p>
+                                                    </div>
+                                                }
                                             </div>
                                             <div className="row">
                                                 <p className="bet-type">1X2</p>
@@ -106,9 +108,18 @@ export default function OddsBetSlip({onBetSlipUpdate}){
                                                     <p className="bet-selection">{betEvent.betSelectionName} @ {betEvent.odds}</p>
                                                 </div>    
                                                 <div className="col-md-4">
-                                                    <span className="bet-amount-input">
-                                                        $<input type="text" maxLength={7} inputMode="numeric" onChange={(event) => handleChangeBetAmount(betEvent, event)}/>
-                                                    </span>
+                                                    {placeBetStatus === 'I' && 
+                                                        <span className="bet-amount-input">
+                                                            $<input type="text" maxLength={7} inputMode="numeric"
+                                                                value={betEvent.betAmount !== null ? betEvent.betAmount : ''}
+                                                                onChange={(event) => handleChangeBetAmount(betEvent, event)}/>
+                                                        </span>
+                                                    }
+                                                    {placeBetStatus !== 'I' && betEvent.potentialPayout !== 0 &&
+                                                        <span className="pull-right" style={{float: 'right'}}>
+                                                            $  {betEvent.betAmount}
+                                                        </span>
+                                                    }
                                                 </div>    
                                             </div>
                                             <hr />
