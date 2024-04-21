@@ -11,6 +11,7 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
+    const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
 
     useEffect(() => {
         setBetSlipSelections(betEvents);
@@ -23,26 +24,52 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     function handleOnDelete(betEvent): void {
         let updateBetEvents = [...betSlipSelections];
         updateBetEvents = updateBetEvents.filter(e => !(e.eventId === betEvent.eventId && e.betSelection === betEvent.betSelection));
-        setBetSlipSelections(updateBetEvents);
         onBetSlipUpdate(betEvent);
         dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
     }
 
     function handleChangeBetAmount(betEvent, event){
-        const amount = +event.target.value;
-        betEvent.betAmount = amount;
-        const odds = +betEvent.odds;
-        betEvent.potentialPayout = +(odds * amount).toFixed(2);
+        const regex = /^(?!0\d*$)\d{1,4}(?:\.\d{0,2})?$/;
+        let amount = event.target.value;
+        if(!regex.test(amount)){
+            betEvent.betAmount = null;
+            betEvent.potentialPayout = 0;
+        } else {
+            amount = +amount;
+            betEvent.betAmount = amount;
+            const odds = +betEvent.odds;
+            betEvent.potentialPayout = +(odds * amount).toFixed(2);
+        }
+        
         let updatedTotalStake = 0;
         const updatedBetSlip = betSlipSelections.map(betSelection => {
             updatedTotalStake += betSelection.betAmount;
-            if(betSelection.eventId === betEvent.eventId){
+            if(betSelection.eventId === betEvent.eventId && betSelection.betSelection === betEvent.betSelection){
                 return betEvent;
             }
             return betSelection;
         });
         setBetSlipSelections(updatedBetSlip);
         setTotalStake(updatedTotalStake);
+    }
+
+    function handleClickPlaceBet(): void {
+        const betSelectionsWithNoAmt = betSlipSelections.filter(e => e.betAmount === 0 || e.potentialPayout === 0);
+        let updateBetEvents = [...betSlipSelections];
+        betSelectionsWithNoAmt.forEach(removeSelection => {
+            updateBetEvents = updateBetEvents.filter(e => !(e.eventId === removeSelection.eventId && e.betSelection === removeSelection.betSelection));
+            onBetSlipUpdate(removeSelection);
+            dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
+        });
+        setPlaceBetStatus("C");
+    }
+
+    function handleClickDecline(event): void {
+        setPlaceBetStatus("I");
+    }
+
+    function handleClickConfirmBet(event): void {
+        setPlaceBetStatus("D");
     }
 
     return (
@@ -101,21 +128,26 @@ export default function OddsBetSlip({onBetSlipUpdate}){
                 <div className="total-stake-panel">
                     <span className="total-stake-section">Total Stake: ${totalStake}</span>
                 </div>
-                <button className="btn btn-success btn-place-bet" type="button">
-                    Place Bet
-                </button>
-                <div className="row">
-                    <div className="col-md-6 d-flex justify-content-center">
-                        <button className="btn btn-success btn-decline" type="button">
-                            Decline
-                        </button>
+                {placeBetStatus === 'I' && 
+                    <button className="btn btn-success btn-place-bet" type="button" onClick={handleClickPlaceBet}>
+                        Place Bet
+                    </button>
+                }
+                {placeBetStatus === 'C' && 
+                    <div className="row">
+                        <div className="col-md-6 d-flex justify-content-center">
+                            <button className="btn btn-success btn-decline" type="button" onClick={handleClickDecline}>
+                                Decline
+                            </button>
+                        </div>
+                        <div className="col-md-6 d-flex justify-content-center">
+                            <button className="btn btn-success btn-confirm" type="button" onClick={handleClickConfirmBet}>
+                                Confirm
+                            </button>
+                        </div>
                     </div>
-                    <div className="col-md-6 d-flex justify-content-center">
-                        <button className="btn btn-success btn-confirm" type="button">
-                            Confirm
-                        </button>
-                    </div>
-                </div>
+                }
+                
             </div>
         </div>
     );
