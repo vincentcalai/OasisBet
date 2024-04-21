@@ -8,14 +8,20 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     const dispatch = useDispatch();
 
     const betEvents = useSelector((state: any) => state.betSlip);
+    const reducerAction = useSelector((state: any) => state.action);
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
     const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
 
     useEffect(() => {
-        setBetSlipSelections(betEvents);
-    }, [betEvents]);
+        setBetSlipSelections(() => {
+            if (reducerAction === 'ADD') {
+                setPlaceBetStatus('I');
+            }
+            return betEvents;
+        });
+    }, [betEvents, reducerAction]);
 
     function handleClickSingles(event): void {
         setShowSingles(prevState => !prevState);
@@ -64,11 +70,12 @@ export default function OddsBetSlip({onBetSlipUpdate}){
         setPlaceBetStatus("C");
     }
 
-    function handleClickDecline(event): void {
+    function handleClickDecline(): void {
         setPlaceBetStatus("I");
     }
 
-    function handleClickConfirmBet(event): void {
+    function handleClickConfirmBet(): void {
+        dispatch({type: 'CLEAR_BET_SELECTION'});
         setPlaceBetStatus("D");
     }
 

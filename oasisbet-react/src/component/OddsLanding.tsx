@@ -12,6 +12,7 @@ export default function OddsLanding(){
     const dispatch = useDispatch();
     
     const betSlips = useSelector((state: any) => state.betSlip);
+    const reducerAction = useSelector((state: any) => state.action);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
@@ -20,6 +21,22 @@ export default function OddsLanding(){
     useEffect(() => {
         selectedBetsRef.current = betSlips;
     }, [betSlips]);
+
+    useEffect(() => {
+        if(reducerAction === 'CLEAR'){
+            selectedBetsRef.current = [];
+            setEventsMap((eventsMap) => {
+                eventsMap.forEach((events) => {
+                    events.forEach((betEvent) => {
+                        betEvent.betSelection.homeSelected = false;
+                        betEvent.betSelection.drawSelected = false;
+                        betEvent.betSelection.awaySelected = false;
+                    });
+                });
+                return new Map(eventsMap);
+            });
+        }
+    }, [reducerAction]);
 
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
@@ -190,7 +207,7 @@ export default function OddsLanding(){
                         </div>
                     </div>
                     <div className="col-2">
-                        <OddsBetSlip onBetSlipUpdate={handleBetSlipUpdate}/>
+                        <OddsBetSlip onBetSlipUpdate={handleBetSlipUpdate} />
                     </div>
                 </div>
             </div>
