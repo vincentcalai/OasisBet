@@ -9,14 +9,23 @@ export default function OddsBetSlip({onBetSlipUpdate}){
 
     const betEvents = useSelector((state: any) => state.betSlip);
     const reducerAction = useSelector((state: any) => state.action);
+    const [responseMsg, setResponseMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
     const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
 
+    console.log("betEvents: ", betEvents);
+    console.log("reducerAction: ", reducerAction);
+
+    const BET_STATUS_FLAG = true;
+
     useEffect(() => {
         setBetSlipSelections(() => {
             if (reducerAction === 'ADD') {
+                setResponseMsg('');
+                setErrorMsg('');
                 setPlaceBetStatus('I');
             }
             return betEvents;
@@ -77,12 +86,20 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     function handleClickConfirmBet(): void {
         dispatch({type: 'CLEAR_BET_SELECTION'});
         setPlaceBetStatus("D");
+        if(BET_STATUS_FLAG){
+            setResponseMsg("Bet successfully placed!");
+        } else {
+            setErrorMsg("There is an error with the process");
+        }
+        
     }
 
     return (
         betSlipSelections.length > 0 && 
         <div className="bet-slip">
             <h2 className="bet-slip-header">Bet Slip</h2>
+            {responseMsg && <div className="alert alert-success"><b>Success: </b>{responseMsg}</div>}
+            {errorMsg && <div className="alert alert-danger"><b>Fail: </b>{errorMsg}</div>}
             <div className="header-panel">
                 <h3 className="panel-header" onClick={handleClickSingles}>Singles
                     <span className="dropdown-icon">
