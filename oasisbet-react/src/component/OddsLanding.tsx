@@ -19,6 +19,12 @@ export default function OddsLanding(){
     const selectedBetsRef = useRef([] as BetSlip[]);
 
     useEffect(() => {
+        return () => {
+            dispatch({type: 'EMPTY_BET_SELECTION'});
+        };
+    }, [dispatch]);
+
+    useEffect(() => {
         selectedBetsRef.current = betSlips;
     }, [betSlips]);
 
