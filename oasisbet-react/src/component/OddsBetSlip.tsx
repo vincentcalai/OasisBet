@@ -32,7 +32,7 @@ export default function OddsBetSlip({onBetSlipUpdate}){
         });
     }, [betEvents, reducerAction]);
 
-    function handleClickSingles(event): void {
+    function handleClickSingles(): void {
         setShowSingles(prevState => !prevState);
     }
 

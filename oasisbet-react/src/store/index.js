@@ -21,6 +21,12 @@ const betSlipReducer = (state = { betSlip: [] }, action) => {
                 action: 'CLEAR',
                 betSlip: state.betSlip
             };
+        case 'EMPTY_BET_SELECTION':
+            console.log("Clearing Bet Selection in bet reducer works! ");
+            return {
+                action: 'EMPTY',
+                betSlip: []
+            };
         default:
             return state;
     }
