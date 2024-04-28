@@ -15,8 +15,8 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
 
-    console.log("betEvents: ", betEvents);
-    console.log("reducerAction: ", reducerAction);
+    console.log("OddsBetSlip betEvents: ", betEvents);
+    console.log("OddsBetSlip reducerAction: ", reducerAction);
 
     const BET_STATUS_FLAG = true;
 
@@ -25,6 +25,10 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             if (reducerAction === 'ADD') {
                 setResponseMsg('');
                 setErrorMsg('');
+            } else if (reducerAction === 'REMOVE') {
+                let updatedTotalStake = 0;
+                betEvents.forEach(event => updatedTotalStake += event.betAmount);
+                setTotalStake(updatedTotalStake);
             }
             return betEvents;
         });
@@ -38,6 +42,9 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
         let updateBetEvents = [...betSlipSelections];
         updateBetEvents = updateBetEvents.filter(e => !(e.eventId === betEvent.eventId && e.betSelection === betEvent.betSelection));
         onBetSlipUpdate(betEvent);
+        let updatedTotalStake = 0;
+        updateBetEvents.forEach(event => updatedTotalStake += event.betAmount);
+        setTotalStake(updatedTotalStake);
         dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
     }
 
@@ -89,7 +96,6 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
         } else {
             setErrorMsg("There is an error with the process");
         }
-        
     }
 
     return (
@@ -162,7 +168,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                     <span className="total-stake-section">Total Stake: ${totalStake}</span>
                 </div>
                 {placeBetStatus === 'I' && 
-                    <button className="btn btn-success btn-place-bet" type="button" onClick={handleClickPlaceBet}>
+                    <button className="btn btn-success btn-place-bet" type="button" onClick={handleClickPlaceBet} disabled={totalStake === 0}>
                         Place Bet
                     </button>
                 }

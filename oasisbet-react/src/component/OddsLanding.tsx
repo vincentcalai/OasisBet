@@ -104,10 +104,12 @@ export default function OddsLanding(){
         if (!isRemoveBetSelection) {
             selectedBetsRef.current.push(betSlip);
             selectedBetsRef.current = [...selectedBetsRef.current];
+            dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBetsRef.current });
         } else {
             selectedBetsRef.current = selectedBetsRef.current.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
+            dispatch({ type: 'REMOVE_BET_SELECTION', payload: selectedBetsRef.current });
         }
-        dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBetsRef.current });
+        
         setPlaceBetStatus("I");
         newBetEventsMap.set(date, betEvents);
         setEventsMap(newBetEventsMap);
