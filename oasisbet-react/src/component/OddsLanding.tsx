@@ -16,6 +16,7 @@ export default function OddsLanding(){
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
+    const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
     const selectedBetsRef = useRef([] as BetSlip[]);
 
     useEffect(() => {
@@ -107,6 +108,7 @@ export default function OddsLanding(){
             selectedBetsRef.current = selectedBetsRef.current.filter(e => !(e.eventId === betSlip.eventId && e.betSelection === betSlip.betSelection));
         }
         dispatch({ type: 'ADD_BET_SELECTION', payload: selectedBetsRef.current });
+        setPlaceBetStatus("I");
         newBetEventsMap.set(date, betEvents);
         setEventsMap(newBetEventsMap);
     }
@@ -124,6 +126,10 @@ export default function OddsLanding(){
             }
         })
         setEventsMap(new Map(eventsMap));
+    }
+
+    function handlePlaceBetStatusUpdate(status){
+        setPlaceBetStatus(status);
     }
 
     return (
@@ -213,7 +219,7 @@ export default function OddsLanding(){
                         </div>
                     </div>
                     <div className="col-2">
-                        <OddsBetSlip onBetSlipUpdate={handleBetSlipUpdate} />
+                        <OddsBetSlip onBetSlipUpdate={handleBetSlipUpdate} onPlaceBetStatusUpdate={handlePlaceBetStatusUpdate} placeBetStatus={placeBetStatus}/>
                     </div>
                 </div>
             </div>

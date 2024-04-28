@@ -4,7 +4,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function OddsBetSlip({onBetSlipUpdate}){
+export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
 
     const betEvents = useSelector((state: any) => state.betSlip);
@@ -14,7 +14,6 @@ export default function OddsBetSlip({onBetSlipUpdate}){
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
-    const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
 
     console.log("betEvents: ", betEvents);
     console.log("reducerAction: ", reducerAction);
@@ -26,7 +25,6 @@ export default function OddsBetSlip({onBetSlipUpdate}){
             if (reducerAction === 'ADD') {
                 setResponseMsg('');
                 setErrorMsg('');
-                setPlaceBetStatus('I');
             }
             return betEvents;
         });
@@ -76,16 +74,16 @@ export default function OddsBetSlip({onBetSlipUpdate}){
             onBetSlipUpdate(removeSelection);
             dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
         });
-        setPlaceBetStatus("C");
+        onPlaceBetStatusUpdate("C");
     }
 
     function handleClickDecline(): void {
-        setPlaceBetStatus("I");
+        onPlaceBetStatusUpdate("I");
     }
 
     function handleClickConfirmBet(): void {
         dispatch({type: 'CLEAR_BET_SELECTION'});
-        setPlaceBetStatus("D");
+        onPlaceBetStatusUpdate("D");
         if(BET_STATUS_FLAG){
             setResponseMsg("Bet successfully placed!");
         } else {
