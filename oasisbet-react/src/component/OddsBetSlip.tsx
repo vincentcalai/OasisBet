@@ -15,20 +15,17 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
 
-    console.log("OddsBetSlip betEvents: ", betEvents);
-    console.log("OddsBetSlip reducerAction: ", reducerAction);
-
     const BET_STATUS_FLAG = true;
 
     useEffect(() => {
+        let updatedTotalStake = 0;
+        betEvents.forEach(event => updatedTotalStake += event.betAmount);
+        setTotalStake(updatedTotalStake);
+
         setBetSlipSelections(() => {
             if (reducerAction === 'ADD') {
                 setResponseMsg('');
                 setErrorMsg('');
-            } else if (reducerAction === 'REMOVE') {
-                let updatedTotalStake = 0;
-                betEvents.forEach(event => updatedTotalStake += event.betAmount);
-                setTotalStake(updatedTotalStake);
             }
             return betEvents;
         });
