@@ -26,6 +26,9 @@ export default function OddsLanding(){
     }, [dispatch]);
 
     useEffect(() => {
+        if(!betSlips || betSlips.length === 0){
+            setPlaceBetStatus('I');
+        }
         selectedBetsRef.current = betSlips;
     }, [betSlips]);
 
@@ -174,7 +177,7 @@ export default function OddsLanding(){
                                                                 className={`btn ${event.betSelection.homeSelected ? 'selected' : ''}`}
                                                                 variant="light"
                                                                 onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_HOME)}
-                                                                >
+                                                                disabled={placeBetStatus === 'C'}>
                                                                     <span className={`${event.betSelection.homeSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
                                                                     </span>
@@ -185,7 +188,7 @@ export default function OddsLanding(){
                                                                 className={`btn ${event.betSelection.drawSelected ? 'selected' : ''}`}
                                                                 variant="light"
                                                                 onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_DRAW)}
-                                                                >
+                                                                disabled={placeBetStatus === 'C'}>
                                                                     <span className={`${event.betSelection.drawSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
                                                                     </span>
@@ -196,7 +199,7 @@ export default function OddsLanding(){
                                                                 className={`btn ${event.betSelection.awaySelected ? 'selected' : ''}`}
                                                                 variant="light"
                                                                 onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_AWAY)}
-                                                                >
+                                                                disabled={placeBetStatus === 'C'}>
                                                                     <span className={`${event.betSelection.awaySelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
                                                                     </span>
