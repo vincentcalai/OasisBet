@@ -1,0 +1,73 @@
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin: 20px 0;
+    width: 40%;
+  }
+  
+  .card-header {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .login-btn {
+    width: 20%;
+    height: 35px;
+    background-color: #87be77;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+  }
+  
+  .login-btn:hover {
+    color: black;
+    background-color: #c3f7b4;
+  }
+
+  .signup-link {
+    background: none;
+    border: none;
+    color: rgb(0, 94, 255); 
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .signup-link:hover {
+    color: rgb(0, 52, 140); 
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
