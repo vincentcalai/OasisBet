@@ -146,7 +146,6 @@ export default function OddsLanding(){
                     </div>
                     <div className="col-8">
                         <div className="container-fluid">
-                            <br></br>
                             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                                 <Card.Header className="card-header">
                                     <h2>{compTypeHdr}</h2>

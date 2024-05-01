@@ -8,7 +8,8 @@ export default function AccountLanding(){
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    console.log('Logging in...');
+    console.log('Logging in... username: ', username, ' password: ', password);
+    
   };
 
   return (
