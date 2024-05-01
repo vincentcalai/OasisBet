@@ -1,0 +1,99 @@
+.bet-selection-text {
+    font-weight: normal
+  }
+  
+  .card-subtitle {
+    background-color: lightgrey;
+    padding-left: 10px;
+    font-weight: bold;
+  }
+  
+  label{
+    font-weight: bold;
+  }
+  
+  .dates-section-label-width{
+    font-weight: bold;
+  }
+  
+  .dates-section-selection-width{
+    margin-left: 10px;
+  }
+  
+  .dates-dropdown {
+    height: 50px;
+    width: 280px !important;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    border: none;
+    color: #8d8d8d;
+    padding: 5px 10px;
+    font-size: 14px;
+    box-shadow: none;
+  }
+  
+  .dates-input {
+    height: 50px;
+    width: 140px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    border: none;
+    color: #8d8d8d;
+    padding: 5px 10px;
+    box-shadow: none;
+  }
+  
+  .dates-dropdown option {
+    background-color: #f2f2f2;
+    color: #8d8d8d;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .dates-dropdown.show {
+    border-radius: 5px 5px 0 0;
+    border: 1px solid #ccc;
+    border-bottom: none;
+  }
+  
+  .dates-dropdown.show option:hover {
+    background-color: #fff;
+  }
+  
+  .filter-section {
+    position: relative;
+    font-size: 14px;
+  }
+  
+  .dropdown-icon {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    font-size: 24px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .btn-filter{
+    color:white;
+    background-color: #FF8200 !important;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    margin-top: 38px;
+    width: 120%;
+    display: block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-filter:hover {
+    color: black;
+    background-color: #f3b97a;
+  }
+  
+  
+  

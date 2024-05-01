@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import './ResultLanding.css';
 import SharedVarConstants from "../constants/SharedVarConstants";
 import CompSideNav from './CompSideNav.tsx';
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export default function ResultLanding(){
@@ -54,14 +56,45 @@ export default function ResultLanding(){
                     <div className="col-2">
                         <CompSideNav compType={compType} selectCompType={selectCompType}></CompSideNav>
                     </div>
-                    <div className="col-8">
+                    <div className="col-10">
                         <div className="container-fluid">
                             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                                 <Card.Header className="card-header">
                                     <h2>{compTypeHdr}</h2>
                                 </Card.Header>
                                 <Card.Body className="card-body">
-                                    
+                                    <div className="row">
+                                        <div className="col-md-3 offset-md-1">
+                                            <label className="control-label dates-section-label-width">Dates</label>
+                                            <div className="filter-section">
+                                                <select className="form-control dates-dropdown">
+                                                    <option value="last24Hrs">Last 24 Hours</option>
+                                                    <option value="last3Days">Last 3 Days</option>
+                                                    <option value="custom">Custom Period (up to 7 days)</option>
+                                                </select>
+                                                <span className="dropdown-icon">
+                                                    <FontAwesomeIcon icon={faAngleDown} />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-2 offset-md-1">
+                                            <label className="control-label dates-section-label-width">Date From</label>
+                                            <div className="filter-section">
+                                                <input type="text" className="dates-input" placeholder="DD/MM/YYYY" />
+                                                {/* You would replace the mat-datepicker with your preferred datepicker component */}
+                                            </div>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <label className="control-label dates-section-label-width">Date To</label>
+                                            <div className="filter-section">
+                                                <input type="text" className="dates-input" placeholder="DD/MM/YYYY" />
+                                                {/* You would replace the mat-datepicker with your preferred datepicker component */}
+                                            </div>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <Button type="button" variant="secondary" className="btn-filter">Filter</Button>
+                                        </div>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </div>
