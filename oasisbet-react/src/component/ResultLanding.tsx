@@ -12,7 +12,7 @@ export default function ResultLanding(){
 
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
-    const [resultList, setResultList] = useState<ResultEvent[]>(generateSampleResultData());
+    const [resultList, setResultList] = useState<ResultEvent[]>([]);
 
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
@@ -115,12 +115,13 @@ export default function ResultLanding(){
                                                 </tr>
                                             ))}
                                         </tbody>
-                                        {
-                                            (!resultList || resultList.length === 0) &&
-                                            <div className="container-fluid text-center">
-                                                <span>No Event(s) Found.</span>
-                                            </div>
-                                        }
+                                        {(!resultList || resultList.length === 0) && (
+                                            <tbody>
+                                                <tr>
+                                                    <td colSpan={parseInt("3")} style={{ textAlign: 'center' }}>No Event(s) Found.</td>
+                                                </tr>
+                                            </tbody>
+                                        )}
                                     </Table>
                                 </Card.Body>
                             </Card>
