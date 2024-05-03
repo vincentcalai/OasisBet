@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import './ResultLanding.css';
 import SharedVarConstants from "../constants/SharedVarConstants";
 import CompSideNav from './CompSideNav.tsx';
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Table } from "react-bootstrap";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ResultEvent, generateSampleResultData } from "../constants/MockData.js";
 
 
 export default function ResultLanding(){
 
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
+    const [resultList, setResultList] = useState<ResultEvent[]>(generateSampleResultData());
 
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
@@ -95,6 +97,31 @@ export default function ResultLanding(){
                                             <Button type="button" variant="secondary" className="btn-filter">Filter</Button>
                                         </div>
                                     </div>
+                                    <br />
+                                    <Table style={{ width: '80%', margin: '0 auto' }}>
+                                        <thead>
+                                            <tr>
+                                                <th style={{ width: '25%' }}>Date & Time</th>
+                                                <th style={{ width: '60%' }}>Event Description</th>
+                                                <th style={{ width: '15%' }}>Result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {resultList?.map((resultEvent, index) => (
+                                                <tr key={index}>
+                                                    <td>{new Date(resultEvent.startTime).toLocaleDateString()} {new Date(resultEvent.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                                                    <td>{resultEvent.eventDesc}</td>
+                                                    <td>{resultEvent.score}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                        {
+                                            (!resultList || resultList.length === 0) &&
+                                            <div className="container-fluid text-center">
+                                                <span>No Event(s) Found.</span>
+                                            </div>
+                                        }
+                                    </Table>
                                 </Card.Body>
                             </Card>
                         </div>
