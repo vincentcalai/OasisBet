@@ -24,7 +24,11 @@ const SharedVarConstants = {
     COMP_HEADER_LIGUE_ONE: "Ligue One",
     COMP_HEADER_FA_CUP: "FA Cup",
     COMP_HEADER_EFL_CUP: "EFL Cup",
-    COMP_HEADER_UCL: "UEFA Champions League"
+    COMP_HEADER_UCL: "UEFA Champions League",
+    LAST_24_HRS: 'last24Hrs',
+    LAST_3_DAYS: 'last3Days',
+    MILLI_SEC_24_HRS: 86400000, // 24 hours in milliseconds
+    MILLI_SEC_3_DAYS: 259200000, // 3 days in milliseconds
   };
 
   export default SharedVarConstants;

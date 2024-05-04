@@ -1,23 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './ResultLanding.css';
 import SharedVarConstants from "../constants/SharedVarConstants";
 import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from "react-bootstrap";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { ResultEvent, generateSampleResultData } from "../constants/MockData.js";
 
 
 export default function ResultLanding(){
 
+    const currentDate = new Date();
+    const last24Hours = SharedVarConstants.MILLI_SEC_24_HRS;
+    const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last24Hours);
+    
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
-    const [resultList, setResultList] = useState<ResultEvent[]>([]);
+    const [resultList, setResultList] = useState<ResultEvent[]>(generateSampleResultData());
+    const [selectedDate, setSelectedDate] = useState('last24Hrs');
+    const [dateFrom, setDateFrom] = useState<Date | null>(fromDate);
+    const [dateTo, setDateTo] = useState<Date | null>(currentDate);
+
+    useEffect(() => {
+        if (selectedDate === SharedVarConstants.LAST_24_HRS) {
+            setDateFrom(fromDate);
+            setDateTo(currentDate);
+        } else if (selectedDate === SharedVarConstants.LAST_3_DAYS) {
+            const last3Days = SharedVarConstants.MILLI_SEC_3_DAYS;
+            const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last3Days);
+            setDateFrom(fromDate);
+            setDateTo(currentDate);
+        } else {
+            setDateFrom(null);
+            setDateTo(null);
+        }
+    }, [selectedDate]);
 
     const selectCompType = (newCompType) => {
         setCompTypeHdr(retrieveCompHdr(SharedVarConstants, newCompType));
         setCompType(newCompType);
     };
+
+    const handleDateSelectionChange = (event) => {
+        console.log("date selected: ", event.target.value);
+        const key = event.target.value;
+        setSelectedDate(key);
+    };
+    
 
     function retrieveCompHdr(sharedVar, newCompType): string {
         switch(newCompType) { 
@@ -69,28 +98,35 @@ export default function ResultLanding(){
                                         <div className="col-md-3 offset-md-1">
                                             <label className="control-label dates-section-label-width">Dates</label>
                                             <div className="filter-section">
-                                                <select className="form-control dates-dropdown">
+                                                <select className="dates-dropdown" value={selectedDate} onChange={handleDateSelectionChange}>
                                                     <option value="last24Hrs">Last 24 Hours</option>
                                                     <option value="last3Days">Last 3 Days</option>
                                                     <option value="custom">Custom Period (up to 7 days)</option>
                                                 </select>
-                                                <span className="dropdown-icon">
-                                                    <FontAwesomeIcon icon={faAngleDown} />
-                                                </span>
                                             </div>
                                         </div>
                                         <div className="col-md-2 offset-md-1">
                                             <label className="control-label dates-section-label-width">Date From</label>
                                             <div className="filter-section">
-                                                <input type="text" className="dates-input" placeholder="DD/MM/YYYY" />
-                                                {/* You would replace the mat-datepicker with your preferred datepicker component */}
+                                                <DatePicker
+                                                    selected={dateFrom}
+                                                    onChange={(date: Date | null) => setDateFrom(date)}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    className="dates-input"
+                                                    placeholderText="DD/MM/YYYY"
+                                                />
                                             </div>
                                         </div>
                                         <div className="col-md-2">
                                             <label className="control-label dates-section-label-width">Date To</label>
                                             <div className="filter-section">
-                                                <input type="text" className="dates-input" placeholder="DD/MM/YYYY" />
-                                                {/* You would replace the mat-datepicker with your preferred datepicker component */}
+                                                <DatePicker
+                                                    selected={dateTo}
+                                                    onChange={(date: Date | null) => setDateTo(date)}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    className="dates-input"
+                                                    placeholderText="DD/MM/YYYY"
+                                                />
                                             </div>
                                         </div>
                                         <div className="col-md-2">
@@ -132,3 +168,4 @@ export default function ResultLanding(){
         </>
     );
 }
+
