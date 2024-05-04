@@ -3,11 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function MainMenu(){
 
-    const [activeMenuButton, setActiveMenuButton] = useState('odds');
+    const location = useLocation();
+
+    const routeName = location.pathname.substring(1);
+
+    console.log('Route parameters:', routeName);
+
+    const [activeMenuButton, setActiveMenuButton] = useState(routeName);
 
     function handleOnChangeMenu(menu){
         setActiveMenuButton(menu);
