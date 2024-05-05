@@ -21,7 +21,7 @@
   }
   
   .dates-dropdown {
-    height: 50px;
+    height: 40px;
     width: 280px !important;
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -33,7 +33,6 @@
   }
   
   .dates-input {
-    height: 50px;
     width: 140px;
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -74,7 +73,7 @@
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
-    margin-top: 38px;
+    margin-top: 30px;
     width: 120%;
     display: block;
     padding: 5px 10px;
@@ -82,8 +81,8 @@
   }
   
   .btn-filter:hover {
-    color: black;
-    background-color: #f3b97a;
+    background-color: #CC6800 !important;
+    border-color: #FF8200;
   }
   
   

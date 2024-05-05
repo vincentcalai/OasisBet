@@ -43,8 +43,8 @@
 }
 
 .btn-logout:hover {
-  color: black;
-  background-color: #f3b97a;
+  background-color: #CC6800 !important;
+  border-color: #FF8200;
 }
 
 .user-menu-display{

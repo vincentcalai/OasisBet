@@ -14,6 +14,10 @@ export default function ResultLanding(){
     const currentDate = new Date();
     const last24Hours = SharedVarConstants.MILLI_SEC_24_HRS;
     const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last24Hours);
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() - 7);
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 14);
 
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
@@ -97,7 +101,7 @@ export default function ResultLanding(){
 
     function handleFilterClick(event): void {
         console.log("Click Filter event: ", selectedDate, " dateFrom: ", dateFrom, " dateTo: ", dateTo, " compType: ", compType);
-        
+        fetchData(compType, selectedDate, dateFrom, dateTo);
     }
 
     return (
@@ -129,11 +133,15 @@ export default function ResultLanding(){
                                             <label className="control-label dates-section-label-width">Date From</label>
                                             <div className="filter-section">
                                                 <DatePicker
+                                                    showIcon
                                                     selected={dateFrom}
                                                     onChange={(date: Date | null) => setDateFrom(date)}
                                                     dateFormat="dd/MM/yyyy"
+                                                    minDate={minDate}
+                                                    maxDate={maxDate}
                                                     className="dates-input"
                                                     placeholderText="DD/MM/YYYY"
+                                                    disabled={selectedDate !== 'custom'}
                                                 />
                                             </div>
                                         </div>
@@ -141,11 +149,15 @@ export default function ResultLanding(){
                                             <label className="control-label dates-section-label-width">Date To</label>
                                             <div className="filter-section">
                                                 <DatePicker
+                                                    showIcon
                                                     selected={dateTo}
                                                     onChange={(date: Date | null) => setDateTo(date)}
                                                     dateFormat="dd/MM/yyyy"
+                                                    minDate={minDate}
+                                                    maxDate={maxDate}
                                                     className="dates-input"
                                                     placeholderText="DD/MM/YYYY"
+                                                    disabled={selectedDate !== 'custom'}
                                                 />
                                             </div>
                                         </div>
@@ -167,7 +179,7 @@ export default function ResultLanding(){
                                                 <tr key={index}>
                                                     <td>{new Date(resultEvent.startTime).toLocaleDateString()} {new Date(resultEvent.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                                                     <td>{resultEvent.eventDesc}</td>
-                                                    <td>{resultEvent.score}</td>
+                                                    <td>{resultEvent.score ? resultEvent.score : 'Pending'}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
