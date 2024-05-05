@@ -6,6 +6,7 @@ import { Button, Card, Table } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ResultEvent, generateSampleResultData } from "../constants/MockData.js";
+import { fetchResults } from "../services/api/ApiService.js";
 
 
 export default function ResultLanding(){
@@ -13,7 +14,7 @@ export default function ResultLanding(){
     const currentDate = new Date();
     const last24Hours = SharedVarConstants.MILLI_SEC_24_HRS;
     const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last24Hours);
-    
+
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [resultList, setResultList] = useState<ResultEvent[]>(generateSampleResultData());
@@ -22,7 +23,23 @@ export default function ResultLanding(){
     const [dateTo, setDateTo] = useState<Date | null>(currentDate);
 
     useEffect(() => {
+        fetchData(compType, selectedDate, dateFrom, dateTo);
+    }, []);
+
+    const fetchData = async (compType, selectedDate, dateFrom, dateTo) => {
+        try {
+        const updatedEvents = await fetchResults(compType, selectedDate, dateFrom, dateTo);
+        setResultList(updatedEvents);
+        } catch (error) {
+        // Handle error
+        }
+    };
+
+    useEffect(() => {
+        const currentDate = new Date();
         if (selectedDate === SharedVarConstants.LAST_24_HRS) {
+            const last24Hours = SharedVarConstants.MILLI_SEC_24_HRS;
+            const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last24Hours);
             setDateFrom(fromDate);
             setDateTo(currentDate);
         } else if (selectedDate === SharedVarConstants.LAST_3_DAYS) {
@@ -42,12 +59,10 @@ export default function ResultLanding(){
     };
 
     const handleDateSelectionChange = (event) => {
-        console.log("date selected: ", event.target.value);
         const key = event.target.value;
         setSelectedDate(key);
     };
     
-
     function retrieveCompHdr(sharedVar, newCompType): string {
         switch(newCompType) { 
             case sharedVar.API_SOURCE_COMP_TYPE_EPL: { 
@@ -78,6 +93,11 @@ export default function ResultLanding(){
                 return '';
             }
         }
+    }
+
+    function handleFilterClick(event): void {
+        console.log("Click Filter event: ", selectedDate, " dateFrom: ", dateFrom, " dateTo: ", dateTo, " compType: ", compType);
+        
     }
 
     return (
@@ -130,7 +150,7 @@ export default function ResultLanding(){
                                             </div>
                                         </div>
                                         <div className="col-md-2">
-                                            <Button type="button" variant="secondary" className="btn-filter">Filter</Button>
+                                            <Button type="button" variant="secondary" className="btn-filter" onClick={handleFilterClick} >Filter</Button>
                                         </div>
                                     </div>
                                     <br />
