@@ -40,6 +40,7 @@
   font-size: 12px;
   margin-right: 12px;
   width: 100px;
+  z-index: 0;
 }
 
 .btn-logout:hover {
