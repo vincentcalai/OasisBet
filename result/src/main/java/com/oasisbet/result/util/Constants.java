@@ -37,7 +37,7 @@ public class Constants {
 	public static final String COMP_TYPE = "comp_type";
 	public static final String API_EVENT_ID = "api_event_id";
 
-	public static final String RESULT_RETRIEVE_LAST_24_HRS = "last24Hrs";
+	public static final String RESULT_RETRIEVE_LAST_3_DAYS = "last3Days";
 	public static final String RESULT_RETRIEVE_CUSTOM = "custom";
 
 	public static final List<String> COMP_TYPE_LIST = Collections
