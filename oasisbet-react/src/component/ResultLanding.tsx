@@ -21,7 +21,7 @@ export default function ResultLanding(){
 
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
-    const [resultList, setResultList] = useState<ResultEvent[]>(generateSampleResultData());
+    const [resultList, setResultList] = useState<ResultEvent[]>([]);
     const [selectedDate, setSelectedDate] = useState('last24Hrs');
     const [dateFrom, setDateFrom] = useState<Date | null>(fromDate);
     const [dateTo, setDateTo] = useState<Date | null>(currentDate);
@@ -43,12 +43,12 @@ export default function ResultLanding(){
         const currentDate = new Date();
         if (selectedDate === SharedVarConstants.LAST_24_HRS) {
             const last24Hours = SharedVarConstants.MILLI_SEC_24_HRS;
-            const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last24Hours);
+            const fromDate = new Date(currentDate.getTime() - last24Hours);
             setDateFrom(fromDate);
             setDateTo(currentDate);
         } else if (selectedDate === SharedVarConstants.LAST_3_DAYS) {
             const last3Days = SharedVarConstants.MILLI_SEC_3_DAYS;
-            const fromDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset() * 60000) - last3Days);
+            const fromDate = new Date(currentDate.getTime() - last3Days);
             setDateFrom(fromDate);
             setDateTo(currentDate);
         } else {
