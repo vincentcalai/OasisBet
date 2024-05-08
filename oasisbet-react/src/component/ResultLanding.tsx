@@ -5,7 +5,7 @@ import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ResultEvent, generateSampleResultData } from "../constants/MockData.js";
+import { ResultEvent } from "../constants/MockData.js";
 import { fetchResults } from "../services/api/ApiService.js";
 
 
