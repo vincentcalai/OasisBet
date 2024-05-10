@@ -28,7 +28,7 @@ export default function ResultLanding(){
 
     useEffect(() => {
         fetchData(compType, selectedDate, dateFrom, dateTo);
-    }, []);
+    }, [compType]);
 
     const fetchData = async (compType, selectedDate, dateFrom, dateTo) => {
         try {
