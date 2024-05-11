@@ -3,10 +3,11 @@ import './OddsLanding.css';
 import React, { useEffect, useRef, useState } from 'react';
 import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
-import { BetEvent, BetSlip, generateSampleData } from '../constants/MockData.js';
+import { BetEvent, BetSlip, H2HBetSelection, generateSampleData } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchOdds } from '../services/api/ApiService.js';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();
@@ -15,9 +16,64 @@ export default function OddsLanding(){
     const reducerAction = useSelector((state: any) => state.action);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
-    const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(generateSampleData());
+    const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(new Map());
     const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
     const selectedBetsRef = useRef([] as BetSlip[]);
+
+    useEffect(() => {
+        const fetchData = async (compType) => {
+            try {
+            const resp = await fetchOdds(compType);
+            
+            const betEvents = resp.betEvent;
+            console.log("betEvents after retriving odds: ", betEvents);
+    
+            // Initialize H2HBetSelection object and save to all events
+            const updatedEvents = betEvents.map(event => {
+              const initBetSelection = new H2HBetSelection();
+              event.betSelection = initBetSelection;
+              return event;
+            });
+    
+            // Convert startTime from string to Date format
+            updatedEvents.forEach(event => event.startTime = new Date(event.startTime));
+    
+            // Record bet selection in current bet slip to match bet selection on screen
+            const updatedSelectedBets = selectedBetsRef.current.map(betInBetSlip => {
+              const betEvent = updatedEvents.find(event => event.eventId === betInBetSlip.eventId);
+              if (betEvent) {
+                if (betInBetSlip.betTypeCd === SharedVarConstants.BET_TYPE_CD_H2H && betInBetSlip.betSelection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
+                  betEvent.betSelection.homeSelected = true;
+                } else if (betInBetSlip.betTypeCd === SharedVarConstants.BET_TYPE_CD_H2H && betInBetSlip.betSelection === SharedVarConstants.BET_SELECTION_H2H_DRAW) {
+                  betEvent.betSelection.drawSelected = true;
+                } else if (betInBetSlip.betTypeCd === SharedVarConstants.BET_TYPE_CD_H2H && betInBetSlip.betSelection === SharedVarConstants.BET_SELECTION_H2H_AWAY) {
+                  betEvent.betSelection.awaySelected = true;
+                }
+              }
+              return betInBetSlip;
+            });
+
+            selectedBetsRef.current = updatedSelectedBets;
+    
+            // Save unique event dates from all events retrieved
+            const uniqueEventDates = Array.from(new Set(updatedEvents.map(event => event.startTime.toDateString())));
+    
+            // Save into an event map with unique event dates after retrieval of events -> (Date string, BetEvents[])
+            const updatedEventsMap = new Map();
+            uniqueEventDates.forEach(dateString => {
+              const eventsDetails = updatedEvents.filter(event => event.startTime.toDateString() === dateString);
+              updatedEventsMap.set(dateString, eventsDetails);
+            });
+            setEventsMap(updatedEventsMap);
+    
+            console.log("logging updatedEventsMap: ", updatedEventsMap);
+            } catch (error) {
+            // Handle error
+            }
+        };
+
+        fetchData(compType);
+    }, [compType]);
 
     useEffect(() => {
         return () => {

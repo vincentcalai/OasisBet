@@ -24,10 +24,29 @@ const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
             startTime: new Date(event.startTime)
         }));
         } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error; // Rethrow the error to handle it in the component
+            console.error('Error fetching data:', error);
+            throw error; 
         }
   };
+
+const fetchOdds = async (compType) => {
+    try {
+        console.log("calling retrieve odds api!");
+        console.log("compType: " + compType);
+
+        const response = await fetch(`http://localhost:8765/odds/retrieveOdds?compType=${compType}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        console.log("data fetched! data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }   
+};
   
   export { fetchResults };
+  export { fetchOdds };
   
