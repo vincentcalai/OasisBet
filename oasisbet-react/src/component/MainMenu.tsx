@@ -16,6 +16,7 @@ export default function MainMenu(){
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [activeMenuButton, setActiveMenuButton] = useState(routeName);
+    const [isLoggedIn, setIsLoggedIn] = useState(false as boolean);
     
 
     function handleOnChangeMenu(menu){
@@ -24,8 +25,20 @@ export default function MainMenu(){
 
     function handleSubmitForm(event){
         event.preventDefault();
-        console.log("form submission email: ", usernameRef.current?.value);
-        console.log("form submission password: ", passwordRef.current?.value);
+        const username = usernameRef.current?.value;
+        const password = passwordRef.current?.value
+        console.log("form submission email: ", username);
+        console.log("form submission password: ", password);
+        if(username === "CHOONANN" && password === "password"){
+            setIsLoggedIn(true);
+        }
+    }
+
+    function handleLogout(){
+        if(window.confirm("Are you sure to logout?")) {
+            console.log("logout ok");
+            setIsLoggedIn(false);
+        }
     }
 
     return (
@@ -62,60 +75,67 @@ export default function MainMenu(){
                     </ul>
                 </div>
 
-                {/* <div className="right-navbar">
-                    <ul className="navbar-nav">
-                        <li className="nav-item user-menu-display">
-                            <span style={{borderRight: '1px solid #ccc'}}>LOGGED IN &nbsp;</span>
-                            <Button type="button" variant="secondary" className="btn-logout">Logout</Button>
-                            <FontAwesomeIcon icon={faUser} className="user-icon"/>
-                            <span className="login-username-tag">&nbsp; CHOONANN</span>
-                        </li>
-                        <li className ="nav-item">
-                            <span className="balance-textbox">Balance: $99.88</span>
-                        </li>
-                    </ul>
-                </div> */}
+                {
+                isLoggedIn && 
+                    <div className="right-navbar">
+                        <ul className="navbar-nav">
+                            <li className="nav-item user-menu-display">
+                                <span style={{borderRight: '1px solid #ccc'}}>LOGGED IN &nbsp;</span>
+                                <Button type="button" variant="secondary" className="btn-logout"
+                                onClick={handleLogout}>Logout</Button>
+                                <FontAwesomeIcon icon={faUser} className="user-icon"/>
+                                <span className="login-username-tag">&nbsp; CHOONANN</span>
+                            </li>
+                            <li className ="nav-item">
+                                <span className="balance-textbox">Balance: $99.88</span>
+                            </li>
+                        </ul>
+                    </div>
+                }
 
-                <div className="right-navbar login-container">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <form id="login-column" onSubmit={handleSubmitForm}>
-                                <div id="login-form" className="login-form-group-block">
-                                    <div className="form-group login-form-group">
-                                        <input
-                                            type="text"
-                                            name="username"
-                                            id="username"
-                                            ref={usernameRef}
-                                            className="input-login"
-                                            placeholder="Username"
-                                        />
+                {
+                !isLoggedIn && 
+                    <div className="right-navbar login-container">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <form id="login-column" onSubmit={handleSubmitForm}>
+                                    <div id="login-form" className="login-form-group-block">
+                                        <div className="form-group login-form-group">
+                                            <input
+                                                type="text"
+                                                name="username"
+                                                id="username"
+                                                ref={usernameRef}
+                                                className="input-login"
+                                                placeholder="Username"
+                                            />
+                                        </div>
+                                        <div className="form-group login-form-group">
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                id="password"
+                                                ref={passwordRef}
+                                                className="input-login"
+                                                placeholder="Password"
+                                            />
+                                        </div>
+                                        <div className="form-group login-form-group">
+                                            <button type="submit" className="btn-login">
+                                                Login
+                                            </button>
+                                        </div>
+                                        <div className="form-group login-form-group">
+                                            <button type="button" className="btn-signup">
+                                                Sign Up
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="form-group login-form-group">
-                                        <input
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            ref={passwordRef}
-                                            className="input-login"
-                                            placeholder="Password"
-                                        />
-                                    </div>
-                                    <div className="form-group login-form-group">
-                                        <button type="submit" className="btn-login">
-                                            Login
-                                        </button>
-                                    </div>
-                                    <div className="form-group login-form-group">
-                                        <button type="button" className="btn-signup">
-                                            Sign Up
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                }
             </nav>
 
             
