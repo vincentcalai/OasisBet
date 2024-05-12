@@ -2,7 +2,7 @@ import './MainMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function MainMenu(){
@@ -13,10 +13,19 @@ export default function MainMenu(){
 
     console.log('Route parameters:', routeName);
 
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
     const [activeMenuButton, setActiveMenuButton] = useState(routeName);
+    
 
     function handleOnChangeMenu(menu){
         setActiveMenuButton(menu);
+    }
+
+    function handleSubmitForm(event){
+        event.preventDefault();
+        console.log("form submission email: ", usernameRef.current?.value);
+        console.log("form submission password: ", passwordRef.current?.value);
     }
 
     return (
@@ -53,7 +62,7 @@ export default function MainMenu(){
                     </ul>
                 </div>
 
-                <div className="right-navbar">
+                {/* <div className="right-navbar">
                     <ul className="navbar-nav">
                         <li className="nav-item user-menu-display">
                             <span style={{borderRight: '1px solid #ccc'}}>LOGGED IN &nbsp;</span>
@@ -63,6 +72,47 @@ export default function MainMenu(){
                         </li>
                         <li className ="nav-item">
                             <span className="balance-textbox">Balance: $99.88</span>
+                        </li>
+                    </ul>
+                </div> */}
+
+                <div className="right-navbar login-container">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <form id="login-column" onSubmit={handleSubmitForm}>
+                                <div id="login-form" className="login-form-group-block">
+                                    <div className="form-group login-form-group">
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            id="username"
+                                            ref={usernameRef}
+                                            className="input-login"
+                                            placeholder="Username"
+                                        />
+                                    </div>
+                                    <div className="form-group login-form-group">
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            id="password"
+                                            ref={passwordRef}
+                                            className="input-login"
+                                            placeholder="Password"
+                                        />
+                                    </div>
+                                    <div className="form-group login-form-group">
+                                        <button type="submit" className="btn-login">
+                                            Login
+                                        </button>
+                                    </div>
+                                    <div className="form-group login-form-group">
+                                        <button type="button" className="btn-signup">
+                                            Sign Up
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </li>
                     </ul>
                 </div>

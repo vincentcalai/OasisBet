@@ -48,6 +48,44 @@
   border-color: #FF8200;
 }
 
+.btn-login {
+  width: 20%;
+  height: 35px;
+  background-color: #87be77;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.btn-login:hover {
+  color: black;
+  background-color: #c3f7b4;
+}
+
+.btn-signup {
+  background-color: #FF8200;
+  width: 20%;
+  height: 35px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.btn-signup:hover {
+  color: black;
+  background-color: #f3b97a;
+}
+
 .user-menu-display{
     display: flex;
     align-items: center;
@@ -135,6 +173,7 @@
 
 .input-login{
   width: 120px;
+  height: 30px;
 }
 
 .user-login-form{

@@ -3,7 +3,7 @@ import './OddsLanding.css';
 import React, { useEffect, useRef, useState } from 'react';
 import CompSideNav from './CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
-import { BetEvent, BetSlip, H2HBetSelection, generateSampleData } from '../constants/MockData.js';
+import { BetEvent, BetSlip, H2HBetSelection } from '../constants/MockData.js';
 import SharedVarConstants from '../constants/SharedVarConstants.js'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch, useSelector } from 'react-redux';

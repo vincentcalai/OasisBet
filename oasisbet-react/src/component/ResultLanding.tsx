@@ -27,17 +27,8 @@ export default function ResultLanding(){
     const [dateTo, setDateTo] = useState<Date | null>(currentDate);
 
     useEffect(() => {
-        fetchData(compType, selectedDate, dateFrom, dateTo);
-    }, [compType]);
-
-    const fetchData = async (compType, selectedDate, dateFrom, dateTo) => {
-        try {
-        const updatedEvents = await fetchResults(compType, selectedDate, dateFrom, dateTo);
-        setResultList(updatedEvents);
-        } catch (error) {
-        // Handle error
-        }
-    };
+        fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [compType]); 
 
     useEffect(() => {
         const currentDate = new Date();
@@ -101,8 +92,17 @@ export default function ResultLanding(){
 
     function handleFilterClick(event): void {
         console.log("Click Filter event: ", selectedDate, " dateFrom: ", dateFrom, " dateTo: ", dateTo, " compType: ", compType);
-        fetchData(compType, selectedDate, dateFrom, dateTo);
+        fetchData();
     }
+
+    const fetchData = async () => {
+        try {
+        const updatedEvents = await fetchResults(compType, selectedDate, dateFrom, dateTo);
+        setResultList(updatedEvents);
+        } catch (error) {
+        // Handle error
+        }
+    };
 
     return (
         <>
