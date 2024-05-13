@@ -108,6 +108,12 @@ export default function MainMenu(){
                                                 ref={usernameRef}
                                                 className="input-login"
                                                 placeholder="Username"
+                                                onChange={(e) => {
+                                                    const username = e.target.value.toUpperCase();
+                                                    if(usernameRef.current){
+                                                        usernameRef.current.value = username;
+                                                    }
+                                                }}
                                             />
                                         </div>
                                         <div className="form-group login-form-group">
