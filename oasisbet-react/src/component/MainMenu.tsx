@@ -2,7 +2,7 @@ import './MainMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function MainMenu(){
@@ -13,23 +13,27 @@ export default function MainMenu(){
 
     console.log('Route parameters:', routeName);
 
-    const usernameRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [activeMenuButton, setActiveMenuButton] = useState(routeName);
     const [isLoggedIn, setIsLoggedIn] = useState(false as boolean);
     
-
     function handleOnChangeMenu(menu){
         setActiveMenuButton(menu);
     }
 
+    const handleLoginInputChange = (event, type) => {
+        console.log("value: ", event.target.value);
+        if(type === 'username'){
+            setUsername(event.target.value.toUpperCase());
+        } else if(type === 'password'){
+            setPassword(event.target.value);
+        }
+    };
+
     function handleSubmitForm(event){
         event.preventDefault();
-        const username = usernameRef.current?.value;
-        const password = passwordRef.current?.value
-        console.log("form submission email: ", username);
-        console.log("form submission password: ", password);
-        if(username === "CHOONANN" && password === "password"){
+        if(username && password && username === "CHOONANN" && password === "password"){
             setIsLoggedIn(true);
         }
     }
@@ -38,6 +42,8 @@ export default function MainMenu(){
         if(window.confirm("Are you sure to logout?")) {
             console.log("logout ok");
             setIsLoggedIn(false);
+            setUsername('');
+            setPassword('');
         }
     }
 
@@ -105,14 +111,11 @@ export default function MainMenu(){
                                                 type="text"
                                                 name="username"
                                                 id="username"
-                                                ref={usernameRef}
                                                 className="input-login"
                                                 placeholder="Username"
+                                                value={username}
                                                 onChange={(e) => {
-                                                    const username = e.target.value.toUpperCase();
-                                                    if(usernameRef.current){
-                                                        usernameRef.current.value = username;
-                                                    }
+                                                    handleLoginInputChange(e, 'username');
                                                 }}
                                             />
                                         </div>
@@ -121,9 +124,12 @@ export default function MainMenu(){
                                                 type="password"
                                                 name="password"
                                                 id="password"
-                                                ref={passwordRef}
                                                 className="input-login"
                                                 placeholder="Password"
+                                                value={password}
+                                                onChange={(e) => {
+                                                    handleLoginInputChange(e, 'password');
+                                                }}
                                             />
                                         </div>
                                         <div className="form-group login-form-group">
