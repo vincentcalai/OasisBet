@@ -1,6 +1,6 @@
 import React from 'react';
 import './CompSideNav.css';
-import SharedVarConstants from '../constants/SharedVarConstants';
+import SharedVarConstants from '../../constants/SharedVarConstants';
 
 function CompSideNav({ compType, selectCompType }) {
     return (

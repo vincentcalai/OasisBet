@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './ResultLanding.css';
-import SharedVarConstants from "../constants/SharedVarConstants";
-import CompSideNav from './CompSideNav.tsx';
+import SharedVarConstants from "../../constants/SharedVarConstants.js";
+import CompSideNav from '../common/CompSideNav.tsx';
 import { Button, Card, Table } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ResultEvent } from "../constants/MockData.js";
-import { fetchResults } from "../services/api/ApiService.js";
+import { ResultEvent } from "../../constants/MockData.js";
+import { fetchResults } from "../../services/api/ApiService.js";
 
 
 export default function ResultLanding(){

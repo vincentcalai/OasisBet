@@ -1,9 +1,9 @@
 import './App.css';
-import OddsLanding from './component/OddsLanding.tsx';
+import OddsLanding from './component/odds/OddsLanding.tsx';
 import React from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
-import ResultLanding from './component/ResultLanding.tsx';
-import AccountLanding from './component/AccountLanding.tsx';
+import ResultLanding from './component/result/ResultLanding.tsx';
+import AccountLanding from './component/account/AccountLanding.tsx';
 import RootMenu from './component/RootMenu.tsx';
 
 function App() {
