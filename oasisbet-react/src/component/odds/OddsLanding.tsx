@@ -207,9 +207,11 @@ export default function OddsLanding(){
                                     <h2>{compTypeHdr}</h2>
                                 </Card.Header>
                                 <Card.Body className="card-body">
+                                    <br />
                                     {eventDates.map((date, index) => (
                                         <div key={index}>
                                             <h3 className="card-subtitle">{formatDate(date)}</h3>
+                                            <br />
                                             <Table>
                                                 <thead>
                                                     <tr>
