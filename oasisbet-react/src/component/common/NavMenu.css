@@ -1,0 +1,32 @@
+.header-bar{
+  padding-left:200px
+}
+
+.navbar {
+    background-color: #38749e;
+}
+
+.navbar-nav {
+    font-family: 'Roboto', sans-serif;
+}
+
+.nav-item {
+    font-weight: bold;
+}
+
+.nav-link {
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-link.main-menu-link.active{
+    background-color: white;
+}
+
+.navbar-nav .nav-link.main-menu-link:not(.active):hover {
+    color: white;
+    background-color: #1588ca;
+    cursor: pointer;
+}

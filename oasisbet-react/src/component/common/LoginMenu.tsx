@@ -11,7 +11,6 @@ export default function LoginMenu(){
     const [isLoggedIn, setIsLoggedIn] = useState(false as boolean);
 
     const handleLoginInputChange = (event, type) => {
-        console.log("value: ", event.target.value);
         if(type === 'username'){
             setUsername(event.target.value.toUpperCase());
         } else if(type === 'password'){
@@ -66,7 +65,7 @@ export default function LoginMenu(){
                                         <input
                                             type="text"
                                             name="username"
-                                            id="username"
+                                            id="username-menu"
                                             className="input-login"
                                             placeholder="Username"
                                             value={username}
@@ -79,7 +78,7 @@ export default function LoginMenu(){
                                         <input
                                             type="password"
                                             name="password"
-                                            id="password"
+                                            id="password-menu"
                                             className="input-login"
                                             placeholder="Password"
                                             value={password}
