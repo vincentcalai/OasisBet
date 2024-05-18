@@ -17,49 +17,56 @@ const CreateUser = () => {
   });
 
   const handleValidation = () => {
+    let validationErrors = {
+      usernameError: '',
+      passwordError: '',
+      cfmPasswordError: '',
+      emailError: '',
+      contactNoError: ''
+    };
 
     if (!username) {
-        errors.usernameError = 'This field is required';
+      validationErrors.usernameError = 'This field is required';
     } else if (!/^[a-zA-Z]+$/.test(username)) {
-        errors.usernameError = 'Please enter only alphabet characters';
+      validationErrors.usernameError = 'Please enter only alphabet characters';
     } else if (username.length > 20) {
-        errors.usernameError = 'Maximum length is 20 characters';
+      validationErrors.usernameError = 'Maximum length is 20 characters';
     } else if (username.length < 5) {
-        errors.usernameError = 'Minimum length is 5 characters';
+      validationErrors.usernameError = 'Minimum length is 5 characters';
     }
 
     if (!password) {
-        errors.passwordError = 'This field is required';
+      validationErrors.passwordError = 'This field is required';
     } else if (password.length > 20) {
-        errors.passwordError = 'Maximum length is 20 characters';
+      validationErrors.passwordError = 'Maximum length is 20 characters';
     } else if (password.length < 5) {
-        errors.passwordError = 'Minimum length is 5 characters';
+      validationErrors.passwordError = 'Minimum length is 5 characters';
     }
 
     if (!cfmPassword) {
-        errors.cfmPasswordError = 'This field is required';
+      validationErrors.cfmPasswordError = 'This field is required';
     } else if (cfmPassword !== password) {
-        errors.cfmPasswordError = 'Passwords do not match';
+      validationErrors.cfmPasswordError = 'Passwords do not match';
     }
 
     if (!email) {
-        errors.emailError = 'This field is required';
+      validationErrors.emailError = 'This field is required';
     } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-        errors.emailError = 'Please enter a valid email address';
+      validationErrors.emailError = 'Please enter a valid email address';
     } else if (email.length > 100) {
-        errors.emailError = 'Maximum length is 100 characters';
+      validationErrors.emailError = 'Maximum length is 100 characters';
     }
 
     if (!contactNo) {
-        errors.contactNoError = 'This field is required';
+      validationErrors.contactNoError = 'This field is required';
     } else if (!/^\d+$/.test(contactNo)) {
-        errors.contactNoError = 'Please enter only numeric characters';
+      validationErrors.contactNoError = 'Please enter only numeric characters';
     } else if (contactNo.length > 30) {
-        errors.contactNoError = 'Maximum length is 30 characters';
+      validationErrors.contactNoError = 'Maximum length is 30 characters';
     }
-
-    setErrors(errors);
-    return Object.keys(errors).length === 0;
+    console.log("form validation errors: ", validationErrors);
+    setErrors(validationErrors);
+    return Object.values(validationErrors).every(error => error === '');
   };
 
   const confirmClicked = () => {
@@ -70,6 +77,13 @@ const CreateUser = () => {
       console.log('Form is invalid');
     }
   };
+
+  function handleOnChangeUsername(e): void {
+    setUsername(e.target.value.toUpperCase());
+    errors.usernameError = '';
+    console.log("testing on change username: ", errors);
+    setErrors(errors);
+  }
 
   return (
     <div className="container">
@@ -92,7 +106,7 @@ const CreateUser = () => {
                   type="text" 
                   className="form-control allCaps" 
                   value={username}
-                  onChange={(e) => setUsername(e.target.value.toUpperCase())} 
+                  onChange={handleOnChangeUsername} 
                   name="username" 
                 />
                 <label id="username_error_0" className={`error-text ${errors.usernameError ? 'highlightLabel' : ''}`} htmlFor="name_0">
@@ -103,7 +117,7 @@ const CreateUser = () => {
               <br />
 
               <div className="form-group form-row required col-md-8 align_cont_center">
-                <label id="PASSWORD_LABEL_1" htmlFor="password_0_Label" className={`control-label ${errors.usernameError ? 'highlightLabel' : ''}`}>
+                <label id="PASSWORD_LABEL_1" htmlFor="password_0_Label" className={`control-label ${errors.passwordError ? 'highlightLabel' : ''}`}>
                   <span id="PASSWORD">Password</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>

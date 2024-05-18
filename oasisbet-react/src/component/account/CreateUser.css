@@ -1,3 +1,9 @@
+label {
+  font-weight: normal;
+  display: block;
+  margin-bottom: 5px;
+}
+
 .text-right {
   width: 100%;
   text-align: right;
@@ -25,15 +31,6 @@
 
 .align_cont_center {
   margin: auto;
-}
-
-.user_form_title {
-  margin-top: 10px;
-  margin-bottom: 25px;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #1a5978;
-  background-color: transparent;
 }
 
 .btn-register {

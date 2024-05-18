@@ -27,6 +27,7 @@
   }
   
   label {
+    font-weight: normal;
     display: block;
     margin-bottom: 5px;
   }
