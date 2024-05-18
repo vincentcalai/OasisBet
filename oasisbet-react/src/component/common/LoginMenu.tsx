@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginMenu(){
 
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false as boolean);
@@ -32,6 +34,10 @@ export default function LoginMenu(){
             setUsername('');
             setPassword('');
         }
+    }
+
+    function handleClickCreateUser(){
+        navigate('/create-user');
     }
 
     return (
@@ -93,7 +99,7 @@ export default function LoginMenu(){
                                         </button>
                                     </div>
                                     <div className="form-group login-form-group">
-                                        <button type="button" className="btn-signup">
+                                        <button type="button" className="btn-signup" onClick={handleClickCreateUser}>
                                             Sign Up
                                         </button>
                                     </div>
