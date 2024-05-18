@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import './AccountLogin.css';
 import { Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountLanding(){
-    
+  
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,6 +14,10 @@ export default function AccountLanding(){
     
   };
 
+  function handleClickCreateUser() {
+    navigate('/create-user');
+  }
+
   return (
     <div className="container-fluid d-flex align-items-center justify-content-center">
       <Card className="card">
@@ -19,6 +25,7 @@ export default function AccountLanding(){
           <h2>Login</h2>
         </Card.Header>
         <Card.Body className="card-body d-flex flex-column align-items-center justify-content-center">
+          <br />
           <div className="form-group ">
             <label htmlFor="username">Username:</label>
             <input 
@@ -41,7 +48,7 @@ export default function AccountLanding(){
           <button className="login-btn" onClick={handleLogin}>Login</button>
           <hr/>
           <div className="form-group">
-            <p>Don't have an account yet? <button className="signup-link">Sign Up Here</button></p>
+            <p>Don't have an account yet? <button className="signup-link" onClick={handleClickCreateUser}>Sign Up Here</button></p>
           </div>
         </Card.Body>    
       </Card>

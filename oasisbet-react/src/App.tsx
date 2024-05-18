@@ -5,6 +5,7 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ResultLanding from './component/result/ResultLanding.tsx';
 import AccountLanding from './component/account/AccountLanding.tsx';
 import RootMenu from './component/RootMenu.tsx';
+import CreateUser from './component/account/CreateUser.tsx';
 
 function App() {
 
@@ -26,6 +27,9 @@ function App() {
             }, {
                 path: "account",
                 element: <AccountLanding />,
+            }, {
+                path: "create-user",
+                element: <CreateUser />
             },
             {
                 path: "*",

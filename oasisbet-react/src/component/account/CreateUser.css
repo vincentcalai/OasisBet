@@ -1,0 +1,51 @@
+.text-right {
+  width: 100%;
+  text-align: right;
+}
+
+.button_o {
+  padding: 15px 20px;
+  background-color: #1a5978;
+  color: white;
+  border: 2px solid black !important;
+  border-color: black;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  width: auto !important;
+}
+
+.btn_text_hover:hover {
+  text-decoration: underline;
+}
+
+.button_back {
+  border-right: 0px;
+  margin-right: 10px;
+}
+
+.align_cont_center {
+  margin: auto;
+}
+
+.user_form_title {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #1a5978;
+  background-color: transparent;
+}
+
+.btn-register {
+  margin-top: 30px;
+  background-color: #87be77;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  width: 120px;
+}
+
+.btn-register:hover {
+  color: black;
+  background-color: #c3f7b4;
+}

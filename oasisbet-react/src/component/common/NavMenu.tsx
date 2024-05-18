@@ -1,6 +1,6 @@
 import './NavMenu.css';
 import Button from 'react-bootstrap/Button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function NavMenu(){
@@ -12,6 +12,10 @@ export default function NavMenu(){
     console.log('Route parameters:', routeName);
 
     const [activeMenuButton, setActiveMenuButton] = useState(routeName);
+
+    useEffect(() => {
+        setActiveMenuButton(routeName);
+    }, [routeName]);
     
     function handleOnChangeMenu(menu){
         setActiveMenuButton(menu);
