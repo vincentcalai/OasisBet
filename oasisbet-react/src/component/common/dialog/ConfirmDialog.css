@@ -1,0 +1,36 @@
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+  
+.dialog {
+    background: white;
+    border-radius: 5px;
+    width: 500px;
+}
+  
+.dialog-header {
+    margin-bottom: 20px;
+}
+  
+.dialog-body {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+  
+.dialog-footer button {
+    margin-left: 10px;
+}

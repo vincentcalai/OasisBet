@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './CreateUser.css';
 import { Card } from "react-bootstrap";
+import SharedVarConstants from '../../constants/SharedVarConstants';
+import ConfirmDialog from '../common/dialog/ConfirmDialog.tsx';
 
 const CreateUser = () => {
   const [username, setUsername] = useState('');
@@ -15,6 +17,8 @@ const CreateUser = () => {
     email: '',
     contactNo: ''
   });
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [dialogData, setDialogData] = useState({ title: '', type: '' });
 
   const handleValidation = (inputType) => {
     let validationErrors = {
@@ -65,9 +69,26 @@ const CreateUser = () => {
       const checkValidation = Object.values(validationErrors).every(error => error === '');
     if (checkValidation) {
       console.log('Form is valid, submitting form to backend now');
-      // Handle form submission
+      handleOpenDialog();
     } else {
       console.log('Form is invalid');
+    }
+  };
+
+  const handleOpenDialog = () => {
+    setDialogData({
+      title: 'Confirm Create User?',
+      type: SharedVarConstants.CREATE_USER_DIALOG_TYPE,
+    });
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = (result) => {
+    setDialogOpen(false);
+    if (result === 'confirm') {
+      console.log('Confirmed!');
+    } else {
+      console.log('Cancelled!');
     }
   };
 
@@ -154,7 +175,7 @@ const CreateUser = () => {
   }
 
   return (
-    <div className="container">
+    <><div className="container">
       <br />
       {/* {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>} */}
       <Card className="card col-md-6 offset-md-3">
@@ -169,15 +190,14 @@ const CreateUser = () => {
                   <span id="USERNAME">User Name</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
-                <input 
-                  id="username_0" 
-                  type="text" 
-                  className="form-control allCaps" 
+                <input
+                  id="username_0"
+                  type="text"
+                  className="form-control allCaps"
                   value={username}
                   onBlur={handleOnBlurInput('username')}
-                  onChange={handleOnChangeInput('username')} 
-                  name="username" 
-                />
+                  onChange={handleOnChangeInput('username')}
+                  name="username" />
                 <label id="username_error_0" className={`error-text ${errors.username ? 'highlightLabel' : ''}`} htmlFor="name_0">
                   {errors.username}
                 </label>
@@ -190,15 +210,14 @@ const CreateUser = () => {
                   <span id="PASSWORD">Password</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
-                <input 
-                  id="password_0" 
-                  type="password" 
-                  className="form-control allCaps" 
+                <input
+                  id="password_0"
+                  type="password"
+                  className="form-control allCaps"
                   value={password}
                   onBlur={handleOnBlurInput('password')}
-                  onChange={handleOnChangeInput('password')} 
-                  name="password" 
-                />
+                  onChange={handleOnChangeInput('password')}
+                  name="password" />
                 <label id="password_error_0" className={`error-text ${errors.password ? 'highlightLabel' : ''}`} htmlFor="password_0">
                   {errors.password}
                 </label>
@@ -211,15 +230,14 @@ const CreateUser = () => {
                   <span id="CFMPASSWORD">Confirm Password</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
-                <input 
-                  id="cfmPassword_0" 
-                  type="password" 
-                  className="form-control allCaps" 
+                <input
+                  id="cfmPassword_0"
+                  type="password"
+                  className="form-control allCaps"
                   value={cfmPassword}
                   onBlur={handleOnBlurInput('cfmPassword')}
-                  onChange={handleOnChangeInput('cfmPassword')} 
-                  name="cfmPassword" 
-                />
+                  onChange={handleOnChangeInput('cfmPassword')}
+                  name="cfmPassword" />
                 <label id="cfmPassword_error_0" className={`error-text ${errors.cfmPassword ? 'highlightLabel' : ''}`} htmlFor="cfmPassword_0">
                   {errors.cfmPassword}
                 </label>
@@ -232,15 +250,14 @@ const CreateUser = () => {
                   <span id="EMAIL">Email</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
-                <input 
-                  id="email_0" 
-                  type="text" 
-                  className="form-control allCaps" 
+                <input
+                  id="email_0"
+                  type="text"
+                  className="form-control allCaps"
                   value={email}
                   onBlur={handleOnBlurInput('email')}
-                  onChange={handleOnChangeInput('email')} 
-                  name="email" 
-                />
+                  onChange={handleOnChangeInput('email')}
+                  name="email" />
                 <label id="email_error_0" className={`error-text ${errors.email ? 'highlightLabel' : ''}`} htmlFor="email_0">
                   {errors.email}
                 </label>
@@ -253,15 +270,14 @@ const CreateUser = () => {
                   <span id="CONTACTNO">Contact No</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
-                <input 
-                  id="contactNo_0" 
-                  type="text" 
-                  className="form-control allCaps" 
+                <input
+                  id="contactNo_0"
+                  type="text"
+                  className="form-control allCaps"
                   value={contactNo}
                   onBlur={handleOnBlurInput('contactNo')}
-                  onChange={handleOnChangeInput('contactNo')} 
-                  name="contactNo" 
-                />
+                  onChange={handleOnChangeInput('contactNo')}
+                  name="contactNo" />
                 <label id="contactNo_error_0" className={`error-text ${errors.contactNo ? 'highlightLabel' : ''}`} htmlFor="contactNo_0">
                   {errors.contactNo}
                 </label>
@@ -274,10 +290,16 @@ const CreateUser = () => {
               </div>
             </form>
           </div>
-        </Card.Body> 
+        </Card.Body>
       </Card>
       <br />
     </div>
+    
+      <ConfirmDialog
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
+        data={dialogData} />
+    </>
   );
 };
 

@@ -9,6 +9,9 @@ const SharedVarConstants = {
     SETTLED: "Settled",
     NOT_SETTLED: "Not Settled",
     BET_SLIP_MAX_ALLOWED_BET: 5,
+
+    //Odds Constants
+
     API_SOURCE_COMP_TYPE_EPL: "soccer_epl",
     API_SOURCE_COMP_TYPE_LALIGA: "soccer_spain_la_liga",
     API_SOURCE_COMP_TYPE_BUNDESLIGA: "soccer_germany_bundesliga",
@@ -17,12 +20,7 @@ const SharedVarConstants = {
     API_SOURCE_COMP_TYPE_FA_CUP: "soccer_fa_cup",
     API_SOURCE_COMP_TYPE_EFL_CUP: "soccer_efl_cup",
     API_SOURCE_COMP_TYPE_UCL: "soccer_uefa_champs_league",
-    NAV_MENU_SELECT_ACCOUNT_OVERVIEW: "account_overview",
-    NAV_MENU_SELECT_ACCOUNT_UPDATE: "account_update",
-    NAV_MENU_SELECT_TRX_HIST: "trx_hist",
-    NAV_MENU_SELECT_LIMIT_MGMT: 'limit_mgmt',
-    NAV_MENU_SELECT_DEPOSITS: "desposits",
-    NAV_MENU_SELECT_WITHDRAWALS: "withdrawals",
+
     COMP_HEADER_EPL: "English Premier League",
     COMP_HEADER_LALIGA: "La Liga",
     COMP_HEADER_BUNDESLIGA: "Bundesliga",
@@ -31,12 +29,36 @@ const SharedVarConstants = {
     COMP_HEADER_FA_CUP: "FA Cup",
     COMP_HEADER_EFL_CUP: "EFL Cup",
     COMP_HEADER_UCL: "UEFA Champions League",
+
+    //Account Constants
     ACCOUNT_OVERVIEW_HEADER: "Account Overview",
     ACCOUNT_UPDATE_HEADER: "Account Update",
     TRANSACTION_HISTORY_HEADER: "Transaction History",
     LIMIT_MANAGEMENT_HEADER: "Limit Management",
     DEPOSIT_HEADER: "Deposits",
     WITHDRAWALS_HEADER: "Withdrawals",
+
+    NAV_MENU_SELECT_ACCOUNT_OVERVIEW: "account_overview",
+    NAV_MENU_SELECT_ACCOUNT_UPDATE: "account_update",
+    NAV_MENU_SELECT_TRX_HIST: "trx_hist",
+    NAV_MENU_SELECT_LIMIT_MGMT: 'limit_mgmt',
+    NAV_MENU_SELECT_DEPOSITS: "desposits",
+    NAV_MENU_SELECT_WITHDRAWALS: "withdrawals",
+
+    CREATE_USER_DIALOG_TYPE: 'CREATE_USER',
+    CFM_DEPOSIT_DIALOG_TYPE: 'CFM_DEPOSIT',
+    CFM_WITHDRAW_DIALOG_TYPE: 'CFM_WITHDRAW',
+    CFM_CHANGE_LIMIT_DIALOG_TYPE: 'CFM_CHANGE_LIMIT',
+    CFM_UPDATE_PW_DIALOG_TYPE: 'CFM_UPDATE_PW',
+    CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE: 'CFM_UPDATE_ACC_DETAILS',
+    
+    CREATE_USER_DIALOG_MSG: 'Are you sure to create a new user?',
+    CFM_DEPOSIT_DIALOG_MSG: 'Confirm deposit?',
+    CFM_WITHDRAW_DIALOG_MSG: 'Confirm withdrawal?',
+    CFM_CHANGE_LIMIT_DIALOG_MSG: 'Confirm change of limit?',
+    CFM_UPDATE_PW_DIALOG_MSG: 'Confirm password update?',
+    CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
+
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',
     MILLI_SEC_24_HRS: 86400000, // 24 hours in milliseconds

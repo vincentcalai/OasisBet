@@ -23,11 +23,11 @@ const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
             ...event,
             startTime: new Date(event.startTime)
         }));
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            throw error; 
-        }
-  };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }
+};
 
 const fetchOdds = async (compType) => {
     try {
@@ -47,6 +47,6 @@ const fetchOdds = async (compType) => {
     }   
 };
   
-  export { fetchResults };
-  export { fetchOdds };
+export { fetchResults };
+export { fetchOdds };
   
