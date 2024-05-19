@@ -2,88 +2,88 @@
     font-weight: normal
   }
   
-  .card-subtitle {
-    background-color: lightgrey;
-    padding-left: 10px;
-    font-weight: bold;
-  }
-  
-  label{
-    font-weight: bold;
-  }
-  
-  .dates-section-label-width{
-    font-weight: bold;
-  }
-  
-  .dates-section-selection-width{
-    margin-left: 10px;
-  }
-  
-  .dates-dropdown {
-    height: 40px;
-    width: 280px !important;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    border: none;
-    color: #8d8d8d;
-    padding: 5px 10px;
-    font-size: 14px;
-    box-shadow: none;
-  }
-  
-  .dates-input {
-    width: 140px;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    border: none;
-    color: #8d8d8d;
-    padding: 5px 10px;
-    box-shadow: none;
-  }
-  
-  .dates-dropdown option {
-    background-color: #f2f2f2;
-    color: #8d8d8d;
-    font-size: 16px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: none;
-    box-shadow: none;
-  }
-  
-  .dates-dropdown.show {
-    border-radius: 5px 5px 0 0;
-    border: 1px solid #ccc;
-    border-bottom: none;
-  }
-  
-  .dates-dropdown.show option:hover {
-    background-color: #fff;
-  }
-  
-  .filter-section {
-    position: relative;
-    font-size: 14px;
-  }
+.card-subtitle {
+  background-color: lightgrey;
+  padding-left: 10px;
+  font-weight: bold;
+}
 
-  .btn-filter{
-    color:white;
-    background-color: #FF8200 !important;
-    text-transform: uppercase;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    margin-top: 30px;
-    width: 120%;
-    display: block;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-  }
-  
-  .btn-filter:hover {
-    background-color: #CC6800 !important;
-    border-color: #FF8200;
-  }
+label{
+  font-weight: bold;
+}
+
+.dates-section-label-width{
+  font-weight: bold;
+}
+
+.dates-section-selection-width{
+  margin-left: 10px;
+}
+
+.dates-dropdown {
+  height: 40px;
+  width: 280px !important;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border: none;
+  color: #8d8d8d;
+  padding: 5px 10px;
+  font-size: 14px;
+  box-shadow: none;
+}
+
+.dates-input {
+  width: 140px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border: none;
+  color: #8d8d8d;
+  padding: 5px 10px;
+  box-shadow: none;
+}
+
+.dates-dropdown option {
+  background-color: #f2f2f2;
+  color: #8d8d8d;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: none;
+}
+
+.dates-dropdown.show {
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+
+.dates-dropdown.show option:hover {
+  background-color: #fff;
+}
+
+.filter-section {
+  position: relative;
+  font-size: 14px;
+}
+
+.btn-filter{
+  color:white;
+  background-color: #FF8200 !important;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  margin-top: 30px;
+  width: 120%;
+  display: block;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.btn-filter:hover {
+  background-color: #CC6800 !important;
+  border-color: #FF8200;
+}
   
   
   
