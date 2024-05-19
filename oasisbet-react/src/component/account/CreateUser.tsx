@@ -112,7 +112,7 @@ const CreateUser = () => {
           } else {
             //create user success! sending resultMessage back to account login screen
             setErrorMsg('');
-            
+
           }
           console.log("User created successfully:", response);
       } catch (error) {
@@ -316,7 +316,7 @@ const CreateUser = () => {
               </div>
 
               <div className="text-right">
-                <button className="btn btn-success btn-register" type="button" onClick={confirmClicked}>
+                <button className="btn-register" type="button" onClick={confirmClicked}>
                   <span id="cfm">Register</span>
                 </button>
               </div>
