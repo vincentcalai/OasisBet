@@ -17,11 +17,12 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ isOpen, onClose, data }) 
   const [dialogMessage, setDialogMessage] = useState('');
 
   useEffect(() => {
-    console.log("check isOpen: ", isOpen);
-    console.log("check data: ", data);
     if (isOpen) {
-      setDialogTitle(data.title);
-      setDialogMessage(retrieveDialogMessage(data.type));
+        setDialogTitle(data.title);
+        setDialogMessage(retrieveDialogMessage(data.type));
+        document.body.style.overflow = 'hidden'; // Disable scrolling
+    } else {
+        document.body.style.overflow = 'auto'; // Enable scrolling
     }
   }, [isOpen, data]);
 
@@ -45,7 +46,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ isOpen, onClose, data }) 
   };
 
   const handleCancelClick = () => {
-    onClose();
+    onClose('cancel');
   };
 
   const handleConfirmClick = () => {
