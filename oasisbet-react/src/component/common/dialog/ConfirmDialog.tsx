@@ -20,10 +20,8 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ isOpen, onClose, data }) 
     if (isOpen) {
         setDialogTitle(data.title);
         setDialogMessage(retrieveDialogMessage(data.type));
-        document.body.style.overflow = 'hidden'; // Disable scrolling
-    } else {
-        document.body.style.overflow = 'auto'; // Enable scrolling
-    }
+    } 
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
   }, [isOpen, data]);
 
   const retrieveDialogMessage = (dialogType) => {

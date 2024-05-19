@@ -3,6 +3,9 @@ import './CreateUser.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from '../../constants/SharedVarConstants';
 import ConfirmDialog from '../common/dialog/ConfirmDialog.tsx';
+import { createUser } from '../../services/api/ApiService.js';
+import { UserModel } from '../../model/UserModel.tsx';
+import { CreateUserModel } from '../../model/CreateUserModel.tsx';
 
 const CreateUser = () => {
   const [username, setUsername] = useState('');
@@ -17,6 +20,7 @@ const CreateUser = () => {
     email: '',
     contactNo: ''
   });
+  const [errorMsg, setErrorMsg] = useState('');
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [dialogData, setDialogData] = useState({ title: '', type: '' });
 
@@ -83,10 +87,38 @@ const CreateUser = () => {
     setDialogOpen(true);
   };
 
-  const handleCloseDialog = (result) => {
+  const handleCloseDialog = async (result) => {
     setDialogOpen(false);
     if (result === 'confirm') {
       console.log('Confirmed!');
+      const formDetails: UserModel = {
+        id: 0,
+        username: username,
+        password: password,
+        email: email,
+        contactNo: contactNo,
+        delInd: '',
+        createdBy: '',
+        createdDt: null
+      };
+      const request: CreateUserModel = {
+        user: formDetails
+      };
+
+      try {
+          const response = await createUser(request);
+          if(response.statusCode !== 0){
+            setErrorMsg(response.resultMessage);
+          } else {
+            //create user success! sending resultMessage back to account login screen
+            setErrorMsg('');
+            
+          }
+          console.log("User created successfully:", response);
+      } catch (error) {
+          console.error("Error creating user:", error);
+          setErrorMsg("Failed to create user. Please try again.");
+      }
     } else {
       console.log('Cancelled!');
     }
@@ -177,7 +209,7 @@ const CreateUser = () => {
   return (
     <><div className="container">
       <br />
-      {/* {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>} */}
+      {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
       <Card className="card col-md-6 offset-md-3">
         <Card.Header className="card-header">
           <h2>Create New Account</h2>

@@ -46,7 +46,32 @@ const fetchOdds = async (compType) => {
         throw error; 
     }   
 };
+
+const createUser = async (request) => {
+    try {
+        console.log("calling create user api!");
+        console.log("create user api request: ", request);
+
+        const response = await fetch(`http://localhost:8765/user/createUser`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(request),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create user');
+        }
+
+        const data = await response.json();
+        console.log("user created! data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+    }
+};
   
-export { fetchResults };
-export { fetchOdds };
+export { fetchResults, fetchOdds, createUser };
   
