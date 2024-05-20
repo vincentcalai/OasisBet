@@ -6,6 +6,7 @@ import ConfirmDialog from '../common/dialog/ConfirmDialog.tsx';
 import { createUser } from '../../services/api/ApiService.js';
 import { UserModel } from '../../model/UserModel.tsx';
 import { CreateUserModel } from '../../model/CreateUserModel.tsx';
+import { isEqualToOtherValue, isShorterThanMinLength, isLongerThanMaxLength, isNotEmpty, isOnlyContainsAlphaNumeric, isOnlyContainsNumeric, isValidEmail } from '../util/validation.js';
 
 const CreateUser = () => {
   const [username, setUsername] = useState('');
@@ -147,13 +148,13 @@ const CreateUser = () => {
   }
 
   function validateUsername(username: string): string {
-    if (!username) {
+    if (!isNotEmpty(username)) {
       return 'This field is required';
-    } else if (!/^[a-zA-Z]+$/.test(username)) {
+    } else if (!isOnlyContainsAlphaNumeric(username)) {
       return 'Please enter only alphabet characters';
-    } else if (username.length > 20) {
+    } else if (isLongerThanMaxLength(username, 20)) {
       return 'Maximum length is 20 characters';
-    } else if (username.length < 5) {
+    } else if (isShorterThanMinLength(username, 5)) {
       return 'Minimum length is 5 characters';
     } else {
       return '';
@@ -161,11 +162,11 @@ const CreateUser = () => {
   }
 
   function validatePassword(password: string): string {
-    if (!password) {
+    if (!isNotEmpty(password)) {
       return 'This field is required';
-    } else if (password.length > 20) {
+    } else if (isLongerThanMaxLength(password, 20)) {
       return 'Maximum length is 20 characters';
-    } else if (password.length < 5) {
+    } else if (isShorterThanMinLength(password, 5)) {
       return 'Minimum length is 5 characters';
     } else {
       return '';
@@ -173,9 +174,9 @@ const CreateUser = () => {
   }
   
   function validateCfmPassword(cfmPassword: string): string {
-    if (!cfmPassword) {
+    if (!isNotEmpty(cfmPassword)) {
       return 'This field is required';
-    } else if (cfmPassword !== password) {
+    } else if (!isEqualToOtherValue(cfmPassword, password)) {
       return 'Passwords do not match';
     } else {
       return '';
@@ -183,11 +184,11 @@ const CreateUser = () => {
   }
 
   function validateEmail(email: string): string {
-    if (!email) {
+    if (!isNotEmpty(email)) {
       return 'This field is required';
-    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    } else if (!isValidEmail(email)) {
       return 'Please enter a valid email address';
-    } else if (email.length > 100) {
+    } else if (isLongerThanMaxLength(100)) {
       return 'Maximum length is 100 characters';
     } else {
       return '';
@@ -195,11 +196,11 @@ const CreateUser = () => {
   }
 
   function validateContactNo(contactNo: string): string {
-    if (!contactNo) {
+    if (!isNotEmpty(contactNo)) {
       return 'This field is required';
-    } else if (!/^\d+$/.test(contactNo)) {
+    } else if (!isOnlyContainsNumeric(contactNo)) {
       return 'Please enter only numeric characters';
-    } else if (contactNo.length > 30) {
+    } else if (isLongerThanMaxLength(contactNo, 30)) {
       return 'Maximum length is 30 characters';
     } else {
       return '';
