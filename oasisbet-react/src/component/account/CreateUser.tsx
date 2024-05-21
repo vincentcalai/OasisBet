@@ -93,7 +93,7 @@ const CreateUser = () => {
     if (result === 'confirm') {
       console.log('Confirmed!');
       const formDetails: UserModel = {
-        id: 0,
+        id: -1,
         username: username,
         password: password,
         email: email,
@@ -117,6 +117,7 @@ const CreateUser = () => {
             setErrorMsg('');
           }
       } catch (error) {
+          //TODO to change this error message to a generic error message shown as red banner
           console.error("Error creating user:", error);
           setErrorMsg("Failed to create user. Please try again.");
       }
