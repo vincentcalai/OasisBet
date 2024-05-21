@@ -59,13 +59,14 @@ const createUser = async (request) => {
             },
             body: JSON.stringify(request),
         });
+        console.log("Response: ", response);
 
         if (!response.ok) {
             throw new Error('Failed to create user');
         }
 
         const data = await response.json();
-        console.log("user created! data: ", data);
+        console.log("Response data: ", data);
         return data;
     } catch (error) {
         console.error('Error creating user:', error);

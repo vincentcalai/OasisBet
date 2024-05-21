@@ -109,13 +109,13 @@ const CreateUser = () => {
       try {
           const response = await createUser(request);
           if(response.statusCode !== 0){
+            console.log("Error creating user, response:", response);
             setErrorMsg(response.resultMessage);
           } else {
             //create user success! sending resultMessage back to account login screen
+            console.log("User created successfully:", response);
             setErrorMsg('');
-
           }
-          console.log("User created successfully:", response);
       } catch (error) {
           console.error("Error creating user:", error);
           setErrorMsg("Failed to create user. Please try again.");
