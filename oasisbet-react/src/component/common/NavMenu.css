@@ -15,7 +15,7 @@
 }
 
 .nav-link {
-    color: white;
+    color: white !important;
     font-size: 16px;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -23,6 +23,7 @@
 
 .nav-link.main-menu-link.active{
     background-color: white;
+    color: black !important;
 }
 
 .navbar-nav .nav-link.main-menu-link:not(.active):hover {
