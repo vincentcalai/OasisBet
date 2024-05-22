@@ -1,5 +1,5 @@
 
-import {createStore} from 'redux';
+import {createStore, combineReducers } from 'redux';
 
 const betSlipReducer = (state = { betSlip: [] }, action) => {
     switch (action.type) {
@@ -32,6 +32,24 @@ const betSlipReducer = (state = { betSlip: [] }, action) => {
     }
 }
 
-const store = createStore(betSlipReducer);
+const userReducer = (state = { message: '' }, action) => {
+    switch (action.type) {
+        case 'CREATE_USER':
+            console.log("Create user reducer works! Payload:", action.payload);
+            return {
+                action: 'ADD',
+                message: action.payload
+            };
+        default:
+            return state;
+    }
+};
+
+const rootReducer = combineReducers({
+    betSlip: betSlipReducer,
+    user: userReducer
+});
+
+const store = createStore(rootReducer);
 
 export default store;

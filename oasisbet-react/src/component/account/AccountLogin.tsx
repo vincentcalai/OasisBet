@@ -32,7 +32,7 @@ export default function AccountLanding(){
               type="text" 
               id="username" 
               value={username} 
-              onChange={(e) => setUsername(e.target.value)} 
+              onChange={(e) => setUsername(e.target.value.toUpperCase())} 
             />
           </div>
           <div className="form-group">
@@ -45,7 +45,7 @@ export default function AccountLanding(){
             />
           </div>
           <br />
-          <button className="login-btn" onClick={handleLogin}>Login</button>
+          <button type="submit" className="login-btn" onClick={handleLogin}>Login</button>
           <hr/>
           <div className="form-group">
             <p>Don't have an account yet? <button className="signup-link" onClick={handleClickCreateUser}>Sign Up Here</button></p>
