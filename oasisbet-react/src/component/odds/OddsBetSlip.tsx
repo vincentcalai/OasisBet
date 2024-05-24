@@ -19,7 +19,8 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
 
     useEffect(() => {
         let updatedTotalStake = 0;
-        betEvents.forEach(event => updatedTotalStake += event.betAmount);
+        const betSlip = betEvents.betSlip;
+        betSlip.forEach(event => updatedTotalStake += event.betAmount);
         setTotalStake(updatedTotalStake);
 
         setBetSlipSelections(() => {

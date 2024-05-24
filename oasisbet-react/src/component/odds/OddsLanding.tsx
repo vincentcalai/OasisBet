@@ -18,7 +18,7 @@ export default function OddsLanding(){
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(new Map());
     const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
-    const selectedBetsRef = useRef([] as BetSlip[]);
+    const selectedBetsRef = useRef(null as any);
 
     useEffect(() => {
         const fetchData = async (compType) => {
@@ -34,12 +34,15 @@ export default function OddsLanding(){
               event.betSelection = initBetSelection;
               return event;
             });
-    
+
             // Convert startTime from string to Date format
             updatedEvents.forEach(event => event.startTime = new Date(event.startTime));
     
+            const betSlip = selectedBetsRef.current === undefined || selectedBetsRef.current.length === 0 ? 
+                            [] : selectedBetsRef.current.betSlip;
+
             // Record bet selection in current bet slip to match bet selection on screen
-            const updatedSelectedBets = selectedBetsRef.current.map(betInBetSlip => {
+            const updatedSelectedBets = betSlip.map(betInBetSlip => {
               const betEvent = updatedEvents.find(event => event.eventId === betInBetSlip.eventId);
               if (betEvent) {
                 if (betInBetSlip.betTypeCd === SharedVarConstants.BET_TYPE_CD_H2H && betInBetSlip.betSelection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
@@ -54,7 +57,7 @@ export default function OddsLanding(){
             });
 
             selectedBetsRef.current = updatedSelectedBets;
-    
+
             // Save unique event dates from all events retrieved
             const uniqueEventDates = Array.from(new Set(updatedEvents.map(event => event.startTime.toDateString())));
     
@@ -69,6 +72,7 @@ export default function OddsLanding(){
             console.log("logging updatedEventsMap: ", updatedEventsMap);
             } catch (error) {
             // Handle error
+            console.log("error fetching odds data: ", error);
             }
         };
 

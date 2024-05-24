@@ -35,10 +35,16 @@ const betSlipReducer = (state = { betSlip: [] }, action) => {
 const userReducer = (state = { message: '' }, action) => {
     switch (action.type) {
         case 'CREATE_USER':
-            console.log("Create user success in user reducer works! Payload:", action.payload);
+            console.log("Create user success in user reducer works!");
             return {
                 action: 'CREATE',
                 message: action.payload
+            };
+        case 'RESET_MESSAGE':
+            console.log("Resetting user message in user reducer works!");
+            return {
+                ...state,
+                message: ''
             };
         default:
             return state;
