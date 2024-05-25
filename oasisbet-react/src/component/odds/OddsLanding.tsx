@@ -13,12 +13,12 @@ export default function OddsLanding(){
     const dispatch = useDispatch();
     
     const betSlips = useSelector((state: any) => state.betSlip.betSlip);
-    const reducerAction = useSelector((state: any) => state.action);
+    const reducerAction = useSelector((state: any) => state.betSlip.action);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
     const [eventsMap, setEventsMap] = useState<Map<string, BetEvent[]>>(new Map());
     const [placeBetStatus, setPlaceBetStatus] = useState('I'); // I -> Init, C -> Confirm, D -> Done
-    const selectedBetsRef = useRef(null as any);
+    const selectedBetsRef = useRef([] as BetSlip[]);
 
     useEffect(() => {
         const fetchData = async (compType) => {
@@ -77,6 +77,7 @@ export default function OddsLanding(){
     }, [compType]);
 
     useEffect(() => {
+        console.log("Destroying OddsLanding Component.. EMPTY BET SELECTION")
         return () => {
             dispatch({type: 'EMPTY_BET_SELECTION'});
         };
