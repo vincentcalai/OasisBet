@@ -12,7 +12,7 @@ import { fetchOdds } from '../../services/api/ApiService.js';
 export default function OddsLanding(){
     const dispatch = useDispatch();
     
-    const betSlips = useSelector((state: any) => state.betSlip);
+    const betSlips = useSelector((state: any) => state.betSlip.betSlip);
     const reducerAction = useSelector((state: any) => state.action);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
@@ -37,12 +37,9 @@ export default function OddsLanding(){
 
             // Convert startTime from string to Date format
             updatedEvents.forEach(event => event.startTime = new Date(event.startTime));
-    
-            const betSlip = selectedBetsRef.current === undefined || selectedBetsRef.current.length === 0 ? 
-                            [] : selectedBetsRef.current.betSlip;
 
             // Record bet selection in current bet slip to match bet selection on screen
-            const updatedSelectedBets = betSlip.map(betInBetSlip => {
+            const updatedSelectedBets = betSlips.map(betInBetSlip => {
               const betEvent = updatedEvents.find(event => event.eventId === betInBetSlip.eventId);
               if (betEvent) {
                 if (betInBetSlip.betTypeCd === SharedVarConstants.BET_TYPE_CD_H2H && betInBetSlip.betSelection === SharedVarConstants.BET_SELECTION_H2H_HOME) {

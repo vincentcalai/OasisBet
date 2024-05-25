@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
 
-    const betEvents = useSelector((state: any) => state.betSlip);
-    const reducerAction = useSelector((state: any) => state.action);
+    const betEvents = useSelector((state: any) => state.betSlip.betSlip);
+    const reducerAction = useSelector((state: any) => state.betSlip.action);
     const [responseMsg, setResponseMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
@@ -19,8 +19,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
 
     useEffect(() => {
         let updatedTotalStake = 0;
-        const betSlip = betEvents.betSlip;
-        betSlip.forEach(event => updatedTotalStake += event.betAmount);
+        betEvents.forEach(event => updatedTotalStake += event.betAmount);
         setTotalStake(updatedTotalStake);
 
         setBetSlipSelections(() => {
