@@ -8,11 +8,9 @@ import { UserModel } from '../../model/UserModel.tsx';
 import { CreateUserModel } from '../../model/CreateUserModel.tsx';
 import { isEqualToOtherValue, isShorterThanMinLength, isLongerThanMaxLength, isNotEmpty, isOnlyContainsAlphaNumeric, isOnlyContainsNumeric, isValidEmail } from '../util/validation.js';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 const CreateUser = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [cfmPassword, setCfmPassword] = useState('');
@@ -118,8 +116,7 @@ const CreateUser = () => {
           } else {
             //create user success! sending resultMessage back to account login screen
             console.log("User created successfully:", response);
-            dispatch({type: 'CREATE_USER', payload: response.resultMessage });
-            navigate('/account');
+            navigate('/account', { state: { message: response.resultMessage } });
             setErrorMsg('');
           }
       } catch (error) {
