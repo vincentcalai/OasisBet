@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import './ResultLanding.css';
 import SharedVarConstants from "../../constants/SharedVarConstants.js";
 import CompSideNav from '../common/CompSideNav.tsx';
@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ResultEvent } from "../../constants/MockData.js";
 import { fetchResults } from "../../services/api/ApiService.js";
+import DateError from "../util/DateError.tsx";
 
 
 export default function ResultLanding(){
@@ -25,6 +26,8 @@ export default function ResultLanding(){
     const [selectedDate, setSelectedDate] = useState('last24Hrs');
     const [dateFrom, setDateFrom] = useState<Date | null>(fromDate);
     const [dateTo, setDateTo] = useState<Date | null>(currentDate);
+    const [dateErrorMsg, setDateErrorMsg] = useState('');
+
 
     useEffect(() => {
         fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,22 +107,21 @@ export default function ResultLanding(){
         }
     };
 
-    function isFilterDisabled(): boolean {
-        if(!dateFrom || !dateTo){
-            return true;
-        } 
-        return validateDateFromLaterThanDateTo(dateFrom, dateTo);
-    }
-
-    const validateDateFromLaterThanDateTo = (dateFrom, dateTo) => {
+    const validateDateFromLaterThanDateTo = useCallback((dateFrom, dateTo) => {
         if (dateFrom && dateTo && dateFrom > dateTo) {
-            console.log("validate date fail!")
-            // setDateErrorMsg(sharedVar.INVALID_DATE_FROM_AND_TO_ERR_MSG);
+            setDateErrorMsg(SharedVarConstants.INVALID_DATE_FROM_AND_TO_ERR_MSG);
             return true;
         }
-        // setDateErrorMsg("");
+        setDateErrorMsg("");
         return false;
-    };
+    }, []);
+
+    const isFilterDisabled = useMemo(() => {
+        if (!dateFrom || !dateTo) {
+            return true;
+        }
+        return validateDateFromLaterThanDateTo(dateFrom, dateTo);
+    }, [dateFrom, dateTo, validateDateFromLaterThanDateTo]);
 
     return (
         <>
@@ -147,7 +149,8 @@ export default function ResultLanding(){
                                             </div>
                                         </div>
                                         <div className="col-md-2 offset-md-1">
-                                            <label className="control-label dates-section-label-width">Date From</label>
+                                            <label className={`control-label dates-section-label-width error-text ${dateErrorMsg ? 'highlightLabel' : ''}`}>
+                                                Date From</label>
                                             <div className="filter-section">
                                                 <DatePicker
                                                     showIcon
@@ -163,7 +166,8 @@ export default function ResultLanding(){
                                             </div>
                                         </div>
                                         <div className="col-md-2">
-                                            <label className="control-label dates-section-label-width">Date To</label>
+                                            <label className={`control-label dates-section-label-width error-text ${dateErrorMsg ? 'highlightLabel' : ''}`}>
+                                                Date To</label>
                                             <div className="filter-section">
                                                 <DatePicker
                                                     showIcon
@@ -180,9 +184,12 @@ export default function ResultLanding(){
                                         </div>
                                         <div className="col-md-2">
                                             <Button type="button" variant="secondary" className="btn-filter" 
-                                                    disabled={isFilterDisabled()} onClick={handleFilterClick} >Filter</Button>
+                                                    disabled={isFilterDisabled} onClick={handleFilterClick} >Filter</Button>
                                         </div>
                                     </div>
+
+                                    <DateError dateErrorMsg={dateErrorMsg} />
+
                                     <br />
                                     <Table style={{ width: '80%', margin: '0 auto' }}>
                                         <thead>

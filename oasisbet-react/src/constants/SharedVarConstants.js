@@ -59,6 +59,8 @@ const SharedVarConstants = {
     CFM_UPDATE_PW_DIALOG_MSG: 'Confirm password update?',
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
 
+    INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
+
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',
     MILLI_SEC_24_HRS: 86400000, // 24 hours in milliseconds
