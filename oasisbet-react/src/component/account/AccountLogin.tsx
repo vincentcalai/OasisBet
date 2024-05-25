@@ -28,7 +28,7 @@ export default function AccountLanding(){
         </Card.Header>
         
         <Card.Body className="card-body d-flex flex-column align-items-center justify-content-center">
-        {createUserMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{userSucessMsg}</div>}
+        {createUserMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{createUserMsg}</div>}
           <br />
           <div className="form-group ">
             <label htmlFor="username">Username:</label>
