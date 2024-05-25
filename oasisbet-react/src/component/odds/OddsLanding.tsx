@@ -39,7 +39,7 @@ export default function OddsLanding(){
             updatedEvents.forEach(event => event.startTime = new Date(event.startTime));
 
             // Record bet selection in current bet slip to match bet selection on screen
-            const updatedSelectedBets = betSlips.map(betInBetSlip => {
+            const updatedSelectedBets = selectedBetsRef.current.map(betInBetSlip => {
               const betEvent = updatedEvents.find(event => event.eventId === betInBetSlip.eventId);
               if (betEvent) {
                 if (betInBetSlip.betTypeCd === SharedVarConstants.BET_TYPE_CD_H2H && betInBetSlip.betSelection === SharedVarConstants.BET_SELECTION_H2H_HOME) {
