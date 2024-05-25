@@ -104,6 +104,23 @@ export default function ResultLanding(){
         }
     };
 
+    function isFilterDisabled(): boolean {
+        if(!dateFrom || !dateTo){
+            return true;
+        } 
+        return validateDateFromLaterThanDateTo(dateFrom, dateTo);
+    }
+
+    const validateDateFromLaterThanDateTo = (dateFrom, dateTo) => {
+        if (dateFrom && dateTo && dateFrom > dateTo) {
+            console.log("validate date fail!")
+            // setDateErrorMsg(sharedVar.INVALID_DATE_FROM_AND_TO_ERR_MSG);
+            return true;
+        }
+        // setDateErrorMsg("");
+        return false;
+    };
+
     return (
         <>
             <div className="container">
@@ -162,7 +179,8 @@ export default function ResultLanding(){
                                             </div>
                                         </div>
                                         <div className="col-md-2">
-                                            <Button type="button" variant="secondary" className="btn-filter" onClick={handleFilterClick} >Filter</Button>
+                                            <Button type="button" variant="secondary" className="btn-filter" 
+                                                    disabled={isFilterDisabled()} onClick={handleFilterClick} >Filter</Button>
                                         </div>
                                     </div>
                                     <br />
