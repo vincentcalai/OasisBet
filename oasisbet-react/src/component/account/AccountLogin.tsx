@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './AccountLogin.css';
 import { Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import SharedVarConstants from "../../constants/SharedVarConstants";
 
 export default function AccountLogin({onLogin}){
   
@@ -20,7 +21,7 @@ export default function AccountLogin({onLogin}){
     } else {
       console.log("Invalid Credential!");
       setResponseCode(1);
-      setResponseMsg("Please enter a valid credential. Login failed.");
+      setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
     }
   };
 

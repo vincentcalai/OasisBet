@@ -60,6 +60,7 @@ const SharedVarConstants = {
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
 
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
+    INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
 
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',
