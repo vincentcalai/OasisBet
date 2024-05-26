@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import './ResultLanding.css';
 import SharedVarConstants from "../../constants/SharedVarConstants.js";
 import CompSideNav from '../common/CompSideNav.tsx';
@@ -107,21 +107,17 @@ export default function ResultLanding(){
         }
     };
 
-    const validateDateFromLaterThanDateTo = useCallback((dateFrom, dateTo) => {
-        if (dateFrom && dateTo && dateFrom > dateTo) {
+    const isFilterDisabled = useMemo(() => {
+        if (!dateFrom || !dateTo) {
+            return true;
+        } 
+        if (dateFrom > dateTo) {
             setDateErrorMsg(SharedVarConstants.INVALID_DATE_FROM_AND_TO_ERR_MSG);
             return true;
         }
         setDateErrorMsg("");
         return false;
-    }, []);
-
-    const isFilterDisabled = useMemo(() => {
-        if (!dateFrom || !dateTo) {
-            return true;
-        }
-        return validateDateFromLaterThanDateTo(dateFrom, dateTo);
-    }, [dateFrom, dateTo, validateDateFromLaterThanDateTo]);
+    }, [dateFrom, dateTo]);
 
     return (
         <>
