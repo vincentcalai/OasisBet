@@ -7,8 +7,7 @@ import { Card } from "react-bootstrap";
 
 export default function AccountLanding(){
 
-    const isUserLoggedIn = false;
-
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
     const [accountMenuSelect, setAccountMenuSelect] = useState(SharedVarConstants.NAV_MENU_SELECT_ACCOUNT_OVERVIEW);
     const [accountMenuHdr, setAccountMenuHdr] = useState(SharedVarConstants.ACCOUNT_OVERVIEW_HEADER);
 
@@ -48,11 +47,16 @@ export default function AccountLanding(){
             }
         }
     }
+
+    function handleLogin(onLogin){
+        console.log("in handleLogin: ", onLogin);
+        setIsUserLoggedIn(onLogin);
+    }
     
 
     return (
         <>
-            {!isUserLoggedIn && <AccountLogin></AccountLogin>}
+            {!isUserLoggedIn && <AccountLogin onLogin={handleLogin}></AccountLogin>}
 
             {isUserLoggedIn && 
                 <div className="container">
