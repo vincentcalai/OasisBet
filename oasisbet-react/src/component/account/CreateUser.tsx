@@ -116,7 +116,7 @@ const CreateUser = () => {
           } else {
             //create user success! sending resultMessage back to account login screen
             console.log("User created successfully:", response);
-            navigate('/account', { state: { message: response.resultMessage } });
+            navigate('/account', { state: { code: 0, message: response.resultMessage } });
             setErrorMsg('');
           }
       } catch (error) {

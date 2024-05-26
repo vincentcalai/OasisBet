@@ -37,7 +37,7 @@ const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
 
 const fetchOdds = async (compType) => {
     try {
-        console.log("calling retrieve odds api!");
+        console.log("calling /odds/retrieveOdds api!");
         console.log("compType: " + compType);
 
         const response = await axios.get('http://localhost:8765/odds/retrieveOdds', {
@@ -62,7 +62,7 @@ const fetchOdds = async (compType) => {
 
 const createUser = async (request) => {
     try {
-        console.log("calling create user api!");
+        console.log("calling /user/createUser api!");
         console.log("create user api request: ", request);
 
         const response = await axios.post('http://localhost:8765/user/createUser', request);
@@ -81,6 +81,28 @@ const createUser = async (request) => {
         throw error;
     }
 };
+
+const submitBets = async (request) => {
+    try {
+        console.log("calling /odds/bets api!");
+        console.log("submit bets api request: ", request);
+
+        const response = await axios.post('http://localhost:8765/odds/bets', request);
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to submit bet');
+        }
+
+        const data = response.data;
+        console.log("Response data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+    }
+};
   
-export { fetchResults, fetchOdds, createUser };
+export { fetchResults, fetchOdds, createUser, submitBets };
   

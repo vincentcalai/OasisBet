@@ -3,9 +3,13 @@ import './OddsBetSlip.css';
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
+import { submitBets } from "../../services/api/ApiService";
+import { SubmitBetsModel } from "../../model/SubmitBetsModel";
+import { useNavigate } from "react-router-dom";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const betEvents = useSelector((state: any) => state.betSlip.betSlip);
     const reducerAction = useSelector((state: any) => state.betSlip.action);
@@ -14,8 +18,6 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
     const [showSingles, setShowSingles] = useState(true);
     const [totalStake, setTotalStake] = useState(0);
-
-    const BET_STATUS_FLAG = true;
 
     useEffect(() => {
         let updatedTotalStake = 0;
@@ -85,15 +87,31 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
         onPlaceBetStatusUpdate("I");
     }
 
-    function handleClickConfirmBet(): void {
-        dispatch({type: 'CLEAR_BET_SELECTION'});
+    const handleClickConfirmBet = async (dispatch, betEvents, onPlaceBetStatusUpdate) => {
+        dispatch({ type: 'CLEAR_BET_SELECTION' });
         onPlaceBetStatusUpdate("D");
-        if(BET_STATUS_FLAG){
-            setResponseMsg("Bet successfully placed!");
-        } else {
+        console.log("confirm place bet! betPLaced: ", betEvents);
+    
+        const submitBetsModel: SubmitBetsModel = {
+            userId: -1,
+            betSlip: betEvents
+        };
+
+        try {
+            const response = await submitBets(submitBetsModel);
+            console.log("Bet submission response:", response);
+            if(response.statusCode === 0){
+                setResponseMsg("Bet successfully placed!");
+            }
+            if (response.statusCode === 4) {
+                navigate('/account', { state: { code: 1, message: response.resultMessage } });
+            }
+
+        } catch (error) {
+            console.error("Error submitting bet:", error);
             setErrorMsg("There is an error with the process");
         }
-    }
+    };
 
     return (
         betSlipSelections.length > 0 && 
@@ -177,7 +195,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                             </button>
                         </div>
                         <div className="col-md-6 d-flex justify-content-center">
-                            <button className="btn btn-success btn-confirm" type="button" onClick={handleClickConfirmBet}>
+                            <button className="btn btn-success btn-confirm" type="button" onClick={() => handleClickConfirmBet(dispatch, betEvents, onPlaceBetStatusUpdate)}>
                                 Confirm
                             </button>
                         </div>

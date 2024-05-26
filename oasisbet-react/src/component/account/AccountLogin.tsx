@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function AccountLanding(){
   
   const location = useLocation();
-  const createUserMsg = location.state?.message;
+  const responseCode = location.state?.code;
+  const responseMsg = location.state?.message;
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +29,8 @@ export default function AccountLanding(){
         </Card.Header>
         
         <Card.Body className="card-body d-flex flex-column align-items-center justify-content-center">
-        {createUserMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{createUserMsg}</div>}
+        {responseCode === 0 && responseMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{responseMsg}</div>}
+        {responseCode !== 0 && responseMsg && <div className="alert alert-danger align-items-center justify-content-center"><b>Fail: </b>{responseMsg}</div>}
           <br />
           <div className="form-group ">
             <label htmlFor="username">Username:</label>
