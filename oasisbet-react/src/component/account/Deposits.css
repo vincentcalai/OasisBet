@@ -1,0 +1,48 @@
+.deposit-section-label-width{
+    text-align: right;
+    font-weight: bold;
+}
+
+.deposit-section-selection-width{
+    margin-left: 20px;
+}
+
+.deposit-acc-label-text{
+    margin-top: 10px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.btn-confirm {
+    margin-top: 30px;
+    background-color: #87be77;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px !important;
+    width: 100px;
+    height: 30px;
+}
+
+.btn-cancel {
+    margin-top: 30px;
+    background-color: red;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px !important;
+    width: 100px;
+    margin-right: 10px;
+    height: 30px;
+}
+
+.btn-cancel:hover {
+    color: black !important;
+    background-color: rgb(255, 131, 131) !important;
+}
+.btn-confirm:hover {
+    color: black;
+    background-color: #c3f7b4;
+}
