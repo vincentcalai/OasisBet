@@ -1,0 +1,29 @@
+.nav-tabs .nav-link {
+    color: grey !important;
+    background-color: white !important;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: black !important;
+    border-bottom: solid 3px !important;
+    border-bottom-color: darkblue !important;
+}
+
+.acc-update-section-label-width{
+    text-align: right;
+    font-weight: bold;
+}
+
+.acc-update-label-text{
+    margin-top: 10px;
+}
+
+.password-section-selection-width{
+    margin-left: 20px;
+}
+
+.btn-pencil{
+    margin-left: 10px;
+    margin-top: 2px;
+    width: 42px;
+}
