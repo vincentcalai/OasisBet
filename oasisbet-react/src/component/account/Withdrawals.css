@@ -10,3 +10,14 @@
 .withdraw-acc-label-text{
     margin-top: 10px;
 }
+
+.link-style {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.link-style:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}

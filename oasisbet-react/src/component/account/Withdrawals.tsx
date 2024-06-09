@@ -1,8 +1,9 @@
 import React from "react";
 import './Withdrawals.css';
 import { Card } from "react-bootstrap";
+import SharedVarConstants from "../../constants/SharedVarConstants";
 
-export default function Withdrawals(){
+export default function Withdrawals({handleNavToTrxHist}){
 
     return (
         <div className="container-fluid">
@@ -16,7 +17,7 @@ export default function Withdrawals(){
                     <br />
                     <br />
                     <span className="control-label check-trx-hist-note">
-                        Note: Check <a href="#trxHist" onClick={() => {/* navToTrxHistMenu() */}}>transaction history</a> for more details.
+                        Note: Check <span className="link-style" onClick={() => handleNavToTrxHist(SharedVarConstants.NAV_MENU_SELECT_TRX_HIST)}>transaction history</span> for more details.
                     </span>
                     <hr />
                     <form>

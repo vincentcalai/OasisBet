@@ -1,8 +1,9 @@
 import React from "react";
 import './Deposits.css';
 import { Card } from "react-bootstrap";
+import SharedVarConstants from "../../constants/SharedVarConstants";
 
-export default function Deposits(){
+export default function Deposits({handleNavToTrxHist}){
 
     return (
         <div className="container-fluid">
@@ -22,7 +23,7 @@ export default function Deposits(){
                     <br />
                     <br />
                     <span className="control-label check-trx-hist-note">
-                        Note: Check <a href="#transaction-history" onClick={() => { /* Add logic to navigate to transaction history */ }}>transaction history</a> for more details.
+                        Note: Check <span className="link-style"  onClick={() => handleNavToTrxHist(SharedVarConstants.NAV_MENU_SELECT_TRX_HIST)}>transaction history</span> for more details.
                     </span>
                     <hr />
                     <form>

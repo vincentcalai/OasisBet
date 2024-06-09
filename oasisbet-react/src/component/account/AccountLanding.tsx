@@ -41,8 +41,8 @@ export default function AccountLanding(){
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_ACCOUNT_UPDATE && <AccountUpdate></AccountUpdate>}
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_TRX_HIST && <TrxHist></TrxHist>}
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_LIMIT_MGMT && <LimitManagement></LimitManagement>}
-                                {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_DEPOSITS && <Deposits></Deposits>}
-                                {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_WITHDRAWALS && <Withdrawals></Withdrawals>}
+                                {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_DEPOSITS && <Deposits handleNavToTrxHist={onHandleAccountMenuSelection}></Deposits>}
+                                {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_WITHDRAWALS && <Withdrawals handleNavToTrxHist={onHandleAccountMenuSelection}></Withdrawals>}
                             </div>
                         </div>
                     </div>
