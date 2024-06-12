@@ -14,7 +14,7 @@ export default function LimitManagement(){
                     <form>
                         <div className="row">
                             <label className="control-label col-sm-3 col-md-3 limit-left-section-label-width">Deposited</label>
-                            <label className="control-label col-sm-6 col-md-6"> </label>
+                            <label className="col-sm-6 col-md-6"> </label>
                             <label className="control-label col-sm-3 col-md-3 limit-right-section-label-width">Current Limit</label>
                         </div>
                         <div className="row">
@@ -52,7 +52,7 @@ export default function LimitManagement(){
                         <br />
                         <div className="row">
                             <label className="control-label col-sm-3 col-md-3 limit-left-section-label-width">Bets</label>
-                            <label className="control-label col-sm-6 col-md-6"></label>
+                            <label className="col-sm-6 col-md-6"></label>
                             <label className="control-label col-sm-3 col-md-3 limit-right-section-label-width">Current Limit</label>
                         </div>
                         <div className="row">

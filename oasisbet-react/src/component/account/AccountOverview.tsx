@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './AccountOverview.css';
 import { Card } from "react-bootstrap";
+import { useSessionStorage } from "../util/useSessionStorage.ts";
+
 
 export default function AccountOverview(){
+    const [accountDetails, setAccountDetails] = useSessionStorage("TEST", {});
 
     return (
         <div className="container-fluid">

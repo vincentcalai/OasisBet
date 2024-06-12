@@ -61,13 +61,4 @@
 
 .dropdown-section {
     position: relative;
-  }
-  
-.dropdown-icon {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    font-size: 24px;
-    transform: translateY(-50%);
-    pointer-events: none;
 }
