@@ -66,6 +66,10 @@ const SharedVarConstants = {
     LAST_3_DAYS: 'last3Days',
     MILLI_SEC_24_HRS: 86400000, // 24 hours in milliseconds
     MILLI_SEC_3_DAYS: 259200000, // 3 days in milliseconds
+
+    HOST_NAME_URL: 'http://localhost:8765/',
+
+    ACCOUNT_DETAILS: 'ACCOUNT_DETAILS'
   };
 
   export default SharedVarConstants;

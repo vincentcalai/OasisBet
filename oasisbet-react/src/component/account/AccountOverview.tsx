@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import './AccountOverview.css';
 import { Card } from "react-bootstrap";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
+import SharedVarConstants from "../../constants/SharedVarConstants.js";
 
 
 export default function AccountOverview(){
-    const [accountDetails, setAccountDetails] = useSessionStorage("TEST", {});
+    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
 
     return (
         <div className="container-fluid">

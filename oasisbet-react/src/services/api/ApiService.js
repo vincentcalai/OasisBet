@@ -1,4 +1,5 @@
 import axios from 'axios';
+import SharedVarConstants from '../../constants/SharedVarConstants.js'; 
 
 const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
     try {
@@ -15,7 +16,7 @@ const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
         console.log("calling retrieve results api!");
         console.log("compType: " + compType + " selectedDate: " + selectedDate + " dateFrom: " + dateFrom + " dateTo: " + dateTo);
 
-        const response = await axios.get('http://localhost:8765/result/retrieveResults', { params });
+        const response = await axios.get(SharedVarConstants.HOST_NAME_URL + 'result/retrieveResults', { params });
         
         console.log("Response: ", response);
 
@@ -40,8 +41,32 @@ const fetchOdds = async (compType) => {
         console.log("calling /odds/retrieveOdds api!");
         console.log("compType: " + compType);
 
-        const response = await axios.get('http://localhost:8765/odds/retrieveOdds', {
+        const response = await axios.get(SharedVarConstants.HOST_NAME_URL + 'odds/retrieveOdds', {
             params: { compType: compType }
+        });
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const data = response.data;
+        console.log("data fetched! data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }   
+};
+
+const fetchAccountDetails = async (username) => {
+    try {
+        console.log("calling account/retrieveAccDetails api!");
+        console.log("username: " + username);
+
+        const response = await axios.get(SharedVarConstants.HOST_NAME_URL + 'account/retrieveAccDetails', {
+            params: { username: username }
         });
 
         console.log("Response: ", response);
@@ -65,7 +90,7 @@ const createUser = async (request) => {
         console.log("calling /user/createUser api!");
         console.log("create user api request: ", request);
 
-        const response = await axios.post('http://localhost:8765/user/createUser', request);
+        const response = await axios.post(SharedVarConstants.HOST_NAME_URL + 'user/createUser', request);
 
         console.log("Response: ", response);
 
@@ -87,7 +112,7 @@ const submitBets = async (request) => {
         console.log("calling /odds/bets api!");
         console.log("submit bets api request: ", request);
 
-        const response = await axios.post('http://localhost:8765/odds/bets', request);
+        const response = await axios.post(SharedVarConstants.HOST_NAME_URL + 'odds/bets', request);
 
         console.log("Response: ", response);
 
@@ -104,5 +129,5 @@ const submitBets = async (request) => {
     }
 };
   
-export { fetchResults, fetchOdds, createUser, submitBets };
+export { fetchResults, fetchOdds, fetchAccountDetails, createUser, submitBets };
   

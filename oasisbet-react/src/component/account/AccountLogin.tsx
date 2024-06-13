@@ -3,6 +3,7 @@ import './AccountLogin.css';
 import { Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants";
+import { fetchAccountDetails } from '../../services/api/ApiService.js';
 
 export default function AccountLogin({onLogin}){
   
@@ -16,7 +17,11 @@ export default function AccountLogin({onLogin}){
 
   const handleLogin = (e) => {
     e.preventDefault();
+    //handle login
     if(username === 'CHOONANN' && password === 'password'){
+      //login successful
+      //TODO: add logic for retrieve account details and set to sessionStorage
+      retrieveAccountDetails('CHOONANN');
       onLogin(true);
     } else {
       console.log("Invalid Credential!");
@@ -28,6 +33,15 @@ export default function AccountLogin({onLogin}){
   function handleClickCreateUser() {
     navigate('/create-user');
   }
+
+  const retrieveAccountDetails = async (username) => {
+    try {
+    const accountDetails = await fetchAccountDetails(username);
+    console.log("accountDetails: ", accountDetails);
+    } catch (error) {
+    // Handle error
+    }
+};
 
   return (
     <div className="container-fluid d-flex align-items-center justify-content-center">
