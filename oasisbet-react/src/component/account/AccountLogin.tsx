@@ -4,6 +4,8 @@ import { Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants";
 import { fetchAccountDetails } from '../../services/api/ApiService.js';
+import { LoginCredentialsModel } from "../../constants/MockData.js";
+import { jwtAuthenticate } from '../../services/api/ApiService.js';
 
 export default function AccountLogin({onLogin}){
   
@@ -15,12 +17,20 @@ export default function AccountLogin({onLogin}){
   const [responseCode, setResponseCode] = useState(location.state?.code);
   const [responseMsg, setResponseMsg] = useState(location.state?.message);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     //handle login
+    const loginCredentialModel = new LoginCredentialsModel(username, password);
+    const response = await jwtAuthenticate(loginCredentialModel);
+    
+    console.log("jwtAuthenticate response: ", response);
     if(username === 'CHOONANN' && password === 'password'){
       //login successful
       //TODO: add logic for retrieve account details and set to sessionStorage
+      const token = response.token;
+      sessionStorage.setItem(SharedVarConstants.AUTH_USER, username);
+      sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
+      sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
       retrieveAccountDetails('CHOONANN');
       onLogin(true);
     } else {
@@ -36,8 +46,8 @@ export default function AccountLogin({onLogin}){
 
   const retrieveAccountDetails = async (username) => {
     try {
-    const accountDetails = await fetchAccountDetails(username);
-    console.log("accountDetails: ", accountDetails);
+      const accountDetails = await fetchAccountDetails(username);
+      console.log("accountDetails: ", accountDetails);
     } catch (error) {
     // Handle error
     }

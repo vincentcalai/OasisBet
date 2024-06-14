@@ -69,7 +69,11 @@ const SharedVarConstants = {
 
     HOST_NAME_URL: 'http://localhost:8765/',
 
-    ACCOUNT_DETAILS: 'ACCOUNT_DETAILS'
+    ACCOUNT_DETAILS: 'ACCOUNT_DETAILS',
+    AUTH_USER: 'AUTH_USER',
+    AUTHORIZATION: 'AUTHORIZATION',
+    LOGIN_TIME: 'LOGIN_TIME'
+
   };
 
   export default SharedVarConstants;

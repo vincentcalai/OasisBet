@@ -84,6 +84,27 @@ const fetchAccountDetails = async (username) => {
     }   
 };
 
+const jwtAuthenticate = async (request) => {
+    try {
+        console.log("calling /user/authenticate api!");
+        console.log("user authenticate api request: ", request);
+
+        const response = await axios.post(SharedVarConstants.HOST_NAME_URL + 'user/authenticate', request);
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to authenticate user');
+        }
+
+        const data = response.data;
+        console.log("Response data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error authenticate user:', error);
+        throw error;
+    }
+};
 
 const createUser = async (request) => {
     try {
@@ -129,5 +150,5 @@ const submitBets = async (request) => {
     }
 };
   
-export { fetchResults, fetchOdds, fetchAccountDetails, createUser, submitBets };
+export { fetchResults, fetchOdds, fetchAccountDetails, createUser, submitBets, jwtAuthenticate };
   

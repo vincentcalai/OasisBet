@@ -71,64 +71,17 @@ export class ResultEvent {
     awayTeam;
     score;
     lastUpdated;
-
-    constructor(eventId, compType, eventDesc, startTime, completed, homeTeam, awayTeam, score, lastUpdated) {
-        this.eventId = eventId;
-        this.compType = compType;
-        this.eventDesc = eventDesc;
-        this.startTime = startTime;
-        this.completed = completed;
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-        this.score = score;
-        this.lastUpdated = lastUpdated;
-    }
 }
 
-// export function generateSampleResultData(){
-//     const resultList = [];
+export class LoginCredentialsModel {
+    username;
+    password;
 
-//     const event1 = new ResultEvent(
-//         100088,
-//         'soccer_epl',
-//         'Manchester United vs Liverpool',
-//         '2024-04-01T18:00:00',
-//         true,
-//         'Manchester United',
-//         'Liverpool',
-//         '2 - 1',
-//         '2024-04-01T20:00:00'
-//     );
-    
-//     const event2 = new ResultEvent(
-//         100089,
-//         'soccer_epl',
-//         'Brentford vs Arsenal',
-//         '2024-04-02T20:00:00',
-//         false,
-//         'Brentford',
-//         'Arsenal',
-//         '0 - 5',
-//         '2024-04-02T22:00:00'
-//     );
-
-//     const event3 = new ResultEvent(
-//         100090,
-//         'soccer_epl',
-//         'West Ham United vs Tottenham Hotspur',
-//         '2024-04-02T20:00:00',
-//         false,
-//         'West Ham United',
-//         'Tottenham Hotspur',
-//         '2 - 3',
-//         '2024-04-02T22:00:00'
-//     );
-
-//     resultList.push(event1);
-//     resultList.push(event2);
-//     resultList.push(event3);
-//     return resultList;
-// }
+    constructor(username, password){
+        this.username = username;
+        this.password = password;
+    }
+}
 
 export function generateSampleData() {
     const eventsMap = new Map();
