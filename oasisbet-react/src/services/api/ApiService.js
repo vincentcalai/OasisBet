@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosInstance from './InterceptorService.js';
 import SharedVarConstants from '../../constants/SharedVarConstants.js'; 
 
 const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
@@ -65,8 +66,8 @@ const fetchAccountDetails = async (username) => {
         console.log("calling account/retrieveAccDetails api!");
         console.log("username: " + username);
 
-        const response = await axios.get(SharedVarConstants.HOST_NAME_URL + 'account/retrieveAccDetails', {
-            params: { username: username }
+        const response = await axiosInstance.get(SharedVarConstants.HOST_NAME_URL + 'account/retrieveAccDetails', {
+            params: { user: username }
         });
 
         console.log("Response: ", response);
