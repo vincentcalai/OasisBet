@@ -83,6 +83,17 @@ export class LoginCredentialsModel {
     }
 }
 
+export class AccountModel {
+    accId;
+    usrId;
+    balance;
+    depositLimit;
+    betLimit;
+    depositAmt;
+    withdrawalAmt;
+    actionType;
+}
+
 export function generateSampleData() {
     const eventsMap = new Map();
 

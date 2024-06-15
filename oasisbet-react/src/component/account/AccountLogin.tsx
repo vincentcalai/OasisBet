@@ -19,24 +19,27 @@ export default function AccountLogin({onLogin}){
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    //handle login
     const loginCredentialModel = new LoginCredentialsModel(username, password);
-    const response = await jwtAuthenticate(loginCredentialModel);
-    
-    console.log("jwtAuthenticate response: ", response);
-    if(username === 'CHOONANN' && password === 'password'){
-      //login successful
-      //TODO: add logic for retrieve account details and set to sessionStorage
-      const token = response.token;
-      sessionStorage.setItem(SharedVarConstants.AUTH_USER, username);
-      sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
-      sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
-      retrieveAccountDetails(username);
-      onLogin(true);
-    } else {
-      console.log("Invalid Credential!");
-      setResponseCode(1);
-      setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+    try {
+        const response = await jwtAuthenticate(loginCredentialModel);
+        console.log("JWT authtentication: ", response);
+        if(response){
+          //login successful
+          const token = response.token;
+          sessionStorage.setItem(SharedVarConstants.AUTH_USER, username);
+          sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
+          sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
+          retrieveAccountDetails(username);
+          onLogin(true);
+        } else {
+          console.log("Invalid Credential!");
+          setResponseCode(1);
+          setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+        }
+    } catch (error) {
+        console.log("Invalid Credential, ", error);
+        setResponseCode(1);
+        setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
     }
   };
 
@@ -47,11 +50,12 @@ export default function AccountLogin({onLogin}){
   const retrieveAccountDetails = async (username) => {
     try {
       const accountDetails = await fetchAccountDetails(username);
-      console.log("accountDetails: ", accountDetails);
+      console.log("accountDetails: ", JSON.stringify(accountDetails));
+      sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails));
     } catch (error) {
-    // Handle error
+      console.log("Error when retrieving account details!");
     }
-};
+  };
 
   return (
     <div className="container-fluid d-flex align-items-center justify-content-center">

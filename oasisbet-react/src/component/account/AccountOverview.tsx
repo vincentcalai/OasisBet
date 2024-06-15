@@ -1,12 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './AccountOverview.css';
 import { Card } from "react-bootstrap";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants.js";
+import { AccountModel } from "../../constants/MockData.js";
 
 
 export default function AccountOverview(){
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [accountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [balance, setBalance] = useState('NA');
+    const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
+    const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
+
+    useEffect(() => {
+        const { account } = accountDetails || {};
+        const { balance, ytdDepositAmt, ytdWithdrawalAmt } = account || {};
+
+        setBalance((balance ?? 'NA').toString());
+        setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
+        setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
+    }, [accountDetails]);
 
     return (
         <div className="container-fluid">
@@ -19,13 +32,13 @@ export default function AccountOverview(){
                     Balance
                 </label>
                 <div className="dashboard-sidemenu-value">
-                    $100.00
+                    ${balance}
                 </div>
                 <label className="control-label">
                     Deposit
                 </label>
                 <div className="dashboard-sidemenu-value">
-                    $50.00
+                    ${ytdDepositAmt}
                 </div>
                 <div className="text_year_to_date">
                     (Year To Date)
@@ -34,7 +47,7 @@ export default function AccountOverview(){
                     Withdrawal
                 </label>
                 <div className="dashboard-sidemenu-value">
-                    $28.00
+                    ${ytdWithdrawalAmt}
                 </div>
                 <div className="text_year_to_date">
                     (Year To Date)

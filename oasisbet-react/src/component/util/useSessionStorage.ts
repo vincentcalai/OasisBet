@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 export function getSessionStorageOrDefault(key, defaultVal){
-
     const storedItem = sessionStorage.getItem(key);
     if(!storedItem){
         return defaultVal;
@@ -9,7 +8,7 @@ export function getSessionStorageOrDefault(key, defaultVal){
     return JSON.parse(storedItem);
 }
 
-export function useSessionStorage(key, defaultVal){
+export function useSessionStorage<T>(key, defaultVal){
     const [value, setValue] = useState(getSessionStorageOrDefault(key,defaultVal));
     useEffect(() => {
         sessionStorage.setItem(key, JSON.stringify(value))
