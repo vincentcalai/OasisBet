@@ -2,8 +2,12 @@ import './LoginMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Button from 'react-bootstrap/Button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiService';
+import { AccountModel, LoginCredentialsModel } from '../../constants/MockData';
+import SharedVarConstants from '../../constants/SharedVarConstants.js';
+import { useSessionStorage } from '../util/useSessionStorage.ts';
 
 export default function LoginMenu(){
 
@@ -11,6 +15,17 @@ export default function LoginMenu(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false as boolean);
+    const [accountDetails, setAccountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [balance, setBalance] = useState('NA');
+
+    useEffect(() => {
+        console.log("accountDetails: ", accountDetails);
+        const { account } = accountDetails || {};
+        const { balance } = account || {};
+
+        setBalance((balance ?? 'NA').toString());
+        setAccountDetails(accountDetails);
+    }, [accountDetails, setAccountDetails]);
 
     const handleLoginInputChange = (event, type) => {
         if(type === 'username'){
@@ -20,12 +35,43 @@ export default function LoginMenu(){
         }
     };
 
-    function handleSubmitForm(event){
+    async function handleSubmitForm(event){
         event.preventDefault();
-        if(username && password && username === "CHOONANN" && password === "password"){
+        const loginCredentialModel = new LoginCredentialsModel(username, password);
+        try {
+            const response = await jwtAuthenticate(loginCredentialModel);
+            console.log("JWT authtentication: ", response);
+            if(response){
+            //login successful
+            const token = response.token;
+            sessionStorage.setItem(SharedVarConstants.AUTH_USER, username);
+            sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
+            sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
+            retrieveAccountDetails(username);
             setIsLoggedIn(true);
+            } else {
+                //navigate to Account Login page and show Invalid Credential error
+                console.log("Invalid Credential!");
+                // setResponseCode(1);
+                // setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+            }
+        } catch (error) {
+            //navigate to Account Login page and show Invalid Credential error
+            console.log("Invalid Credential, ", error);
+            // setResponseCode(1);
+            // setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
         }
     }
+
+    const retrieveAccountDetails = async (username) => {
+        try {
+          const accountDetails = await fetchAccountDetails(username);
+          console.log("accountDetails: ", JSON.stringify(accountDetails));
+          sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails));
+        } catch (error) {
+          console.log("Error when retrieving account details!");
+        }
+    };
 
     function handleLogout(){
         if(window.confirm("Are you sure to logout?")) {
@@ -33,8 +79,16 @@ export default function LoginMenu(){
             setIsLoggedIn(false);
             setUsername('');
             setPassword('');
+            clearLocalStorage();
         }
     }
+
+    function clearLocalStorage() {
+        sessionStorage.removeItem(SharedVarConstants.AUTH_USER);
+        sessionStorage.removeItem(SharedVarConstants.AUTHORIZATION);
+        sessionStorage.removeItem(SharedVarConstants.ACCOUNT_DETAILS);
+        sessionStorage.removeItem(SharedVarConstants.LOGIN_TIME);
+      }
 
     function handleClickCreateUser(){
         navigate('/create-user');
@@ -54,7 +108,7 @@ export default function LoginMenu(){
                             <span className="login-username-tag">&nbsp; CHOONANN</span>
                         </li>
                         <li className ="nav-item">
-                            <span className="balance-textbox">Balance: $99.88</span>
+                            <span className="balance-textbox">Balance: ${balance}</span>
                         </li>
                     </ul>
                 </div>
