@@ -52,14 +52,12 @@ export default function LoginMenu(){
             } else {
                 //navigate to Account Login page and show Invalid Credential error
                 console.log("Invalid Credential!");
-                // setResponseCode(1);
-                // setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+                navigate('/account', { state: { code: 1, message: SharedVarConstants.INVALID_LOGIN_ERR_MSG } });
             }
         } catch (error) {
             //navigate to Account Login page and show Invalid Credential error
             console.log("Invalid Credential, ", error);
-            // setResponseCode(1);
-            // setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+            navigate('/account', { state: { code: 1, message: SharedVarConstants.INVALID_LOGIN_ERR_MSG } });
         }
     }
 

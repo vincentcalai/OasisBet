@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './AccountLogin.css';
 import { Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +16,11 @@ export default function AccountLogin({onLogin}){
 
   const [responseCode, setResponseCode] = useState(location.state?.code);
   const [responseMsg, setResponseMsg] = useState(location.state?.message);
+
+  useEffect(() => {
+    setResponseCode(location.state?.code);
+    setResponseMsg(location.state?.message);
+  }, [location]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
