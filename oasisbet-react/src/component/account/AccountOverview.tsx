@@ -7,19 +7,21 @@ import { AccountModel } from "../../constants/MockData.js";
 
 
 export default function AccountOverview(){
-    const [accountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [accountDetails, setAccountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
     const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
 
     useEffect(() => {
+        console.log("accountDetails: ", accountDetails);
         const { account } = accountDetails || {};
         const { balance, ytdDepositAmt, ytdWithdrawalAmt } = account || {};
 
         setBalance((balance ?? 'NA').toString());
         setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
         setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
-    }, [accountDetails]);
+        setAccountDetails(accountDetails);
+    }, [accountDetails, setAccountDetails]);
 
     return (
         <div className="container-fluid">
