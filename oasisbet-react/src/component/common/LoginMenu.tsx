@@ -8,15 +8,18 @@ import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiServ
 import { AccountModel, LoginCredentialsModel } from '../../constants/MockData';
 import SharedVarConstants from '../../constants/SharedVarConstants.js';
 import { useSessionStorage } from '../util/useSessionStorage.ts';
+import { updateLoginDetails } from '../../actions/LoginAction.ts';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function LoginMenu(){
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false as boolean);
     const [accountDetails, setAccountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
+    const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
 
     useEffect(() => {
         console.log("accountDetails: ", accountDetails);
@@ -37,6 +40,7 @@ export default function LoginMenu(){
 
     async function handleSubmitForm(event){
         event.preventDefault();
+        console.log("username: ", username, " password: ", password);
         const loginCredentialModel = new LoginCredentialsModel(username, password);
         try {
             const response = await jwtAuthenticate(loginCredentialModel);
@@ -48,7 +52,7 @@ export default function LoginMenu(){
             sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
             sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
             retrieveAccountDetails(username);
-            setIsLoggedIn(true);
+            dispatch(updateLoginDetails('isUserLoggedIn', true));
             } else {
                 //navigate to Account Login page and show Invalid Credential error
                 console.log("Invalid Credential!");
@@ -74,10 +78,10 @@ export default function LoginMenu(){
     function handleLogout(){
         if(window.confirm("Are you sure to logout?")) {
             console.log("logout ok");
-            setIsLoggedIn(false);
             setUsername('');
             setPassword('');
             clearLocalStorage();
+            dispatch(updateLoginDetails('isUserLoggedIn', false));
         }
     }
 
@@ -95,7 +99,7 @@ export default function LoginMenu(){
     return (
         <>
             {
-            isLoggedIn && 
+            isUserLoggedIn && 
                 <div className="right-navbar">
                     <ul className="navbar-nav">
                         <li className="nav-item user-menu-display">
@@ -113,7 +117,7 @@ export default function LoginMenu(){
             }
 
             {
-            !isLoggedIn && 
+            !isUserLoggedIn && 
                 <div className="right-navbar login-container">
                     <ul className="navbar-nav">
                         <li className="nav-item">

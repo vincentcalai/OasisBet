@@ -9,10 +9,11 @@ import AccountUpdate from "./AccountUpdate.tsx";
 import Withdrawals from "./Withdrawals.tsx";
 import Deposits from "./Deposits.tsx";
 import LimitManagement from "./LimitManagement.tsx";
+import { useSelector } from "react-redux";
 
 export default function AccountLanding(){
 
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+    const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
     const [accountMenuSelect, setAccountMenuSelect] = useState(SharedVarConstants.NAV_MENU_SELECT_ACCOUNT_OVERVIEW);
 
     const onHandleAccountMenuSelection = (menuSelect) => {
@@ -21,7 +22,6 @@ export default function AccountLanding(){
 
     function handleLogin(onLogin){
         console.log("in handleLogin: ", onLogin);
-        setIsUserLoggedIn(onLogin);
     }
 
     return (
