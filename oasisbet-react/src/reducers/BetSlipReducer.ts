@@ -1,6 +1,3 @@
-
-import {createStore, combineReducers } from 'redux';
-
 const betSlipReducer = (state = { betSlip: [] }, action) => {
     switch (action.type) {
         case 'ADD_BET_SELECTION':
@@ -32,10 +29,4 @@ const betSlipReducer = (state = { betSlip: [] }, action) => {
     }
 }
 
-const rootReducer = combineReducers({
-    betSlip: betSlipReducer
-});
-
-const store = createStore(rootReducer);
-
-export default store;
+export default betSlipReducer;

@@ -6,9 +6,12 @@ import SharedVarConstants from "../../constants/SharedVarConstants";
 import { fetchAccountDetails } from '../../services/api/ApiService.js';
 import { LoginCredentialsModel } from "../../constants/MockData.js";
 import { jwtAuthenticate } from '../../services/api/ApiService.js';
+import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { useDispatch } from "react-redux";
 
 export default function AccountLogin({onLogin}){
   
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -35,6 +38,7 @@ export default function AccountLogin({onLogin}){
           sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
           sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
           retrieveAccountDetails(username);
+          dispatch(updateLoginDetails('isUserLoggedIn', true));
           onLogin(true);
         } else {
           console.log("Invalid Credential!");
