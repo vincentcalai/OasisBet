@@ -9,7 +9,7 @@ import { jwtAuthenticate } from '../../services/api/ApiService.js';
 import { updateLoginDetails } from "../../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 
-export default function AccountLogin({onLogin}){
+export default function AccountLogin(){
   
   const dispatch = useDispatch();
   const location = useLocation();
@@ -39,7 +39,6 @@ export default function AccountLogin({onLogin}){
           sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
           retrieveAccountDetails(username);
           dispatch(updateLoginDetails('isUserLoggedIn', true));
-          onLogin(true);
         } else {
           console.log("Invalid Credential!");
           setResponseCode(1);

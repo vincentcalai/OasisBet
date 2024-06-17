@@ -20,13 +20,9 @@ export default function AccountLanding(){
         setAccountMenuSelect(menuSelect);
     };
 
-    function handleLogin(onLogin){
-        console.log("in handleLogin: ", onLogin);
-    }
-
     return (
         <>
-            {!isUserLoggedIn && <AccountLogin onLogin={handleLogin}></AccountLogin>}
+            {!isUserLoggedIn && <AccountLogin></AccountLogin>}
 
             {isUserLoggedIn && 
                 <div className="container">
