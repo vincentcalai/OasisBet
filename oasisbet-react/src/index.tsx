@@ -8,8 +8,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import {Provider} from 'react-redux';
 import rootReducer from './store/index.ts';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
-import { configureStore } from '@reduxjs/toolkit'
+import { persistReducer, persistStore } from 'redux-persist';
+import { createStore } from '@reduxjs/toolkit'
+import { PersistGate } from 'redux-persist/integration/react';
 
 const persistConfig = {
   key: 'root',
@@ -18,16 +19,17 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = configureStore({
-  reducer: persistedReducer
-})
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
 const domNode = document.getElementById('root')!;
 const root = createRoot(domNode);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
