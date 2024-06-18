@@ -8,7 +8,7 @@ export function getSessionStorageOrDefault(key, defaultVal){
     return JSON.parse(storedItem);
 }
 
-export function useSessionStorage<T>(key, defaultVal){
+export function useSessionStorage(key, defaultVal){
     const [value, setValue] = useState(getSessionStorageOrDefault(key,defaultVal));
     useEffect(() => {
         sessionStorage.setItem(key, JSON.stringify(value))

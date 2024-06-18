@@ -6,12 +6,21 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import {Provider} from 'react-redux';
-import { createStore } from 'redux';
 import rootReducer from './store/index.ts';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit'
 
-const store = createStore(
-  rootReducer
-)
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer
+})
 
 const domNode = document.getElementById('root')!;
 const root = createRoot(domNode);
