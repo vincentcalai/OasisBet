@@ -16,7 +16,7 @@ export default function AccountOverview(){
         const { account } = accountDetails || {};
         const { balance, ytdDepositAmt, ytdWithdrawalAmt } = account || {};
 
-        setBalance((balance ?? 'NA').toString());
+        setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
         setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
         setAccountDetails(accountDetails);

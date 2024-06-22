@@ -25,8 +25,7 @@ export default function LoginMenu(){
         console.log("retrievedAccountDetails in LoginMenu: ", retrievedAccountDetails);
         const { account } = retrievedAccountDetails || {};
         const { balance } = account || {};
-        const formattedBalance = (balance ?? 'NA').toString();
-        setBalance(formattedBalance);
+        setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
     }, [isUserLoggedIn]);
 
     const handleLoginInputChange = (event, type) => {
