@@ -3,17 +3,16 @@ import './AccountOverview.css';
 import { Card } from "react-bootstrap";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants.js";
-import { AccountModel } from "../../constants/MockData.js";
 
 
 export default function AccountOverview(){
-    const [accountDetails, setAccountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
     const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
 
     useEffect(() => {
-        console.log("accountDetails: ", accountDetails);
+        console.log("accountDetails in AccountOverview: ", accountDetails);
         const { account } = accountDetails || {};
         const { balance, ytdDepositAmt, ytdWithdrawalAmt } = account || {};
 

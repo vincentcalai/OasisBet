@@ -5,9 +5,9 @@ import Button from 'react-bootstrap/Button';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiService';
-import { AccountModel, LoginCredentialsModel } from '../../constants/MockData';
+import { LoginCredentialsModel } from '../../constants/MockData';
 import SharedVarConstants from '../../constants/SharedVarConstants.js';
-import { useSessionStorage } from '../util/useSessionStorage.ts';
+import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { updateLoginDetails } from '../../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,18 +17,17 @@ export default function LoginMenu(){
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [accountDetails, setAccountDetails] = useSessionStorage<AccountModel>(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
 
     useEffect(() => {
-        console.log("accountDetails: ", accountDetails);
-        const { account } = accountDetails || {};
+        const retrievedAccountDetails: any = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+        console.log("retrievedAccountDetails in LoginMenu: ", retrievedAccountDetails);
+        const { account } = retrievedAccountDetails || {};
         const { balance } = account || {};
-
-        setBalance((balance ?? 'NA').toString());
-        setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails]);
+        const formattedBalance = (balance ?? 'NA').toString();
+        setBalance(formattedBalance);
+    }, [isUserLoggedIn]);
 
     const handleLoginInputChange = (event, type) => {
         if(type === 'username'){

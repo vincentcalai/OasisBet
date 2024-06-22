@@ -38,7 +38,6 @@ export default function AccountLogin(){
           sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
           sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
           retrieveAccountDetails(username);
-          dispatch(updateLoginDetails('isUserLoggedIn', true));
         } else {
           console.log("Invalid Credential!");
           setResponseCode(1);
@@ -58,8 +57,9 @@ export default function AccountLogin(){
   const retrieveAccountDetails = async (username) => {
     try {
       const accountDetails = await fetchAccountDetails(username);
-      console.log("accountDetails: ", JSON.stringify(accountDetails));
+      console.log("accountDetails in AccountLogin: ", JSON.stringify(accountDetails));
       sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails));
+      dispatch(updateLoginDetails('isUserLoggedIn', true));
     } catch (error) {
       console.log("Error when retrieving account details!");
     }
