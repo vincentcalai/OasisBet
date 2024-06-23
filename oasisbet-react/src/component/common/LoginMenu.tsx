@@ -50,7 +50,6 @@ export default function LoginMenu(){
             sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
             sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
             retrieveAccountDetails(username);
-            dispatch(updateLoginDetails('isUserLoggedIn', true));
             } else {
                 //navigate to Account Login page and show Invalid Credential error
                 console.log("Invalid Credential!");
@@ -68,6 +67,7 @@ export default function LoginMenu(){
           const accountDetails = await fetchAccountDetails(username);
           console.log("accountDetails: ", JSON.stringify(accountDetails));
           sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails));
+          dispatch(updateLoginDetails('isUserLoggedIn', true));
         } catch (error) {
           console.log("Error when retrieving account details!");
         }
