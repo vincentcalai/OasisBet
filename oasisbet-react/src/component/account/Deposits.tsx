@@ -8,6 +8,7 @@ export default function Deposits({handleNavToTrxHist}){
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
+    const [depositAmt, setDepositAmt] = useState(0 as number);
 
     useEffect(() => {
         console.log("accountDetails in Deposits: ", accountDetails);
@@ -21,6 +22,9 @@ export default function Deposits({handleNavToTrxHist}){
         setAccountDetails(accountDetails);
     }, [accountDetails, setAccountDetails]);
     
+    const onDepositAmtChange = (e) => {
+        setDepositAmt(e.target.value);
+    }
 
     return (
         <div className="container-fluid">
@@ -63,6 +67,8 @@ export default function Deposits({handleNavToTrxHist}){
                                     className="form-control allCaps"
                                     name="depositAmt"
                                     inputMode="numeric"
+                                    onChange={onDepositAmtChange}
+                                    value={depositAmt === 0 ? '' : depositAmt}
                                 />
                                 </div>
                             </div>
@@ -70,7 +76,8 @@ export default function Deposits({handleNavToTrxHist}){
                         </form>
                     <hr />
                     <div className="dialog-actions">
-                        <button className="btn btn-danger btn-cancel" type="button">
+                        <button className="btn btn-danger btn-cancel" type="button"
+                            onClick={() => setDepositAmt(0)}>
                         Cancel
                         </button>
                         <button className="btn btn-success btn-confirm-action" type="button">

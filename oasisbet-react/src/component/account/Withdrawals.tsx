@@ -5,8 +5,13 @@ import SharedVarConstants from "../../constants/SharedVarConstants";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 
 export default function Withdrawals({handleNavToTrxHist}){
+    const PASSWORD = 'PASSWORD';
+    const WITHDRAWAL_AMT = 'WITHDRAWAL_AMT';
+
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
+    const [withdrawalAmt, setWithdrawalAmt] = useState(0 as number);
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         console.log("accountDetails in Withdrawals: ", accountDetails);
@@ -16,6 +21,15 @@ export default function Withdrawals({handleNavToTrxHist}){
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setAccountDetails(accountDetails);
     }, [accountDetails, setAccountDetails]);
+
+    const onWithdrawalInputChange = (e, type) => {
+        if(type === WITHDRAWAL_AMT) {
+            setWithdrawalAmt(e.target.value);
+        }
+        if(type === PASSWORD) {
+            setPassword(e.target.value);
+        }
+    }
 
     return (
         <div className="container-fluid">
@@ -42,7 +56,9 @@ export default function Withdrawals({handleNavToTrxHist}){
                             <div className="input-group-prepend">
                                 <span className="input-group-text">$</span>
                             </div>
-                            <input id="withdrawalAmt_0" type="text" className="form-control allCaps" name="withdrawalAmt" />
+                            <input id="withdrawalAmt_0" type="text" className="form-control allCaps" name="withdrawalAmt" 
+                            onChange={(e) => onWithdrawalInputChange(e, WITHDRAWAL_AMT)}
+                            value={withdrawalAmt === 0 ? '' : withdrawalAmt}/>
                             </div>
                         </div>
                         </div>
@@ -54,17 +70,27 @@ export default function Withdrawals({handleNavToTrxHist}){
                         <div className="col-sm-4">
                             <div className="input-group">
                             <div className="input-group-prepend"></div>
-                            <input type="password" className="form-control withdraw-section-selection-width no-spinner" id="password_0" name="password" required />
+                            <input type="password" className="form-control withdraw-section-selection-width no-spinner" 
+                            id="password_0" 
+                            name="password" 
+                            onChange={(e) => onWithdrawalInputChange(e, PASSWORD)}
+                            value={password}
+                            required />
                             </div>
                         </div>
                         </div>
                     </form>
                     <hr />
                     <div className="dialog-actions">
-                        <button className="btn btn-danger btn-cancel" type="button" onClick={() => {/* onCancelWithdrawal() */}}>
+                        <button className="btn btn-danger btn-cancel" type="button" 
+                            onClick={() => {
+                                setWithdrawalAmt(0);
+                                setPassword('');
+                            }}>
                         Cancel
                         </button>
-                        <button className="btn btn-success btn-confirm-action" type="button" onClick={() => {/* confirmClicked() */}}>
+                        <button className="btn btn-success btn-confirm-action" type="button" 
+                            onClick={() => {/* confirmClicked() */}}>
                         Confirm
                         </button>
                     </div>
