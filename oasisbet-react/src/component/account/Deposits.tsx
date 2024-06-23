@@ -56,7 +56,7 @@ export default function Deposits({handleNavToTrxHist}){
                         <button className="btn btn-danger btn-cancel" type="button">
                         Cancel
                         </button>
-                        <button className="btn btn-success btn-confirm" type="button">
+                        <button className="btn btn-success btn-confirm-action" type="button">
                         Confirm
                         </button>
                     </div>

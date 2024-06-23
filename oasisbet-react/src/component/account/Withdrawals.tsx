@@ -52,7 +52,7 @@ export default function Withdrawals({handleNavToTrxHist}){
                         <button className="btn btn-danger btn-cancel" type="button" onClick={() => {/* onCancelWithdrawal() */}}>
                         Cancel
                         </button>
-                        <button className="btn btn-success btn-confirm" type="button" onClick={() => {/* confirmClicked() */}}>
+                        <button className="btn btn-success btn-confirm-action" type="button" onClick={() => {/* confirmClicked() */}}>
                         Confirm
                         </button>
                     </div>

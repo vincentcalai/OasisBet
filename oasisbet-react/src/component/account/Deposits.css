@@ -17,9 +17,9 @@
     padding: 1rem;
 }
 
-.btn-confirm {
+.btn-confirm-action {
     margin-top: 30px;
-    background-color: #87be77;
+    background-color: #87be77 !important;
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
     font-size: 12px !important;
@@ -42,7 +42,7 @@
     color: black !important;
     background-color: rgb(255, 131, 131) !important;
 }
-.btn-confirm:hover {
+.btn-confirm-action:hover {
     color: black;
-    background-color: #c3f7b4;
+    background-color: #c3f7b4 !important;
 }
