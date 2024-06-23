@@ -99,7 +99,7 @@ export default function AccountUpdate(){
                             <button className="btn btn-danger btn-cancel" type="button">
                                 Cancel
                             </button>
-                            <button className="btn btn-success btn-confirm" type="button">
+                            <button className="btn btn-success btn-confirm-action" type="button">
                                 Confirm
                             </button>
                             </div>
@@ -173,12 +173,12 @@ export default function AccountUpdate(){
                         </form>
                             <hr />
                             <div className="d-flex justify-content-end">
-                            <button className="btn btn-danger btn-cancel" type="button">
-                                Cancel
-                            </button>
-                            <button className="btn btn-success btn-confirm" type="button">
-                                Confirm
-                            </button>
+                                <button className="btn btn-danger btn-cancel" type="button">
+                                    Cancel
+                                </button>
+                                <button className="btn btn-success btn-confirm-action" type="button">
+                                    Confirm
+                                </button>
                             </div>
                             <br />
                         </Tab>

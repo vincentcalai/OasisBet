@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Deposits.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants";
+import { useSessionStorage } from "../util/useSessionStorage.ts";
 
 export default function Deposits({handleNavToTrxHist}){
+    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [balance, setBalance] = useState('NA');
+    const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
+
+    useEffect(() => {
+        console.log("accountDetails in Deposits: ", accountDetails);
+        const { account } = accountDetails || {};
+        const { balance, mtdDepositAmt, depositLimit } = account || {};
+
+        const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
+
+        setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
+        setMtdDepositAmt(displayRemDeposit != null ? displayRemDeposit.toFixed(2).toString() : '0.00');
+        setAccountDetails(accountDetails);
+    }, [accountDetails, setAccountDetails]);
+    
 
     return (
         <div className="container-fluid">
@@ -13,12 +30,12 @@ export default function Deposits({handleNavToTrxHist}){
                 </Card.Header>
                 <Card.Body className="card-body">
                     <label className="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Balance:</label>
-                        <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">$100.00</span>
+                        <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">${balance}</span>
                         <br />
                         <br />
                     <label className="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Deposit Remaining Limit:</label>
                     <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">
-                        $1000.00
+                        ${mtdDepositAmt}
                     </span>
                     <br />
                     <br />
