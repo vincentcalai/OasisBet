@@ -53,10 +53,10 @@ const SharedVarConstants = {
     CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE: 'CFM_UPDATE_ACC_DETAILS',
     
     CREATE_USER_DIALOG_MSG: 'Are you sure to create a new user?',
-    CFM_DEPOSIT_DIALOG_MSG: 'Confirm deposit?',
-    CFM_WITHDRAW_DIALOG_MSG: 'Confirm withdrawal?',
-    CFM_CHANGE_LIMIT_DIALOG_MSG: 'Confirm change of limit?',
-    CFM_UPDATE_PW_DIALOG_MSG: 'Confirm password update?',
+    CFM_DEPOSIT_DIALOG_MSG: 'Are you sure to deposit?',
+    CFM_WITHDRAW_DIALOG_MSG: 'Are you sure to withdraw?',
+    CFM_CHANGE_LIMIT_DIALOG_MSG: 'Are you sure to change Monthly Deposit and Monthly Betting limit?',
+    CFM_UPDATE_PW_DIALOG_MSG: 'Are you sure to update account details?',
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
 
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
