@@ -134,7 +134,7 @@ const updateAccDetails = async (request) => {
         console.log("calling /account/updateAccDetails api!");
         console.log("update account details api request: ", request);
 
-        const response = await axios.put(SharedVarConstants.HOST_NAME_URL + '/account/updateAccDetails', request);
+        const response = await axiosInstance.put(SharedVarConstants.HOST_NAME_URL + 'account/updateAccDetails', request);
 
         console.log("Response: ", response);
 

@@ -78,8 +78,8 @@ export default function Deposits({handleNavToTrxHist}){
         if (result === 'confirm') {
           console.log('Confirmed!');
           const request: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
-          request['depositAmt'] = depositAmt;
-          request['actionType'] = 'D';
+          request['account']['depositAmt'] = depositAmt;
+          request['account']['actionType'] = 'D';
     
           try {
               const response = await updateAccDetails(request);
