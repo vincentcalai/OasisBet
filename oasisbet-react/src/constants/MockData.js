@@ -84,14 +84,22 @@ export class LoginCredentialsModel {
 }
 
 export class AccountModel {
-    accId;
-    usrId;
-    balance;
-    depositLimit;
-    betLimit;
-    depositAmt;
-    withdrawalAmt;
-    actionType;
+    constructor(accId, usrId, balance, depositLimit, betLimit, depositAmt, withdrawalAmt, actionType) {
+        this.accId = accId;
+        this.usrId = usrId;
+        this.balance = balance;
+        this.depositLimit = depositLimit;
+        this.betLimit = betLimit;
+        this.depositAmt = depositAmt;
+        this.withdrawalAmt = withdrawalAmt;
+        this.actionType = actionType;
+    }
+}
+
+export class UpdateAccountModel {
+    constructor(account) {
+        this.account = account;
+    }
 }
 
 export function generateSampleData() {

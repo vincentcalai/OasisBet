@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountModel } from "../../constants/MockData.js";
+import { AccountModel, UpdateAccountModel } from "../../constants/MockData.js";
 import { updateAccDetails } from "../../services/api/ApiService.js";
 
 export default function Deposits({handleNavToTrxHist}){
@@ -76,9 +76,11 @@ export default function Deposits({handleNavToTrxHist}){
         setDialogOpen(false);
         if (result === 'confirm') {
           console.log('Confirmed!');
-          const request: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
-          request['account']['depositAmt'] = depositAmt;
-          request['account']['actionType'] = 'D';
+          const request: UpdateAccountModel = new UpdateAccountModel();
+          const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+          account['depositAmt'] = depositAmt;
+          account['actionType'] = 'D';
+          request.account = account;
     
           try {
               const response = await updateAccDetails(request);
@@ -88,7 +90,7 @@ export default function Deposits({handleNavToTrxHist}){
               } else {
                 //deposit amount success!
                 console.log("Amount deposited successfully:", response);
-                setAccountDetails(response);
+                setAccountDetails(response.account);
                 setErrorMsg('');
               }
           } catch (error) {
