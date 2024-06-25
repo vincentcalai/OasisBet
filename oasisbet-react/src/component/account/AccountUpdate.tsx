@@ -15,6 +15,7 @@ export default function AccountUpdate(){
     const CFM_PASSWORD = 'CFM_PASSWORD';
 
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [personalInfoDetails, setPersonalInfoDetails] = useSessionStorage(SharedVarConstants.PERSONAL_DETAILS, {});
     const [email, setEmail] = useState('');
     const [contactNo, setContactNo] = useState('');
 
@@ -27,16 +28,20 @@ export default function AccountUpdate(){
     const [isContactNoDisabled, setIsContactNoDisabled] = useState(true);
 
     useEffect(() => {
-        console.log("accountDetails in AccountOverview: ", accountDetails);
-        const { account, personalInfo } = accountDetails || {};
+        console.log("accountDetails in AccountUpdate: ", accountDetails);
+        console.log("personalInfoDetails in AccountUpdate: ", personalInfoDetails);
+        const { account } = accountDetails || {};
         const { accId } = account || {};
-        const {email, contactNo} = personalInfo || {};
+        const {email, contactNo} = personalInfoDetails || {};
+        console.log("email in AccountUpdate: ", email);
+        console.log("contactNo in AccountUpdate: ", contactNo);
 
         setAccId(accId);
         setEmail(email);
         setContactNo(contactNo);
         setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails]);
+        setPersonalInfoDetails(personalInfoDetails);
+    }, [accountDetails, setAccountDetails, personalInfoDetails, setPersonalInfoDetails]);
 
     const onCancel = ((navigateTab) => {
         if(navigateTab === CONTACT_TAB && !isEmailDisabled){

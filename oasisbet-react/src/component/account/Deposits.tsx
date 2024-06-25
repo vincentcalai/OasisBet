@@ -89,6 +89,7 @@ export default function Deposits({handleNavToTrxHist}){
               } else {
                 //deposit amount success!
                 console.log("Amount deposited successfully:", response);
+                setAccountDetails(response);
                 setErrorMsg('');
               }
           } catch (error) {

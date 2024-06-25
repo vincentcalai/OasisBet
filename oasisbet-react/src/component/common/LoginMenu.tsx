@@ -23,8 +23,7 @@ export default function LoginMenu(){
     useEffect(() => {
         const retrievedAccountDetails: any = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
         console.log("retrievedAccountDetails in LoginMenu: ", retrievedAccountDetails);
-        const { account } = retrievedAccountDetails || {};
-        const { balance } = account || {};
+        const { balance } = retrievedAccountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
     }, [isUserLoggedIn]);
 
@@ -65,8 +64,8 @@ export default function LoginMenu(){
     const retrieveAccountDetails = async (username) => {
         try {
           const accountDetails = await fetchAccountDetails(username);
-          console.log("accountDetails: ", JSON.stringify(accountDetails));
-          sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails));
+          console.log("accountDetails: ", JSON.stringify(accountDetails.account));
+          sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails.account));
           dispatch(updateLoginDetails('isUserLoggedIn', true));
         } catch (error) {
           console.log("Error when retrieving account details!");

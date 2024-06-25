@@ -13,8 +13,7 @@ export default function AccountOverview(){
 
     useEffect(() => {
         console.log("accountDetails in AccountOverview: ", accountDetails);
-        const { account } = accountDetails || {};
-        const { balance, ytdDepositAmt, ytdWithdrawalAmt } = account || {};
+        const { balance, ytdDepositAmt, ytdWithdrawalAmt } = accountDetails || {};
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));

@@ -56,9 +56,11 @@ export default function AccountLogin(){
 
   const retrieveAccountDetails = async (username) => {
     try {
-      const accountDetails = await fetchAccountDetails(username);
-      console.log("accountDetails in AccountLogin: ", JSON.stringify(accountDetails));
-      sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails));
+      const response = await fetchAccountDetails(username);
+      console.log("accountDetails in AccountLogin: ", JSON.stringify(response.account));
+      console.log("personalInfo in AccountLogin: ", JSON.stringify(response.personalInfo));
+      sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+      sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(response.personalInfo));
       dispatch(updateLoginDetails('isUserLoggedIn', true));
     } catch (error) {
       console.log("Error when retrieving account details!");
