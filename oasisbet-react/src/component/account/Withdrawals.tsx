@@ -15,8 +15,7 @@ export default function Withdrawals({handleNavToTrxHist}){
 
     useEffect(() => {
         console.log("accountDetails in Withdrawals: ", accountDetails);
-        const { account } = accountDetails || {};
-        const { balance } = account || {};
+        const { balance } = accountDetails || {};
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setAccountDetails(accountDetails);

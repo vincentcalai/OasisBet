@@ -20,8 +20,7 @@ export default function Deposits({handleNavToTrxHist}){
 
     useEffect(() => {
         console.log("accountDetails in Deposits: ", accountDetails);
-        const { account } = accountDetails || {};
-        const { balance, mtdDepositAmt, depositLimit } = account || {};
+        const { balance, mtdDepositAmt, depositLimit } = accountDetails || {};
 
         const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
 
