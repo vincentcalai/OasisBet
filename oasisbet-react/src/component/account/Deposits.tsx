@@ -16,6 +16,7 @@ export default function Deposits({handleNavToTrxHist}){
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [dialogData, setDialogData] = useState({ title: '', type: '' });
     const [inputErrorMsg, setInputErrorMsg] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
     useEffect(() => {
@@ -51,6 +52,7 @@ export default function Deposits({handleNavToTrxHist}){
     const onCancel = () => {
         setDepositAmt(0);
         setInputErrorMsg('');
+        setSuccessMsg('');
         setErrorMsg('');
     }
 
@@ -91,6 +93,7 @@ export default function Deposits({handleNavToTrxHist}){
                 //deposit amount success!
                 console.log("Amount deposited successfully:", response);
                 setAccountDetails(response.account);
+                setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
               }
           } catch (error) {
@@ -106,6 +109,7 @@ export default function Deposits({handleNavToTrxHist}){
     return (
         <div className="container-fluid">
             <br />
+            {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
             {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
