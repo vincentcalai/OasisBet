@@ -61,11 +61,16 @@ export default function Deposits({handleNavToTrxHist}){
     }
 
     const confirmSubmit = () => {
-        const isFormValid = validateDepositAmt(depositAmt);
+      const isFormValid = validateDepositAmt(depositAmt);
+      if(depositAmt < 1) {
+        setInputErrorMsg('Minimum amount to deposit is $1');
+        return false;
+      }
       if (isFormValid) {
         console.log('Form is valid, submitting form to backend now');
         handleOpenDialog();
       } else {
+        setInputErrorMsg('Deposit amount is invalid');
         console.log('Form is invalid');
       }
     };
