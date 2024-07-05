@@ -6,6 +6,8 @@ import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessio
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, UpdateAccountModel } from "../../constants/MockData.js";
 import { updateAccDetails } from "../../services/api/ApiService.js";
+import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { useDispatch } from "react-redux";
 
 export default function Deposits({handleNavToTrxHist}){
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
@@ -18,6 +20,8 @@ export default function Deposits({handleNavToTrxHist}){
     const [inputErrorMsg, setInputErrorMsg] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         console.log("accountDetails in Deposits: ", accountDetails);
@@ -92,6 +96,8 @@ export default function Deposits({handleNavToTrxHist}){
               } else {
                 //deposit amount success!
                 console.log("Amount deposited successfully:", response);
+                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+                dispatch(updateLoginDetails('balance', response.account?.balance));
                 setAccountDetails(response.account);
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');

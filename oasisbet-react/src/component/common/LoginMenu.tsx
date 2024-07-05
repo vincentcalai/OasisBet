@@ -19,6 +19,7 @@ export default function LoginMenu(){
     const [password, setPassword] = useState('');
     const [balance, setBalance] = useState('NA');
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
+    const updatedBalance = useSelector((state: any) => state['login']['balance']) ;
 
     useEffect(() => {
         const retrievedAccountDetails: any = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
@@ -26,6 +27,13 @@ export default function LoginMenu(){
         const { balance } = retrievedAccountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
     }, [isUserLoggedIn]);
+
+    useEffect(() => {
+        console.log("updatedBalance: ", updatedBalance)
+        if (updatedBalance !== undefined) {
+            setBalance(updatedBalance !== null ? updatedBalance.toFixed(2).toString() : 'NA');
+        }
+    }, [updatedBalance]);
 
     const handleLoginInputChange = (event, type) => {
         if(type === 'username'){
