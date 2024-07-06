@@ -6,8 +6,8 @@ import ConfirmDialog from '../common/dialog/ConfirmDialog.tsx';
 import { createUser } from '../../services/api/ApiService.js';
 import { UserModel } from '../../model/UserModel.tsx';
 import { CreateUserModel } from '../../model/CreateUserModel.tsx';
-import { isEqualToOtherValue, isShorterThanMinLength, isLongerThanMaxLength, isNotEmpty, isOnlyContainsAlphaNumeric, isOnlyContainsNumeric, isValidEmail } from '../util/validation.js';
 import { useNavigate } from 'react-router-dom';
+import { validateUsername, validatePassword, validateCfmPassword, validateEmail, validateContactNo } from '../util/validation.ts';
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const CreateUser = () => {
     }
     
     if(inputType === 'cfmPassword'){
-      validationErrors.cfmPassword = validateCfmPassword(cfmPassword);
+      validationErrors.cfmPassword = validateCfmPassword(cfmPassword, password);
     }
 
     if(inputType === 'email'){
@@ -69,7 +69,7 @@ const CreateUser = () => {
       };
       validationErrors.username = validateUsername(username);
       validationErrors.password = validatePassword(password);
-      validationErrors.cfmPassword = validateCfmPassword(cfmPassword);
+      validationErrors.cfmPassword = validateCfmPassword(cfmPassword, password);
       validationErrors.email = validateEmail(email);
       validationErrors.contactNo = validateContactNo(contactNo);
       setErrors(validationErrors);
@@ -149,66 +149,6 @@ const CreateUser = () => {
       ...prevState, 
       [inputType]: ''
     }));
-  }
-
-  function validateUsername(username: string): string {
-    if (!isNotEmpty(username)) {
-      return 'This field is required';
-    } else if (!isOnlyContainsAlphaNumeric(username)) {
-      return 'Please enter only alphabet characters';
-    } else if (isLongerThanMaxLength(username, 20)) {
-      return 'Maximum length is 20 characters';
-    } else if (isShorterThanMinLength(username, 5)) {
-      return 'Minimum length is 5 characters';
-    } else {
-      return '';
-    }
-  }
-
-  function validatePassword(password: string): string {
-    if (!isNotEmpty(password)) {
-      return 'This field is required';
-    } else if (isLongerThanMaxLength(password, 20)) {
-      return 'Maximum length is 20 characters';
-    } else if (isShorterThanMinLength(password, 5)) {
-      return 'Minimum length is 5 characters';
-    } else {
-      return '';
-    }
-  }
-  
-  function validateCfmPassword(cfmPassword: string): string {
-    if (!isNotEmpty(cfmPassword)) {
-      return 'This field is required';
-    } else if (!isEqualToOtherValue(cfmPassword, password)) {
-      return 'Passwords do not match';
-    } else {
-      return '';
-    }
-  }
-
-  function validateEmail(email: string): string {
-    if (!isNotEmpty(email)) {
-      return 'This field is required';
-    } else if (!isValidEmail(email)) {
-      return 'Please enter a valid email address';
-    } else if (isLongerThanMaxLength(100)) {
-      return 'Maximum length is 100 characters';
-    } else {
-      return '';
-    }
-  }
-
-  function validateContactNo(contactNo: string): string {
-    if (!isNotEmpty(contactNo)) {
-      return 'This field is required';
-    } else if (!isOnlyContainsNumeric(contactNo)) {
-      return 'Please enter only numeric characters';
-    } else if (isLongerThanMaxLength(contactNo, 30)) {
-      return 'Maximum length is 30 characters';
-    } else {
-      return '';
-    }
   }
 
   return (

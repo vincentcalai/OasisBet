@@ -5,10 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants";
+import { validatePassword, validateCfmPassword, validateEmail, validateContactNo } from "../util/validation.ts";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
     const LOGIN_TAB = 'LOGIN';
+
+    const EMAIL = 'EMAIL';
+    const CONTACT_NO = 'CONTACT_NO';
 
     const CURRENT_PASSWORD = 'CURRENT_PASSWORD';
     const NEW_PASSWORD = 'NEW_PASSWORD';
@@ -26,6 +30,12 @@ export default function AccountUpdate(){
     const [accId, setAccId] = useState('');
     const [isEmailDisabled, setIsEmailDisabled] = useState(true);
     const [isContactNoDisabled, setIsContactNoDisabled] = useState(true);
+    const [errors, setErrors] = useState({
+        newPassword: '',
+        cfmPassword: '',
+        email: '',
+        contactNo: ''
+    });
 
     useEffect(() => {
         console.log("accountDetails in AccountUpdate: ", accountDetails);
@@ -57,6 +67,10 @@ export default function AccountUpdate(){
         }
     });
 
+    const onSubmit = (() => {
+        console.log("onSubmit Account Update details: ", email, contactNo);
+    });
+
     const handlePasswordInputChange = (event, type) => {
         if(type === CURRENT_PASSWORD){
             setCurrentPassword(event.target.value);
@@ -66,6 +80,55 @@ export default function AccountUpdate(){
             setCfmPassword(event.target.value);
         }
     };
+
+    const handleContactInputChange = (event, type) => {
+        const validationErrors = {
+            newPassword: '',
+            cfmPassword: '',
+            email: '',
+            contactNo: ''
+          };
+          validationErrors.newPassword = validatePassword(newPassword);
+          validationErrors.cfmPassword = validateCfmPassword(newPassword, cfmPassword);
+          validationErrors.email = validateEmail(email);
+          validationErrors.contactNo = validateContactNo(contactNo);
+        if(type === EMAIL){
+            setEmail(event.target.value);
+        } else if(type === CONTACT_NO){
+            setContactNo(event.target.value);
+        }
+    };
+
+    const handleValidation = (inputType) => {
+        let validationErrors = {
+          newPassword: '',
+          cfmPassword: '',
+          email: '',
+          contactNo: ''
+        };
+        
+        if(inputType === NEW_PASSWORD){
+          validationErrors.newPassword = validatePassword(newPassword);
+        }
+        
+        if(inputType === CFM_PASSWORD){
+          validationErrors.cfmPassword = validateCfmPassword(newPassword, cfmPassword);
+        }
+    
+        if(inputType === EMAIL){
+          validationErrors.email = validateEmail(email);
+        }
+        
+        if(inputType === CONTACT_NO){
+          validationErrors.contactNo = validateContactNo(contactNo);
+        }
+    
+        setErrors(validationErrors);
+    };
+
+    const handleOnBlurInput = (inputType) => (e) => {
+        handleValidation(inputType);
+    }
 
     return (
         <div className="container-fluid">
@@ -109,25 +172,31 @@ export default function AccountUpdate(){
                                     <span id="EMAIL">Email:</span>
                                     </label>
                                     <div className="col-sm-4">
-                                    <div className="input-group">
-                                        <div className="input-group-prepend"></div>
-                                        <input
-                                        type="text"
-                                        className="form-control acc-update-section-selection-width no-spinner"
-                                        id="email_0"
-                                        name="email"
-                                        value = {email}
-                                        disabled = {isEmailDisabled}
-                                        required
-                                        />
-                                        &nbsp;
-                                        <div className="input-group-append">
-                                        <button className="btn btn-outline-secondary btn-pencil" type="button"
-                                            onClick={() => setIsEmailDisabled(!isEmailDisabled)}>
-                                            <FontAwesomeIcon icon={faPencil} className="pencil-icon"/>
-                                        </button>
+                                        <div className="input-group">
+                                            <div className="input-group-prepend"></div>
+                                            <input
+                                            type="text"
+                                            className="form-control acc-update-section-selection-width no-spinner"
+                                            id="email_0"
+                                            name="email"
+                                            value = {email}
+                                            onBlur={handleOnBlurInput(EMAIL)}
+                                            onChange={(e) => handleContactInputChange(e, EMAIL)}
+                                            disabled = {isEmailDisabled}
+                                            required
+                                            />
+                                            &nbsp;
+                                            <div className="input-group-append">
+                                            <button className="btn btn-outline-secondary btn-pencil" type="button"
+                                                onClick={() => setIsEmailDisabled(!isEmailDisabled)}>
+                                                <FontAwesomeIcon icon={faPencil} className="pencil-icon"/>
+                                            </button>
+                                            </div>
+                                            <label id="email_error_0" className={`error-text ${errors.email ? 'highlightLabel' : ''}`} htmlFor="email_0">
+                                                {errors.email}
+                                            </label>
                                         </div>
-                                    </div>
+                                        
                                     </div>
                                 </div>
                                 <div className="form-group row mx-0">
@@ -147,6 +216,8 @@ export default function AccountUpdate(){
                                             id="contact_no_0"
                                             name="contactNo"
                                             value = {contactNo}
+                                            onBlur={handleOnBlurInput(CONTACT_NO)}
+                                            onChange={(e) => handleContactInputChange(e, CONTACT_NO)}
                                             disabled = {isContactNoDisabled}
                                             required
                                             />
@@ -157,7 +228,11 @@ export default function AccountUpdate(){
                                                 <FontAwesomeIcon icon={faPencil}/>
                                             </button>
                                             </div>
+                                            <label id="contactNo_error_0" className={`error-text ${errors.contactNo ? 'highlightLabel' : ''}`} htmlFor="contactNo_0">
+                                                {errors.contactNo}
+                                            </label>
                                         </div>
+
                                     </div>
                                 </div>
                             </form>
@@ -167,7 +242,8 @@ export default function AccountUpdate(){
                                 onClick={() => onCancel(CONTACT_TAB)}>
                                 Cancel
                             </button>
-                            <button className="btn btn-success btn-confirm-action" type="button">
+                            <button className="btn btn-success btn-confirm-action" type="button"
+                                onClick={onSubmit}>
                                 Confirm
                             </button>
                             </div>
@@ -184,18 +260,19 @@ export default function AccountUpdate(){
                                 <span id="OLD_PASSWORD">Current Password:</span>
                                 </label>
                                 <div className="col-sm-4">
-                                <div className="input-group">
-                                    <div className="input-group-prepend"></div>
-                                    <input
-                                    type="password"
-                                    className="form-control acc-update-section-selection-width no-spinner"
-                                    id="old_password_0"
-                                    name="old_password"
-                                    onChange={(e) => handlePasswordInputChange(e, CURRENT_PASSWORD)}
-                                    value = {currentPassword}
-                                    required
-                                    />
-                                </div>
+                                    <div className="input-group">
+                                        <div className="input-group-prepend"></div>
+                                        <input
+                                        type="password"
+                                        className="form-control acc-update-section-selection-width no-spinner"
+                                        id="old_password_0"
+                                        name="old_password"
+                                        onBlur={handleOnBlurInput(CURRENT_PASSWORD)}
+                                        onChange={(e) => handlePasswordInputChange(e, CURRENT_PASSWORD)}
+                                        value = {currentPassword}
+                                        required
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-group row mx-0">
@@ -207,19 +284,23 @@ export default function AccountUpdate(){
                                 <span id="NEW_PASSWORD">New Password:</span>
                                 </label>
                                 <div className="col-sm-4">
-                                <div className="input-group">
-                                    <div className="input-group-prepend"></div>
-                                    <input
-                                    type="password"
-                                    className="form-control acc-update-section-selection-width no-spinner"
-                                    id="new_password_0"
-                                    name="new_password"
-                                    onChange={(e) => handlePasswordInputChange(e, NEW_PASSWORD)}
-                                    value = {newPassword}
-                                    required
-                                    />
+                                    <div className="input-group">
+                                        <div className="input-group-prepend"></div>
+                                        <input
+                                        type="password"
+                                        className="form-control acc-update-section-selection-width no-spinner"
+                                        id="new_password_0"
+                                        name="new_password"
+                                        onBlur={handleOnBlurInput(NEW_PASSWORD)}
+                                        onChange={(e) => handlePasswordInputChange(e, NEW_PASSWORD)}
+                                        value = {newPassword}
+                                        required
+                                        />
+                                    </div>
                                 </div>
-                                </div>
+                                <label id="newPassword_error_0" className={`error-text ${errors.newPassword ? 'highlightLabel' : ''}`} htmlFor="newPassword_0">
+                                    {errors.newPassword}
+                                </label>
                             </div>
                             <div className="form-group row mx-0">
                                 <label
@@ -230,19 +311,23 @@ export default function AccountUpdate(){
                                 <span id="CFM_NEW_PASSWORD">Confirm New Password:</span>
                                 </label>
                                 <div className="col-sm-4">
-                                <div className="input-group">
-                                    <div className="input-group-prepend"></div>
-                                    <input
-                                    type="password"
-                                    className="form-control acc-update-section-selection-width no-spinner"
-                                    id="cfm_new_password_0"
-                                    name="cfm_new_password"
-                                    onChange={(e) => handlePasswordInputChange(e, CFM_PASSWORD)}
-                                    value = {cfmPassword}
-                                    required
-                                    />
+                                    <div className="input-group">
+                                        <div className="input-group-prepend"></div>
+                                        <input
+                                        type="password"
+                                        className="form-control acc-update-section-selection-width no-spinner"
+                                        id="cfm_new_password_0"
+                                        name="cfm_new_password"
+                                        onBlur={handleOnBlurInput(CFM_PASSWORD)}
+                                        onChange={(e) => handlePasswordInputChange(e, CFM_PASSWORD)}
+                                        value = {cfmPassword}
+                                        required
+                                        />
+                                    </div>
                                 </div>
-                                </div>
+                                <label id="cfmPassword_error_0" className={`error-text ${errors.cfmPassword ? 'highlightLabel' : ''}`} htmlFor="cfmPassword_0">
+                                    {errors.cfmPassword}
+                                </label>
                             </div>
                         </form>
                             <hr />
@@ -251,7 +336,8 @@ export default function AccountUpdate(){
                                     onClick={() => onCancel(LOGIN_TAB)}>
                                     Cancel
                                 </button>
-                                <button className="btn btn-success btn-confirm-action" type="button">
+                                <button className="btn btn-success btn-confirm-action" type="button"
+                                    onClick={onSubmit}>
                                     Confirm
                                 </button>
                             </div>
