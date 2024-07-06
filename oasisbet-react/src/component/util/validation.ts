@@ -26,6 +26,13 @@ export function isValidEmail(value){
     return /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
 }
 
+export function validateRequiredField(value){
+    if (!isNotEmpty(value)) {
+      return 'This field is required';
+    }
+    return '';
+}
+
 export function validateUsername(username: string): string {
     if (!isNotEmpty(username)) {
       return 'This field is required';

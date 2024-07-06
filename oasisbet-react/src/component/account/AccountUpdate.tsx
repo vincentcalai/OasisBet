@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants";
-import { validatePassword, validateCfmPassword, validateEmail, validateContactNo } from "../util/validation.ts";
+import { validatePassword, validateCfmPassword, validateEmail, validateContactNo, validateRequiredField } from "../util/validation.ts";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
@@ -31,6 +31,7 @@ export default function AccountUpdate(){
     const [isEmailDisabled, setIsEmailDisabled] = useState(true);
     const [isContactNoDisabled, setIsContactNoDisabled] = useState(true);
     const [errors, setErrors] = useState({
+        currentPassword: '',
         newPassword: '',
         cfmPassword: '',
         email: '',
@@ -67,8 +68,33 @@ export default function AccountUpdate(){
         }
     });
 
-    const onSubmit = (() => {
+    const onSubmit = ((type: string) => {
         console.log("onSubmit Account Update details: ", email, contactNo);
+        const validationErrors = {
+            currentPassword: '',
+            newPassword: '',
+            cfmPassword: '',
+            email: '',
+            contactNo: ''
+        };
+
+        if(type === CONTACT_TAB){
+            validationErrors.email = validateEmail(email);
+            validationErrors.contactNo = validateContactNo(contactNo);
+        } else if(type === LOGIN_TAB){
+            validationErrors.currentPassword = validateRequiredField(currentPassword);
+            validationErrors.newPassword = validatePassword(newPassword);
+            validationErrors.cfmPassword = validateCfmPassword(cfmPassword, newPassword);
+        }
+        setErrors(validationErrors);
+
+        const checkValidation = Object.values(validationErrors).every(error => error === '');
+        if (checkValidation) {
+            console.log('Account Update Form is valid, submitting form to backend now');
+            //handleOpenDialog();
+        } else {
+            console.log('Account Update Form is invalid');
+        }
     });
 
     const handlePasswordInputChange = (event, type) => {
@@ -82,16 +108,6 @@ export default function AccountUpdate(){
     };
 
     const handleContactInputChange = (event, type) => {
-        const validationErrors = {
-            newPassword: '',
-            cfmPassword: '',
-            email: '',
-            contactNo: ''
-          };
-          validationErrors.newPassword = validatePassword(newPassword);
-          validationErrors.cfmPassword = validateCfmPassword(newPassword, cfmPassword);
-          validationErrors.email = validateEmail(email);
-          validationErrors.contactNo = validateContactNo(contactNo);
         if(type === EMAIL){
             setEmail(event.target.value);
         } else if(type === CONTACT_NO){
@@ -101,11 +117,16 @@ export default function AccountUpdate(){
 
     const handleValidation = (inputType) => {
         let validationErrors = {
+          currentPassword: '',
           newPassword: '',
           cfmPassword: '',
           email: '',
           contactNo: ''
         };
+
+        if(inputType === CURRENT_PASSWORD){
+            validationErrors.currentPassword = validateRequiredField(currentPassword);
+        }
         
         if(inputType === NEW_PASSWORD){
           validationErrors.newPassword = validatePassword(newPassword);
@@ -192,11 +213,10 @@ export default function AccountUpdate(){
                                                 <FontAwesomeIcon icon={faPencil} className="pencil-icon"/>
                                             </button>
                                             </div>
-                                            <label id="email_error_0" className={`error-text ${errors.email ? 'highlightLabel' : ''}`} htmlFor="email_0">
-                                                {errors.email}
-                                            </label>
                                         </div>
-                                        
+                                        <label id="email_error_0" className={`error-text ${errors.email ? 'highlightLabel' : ''}`} htmlFor="email_0">
+                                            {errors.email}
+                                        </label>
                                     </div>
                                 </div>
                                 <div className="form-group row mx-0">
@@ -228,11 +248,10 @@ export default function AccountUpdate(){
                                                 <FontAwesomeIcon icon={faPencil}/>
                                             </button>
                                             </div>
-                                            <label id="contactNo_error_0" className={`error-text ${errors.contactNo ? 'highlightLabel' : ''}`} htmlFor="contactNo_0">
-                                                {errors.contactNo}
-                                            </label>
                                         </div>
-
+                                        <label id="contact_no_error_0" className={`error-text ${errors.contactNo ? 'highlightLabel' : ''}`} htmlFor="contact_no_0">
+                                            {errors.contactNo}
+                                        </label>
                                     </div>
                                 </div>
                             </form>
@@ -243,7 +262,7 @@ export default function AccountUpdate(){
                                 Cancel
                             </button>
                             <button className="btn btn-success btn-confirm-action" type="button"
-                                onClick={onSubmit}>
+                                onClick={() => onSubmit(CONTACT_TAB)}>
                                 Confirm
                             </button>
                             </div>
@@ -273,6 +292,9 @@ export default function AccountUpdate(){
                                         required
                                         />
                                     </div>
+                                    <label id="current_password_error_0" className={`error-text ${errors.currentPassword ? 'highlightLabel' : ''}`} htmlFor="current_password_0">
+                                        {errors.currentPassword}
+                                    </label>
                                 </div>
                             </div>
                             <div className="form-group row mx-0">
@@ -297,10 +319,10 @@ export default function AccountUpdate(){
                                         required
                                         />
                                     </div>
+                                    <label id="newPassword_error_0" className={`error-text ${errors.newPassword ? 'highlightLabel' : ''}`} htmlFor="newPassword_0">
+                                        {errors.newPassword}
+                                    </label>    
                                 </div>
-                                <label id="newPassword_error_0" className={`error-text ${errors.newPassword ? 'highlightLabel' : ''}`} htmlFor="newPassword_0">
-                                    {errors.newPassword}
-                                </label>
                             </div>
                             <div className="form-group row mx-0">
                                 <label
@@ -324,10 +346,10 @@ export default function AccountUpdate(){
                                         required
                                         />
                                     </div>
+                                    <label id="cfmPassword_error_0" className={`error-text ${errors.cfmPassword ? 'highlightLabel' : ''}`} htmlFor="cfmPassword_0">
+                                        {errors.cfmPassword}
+                                    </label>
                                 </div>
-                                <label id="cfmPassword_error_0" className={`error-text ${errors.cfmPassword ? 'highlightLabel' : ''}`} htmlFor="cfmPassword_0">
-                                    {errors.cfmPassword}
-                                </label>
                             </div>
                         </form>
                             <hr />
@@ -337,7 +359,7 @@ export default function AccountUpdate(){
                                     Cancel
                                 </button>
                                 <button className="btn btn-success btn-confirm-action" type="button"
-                                    onClick={onSubmit}>
+                                    onClick={() => onSubmit(LOGIN_TAB)}>
                                     Confirm
                                 </button>
                             </div>

@@ -75,10 +75,10 @@ const CreateUser = () => {
       setErrors(validationErrors);
       const checkValidation = Object.values(validationErrors).every(error => error === '');
     if (checkValidation) {
-      console.log('Form is valid, submitting form to backend now');
+      console.log('Create User Form is valid, submitting form to backend now');
       handleOpenDialog();
     } else {
-      console.log('Form is invalid');
+      console.log('Create User Form is invalid');
     }
   };
 
