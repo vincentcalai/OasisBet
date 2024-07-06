@@ -41,8 +41,7 @@ export default function AccountUpdate(){
     useEffect(() => {
         console.log("accountDetails in AccountUpdate: ", accountDetails);
         console.log("personalInfoDetails in AccountUpdate: ", personalInfoDetails);
-        const { account } = accountDetails || {};
-        const { accId } = account || {};
+        const { accId } = accountDetails || {};
         const {email, contactNo} = personalInfoDetails || {};
         console.log("email in AccountUpdate: ", email);
         console.log("contactNo in AccountUpdate: ", contactNo);
