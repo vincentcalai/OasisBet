@@ -45,6 +45,13 @@ const SharedVarConstants = {
     NAV_MENU_SELECT_DEPOSITS: "desposits",
     NAV_MENU_SELECT_WITHDRAWALS: "withdrawals",
 
+    CREATE_USER_DIALOG_TITLE: "Confirm Create User",
+    CFM_DEPOSIT_DIALOG_TITLE: "Confirm Deposit",
+    CFM_WITHDRAW_DIALOG_TITLE: "Confirm Withdrawal",
+    CFM_UPDATE_PW_DIALOG_TITLE: "Confirm Update Password",
+    CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE: "Confirm Update Account Details",
+    CFM_CHANGE_LIMIT_DIALOG_TITLE: "Confirm Change Limit",
+
     CREATE_USER_DIALOG_TYPE: 'CREATE_USER',
     CFM_DEPOSIT_DIALOG_TYPE: 'CFM_DEPOSIT',
     CFM_WITHDRAW_DIALOG_TYPE: 'CFM_WITHDRAW',

@@ -6,6 +6,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants";
 import { validatePassword, validateCfmPassword, validateEmail, validateContactNo, validateRequiredField } from "../util/validation.ts";
+import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
@@ -26,6 +27,9 @@ export default function AccountUpdate(){
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [cfmPassword, setCfmPassword] = useState('');
+
+    const [isDialogOpen, setDialogOpen] = useState(false);
+    const [dialogData, setDialogData] = useState({ title: '', type: '' });
 
     const [accId, setAccId] = useState('');
     const [isEmailDisabled, setIsEmailDisabled] = useState(true);
@@ -90,11 +94,53 @@ export default function AccountUpdate(){
         const checkValidation = Object.values(validationErrors).every(error => error === '');
         if (checkValidation) {
             console.log('Account Update Form is valid, submitting form to backend now');
-            //handleOpenDialog();
+            handleOpenDialog();
         } else {
             console.log('Account Update Form is invalid');
         }
     });
+
+    const handleOpenDialog = () => {
+        setDialogData({
+          title: SharedVarConstants.CFM_UPDATE_PW_DIALOG_TITLE,
+          type: SharedVarConstants.CFM_UPDATE_PW_DIALOG_TYPE,
+        });
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = async (result) => {
+        setDialogOpen(false);
+        if (result === 'confirm') {
+          console.log('Confirmed!');
+        //   const request: UpdateAccountModel = new UpdateAccountModel();
+        //   const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+        //   account['depositAmt'] = depositAmt;
+        //   account['actionType'] = 'D';
+        //   request.account = account;
+    
+        //   try {
+        //       const response = await updateAccDetails(request);
+        //       if(response.statusCode !== 0){
+        //         console.log("Error depositing amount, response:", response);
+        //         setErrorMsg(response.resultMessage);
+        //       } else {
+        //         //deposit amount success!
+        //         console.log("Amount deposited successfully:", response);
+        //         sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+        //         dispatch(updateLoginDetails('balance', response.account?.balance));
+        //         setAccountDetails(response.account);
+        //         setSuccessMsg(response.resultMessage);
+        //         setErrorMsg('');
+        //       }
+        //   } catch (error) {
+        //       //TODO to change this error message to a generic error message shown as red banner
+        //       console.error("Error in handling deposit:", error);
+        //       setErrorMsg("Failed to deposit. Please try again.");
+        //   }
+        } else {
+          console.log('Cancelled!');
+        }
+    };
 
     const handlePasswordInputChange = (event, type) => {
         if(type === CURRENT_PASSWORD){
@@ -367,6 +413,11 @@ export default function AccountUpdate(){
                     </Tabs>
                 </Card.Body> 
             </Card>
+
+            <ConfirmDialog
+                isOpen={isDialogOpen}
+                onClose={handleCloseDialog}
+                data={dialogData} />
         </div>
     );
 }

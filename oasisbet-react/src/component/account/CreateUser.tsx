@@ -84,7 +84,7 @@ const CreateUser = () => {
 
   const handleOpenDialog = () => {
     setDialogData({
-      title: 'Confirm Create User?',
+      title: SharedVarConstants.CREATE_USER_DIALOG_TITLE,
       type: SharedVarConstants.CREATE_USER_DIALOG_TYPE,
     });
     setDialogOpen(true);

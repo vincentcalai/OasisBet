@@ -77,7 +77,7 @@ export default function Deposits({handleNavToTrxHist}){
   
     const handleOpenDialog = () => {
       setDialogData({
-        title: 'Confirm Deposit?',
+        title: SharedVarConstants.CFM_DEPOSIT_DIALOG_TITLE,
         type: SharedVarConstants.CFM_DEPOSIT_DIALOG_TYPE,
       });
       setDialogOpen(true);
@@ -115,7 +115,7 @@ export default function Deposits({handleNavToTrxHist}){
         } else {
           console.log('Cancelled!');
         }
-      };
+    };
 
     return (
         <div className="container-fluid">
