@@ -151,6 +151,28 @@ const updateAccDetails = async (request) => {
     }
 };
 
+const updateAccInfo = async (request) => {
+    try {
+        console.log("calling /account/updateAccInfo api!");
+        console.log("update account info api request: ", request);
+
+        const response = await axiosInstance.put(SharedVarConstants.HOST_NAME_URL + 'account/updateAccInfo', request);
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to update account details');
+        }
+
+        const data = response.data;
+        console.log("Response data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error update account details:', error);
+        throw error;
+    }
+};
+
 const submitBets = async (request) => {
     try {
         console.log("calling /odds/bets api!");
@@ -173,5 +195,5 @@ const submitBets = async (request) => {
     }
 };
   
-export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, submitBets, jwtAuthenticate };
+export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, updateAccInfo, submitBets, jwtAuthenticate };
   

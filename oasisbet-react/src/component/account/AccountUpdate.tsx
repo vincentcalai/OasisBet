@@ -7,6 +7,8 @@ import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants";
 import { validatePassword, validateCfmPassword, validateEmail, validateContactNo, validateRequiredField } from "../util/validation.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
+import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/MockData.js";
+import { updateAccInfo } from "../../services/api/ApiService.js";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
@@ -30,6 +32,9 @@ export default function AccountUpdate(){
 
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [dialogData, setDialogData] = useState({ title: '', type: '' });
+
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
     const [accId, setAccId] = useState('');
     const [isEmailDisabled, setIsEmailDisabled] = useState(true);
@@ -97,16 +102,20 @@ export default function AccountUpdate(){
         const checkValidation = Object.values(validationErrors).every(error => error === '');
         if (checkValidation) {
             console.log('Account Update Form is valid, submitting form to backend now');
-            handleOpenDialog();
+            handleOpenDialog(type);
         } else {
             console.log('Account Update Form is invalid');
         }
     });
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (type: string) => {
+        let dialogTitle = '';
+        let dialogType = '';
+        dialogTitle = type === CONTACT_TAB ? SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE : SharedVarConstants.CFM_UPDATE_PW_DIALOG_TITLE;
+        dialogType = type === CONTACT_TAB ? SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE : SharedVarConstants.CFM_UPDATE_PW_DIALOG_TYPE;
         setDialogData({
-          title: SharedVarConstants.CFM_UPDATE_PW_DIALOG_TITLE,
-          type: SharedVarConstants.CFM_UPDATE_PW_DIALOG_TYPE,
+            title: dialogTitle,
+            type: dialogType,
         });
         setDialogOpen(true);
     };
@@ -115,31 +124,48 @@ export default function AccountUpdate(){
         setDialogOpen(false);
         if (result === 'confirm') {
           console.log('Confirmed!');
-        //   const request: UpdateAccountModel = new UpdateAccountModel();
-        //   const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
-        //   account['depositAmt'] = depositAmt;
-        //   account['actionType'] = 'D';
-        //   request.account = account;
-    
-        //   try {
-        //       const response = await updateAccDetails(request);
-        //       if(response.statusCode !== 0){
-        //         console.log("Error depositing amount, response:", response);
-        //         setErrorMsg(response.resultMessage);
-        //       } else {
-        //         //deposit amount success!
-        //         console.log("Amount deposited successfully:", response);
-        //         sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
-        //         dispatch(updateLoginDetails('balance', response.account?.balance));
-        //         setAccountDetails(response.account);
-        //         setSuccessMsg(response.resultMessage);
-        //         setErrorMsg('');
-        //       }
-        //   } catch (error) {
-        //       //TODO to change this error message to a generic error message shown as red banner
-        //       console.error("Error in handling deposit:", error);
-        //       setErrorMsg("Failed to deposit. Please try again.");
-        //   }
+          const request: UpdateAccountDetailsModel = new UpdateAccountDetailsModel();
+          const accountDetails: AccountDetailsModel = new AccountDetailsModel();
+          
+          const username = sessionStorage.getItem(SharedVarConstants.AUTH_USER);
+          if(!username){
+            console.log("Username is not found in session storage");
+            return;
+          }  
+          accountDetails.username = username
+          if(dialogData?.type === SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE){
+            accountDetails.contactNo = contactNo;
+            accountDetails.email = email;
+          } else if(dialogData?.type === SharedVarConstants.CFM_UPDATE_PW_DIALOG_TYPE){
+            accountDetails.newPassword = newPassword;
+            accountDetails.oldPassword = currentPassword;
+          } else {
+            console.log("Cannot find dialog type");
+            return;
+          }
+
+          request['accountDetails'] = accountDetails;
+          try {
+              const response = await updateAccInfo(request);
+              if(response.statusCode !== 0){
+                console.log("Error updating account information, response:", response);
+                setErrorMsg(response.resultMessage);
+              } else {
+                //update account information success!
+                console.log("Update account information successfully:", response);
+                const personalDetails = {
+                    "email": email,
+                    "contactNo": contactNo
+                };
+                sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(personalDetails));
+                setSuccessMsg(response.resultMessage);
+                setErrorMsg('');
+              }
+          } catch (error) {
+              //TODO to change this error message to a generic error message shown as red banner
+              console.error("Error in handling updating account infomation:", error);
+              setErrorMsg("Failed to update account infomation. Please try again.");
+          }
         } else {
           console.log('Cancelled!');
         }
@@ -203,6 +229,9 @@ export default function AccountUpdate(){
 
     return (
         <div className="container-fluid">
+            <br />
+            {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
+            {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
                     <h2>Account Update</h2>

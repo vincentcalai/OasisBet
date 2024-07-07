@@ -102,6 +102,22 @@ export class UpdateAccountModel {
     }
 }
 
+export class AccountDetailsModel {
+    constructor(username, oldPassword, newPassword, email, contactNo){
+        this.username = username;
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
+        this.email = email;
+        this.contactNo = contactNo;
+    }
+}
+
+export class UpdateAccountDetailsModel {
+    constructor(accountDetails) {
+        this.accountDetails = accountDetails;
+    }
+}
+
 export function generateSampleData() {
     const eventsMap = new Map();
 
