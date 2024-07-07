@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './AccountUpdate.css';
 import { Card, Tab, Tabs } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,6 +41,9 @@ export default function AccountUpdate(){
         email: '',
         contactNo: ''
     });
+
+    const hasEditContact = useRef(false);
+    const hasEditPassword = useRef(false);
 
     useEffect(() => {
         console.log("accountDetails in AccountUpdate: ", accountDetails);
@@ -143,6 +146,7 @@ export default function AccountUpdate(){
     };
 
     const handlePasswordInputChange = (event, type) => {
+        hasEditPassword.current = true;
         if(type === CURRENT_PASSWORD){
             setCurrentPassword(event.target.value);
         } else if(type === NEW_PASSWORD){
@@ -153,6 +157,7 @@ export default function AccountUpdate(){
     };
 
     const handleContactInputChange = (event, type) => {
+        hasEditContact.current = true;
         if(type === EMAIL){
             setEmail(event.target.value);
         } else if(type === CONTACT_NO){
@@ -303,10 +308,12 @@ export default function AccountUpdate(){
                             <hr />
                             <div className="d-flex justify-content-end">
                             <button className="btn btn-danger btn-cancel" type="button"
+                                disabled={!hasEditContact.current}
                                 onClick={() => onCancel(CONTACT_TAB)}>
                                 Cancel
                             </button>
                             <button className="btn btn-success btn-confirm-action" type="button"
+                                disabled={!hasEditContact.current}
                                 onClick={() => onSubmit(CONTACT_TAB)}>
                                 Confirm
                             </button>
@@ -400,10 +407,12 @@ export default function AccountUpdate(){
                             <hr />
                             <div className="d-flex justify-content-end">
                                 <button className="btn btn-danger btn-cancel" type="button"
+                                    disabled={!hasEditPassword.current}
                                     onClick={() => onCancel(LOGIN_TAB)}>
                                     Cancel
                                 </button>
                                 <button className="btn btn-success btn-confirm-action" type="button"
+                                    disabled={!hasEditPassword.current}
                                     onClick={() => onSubmit(LOGIN_TAB)}>
                                     Confirm
                                 </button>
