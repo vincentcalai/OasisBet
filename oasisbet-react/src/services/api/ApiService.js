@@ -178,7 +178,7 @@ const submitBets = async (request) => {
         console.log("calling /odds/bets api!");
         console.log("submit bets api request: ", request);
 
-        const response = await axios.post(SharedVarConstants.HOST_NAME_URL + 'odds/bets', request);
+        const response = await axiosInstance.post(SharedVarConstants.HOST_NAME_URL + 'odds/bets', request);
 
         console.log("Response: ", response);
 

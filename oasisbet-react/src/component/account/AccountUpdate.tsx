@@ -127,6 +127,9 @@ export default function AccountUpdate(){
         setDialogOpen(false);
         if (result === 'confirm') {
           console.log('Confirmed!');
+          setIsContactNoDisabled(true)
+          setIsEmailDisabled(true)
+          
           const request: UpdateAccountDetailsModel = new UpdateAccountDetailsModel();
           const accountDetails: AccountDetailsModel = new AccountDetailsModel();
           
