@@ -87,6 +87,7 @@ export default function LoginMenu(){
             setPassword('');
             clearLocalStorage();
             dispatch(updateLoginDetails('isUserLoggedIn', false));
+            navigate('/account', { state: { code: 0, message: '' } });
         }
     }
 
