@@ -153,11 +153,15 @@ export default function AccountUpdate(){
               } else {
                 //update account information success!
                 console.log("Update account information successfully:", response);
-                const personalDetails = {
-                    "email": email,
-                    "contactNo": contactNo
-                };
-                sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(personalDetails));
+                if(dialogData?.type === SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE){
+                    const personalDetails = {
+                        "email": email,
+                        "contactNo": contactNo
+                    };
+                    sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(personalDetails));
+                    setPersonalInfoDetails(personalDetails);
+                }
+                
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
               }
