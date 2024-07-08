@@ -80,6 +80,9 @@ export default function AccountUpdate(){
     });
 
     const onSubmit = ((type: string) => {
+        setSuccessMsg('');
+        setErrorMsg('');
+
         console.log("onSubmit Account Update details: ", email, contactNo);
         const validationErrors = {
             currentPassword: '',
