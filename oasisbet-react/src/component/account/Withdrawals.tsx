@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './Withdrawals.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants";
@@ -12,6 +12,11 @@ export default function Withdrawals({handleNavToTrxHist}){
     const [balance, setBalance] = useState('NA');
     const [withdrawalAmt, setWithdrawalAmt] = useState(0 as number);
     const [password, setPassword] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+    const [inputErrorMsg, setInputErrorMsg] = useState('');
+
+    const isWithdrawalAmtValid = useRef(false);
 
     useEffect(() => {
         console.log("accountDetails in Withdrawals: ", accountDetails);
@@ -28,10 +33,30 @@ export default function Withdrawals({handleNavToTrxHist}){
         if(type === PASSWORD) {
             setPassword(e.target.value);
         }
+        validateWithdrawalAmt(e.target.value);
+    }
+
+    const validateWithdrawalAmt = (amount) => {
+        const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
+        if(amount > 200000){
+            setInputErrorMsg('Maximum amount to deposit is $199999.99');
+            isWithdrawalAmtValid.current = false;
+            return false;
+        } else if(!pattern.test(amount)) {
+            console.log("pattern failed!")
+            isWithdrawalAmtValid.current = false;
+            setInputErrorMsg('Please enter correct format');
+            return false;
+        } 
+        isWithdrawalAmtValid.current = true;
+        setInputErrorMsg('');
+        return true;
     }
 
     return (
         <div className="container-fluid">
+            {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
+            {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
                     <h2>Withdrawals</h2>
@@ -59,6 +84,9 @@ export default function Withdrawals({handleNavToTrxHist}){
                             onChange={(e) => onWithdrawalInputChange(e, WITHDRAWAL_AMT)}
                             value={withdrawalAmt === 0 ? '' : withdrawalAmt}/>
                             </div>
+                            <label id="input_error_0" className={`error-text ${inputErrorMsg ? 'highlightLabel' : ''}`} htmlFor="input_0">
+                                {inputErrorMsg}
+                            </label>
                         </div>
                         </div>
                         <br />
@@ -82,6 +110,7 @@ export default function Withdrawals({handleNavToTrxHist}){
                     <hr />
                     <div className="dialog-actions">
                         <button className="btn btn-danger btn-cancel" type="button" 
+                            disabled={!isWithdrawalAmtValid}
                             onClick={() => {
                                 setWithdrawalAmt(0);
                                 setPassword('');
@@ -89,6 +118,7 @@ export default function Withdrawals({handleNavToTrxHist}){
                         Cancel
                         </button>
                         <button className="btn btn-success btn-confirm-action" type="button" 
+                            disabled={!isWithdrawalAmtValid}
                             onClick={() => {/* confirmClicked() */}}>
                         Confirm
                         </button>

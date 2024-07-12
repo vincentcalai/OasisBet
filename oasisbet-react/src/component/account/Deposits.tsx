@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './Deposits.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants";
@@ -18,8 +18,11 @@ export default function Deposits({handleNavToTrxHist}){
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [dialogData, setDialogData] = useState({ title: '', type: '' });
     const [inputErrorMsg, setInputErrorMsg] = useState('');
+    
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+
+    const isDepositAmtValid = useRef(false);
 
     const dispatch = useDispatch();
 
@@ -43,12 +46,15 @@ export default function Deposits({handleNavToTrxHist}){
         const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
         if(amount > 200000){
             setInputErrorMsg('Maximum amount to deposit is $199999.99');
+            isDepositAmtValid.current = false;
             return false;
         } else if(!pattern.test(amount)) {
             console.log("pattern failed!")
+            isDepositAmtValid.current = false;
             setInputErrorMsg('Please enter correct format');
             return false
         } 
+        isDepositAmtValid.current = true;
         setInputErrorMsg('');
         return true;
     }
@@ -174,10 +180,12 @@ export default function Deposits({handleNavToTrxHist}){
                     <hr />
                     <div className="dialog-actions">
                         <button className="btn btn-danger btn-cancel" type="button"
+                            disabled ={!isDepositAmtValid.current}
                             onClick={onCancel}>
                         Cancel
                         </button>
                         <button className="btn btn-success btn-confirm-action" type="button"
+                            disabled ={!isDepositAmtValid.current}
                             onClick={confirmSubmit}>
                         Confirm
                         </button>
