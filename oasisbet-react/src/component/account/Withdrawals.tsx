@@ -2,11 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import './Withdrawals.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants";
-import { useSessionStorage } from "../util/useSessionStorage.ts";
+import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
+import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { UpdateAccountModel, AccountModel } from "../../constants/MockData.js";
+import { updateAccDetails } from "../../services/api/ApiService.js";
+import { useDispatch } from "react-redux";
+import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 
 export default function Withdrawals({handleNavToTrxHist}){
     const PASSWORD = 'PASSWORD';
     const WITHDRAWAL_AMT = 'WITHDRAWAL_AMT';
+
+    const [isDialogOpen, setDialogOpen] = useState(false);
+    const [dialogData, setDialogData] = useState({ title: '', type: '' });
+
+    const dispatch = useDispatch();
 
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
@@ -28,18 +38,18 @@ export default function Withdrawals({handleNavToTrxHist}){
 
     const onWithdrawalInputChange = (e, type) => {
         if(type === WITHDRAWAL_AMT) {
+            validateWithdrawalAmt(e.target.value);
             setWithdrawalAmt(e.target.value);
         }
         if(type === PASSWORD) {
             setPassword(e.target.value);
         }
-        validateWithdrawalAmt(e.target.value);
     }
 
     const validateWithdrawalAmt = (amount) => {
         const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
         if(amount > 200000){
-            setInputErrorMsg('Maximum amount to deposit is $199999.99');
+            setInputErrorMsg('Maximum amount to withdraw is $199999.99');
             isWithdrawalAmtValid.current = false;
             return false;
         } else if(!pattern.test(amount)) {
@@ -53,8 +63,75 @@ export default function Withdrawals({handleNavToTrxHist}){
         return true;
     }
 
+    const onCancel = () => {
+        setWithdrawalAmt(0);
+        setPassword('');
+        setInputErrorMsg('');
+        setSuccessMsg('');
+        setErrorMsg('');
+        isWithdrawalAmtValid.current = false;
+    }
+
+    const confirmSubmit = () => {
+        const isFormValid = validateWithdrawalAmt(withdrawalAmt);
+        if(withdrawalAmt < 1) {
+          setInputErrorMsg('Minimum amount to withdraw is $1');
+          return false;
+        }
+        if (isFormValid) {
+          console.log('Form is valid, submitting form to backend now');
+          handleOpenDialog();
+        } else {
+          setInputErrorMsg('Withdrawal amount is invalid');
+          console.log('Form is invalid');
+        }
+    };
+
+    const handleOpenDialog = () => {
+        setDialogData({
+          title: SharedVarConstants.CFM_WITHDRAW_DIALOG_TITLE,
+          type: SharedVarConstants.CFM_WITHDRAW_DIALOG_TYPE
+        });
+        setDialogOpen(true);
+      };
+
+    const handleCloseDialog = async (result) => {
+        setDialogOpen(false);
+        if (result === 'confirm') {
+          console.log('Confirmed!');
+          const request: UpdateAccountModel = new UpdateAccountModel();
+          const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+          account['withdrawalAmt'] = withdrawalAmt;
+          account['actionType'] = 'W';
+          request.account = account;
+    
+          try {
+              const response = await updateAccDetails(request);
+              if(response.statusCode !== 0){
+                console.log("Error withdraw amount, response:", response);
+                setErrorMsg(response.resultMessage);
+              } else {
+                //withdraw amount success!
+                console.log("Amount withdrew successfully:", response);
+                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+                dispatch(updateLoginDetails('balance', response.account?.balance));
+                setAccountDetails(response.account);
+                setSuccessMsg(response.resultMessage);
+                setErrorMsg('');
+              }
+          } catch (error) {
+              //TODO to change this error message to a generic error message shown as red banner
+              console.error("Error in handling withdrawal:", error);
+              setErrorMsg("Failed to withdraw. Please try again.");
+          }
+        } else {
+          console.log('Cancelled!');
+        }
+    };
+
     return (
         <div className="container-fluid">
+            <br />
             {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
             {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
@@ -110,22 +187,24 @@ export default function Withdrawals({handleNavToTrxHist}){
                     <hr />
                     <div className="dialog-actions">
                         <button className="btn btn-danger btn-cancel" type="button" 
-                            disabled={!isWithdrawalAmtValid}
-                            onClick={() => {
-                                setWithdrawalAmt(0);
-                                setPassword('');
-                            }}>
+                            disabled={!isWithdrawalAmtValid.current || password === ''}
+                            onClick={onCancel}>
                         Cancel
                         </button>
                         <button className="btn btn-success btn-confirm-action" type="button" 
-                            disabled={!isWithdrawalAmtValid}
-                            onClick={() => {/* confirmClicked() */}}>
+                            disabled={!isWithdrawalAmtValid.current || password === ''}
+                            onClick={confirmSubmit}>
                         Confirm
                         </button>
                     </div>
                     <br />
                 </Card.Body> 
             </Card>
+
+            <ConfirmDialog
+                isOpen={isDialogOpen}
+                onClose={handleCloseDialog}
+                data={dialogData} />
         </div>
     );
 }
