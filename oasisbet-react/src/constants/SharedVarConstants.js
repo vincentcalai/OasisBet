@@ -68,6 +68,7 @@ const SharedVarConstants = {
 
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
     INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
+    INCORRECT_PW_ERR_MSG: 'Incorrect Password. Please enter correct password.',
 
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',

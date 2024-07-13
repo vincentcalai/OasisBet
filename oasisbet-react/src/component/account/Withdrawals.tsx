@@ -4,8 +4,8 @@ import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import { updateLoginDetails } from "../../actions/LoginAction.ts";
-import { UpdateAccountModel, AccountModel } from "../../constants/MockData.js";
-import { updateAccDetails } from "../../services/api/ApiService.js";
+import { UpdateAccountModel, AccountModel, LoginCredentialsModel } from "../../constants/MockData.js";
+import { jwtAuthenticate, updateAccDetails } from "../../services/api/ApiService.js";
 import { useDispatch } from "react-redux";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 
@@ -98,7 +98,26 @@ export default function Withdrawals({handleNavToTrxHist}){
     const handleCloseDialog = async (result) => {
         setDialogOpen(false);
         if (result === 'confirm') {
-          console.log('Confirmed!');
+          const username = sessionStorage.getItem(SharedVarConstants.AUTH_USER);
+          if(!username){
+            console.log("Username is not found in session storage");
+            return;
+          }  
+          const loginCredentialModel = new LoginCredentialsModel(username, password);
+          try {
+            const response = await jwtAuthenticate(loginCredentialModel);
+            if(!response){
+                console.log("Invalid Credential! Response: ", response);
+                setErrorMsg(SharedVarConstants.INCORRECT_PW_ERR_MSG);
+                return;
+            }
+            console.log("Login response: ", response);
+          } catch (error) {
+            setErrorMsg(SharedVarConstants.INCORRECT_PW_ERR_MSG);
+            console.log("Invalid Credential, ", error);
+            return;
+          }
+          
           const request: UpdateAccountModel = new UpdateAccountModel();
           const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
           account['withdrawalAmt'] = withdrawalAmt;
