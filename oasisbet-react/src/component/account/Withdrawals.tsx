@@ -73,6 +73,8 @@ export default function Withdrawals({handleNavToTrxHist}){
     }
 
     const confirmSubmit = () => {
+        setSuccessMsg('');
+        setErrorMsg('');
         const isFormValid = validateWithdrawalAmt(withdrawalAmt);
         if(withdrawalAmt < 1) {
           setInputErrorMsg('Minimum amount to withdraw is $1');
@@ -117,7 +119,7 @@ export default function Withdrawals({handleNavToTrxHist}){
             console.log("Invalid Credential, ", error);
             return;
           }
-          
+
           const request: UpdateAccountModel = new UpdateAccountModel();
           const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
           account['withdrawalAmt'] = withdrawalAmt;
