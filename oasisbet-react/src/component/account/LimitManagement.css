@@ -8,18 +8,20 @@
     font-weight: bold;
 }
 
-
-.limit-right-section-label-width{
-    text-align: left;
-    font-weight: bold;
-}
-
 .limit-acc-label-text{
     margin-top: 10px;
 }
 
 .limit-section-selection-width{
     height: 35px;
+}
+
+.progress-bar-section{
+    padding-top: 20px;
+}
+
+.progress-bar-text-span{
+    padding-bottom: 2px;
 }
 
 .no-spinner::-webkit-outer-spin-button,
