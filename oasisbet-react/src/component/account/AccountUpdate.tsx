@@ -4,11 +4,11 @@ import { Card, Tab, Tabs } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
-import SharedVarConstants from "../../constants/SharedVarConstants";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { validatePassword, validateCfmPassword, validateEmail, validateContactNo, validateRequiredField } from "../util/validation.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/MockData.js";
-import { updateAccInfo } from "../../services/api/ApiService.js";
+import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/MockData.ts";
+import { updateAccInfo } from "../../services/api/ApiService.ts";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';

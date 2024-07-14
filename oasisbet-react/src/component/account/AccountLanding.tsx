@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './AccountLanding.css';
 import AccountLogin from "./AccountLogin.tsx";
 import AccountSideNav from "../common/AccountSideNav.tsx";
-import SharedVarConstants from "../../constants/SharedVarConstants.js";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import AccountOverview from "./AccountOverview.tsx";
 import TrxHist from "./TrxHist.tsx";
 import AccountUpdate from "./AccountUpdate.tsx";

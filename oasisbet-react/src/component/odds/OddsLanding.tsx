@@ -3,11 +3,11 @@ import './OddsLanding.css';
 import React, { useEffect, useRef, useState } from 'react';
 import CompSideNav from '../common/CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
-import { BetEvent, BetSlip, H2HBetSelection } from '../../constants/MockData.js';
-import SharedVarConstants from '../../constants/SharedVarConstants.js'; 
+import { BetEvent, BetSlip, H2HBetSelection } from '../../constants/MockData.ts';
+import SharedVarConstants from '../../constants/SharedVarConstants.ts'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOdds } from '../../services/api/ApiService.js';
+import { fetchOdds } from '../../services/api/ApiService.ts';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import './AccountLogin.css';
 import { Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import SharedVarConstants from "../../constants/SharedVarConstants";
-import { fetchAccountDetails } from '../../services/api/ApiService.js';
-import { LoginCredentialsModel } from "../../constants/MockData.js";
-import { jwtAuthenticate } from '../../services/api/ApiService.js';
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
+import { fetchAccountDetails } from '../../services/api/ApiService.ts';
+import { LoginCredentialsModel } from "../../constants/MockData.ts";
+import { jwtAuthenticate } from '../../services/api/ApiService.ts';
 import { updateLoginDetails } from "../../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 

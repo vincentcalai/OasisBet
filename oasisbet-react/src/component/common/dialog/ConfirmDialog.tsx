@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ConfirmDialog.css';
-import SharedVarConstants from '../../../constants/SharedVarConstants';
+import SharedVarConstants from '../../../constants/SharedVarConstants.ts';
 import { Card } from 'react-bootstrap';
 
 interface ConfirmDialogProps {

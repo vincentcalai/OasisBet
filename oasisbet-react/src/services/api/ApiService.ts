@@ -1,6 +1,6 @@
 import axios from 'axios';
-import axiosInstance from './InterceptorService.js';
-import SharedVarConstants from '../../constants/SharedVarConstants.js'; 
+import axiosInstance from './InterceptorService.ts';
+import SharedVarConstants from '../../constants/SharedVarConstants.ts'; 
 
 const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
     try {
@@ -194,6 +194,30 @@ const submitBets = async (request) => {
         throw error;
     }
 };
-  
-export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, updateAccInfo, submitBets, jwtAuthenticate };
+
+const retrieveMtdAmounts = async (accId) => {
+    try {
+        console.log("calling /account/retrieveMtdAmounts api!");
+        console.log("retrieve MTD amount api request accId: ", accId);
+
+        const response = await axiosInstance.get(SharedVarConstants.HOST_NAME_URL + 'account/retrieveMtdAmounts', {
+            params: { accId: accId }
+        });
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const data = response.data;
+        console.log("data fetched! data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }   
+}
+
+export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, updateAccInfo, submitBets, retrieveMtdAmounts, jwtAuthenticate };
   

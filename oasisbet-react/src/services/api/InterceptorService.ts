@@ -1,4 +1,4 @@
-import SharedVarConstants from "../../constants/SharedVarConstants";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import axios from 'axios';
 
 const getToken = () => sessionStorage.getItem('AUTHORIZATION');

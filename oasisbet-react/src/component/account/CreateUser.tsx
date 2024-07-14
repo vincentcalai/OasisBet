@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './CreateUser.css';
 import { Card } from "react-bootstrap";
-import SharedVarConstants from '../../constants/SharedVarConstants';
+import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import ConfirmDialog from '../common/dialog/ConfirmDialog.tsx';
-import { createUser } from '../../services/api/ApiService.js';
+import { createUser } from '../../services/api/ApiService.ts';
 import { UserModel } from '../../model/UserModel.tsx';
 import { CreateUserModel } from '../../model/CreateUserModel.tsx';
 import { useNavigate } from 'react-router-dom';

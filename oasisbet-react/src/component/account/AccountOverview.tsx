@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './AccountOverview.css';
 import { Card } from "react-bootstrap";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
-import SharedVarConstants from "../../constants/SharedVarConstants.js";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 
 
 export default function AccountOverview(){

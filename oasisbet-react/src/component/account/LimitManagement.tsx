@@ -1,11 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './LimitManagement.css';
 import { Card, ProgressBar } from "react-bootstrap";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
+import { retrieveMtdAmounts } from "../../services/api/ApiService.ts";
+import { useSessionStorage } from "../util/useSessionStorage.ts";
 
 export default function LimitManagement(){
+    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
+    const [mtdBetAmt, setMtdBetAmt] = useState('0.00');
+    const [depositProgress, setDepositProgress] = useState(0 as number);
+    const [betProgress, setBetProgress] = useState(0 as number);
+
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+    
+    useEffect(() => {
+        console.log("accountDetails in Deposits: ", accountDetails);
+        const { accId, depositLimit, betLimit } = accountDetails || {};
+
+        retrieveAccDetails(depositLimit, betLimit, accId);
+
+        setAccountDetails(accountDetails);
+    }, [accountDetails, setAccountDetails]);
+
+    const retrieveAccDetails = async (depositLimit: number, betLimit: number, accId: string) => {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdDepositAmt = response.account.mtdDepositAmt;
+            const mtdBetAmt = response.account.mtdBetAmount;
+            const depositProgress = mtdDepositAmt ? (mtdDepositAmt/depositLimit) * 100 : 0;
+            const betProgress = mtdBetAmt ? (mtdBetAmt/betLimit) * 100 : 0;
+
+            setMtdDepositAmt(mtdDepositAmt != null ? mtdDepositAmt.toFixed(2).toString() : '0.00');
+            setMtdBetAmt(mtdBetAmt != null ? mtdBetAmt.toFixed(2).toString() : '0.00');
+            setDepositProgress(depositProgress);
+            setBetProgress(betProgress);
+        } catch (error) {
+            //TODO to change this error message to a generic error message shown as red banner
+            console.error("Error in retrieve MTD amounts:", error);
+            setErrorMsg("Error in retrieving Account Details. Please try again.");
+        }
+    } 
 
     return (
         <div className="container-fluid">
+            <br />
+            {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
+            {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
                     <h2>Limit Management</h2>
@@ -20,10 +62,10 @@ export default function LimitManagement(){
                         <div className="row">
                             <label className="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
                             <div className="col-sm-6 col-md-6">
-                            <ProgressBar now={38.88} />
-                            <span>38.88%</span>
+                            <ProgressBar now={depositProgress} />
+                            <span>{depositProgress}%</span>
                             </div>
-                            <label className="control-label col-sm-3 col-md-3 limit-right-section-label-width">${588.00}</label>
+                            <label className="control-label col-sm-3 col-md-3 limit-right-section-label-width">${accountDetails.depositLimit}</label>
                         </div>
                         <br />
                         <div className="row">
@@ -58,10 +100,10 @@ export default function LimitManagement(){
                         <div className="row">
                             <label className="control-label col-sm-3 col-md-3 limit-left-section-label-width">$0.00</label>
                             <div className="col-sm-6 col-md-6">
-                            <ProgressBar now={58.88} />
-                            <span>{58.88}%</span>
+                            <ProgressBar now={betProgress} />
+                            <span>{betProgress}%</span>
                             </div>
-                            <label className="control-label col-sm-3 col-md-3 limit-right-section-label-width">${888.61}</label>
+                            <label className="control-label col-sm-3 col-md-3 limit-right-section-label-width">${accountDetails.betLimit}</label>
                         </div>
                         <br />
                         <div className="row">

@@ -1,6 +1,6 @@
 import React from 'react';
 import './CompSideNav.css';
-import SharedVarConstants from '../../constants/SharedVarConstants';
+import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 
 function AccountSideNav({ accountMenuSelect, handleClick }) {
     return (

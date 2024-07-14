@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import './Deposits.css';
 import { Card } from "react-bootstrap";
-import SharedVarConstants from "../../constants/SharedVarConstants";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountModel, UpdateAccountModel } from "../../constants/MockData.js";
-import { updateAccDetails } from "../../services/api/ApiService.js";
+import { AccountModel, UpdateAccountModel } from "../../constants/MockData.ts";
+import { updateAccDetails, retrieveMtdAmounts } from "../../services/api/ApiService.ts";
 import { updateLoginDetails } from "../../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 
@@ -28,15 +28,27 @@ export default function Deposits({handleNavToTrxHist}){
 
     useEffect(() => {
         console.log("accountDetails in Deposits: ", accountDetails);
-        const { balance, mtdDepositAmt, depositLimit } = accountDetails || {};
+        const { accId, balance, depositLimit } = accountDetails || {};
 
-        const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
+        retrieveAccDetails(depositLimit, accId);
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
-        setMtdDepositAmt(displayRemDeposit != null ? displayRemDeposit.toFixed(2).toString() : '0.00');
         setAccountDetails(accountDetails);
     }, [accountDetails, setAccountDetails]);
     
+    const retrieveAccDetails = async (depositLimit: number, accId: string) => {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdDepositAmt = response.account.mtdDepositAmt;
+            const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
+            setMtdDepositAmt(displayRemDeposit != null ? displayRemDeposit.toFixed(2).toString() : '0.00');
+        } catch (error) {
+            //TODO to change this error message to a generic error message shown as red banner
+            console.error("Error in retrieve MTD amounts:", error);
+            setErrorMsg("Error in retrieving Account Details. Please try again.");
+        }
+    } 
+
     const onDepositAmtChange = (e) => {
         setDepositAmt(e.target.value);
         validateDepositAmt(e.target.value);
@@ -201,3 +213,5 @@ export default function Deposits({handleNavToTrxHist}){
         </div>
     );
 }
+
+

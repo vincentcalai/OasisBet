@@ -84,7 +84,16 @@ export class LoginCredentialsModel {
 }
 
 export class AccountModel {
-    constructor(accId, usrId, balance, depositLimit, betLimit, depositAmt, withdrawalAmt, actionType) {
+    public accId: number;
+    public usrId: number;
+    public balance: number;
+    public depositLimit: number;
+    public betLimit: number;
+    public depositAmt: number;
+    public withdrawalAmt: number;
+    public actionType: string;
+
+    constructor(accId?, usrId?, balance?, depositLimit?, betLimit?, depositAmt?, withdrawalAmt?, actionType?) {
         this.accId = accId;
         this.usrId = usrId;
         this.balance = balance;
@@ -97,13 +106,21 @@ export class AccountModel {
 }
 
 export class UpdateAccountModel {
-    constructor(account) {
+    public account: AccountModel;
+
+    constructor(account?) {
         this.account = account;
     }
 }
 
 export class AccountDetailsModel {
-    constructor(username, oldPassword, newPassword, email, contactNo){
+    username: string;
+    oldPassword: string;
+    newPassword: string;
+    email: string;
+    contactNo: string;
+
+    constructor(username?, oldPassword?, newPassword?, email?, contactNo?){
         this.username = username;
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
@@ -113,7 +130,9 @@ export class AccountDetailsModel {
 }
 
 export class UpdateAccountDetailsModel {
-    constructor(accountDetails) {
+    public accountDetails: AccountDetailsModel;
+
+    constructor(accountDetails?) {
         this.accountDetails = accountDetails;
     }
 }

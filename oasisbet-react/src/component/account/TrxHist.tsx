@@ -1,8 +1,8 @@
 import React from "react";
 import './TrxHist.css';
 import { Card } from "react-bootstrap";
-import SharedVarConstants from "../../constants/SharedVarConstants.js";
-import SharedVarMethods from "../../constants/SharedVarMethods.js";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
+import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 
 export default function TrxHist(){
 
