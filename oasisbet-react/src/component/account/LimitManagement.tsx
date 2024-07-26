@@ -6,11 +6,17 @@ import { retrieveMtdAmounts } from "../../services/api/ApiService.ts";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 
 export default function LimitManagement(){
+    const DEPOSIT = 'deposit';
+    const BET = 'bet';
+
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
     const [mtdBetAmt, setMtdBetAmt] = useState('0.00');
     const [depositProgress, setDepositProgress] = useState(0 as number);
     const [betProgress, setBetProgress] = useState(0 as number);
+    const [password, setPassword] = useState('');
+    const [depositErrorMsg, setDepositErrorMsg] = useState('');
+    const [betErrorMsg, setBetErrorMsg] = useState('');
 
     const [selectedDepositOption, setSelectedDepositOption] = useState('300');
     const [selectedBetOption, setSelectedBetOption] = useState('100');
@@ -52,24 +58,67 @@ export default function LimitManagement(){
         }
     } 
 
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    }
+
     const handleInputLimitChange = (e, type) => {
         const value = e.target.value;
         const isOtherSelected = value === 'other';
         const newValue = isOtherSelected ? '' : value;
     
-        if (type === 'deposit') {
+        if (type === DEPOSIT) {
             const depositAmt = isOtherSelected ? '' : newValue;
             setSelectedDepositAmt(depositAmt);
             setSelectedDepositOption(newValue);
             setIsDepositAmtInputDisabled(!isOtherSelected);
-        } else if (type === 'bet') {
+            setDepositErrorMsg('');
+        } else if (type === BET) {
             const betAmt = isOtherSelected ? '' : newValue;
             setSelectedBetAmt(betAmt);
             setSelectedBetOption(newValue);
             setIsBetAmtInputDisabled(!isOtherSelected);
+            setBetErrorMsg('');
         }
     };
+
+    const validateInput = (amount, type) => {
+        const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
+        let errorMsg = '';
     
+        if (amount > 200000) {
+            errorMsg = 'Maximum amount to set is $199999.99';
+        } else if (!pattern.test(amount)) {
+            errorMsg = 'Please enter correct format';
+        }
+    
+        if (type === DEPOSIT) {
+            setDepositErrorMsg(errorMsg);
+        } else if (type === BET) {
+            setBetErrorMsg(errorMsg);
+        }
+    
+        return;
+    };
+
+    const onChangeInputAmount = (e, type) => {
+        validateInput(e.target.value, type);
+        if(type === DEPOSIT){
+            setSelectedDepositAmt(e.target.value)
+        } else if(type === BET){
+            setSelectedBetAmt(e.target.value)
+        }
+    }
+    
+    const onCancel = () => {
+        setSelectedDepositOption('300');
+        setSelectedDepositAmt('300');
+        setSelectedBetOption('100');
+        setSelectedBetAmt('100');
+        setPassword('');
+        setIsDepositAmtInputDisabled(true);
+        setIsBetAmtInputDisabled(true);
+    }
 
     return (
         <div className="container-fluid">
@@ -111,7 +160,7 @@ export default function LimitManagement(){
                             <div className="col-md-3">
                             <div className="dropdown-section">
                                 <select id="depositLimitDropdown" className="limit-dropdown"
-                                    value={selectedDepositOption || 'other'} onChange={(e) => handleInputLimitChange(e, 'deposit')}>
+                                    value={selectedDepositOption || 'other'} onChange={(e) => handleInputLimitChange(e, DEPOSIT)}>
                                     <option value="300">$300</option>
                                     <option value="500">$500</option>
                                     <option value="1000">$1000</option>
@@ -127,8 +176,11 @@ export default function LimitManagement(){
                                 <input type="text" className="form-control limit-left-section-selection-width no-spinner" 
                                 id="deposit_limit_0" name="deposit_limit" 
                                 value={selectedDepositAmt}
-                                onChange={(e) => setSelectedDepositAmt(e.target.value)}
+                                onChange={(e) => onChangeInputAmount(e, DEPOSIT)}
                                 disabled={isDepositAmtInputDisabled} required />
+                                <label id="input_error_0" className={`error-text ${depositErrorMsg ? 'highlightLabel' : ''}`} htmlFor="input_0">
+                                    {depositErrorMsg}
+                                </label>
                             </div>
                             </div>
                         </div>
@@ -164,7 +216,7 @@ export default function LimitManagement(){
                             <div className="col-md-3">
                             <div className="dropdown-section">
                                 <select id="betLimitDropdown" className="limit-dropdown"
-                                    value={selectedBetOption || 'other' } onChange={(e) => handleInputLimitChange(e, 'bet')}>
+                                    value={selectedBetOption || 'other' } onChange={(e) => handleInputLimitChange(e, BET)}>
                                     <option value="100">$100</option>
                                     <option value="200">$200</option>
                                     <option value="300">$300</option>
@@ -182,8 +234,11 @@ export default function LimitManagement(){
                                     <input type="text" className="form-control limit-section-selection-width no-spinner" 
                                     id="bet_limit_0" name="bet_limit" 
                                     value={selectedBetAmt} 
-                                    onChange={(e) => setSelectedBetAmt(e.target.value)}
+                                    onChange={(e) => onChangeInputAmount(e, BET)}
                                     disabled={isBetAmtInputDisabled} required />
+                                    <label id="input_error_0" className={`error-text ${betErrorMsg ? 'highlightLabel' : ''}`} htmlFor="input_0">
+                                        {betErrorMsg}
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -193,12 +248,16 @@ export default function LimitManagement(){
                         <div className="form-group row">
                             <label className="control-label col-sm-4 limit-left-section-label-width limit-acc-label-text">Enter OasisBet Account password</label>
                             <div className="col-md-3">
-                            <input type="password" className="form-control limit-section-selection-width no-spinner" id="password_0" name="password" required />
+                            <input type="password" className="form-control limit-section-selection-width no-spinner" 
+                            id="password_0" name="password" 
+                            onChange={handlePasswordChange}
+                            value={password}
+                            required />
                             </div>
                         </div>
                         <hr />
                         <div className="dialog-actions">
-                            <button className="btn btn-danger btn-cancel" type="button">
+                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}>
                                 Cancel
                             </button>
                             <button className="btn btn-success btn-confirm-action" type="button">
