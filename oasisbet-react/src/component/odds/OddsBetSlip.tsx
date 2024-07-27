@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { submitBets } from "../../services/api/ApiService.ts";
 import { SubmitBetsModel } from "../../model/SubmitBetsModel";
 import { useNavigate } from "react-router-dom";
+import SharedVarConstants from "../../constants/SharedVarConstants.ts";
+import { AccountModel } from "../../constants/MockData.ts";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
@@ -91,9 +93,17 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
         dispatch({ type: 'CLEAR_BET_SELECTION' });
         onPlaceBetStatusUpdate("D");
         console.log("confirm place bet! betPLaced: ", betEvents);
-    
+
+        const accountDetailsString = sessionStorage.getItem(SharedVarConstants.ACCOUNT_DETAILS);
+        const accountDetails: AccountModel = accountDetailsString ? JSON.parse(accountDetailsString) : {};
+        const { accId } = accountDetails;
+
+        if(!accId){
+            navigate('/account', { state: { code: 1, message: SharedVarConstants.USER_NOT_LOGGED_IN } });
+        }
+
         const submitBetsModel: SubmitBetsModel = {
-            userId: -1,
+            userId: accId,
             betSlip: betEvents
         };
 
