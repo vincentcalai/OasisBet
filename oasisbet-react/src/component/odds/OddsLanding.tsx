@@ -215,7 +215,7 @@ export default function OddsLanding(){
                                             <h3 className="card-subtitle">{formatDate(date)}</h3>
                                             <br />
                                             <Table>
-                                                <thead>
+                                                <thead className="table-primary">
                                                     <tr>
                                                         <th style={{ width: '13%' }}>Time</th>
                                                         <th style={{ width: '12%' }}>Event ID</th>
