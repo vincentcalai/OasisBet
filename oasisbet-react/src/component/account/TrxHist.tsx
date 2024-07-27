@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import './TrxHist.css';
-import { Card } from "react-bootstrap";
+import { Card, Table } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import { retrieveMtdAmounts, retrieveTrxList } from "../../services/api/ApiService.ts";
+import { TrxHistModel } from "../../model/TrxHistModel.tsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function TrxHist(){
 
-    const trxHistList: any = [];
+    const [trxHistList, setTrxHistList] = useState([] as TrxHistModel[])
 
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [mtdBetAmount, setMtdBetAmount] = useState('0.00');
@@ -50,6 +53,8 @@ export default function TrxHist(){
     const retrieveTrx = async (accId: string, selectedTrxType: string, selectedPeriod: string) => {
         try {
             const response: any = await retrieveTrxList(accId, selectedTrxType, selectedPeriod);
+            const trxHist = response.trxHistList;
+            setTrxHistList(trxHist);
         } catch (error) {
             //TODO to change this error message to a generic error message shown as red banner
             console.error("Error in retrieve Transaction History details:", error);
@@ -57,8 +62,17 @@ export default function TrxHist(){
         }
     } 
 
+    const toggleShowDetails = (index) => {
+        setTrxHistList((prevTrxHistList) =>
+            prevTrxHistList.map((trx, i) =>
+                i === index ? { ...trx, showDetails: !trx.showDetails } : trx
+            )
+        );
+    };
+
     return (
         <div className="container-fluid">
+            <br />
             {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
@@ -102,8 +116,8 @@ export default function TrxHist(){
                         </div>
                     </div>
                     <br />
-                    <table className="table" style={{ tableLayout: 'fixed', width: '100%' }}>
-                        <thead className="table-header-trx">
+                    <Table className="table">
+                        <thead className="table-primary">
                         <tr>
                             <th style={{ textAlign: 'center', width: '25%' }}>Date & Time</th>
                             <th style={{ textAlign: 'center', width: '45%' }}>Description</th>
@@ -124,14 +138,21 @@ export default function TrxHist(){
                                 <td style={{ textAlign: 'center', width: '20%' }}>
                                     {trx.type === 'W' || trx.type === 'S' ? `-$${trx.amount.toFixed(2)}` : `+$${trx.amount.toFixed(2)}`}
                                 </td>
-                                    <td style={{ textAlign: 'center', width: '10%' }}>
+                                <td style={{ textAlign: 'center', width: '10%' }}>
+                                    {(trx.type === 'S' || trx.type === 'C') && (
+                                    <FontAwesomeIcon
+                                        icon={trx.showDetails ? faAngleDown : faAngleRight}
+                                        onClick={() => toggleShowDetails(index)}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                    )}
                                 </td>
                             </tr>
                             {trx.showDetails && trx.trxBetDetails && (
                                 <tr>
                                 <td colSpan={4}>
-                                    <table className="table" style={{ tableLayout: 'fixed', width: '100%' }}>
-                                    <thead className="table-header-details">
+                                    <Table bordered hover>
+                                    <thead className="table-secondary">
                                         <tr>
                                         <th style={{ textAlign: 'center', width: '20%' }}>Start Time</th>
                                         <th style={{ textAlign: 'center', width: '15%' }}>Competition</th>
@@ -151,7 +172,7 @@ export default function TrxHist(){
                                         <td style={{ textAlign: 'center', width: '20%' }}>{trx.trxBetDetails.trxId}</td>
                                         </tr>
                                     </tbody>
-                                    </table>
+                                    </Table>
                                 </td>
                                 </tr>
                             )}
@@ -165,8 +186,8 @@ export default function TrxHist(){
                             </tr>
                         )}
                         </tbody>
-                    </table>
-                    </div>
+                    </Table>
+                </div>
                 </Card.Body> 
             </Card>
         </div>
