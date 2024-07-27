@@ -219,5 +219,33 @@ const retrieveMtdAmounts = async (accId) => {
     }   
 }
 
-export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, updateAccInfo, submitBets, retrieveMtdAmounts, jwtAuthenticate };
+const retrieveTrxList = async (accId, selectedTrxType, selectedPeriod) => {
+    try {
+        console.log("calling /account/retrieveTrx api!");
+        console.log("retrieve MTD amount api request accId: ", accId);
+
+        const response = await axiosInstance.get(SharedVarConstants.HOST_NAME_URL + 'account/retrieveTrx', {
+            params: { 
+                accId: accId,
+                type: selectedTrxType,
+                period: selectedPeriod
+            }
+        });
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const data = response.data;
+        console.log("data fetched! data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }   
+}
+
+export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, updateAccInfo, submitBets, retrieveMtdAmounts, retrieveTrxList, jwtAuthenticate };
   

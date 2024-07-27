@@ -1,15 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './TrxHist.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
+import { useSessionStorage } from "../util/useSessionStorage.ts";
+import { retrieveMtdAmounts, retrieveTrxList } from "../../services/api/ApiService.ts";
 
 export default function TrxHist(){
 
     const trxHistList: any = [];
 
+    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const [mtdBetAmount, setMtdBetAmount] = useState('0.00');
+    const [mtdPayout, setMtdPayout] = useState('0.00');
+    const [selectedTrxType, setSelectedTrxType] = useState('funds');
+    const [selectedPeriod, setSelectedPeriod] = useState('today');
+
+    const [errorMsg, setErrorMsg] = useState('');
+
+    useEffect(() => {
+        console.log("accountDetails in Transaction History: ", accountDetails);
+        const { accId } = accountDetails || {};
+
+        retrieveAccDetails(accId);
+
+        setAccountDetails(accountDetails);
+    }, [accountDetails, setAccountDetails]);
+
+    useEffect(() => {
+        const { accId } = accountDetails || {};
+        console.log("selectedTrxType: ", selectedTrxType, " selectedPeriod: ", selectedPeriod);
+        retrieveTrx(accId, selectedTrxType, selectedPeriod);   
+    }, [selectedTrxType, selectedPeriod, accountDetails]);
+
+    const retrieveAccDetails = async (accId: string) => {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdBetAmount = response.account.mtdBetAmount;
+            const mtdPayout = response.account.mthPayout;
+            setMtdBetAmount(mtdBetAmount != null ? mtdBetAmount.toFixed(2).toString() : '0.00');
+            setMtdPayout(mtdPayout != null ? mtdPayout.toFixed(2).toString() : '0.00');
+        } catch (error) {
+            //TODO to change this error message to a generic error message shown as red banner
+            console.error("Error in retrieve MTD amount details:", error);
+            setErrorMsg("Error in retrieving MTD amount Details. Please try again.");
+        }
+    } 
+
+    const retrieveTrx = async (accId: string, selectedTrxType: string, selectedPeriod: string) => {
+        try {
+            const response: any = await retrieveTrxList(accId, selectedTrxType, selectedPeriod);
+        } catch (error) {
+            //TODO to change this error message to a generic error message shown as red banner
+            console.error("Error in retrieve Transaction History details:", error);
+            setErrorMsg("Error in retrieving Transaction History Details. Please try again.");
+        }
+    } 
+
     return (
         <div className="container-fluid">
+            {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
                     <h2>Transaction History</h2>
@@ -19,16 +69,17 @@ export default function TrxHist(){
                     <label className="trx-section-label-width">Month To Date</label>
                     <br />
                     <label className="trx-section-label-width">Bet Placed:</label>
-                    <span className="col-sm-3 trx-section-selection-width">$5568.10</span>
+                    <span className="col-sm-3 trx-section-selection-width">${mtdBetAmount}</span>
                     <br />
                     <label className="trx-section-label-width">Payout:</label>
-                    <span className="col-sm-3 trx-section-selection-width">$6421.42</span>
+                    <span className="col-sm-3 trx-section-selection-width">${mtdPayout}</span>
                     <hr />
                     <div className="row">
                         <div className="col-md-3 offset-md-1">
                         <label className="trx-section-label-width">View</label>
                         <div className="dropdown-section">
-                            <select id="trxViewDropdown" className="trx-dropdown">
+                            <select id="trxViewDropdown" className="trx-dropdown"
+                                value={selectedTrxType} onChange={(e) => setSelectedTrxType(e.target.value)}>
                                 <option value="funds">Funds In/Out</option>
                                 <option value="sportsbet">All Sports Bet</option>
                                 <option value="deposit">Deposits</option>
@@ -39,7 +90,8 @@ export default function TrxHist(){
                         <div className="col-md-3 offset-md-1">
                         <label className="trx-section-label-width">Time Period</label>
                         <div className="dropdown-section">
-                            <select id="trxTimePrdDropdown" className="trx-dropdown">
+                            <select id="trxTimePrdDropdown" className="trx-dropdown"
+                                value={selectedPeriod} onChange={(e) => setSelectedPeriod(e.target.value)}>
                                 <option value="today">Today</option>
                                 <option value="last7day">Last 7 Days</option>
                                 <option value="last1mth">Last Month</option>
