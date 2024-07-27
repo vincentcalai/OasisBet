@@ -110,11 +110,13 @@ export default function Withdrawals({handleNavToTrxHist}){
             const response = await jwtAuthenticate(loginCredentialModel);
             if(!response){
                 console.log("Invalid Credential! Response: ", response);
+                setPassword('');
                 setErrorMsg(SharedVarConstants.INCORRECT_PW_ERR_MSG);
                 return;
             }
             console.log("Login response: ", response);
           } catch (error) {
+            setPassword('');
             setErrorMsg(SharedVarConstants.INCORRECT_PW_ERR_MSG);
             console.log("Invalid Credential, ", error);
             return;
@@ -139,6 +141,7 @@ export default function Withdrawals({handleNavToTrxHist}){
                 setAccountDetails(response.account);
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
+                setPassword('');
               }
           } catch (error) {
               //TODO to change this error message to a generic error message shown as red banner

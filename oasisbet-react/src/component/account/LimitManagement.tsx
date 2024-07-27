@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import './LimitManagement.css';
 import { Card, OverlayTrigger, ProgressBar, Tooltip } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
-import { retrieveMtdAmounts } from "../../services/api/ApiService.ts";
-import { useSessionStorage } from "../util/useSessionStorage.ts";
+import { jwtAuthenticate, retrieveMtdAmounts, updateAccDetails } from "../../services/api/ApiService.ts";
+import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
+import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
+import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/MockData.ts";
 
 export default function LimitManagement(){
     const DEPOSIT = 'deposit';
@@ -27,16 +29,25 @@ export default function LimitManagement(){
     const [isDepositAmtInputDisabled, setIsDepositAmtInputDisabled] = useState(true);
     const [isBetAmtInputDisabled, setIsBetAmtInputDisabled] = useState(true);
 
+    const [isDialogOpen, setDialogOpen] = useState(false);
+    const [dialogData, setDialogData] = useState({ title: '', type: '' });
+
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     
     useEffect(() => {
-        console.log("accountDetails in Deposits: ", accountDetails);
+        console.log("accountDetails in Limit Management: ", accountDetails);
         const { accId, depositLimit, betLimit } = accountDetails || {};
 
         retrieveAccDetails(depositLimit, betLimit, accId);
 
         setAccountDetails(accountDetails);
+        setSelectedDepositOption('300');
+        setSelectedBetOption('100');
+        setSelectedDepositAmt('300');
+        setSelectedBetAmt('100');
+        setIsDepositAmtInputDisabled(true);
+        setIsBetAmtInputDisabled(true);
     }, [accountDetails, setAccountDetails]);
 
     const retrieveAccDetails = async (depositLimit: number, betLimit: number, accId: string) => {
@@ -49,8 +60,8 @@ export default function LimitManagement(){
 
             setMtdDepositAmt(mtdDepositAmt != null ? mtdDepositAmt.toFixed(2).toString() : '0.00');
             setMtdBetAmt(mtdBetAmt != null ? mtdBetAmt.toFixed(2).toString() : '0.00');
-            setDepositProgress(depositProgress);
-            setBetProgress(betProgress);
+            setDepositProgress(depositProgress != null ? Number(depositProgress.toFixed(2)) : 0);
+            setBetProgress(betProgress != null ? Number(betProgress.toFixed(2)) : 0);
         } catch (error) {
             //TODO to change this error message to a generic error message shown as red banner
             console.error("Error in retrieve MTD amounts:", error);
@@ -109,6 +120,11 @@ export default function LimitManagement(){
             setSelectedBetAmt(e.target.value)
         }
     }
+
+    const isDisabled = (): boolean => {
+        return !selectedDepositAmt || !selectedBetAmt || !password || Boolean(betErrorMsg) || Boolean(depositErrorMsg);
+    };
+    
     
     const onCancel = () => {
         setSelectedDepositOption('300');
@@ -118,7 +134,89 @@ export default function LimitManagement(){
         setPassword('');
         setIsDepositAmtInputDisabled(true);
         setIsBetAmtInputDisabled(true);
+        setErrorMsg('');
+        setSuccessMsg('');
+        setDepositErrorMsg('');
+        setBetErrorMsg('');
     }
+
+    const confirmSubmit = () => {
+        if (selectedDepositOption === '' && selectedDepositAmt === ''){
+            setDepositErrorMsg('Deposit Limit is required'); 
+            console.log('Form is invalid');
+            return; 
+        } else if (selectedBetOption === '' && selectedBetAmt === ''){
+            setBetErrorMsg('Bet Limit is required');
+            console.log('Form is invalid');
+            return; 
+        }
+        handleOpenDialog();
+    }
+
+    const handleOpenDialog = () => {
+        setDialogData({
+          title: SharedVarConstants.CFM_CHANGE_LIMIT_DIALOG_TITLE,
+          type: SharedVarConstants.CFM_CHANGE_LIMIT_DIALOG_TYPE,
+        });
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = async (result) => {
+        setDialogOpen(false);
+        if (result === 'confirm') {
+          console.log('Confirmed!');
+          const username = sessionStorage.getItem(SharedVarConstants.AUTH_USER);
+          if(!username){
+            console.log("Username is not found in session storage");
+            return;
+          }  
+          const loginCredentialModel = new LoginCredentialsModel(username, password);
+          try {
+            const response = await jwtAuthenticate(loginCredentialModel);
+            if(!response){
+                console.log("Invalid Credential! Response: ", response);
+                setPassword('');
+                setErrorMsg(SharedVarConstants.INCORRECT_PW_ERR_MSG);
+                return;
+            }
+            console.log("Login response: ", response);
+          } catch (error) {
+            setPassword('');
+            setErrorMsg(SharedVarConstants.INCORRECT_PW_ERR_MSG);
+            console.log("Invalid Credential, ", error);
+            return;
+          }
+
+          const request: UpdateAccountModel = new UpdateAccountModel();
+          const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+          account['betLimit'] = +selectedBetAmt;
+          account['depositLimit'] = +selectedDepositAmt;
+          account['actionType'] = 'L';
+          request.account = account;
+    
+          try {
+              const response = await updateAccDetails(request);
+              if(response.statusCode !== 0){
+                console.log("Error setting deposit/bet limit, response:", response);
+                setErrorMsg(response.resultMessage);
+              } else {
+                //set bet and deposit limit success!
+                console.log("Set deposit/bet limit successfully:", response);
+                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+                setAccountDetails(response.account);
+                setSuccessMsg(response.resultMessage);
+                setErrorMsg('');
+                setPassword('');
+              }
+          } catch (error) {
+              //TODO to change this error message to a generic error message shown as red banner
+              console.error("Error in handling setting bet/deposit limit:", error);
+              setErrorMsg("Failed to set bet/deposit limit. Please try again.");
+          }
+        } else {
+          console.log('Cancelled!');
+        }
+    };
 
     return (
         <div className="container-fluid">
@@ -257,10 +355,12 @@ export default function LimitManagement(){
                         </div>
                         <hr />
                         <div className="dialog-actions">
-                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}>
+                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}
+                                disabled={isDisabled()}>
                                 Cancel
                             </button>
-                            <button className="btn btn-success btn-confirm-action" type="button">
+                            <button className="btn btn-success btn-confirm-action" type="button" onClick={confirmSubmit}
+                                disabled={isDisabled()}>
                                 Confirm
                             </button>
                         </div>
@@ -268,6 +368,11 @@ export default function LimitManagement(){
                     </form>
                 </Card.Body> 
             </Card>
+
+            <ConfirmDialog
+                isOpen={isDialogOpen}
+                onClose={handleCloseDialog}
+                data={dialogData} />
         </div>
     );
 }
