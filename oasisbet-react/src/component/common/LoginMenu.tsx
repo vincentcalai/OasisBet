@@ -127,6 +127,7 @@ export default function LoginMenu(){
         sessionStorage.removeItem(SharedVarConstants.AUTHORIZATION);
         sessionStorage.removeItem(SharedVarConstants.ACCOUNT_DETAILS);
         sessionStorage.removeItem(SharedVarConstants.LOGIN_TIME);
+        sessionStorage.removeItem(SharedVarConstants.PERSONAL_DETAILS);
       }
 
     function handleClickCreateUser(){

@@ -142,9 +142,14 @@ export default function AccountUpdate(){
           if(dialogData?.type === SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE){
             accountDetails.contactNo = contactNo;
             accountDetails.email = email;
+            hasEditContact.current = false;
           } else if(dialogData?.type === SharedVarConstants.CFM_UPDATE_PW_DIALOG_TYPE){
             accountDetails.newPassword = newPassword;
             accountDetails.oldPassword = currentPassword;
+            hasEditPassword.current = false;
+            setCurrentPassword('');
+            setNewPassword('');
+            setCfmPassword('');
           } else {
             console.log("Cannot find dialog type");
             return;
@@ -167,7 +172,6 @@ export default function AccountUpdate(){
                     sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(personalDetails));
                     setPersonalInfoDetails(personalDetails);
                 }
-                
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
               }
