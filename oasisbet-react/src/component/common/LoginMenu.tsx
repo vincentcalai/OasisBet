@@ -18,6 +18,11 @@ export default function LoginMenu(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [balance, setBalance] = useState('NA');
+    const [loginTime, setLoginTime] = useState((): number => {
+        const savedLoginTime = sessionStorage.getItem(SharedVarConstants.LOGIN_TIME);
+        return savedLoginTime ? +savedLoginTime : 0;
+    });
+    const [loginTimer, setLoginTimer] = useState('00:00:00');
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
     const updatedBalance = useSelector((state: any) => state['login']['balance']) ;
 
@@ -35,12 +40,36 @@ export default function LoginMenu(){
         }
     }, [updatedBalance]);
 
+    useEffect(() => {
+        let intervalId;
+        if(isUserLoggedIn){
+            setLoginTime(Date.now());
+            intervalId = setInterval(() => {
+                setLoginTimer(getLoggedInDuration());
+            }, 1000);
+        }
+        return () => clearInterval(intervalId); // clear interval when unmounting this component 
+        // eslint-disable-next-line
+    }, [loginTime, isUserLoggedIn]);
+
     const handleLoginInputChange = (event, type) => {
         if(type === 'username'){
             setUsername(event.target.value.toUpperCase());
         } else if(type === 'password'){
             setPassword(event.target.value);
         }
+    };
+
+    const getLoggedInDuration = () => {
+        const durationInSeconds = Math.floor((Date.now() - loginTime) / 1000);
+        return formatDuration(durationInSeconds);
+    };
+    
+    const formatDuration = (seconds) => {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
 
     async function handleSubmitForm(event){
@@ -85,6 +114,8 @@ export default function LoginMenu(){
             console.log("logout ok");
             setUsername('');
             setPassword('');
+            setLoginTime(0);
+            setLoginTimer('00:00:00');
             clearLocalStorage();
             dispatch(updateLoginDetails('isUserLoggedIn', false));
             navigate('/account', { state: { code: 0, message: '' } });
@@ -109,7 +140,8 @@ export default function LoginMenu(){
                 <div className="right-navbar">
                     <ul className="navbar-nav">
                         <li className="nav-item user-menu-display">
-                            <span style={{borderRight: '1px solid #ccc'}}>LOGGED IN &nbsp;</span>
+                            <span style={{borderRight: '1px solid #ccc'}}>LOGGED IN &nbsp; 
+                                {loginTimer}</span>
                             <Button type="button" variant="secondary" className="btn-logout"
                             onClick={handleLogout}>Logout</Button>
                             <FontAwesomeIcon icon={faUser} className="user-icon"/>

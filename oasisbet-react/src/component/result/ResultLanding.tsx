@@ -188,7 +188,7 @@ export default function ResultLanding(){
 
                                     <br />
                                     <Table style={{ width: '80%', margin: '0 auto' }}>
-                                        <thead className="table-primary">
+                                        <thead className="table-primary table-header">
                                             <tr>
                                                 <th style={{ width: '25%' }}>Date & Time</th>
                                                 <th style={{ width: '60%' }}>Event Description</th>
