@@ -17,6 +17,7 @@ export default function LoginMenu(){
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginUsername, setLoginUsername] = useState('');
     const [balance, setBalance] = useState('NA');
     const [loginTimer, setLoginTimer] = useState('00:00:00');
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
@@ -27,6 +28,9 @@ export default function LoginMenu(){
         console.log("retrievedAccountDetails in LoginMenu: ", retrievedAccountDetails);
         const { balance } = retrievedAccountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
+
+        const authUser = sessionStorage.getItem(SharedVarConstants.AUTH_USER);
+        setLoginUsername(authUser ? authUser : '');
 
         let intervalId;
         if(isUserLoggedIn){
@@ -143,7 +147,7 @@ export default function LoginMenu(){
                             <Button type="button" variant="secondary" className="btn-logout"
                             onClick={handleLogout}>Logout</Button>
                             <FontAwesomeIcon icon={faUser} className="user-icon"/>
-                            <span className="login-username-tag">&nbsp; CHOONANN</span>
+                            <span className="login-username-tag">&nbsp; {loginUsername}</span>
                         </li>
                         <li className ="nav-item">
                             <span className="balance-textbox">Balance: ${balance}</span>
