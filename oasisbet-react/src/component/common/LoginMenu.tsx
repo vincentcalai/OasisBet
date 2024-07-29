@@ -18,10 +18,6 @@ export default function LoginMenu(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [balance, setBalance] = useState('NA');
-    const [loginTime, setLoginTime] = useState((): number => {
-        const savedLoginTime = sessionStorage.getItem(SharedVarConstants.LOGIN_TIME);
-        return savedLoginTime ? +savedLoginTime : 0;
-    });
     const [loginTimer, setLoginTimer] = useState('00:00:00');
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
     const updatedBalance = useSelector((state: any) => state['login']['balance']) ;
@@ -31,6 +27,16 @@ export default function LoginMenu(){
         console.log("retrievedAccountDetails in LoginMenu: ", retrievedAccountDetails);
         const { balance } = retrievedAccountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
+
+        let intervalId;
+        if(isUserLoggedIn){
+            const userLoginTime = Date.now();
+            intervalId = setInterval(() => {
+                setLoginTimer(getLoggedInDuration(userLoginTime));
+            }, 1000);
+        }
+        return () => clearInterval(intervalId); // clear interval when unmounting this component 
+        // eslint-disable-next-line
     }, [isUserLoggedIn]);
 
     useEffect(() => {
@@ -40,18 +46,6 @@ export default function LoginMenu(){
         }
     }, [updatedBalance]);
 
-    useEffect(() => {
-        let intervalId;
-        if(isUserLoggedIn){
-            setLoginTime(Date.now());
-            intervalId = setInterval(() => {
-                setLoginTimer(getLoggedInDuration());
-            }, 1000);
-        }
-        return () => clearInterval(intervalId); // clear interval when unmounting this component 
-        // eslint-disable-next-line
-    }, [loginTime, isUserLoggedIn]);
-
     const handleLoginInputChange = (event, type) => {
         if(type === 'username'){
             setUsername(event.target.value.toUpperCase());
@@ -60,8 +54,13 @@ export default function LoginMenu(){
         }
     };
 
-    const getLoggedInDuration = () => {
+    const getLoggedInDuration = (loginTime: number) => {
+        console.log("loginTime: ", loginTime)
+        console.log("Date.now(): ", Date.now())
+        
         const durationInSeconds = Math.floor((Date.now() - loginTime) / 1000);
+        console.log("durationInSeconds: ", durationInSeconds)
+        console.log("formatDuration(durationInSeconds): ", formatDuration(durationInSeconds))
         return formatDuration(durationInSeconds);
     };
     
@@ -114,7 +113,6 @@ export default function LoginMenu(){
             console.log("logout ok");
             setUsername('');
             setPassword('');
-            setLoginTime(0);
             setLoginTimer('00:00:00');
             clearLocalStorage();
             dispatch(updateLoginDetails('isUserLoggedIn', false));
@@ -127,7 +125,6 @@ export default function LoginMenu(){
         sessionStorage.removeItem(SharedVarConstants.AUTHORIZATION);
         sessionStorage.removeItem(SharedVarConstants.ACCOUNT_DETAILS);
         sessionStorage.removeItem(SharedVarConstants.LOGIN_TIME);
-        sessionStorage.removeItem(SharedVarConstants.PERSONAL_DETAILS);
       }
 
     function handleClickCreateUser(){
