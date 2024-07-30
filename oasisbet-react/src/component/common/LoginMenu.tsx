@@ -10,6 +10,7 @@ import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { updateLoginDetails } from '../../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
+import SharedVarMethods from '../../constants/SharedVarMethods.ts';
 
 export default function LoginMenu(){
 
@@ -104,8 +105,10 @@ export default function LoginMenu(){
     const retrieveAccountDetails = async (username) => {
         try {
           const accountDetails = await fetchAccountDetails(username);
-          console.log("accountDetails: ", JSON.stringify(accountDetails.account));
+          console.log("accountDetails in LoginMenu: ", JSON.stringify(accountDetails.account));
+          console.log("personalInfo in LoginMenu: ", JSON.stringify(accountDetails.personalInfo));
           sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails.account));
+          sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(accountDetails.personalInfo));
           dispatch(updateLoginDetails('isUserLoggedIn', true));
         } catch (error) {
           console.log("Error when retrieving account details!");
@@ -118,18 +121,13 @@ export default function LoginMenu(){
             setUsername('');
             setPassword('');
             setLoginTimer('00:00:00');
-            clearLocalStorage();
+            SharedVarMethods.clearSessionStorage();
             dispatch(updateLoginDetails('isUserLoggedIn', false));
             navigate('/account', { state: { code: 0, message: '' } });
         }
     }
 
-    function clearLocalStorage() {
-        sessionStorage.removeItem(SharedVarConstants.AUTH_USER);
-        sessionStorage.removeItem(SharedVarConstants.AUTHORIZATION);
-        sessionStorage.removeItem(SharedVarConstants.ACCOUNT_DETAILS);
-        sessionStorage.removeItem(SharedVarConstants.LOGIN_TIME);
-      }
+    
 
     function handleClickCreateUser(){
         navigate('/create-user');

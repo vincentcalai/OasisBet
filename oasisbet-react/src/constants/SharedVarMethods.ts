@@ -1,6 +1,6 @@
 import SharedVarConstants from "./SharedVarConstants.ts";
 
-const SharedVarMethods = {
+export class SharedVarMethods {
     mapBetTypeCd(betType){
         switch(betType) {
             case SharedVarConstants.BET_TYPE_CD_H2H: {
@@ -10,6 +10,14 @@ const SharedVarMethods = {
             return '';
             }
         }
+    }
+
+    static clearSessionStorage() {
+        sessionStorage.removeItem(SharedVarConstants.AUTH_USER);
+        sessionStorage.removeItem(SharedVarConstants.AUTHORIZATION);
+        sessionStorage.removeItem(SharedVarConstants.ACCOUNT_DETAILS);
+        sessionStorage.removeItem(SharedVarConstants.LOGIN_TIME);
+        sessionStorage.removeItem(SharedVarConstants.PERSONAL_DETAILS);
     }
 }
 

@@ -8,6 +8,7 @@ import { SubmitBetsModel } from "../../model/SubmitBetsModel";
 import { useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { AccountModel } from "../../constants/MockData.ts";
+import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
@@ -112,6 +113,9 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
                 setResponseMsg("Bet successfully placed!");
+            } else if (response.statusCode === 4) {
+                SharedVarMethods.clearSessionStorage();
+                navigate('/account', { state: { code: 1, message: response.resultMessage } });
             } else {
                 setErrorMsg(response.resultMessage);
             }
