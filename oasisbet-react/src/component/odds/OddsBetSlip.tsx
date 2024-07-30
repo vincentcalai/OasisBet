@@ -112,11 +112,9 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
                 setResponseMsg("Bet successfully placed!");
+            } else {
+                setErrorMsg(response.resultMessage);
             }
-            if (response.statusCode === 4) {
-                navigate('/account', { state: { code: 1, message: response.resultMessage } });
-            }
-
         } catch (error) {
             console.error("Error submitting bet:", error);
             setErrorMsg("There is an error with the process");
