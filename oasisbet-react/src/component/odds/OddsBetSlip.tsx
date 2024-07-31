@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { AccountModel } from "../../constants/MockData.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
+import { updateLoginDetails } from "../../actions/LoginAction.ts";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
@@ -101,6 +102,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
 
         if(!accId){
             navigate('/account', { state: { code: 1, message: SharedVarConstants.USER_NOT_LOGGED_IN } });
+            return;
         }
 
         const submitBetsModel: SubmitBetsModel = {
@@ -113,9 +115,11 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
                 setResponseMsg("Bet successfully placed!");
+                dispatch(updateLoginDetails('balance', response.account?.balance));
             } else if (response.statusCode === 4) {
                 SharedVarMethods.clearSessionStorage();
                 navigate('/account', { state: { code: 1, message: response.resultMessage } });
+                return;
             } else {
                 setErrorMsg(response.resultMessage);
             }
