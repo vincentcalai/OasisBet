@@ -8,11 +8,14 @@ import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOdds } from '../../services/api/ApiService.ts';
+import { useNavigate } from 'react-router-dom';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     const betSlips = useSelector((state: any) => state.betSlip.betSlip);
+    const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
     const reducerAction = useSelector((state: any) => state.betSlip.action);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
     const [compTypeHdr, setCompTypeHdr] = useState(SharedVarConstants.COMP_HEADER_EPL);
@@ -121,6 +124,11 @@ export default function OddsLanding(){
     };
 
     function selectBetSelection(index: number, date: any, selection: string) {
+        if(!isUserLoggedIn){
+            navigate('/account', { state: { code: 1, message: SharedVarConstants.USER_NOT_LOGGED_IN } });
+            return;
+        }
+
         const newBetEventsMap: any = new Map(eventsMap);
 
         const betEvents = newBetEventsMap.get(date);

@@ -99,12 +99,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
         const accountDetailsString = sessionStorage.getItem(SharedVarConstants.ACCOUNT_DETAILS);
         const accountDetails: AccountModel = accountDetailsString ? JSON.parse(accountDetailsString) : {};
         const { accId } = accountDetails;
-
-        if(!accId){
-            navigate('/account', { state: { code: 1, message: SharedVarConstants.USER_NOT_LOGGED_IN } });
-            return;
-        }
-
+        
         const submitBetsModel: SubmitBetsModel = {
             userId: accId,
             betSlip: betEvents
