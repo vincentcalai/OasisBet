@@ -35,7 +35,7 @@ export default function LoginMenu(){
 
         let intervalId;
         if(isUserLoggedIn){
-            const userLoginTime = Date.now();
+            const userLoginTime = sessionStorage.getItem(SharedVarConstants.LOGIN_TIME) ? Number(sessionStorage.getItem(SharedVarConstants.LOGIN_TIME)) : Date.now();
             intervalId = setInterval(() => {
                 setLoginTimer(getLoggedInDuration(userLoginTime));
             }, 1000);
