@@ -60,12 +60,7 @@ export default function LoginMenu(){
     };
 
     const getLoggedInDuration = (loginTime: number) => {
-        console.log("loginTime: ", loginTime)
-        console.log("Date.now(): ", Date.now())
-        
         const durationInSeconds = Math.floor((Date.now() - loginTime) / 1000);
-        console.log("durationInSeconds: ", durationInSeconds)
-        console.log("formatDuration(durationInSeconds): ", formatDuration(durationInSeconds))
         return formatDuration(durationInSeconds);
     };
     
@@ -78,7 +73,6 @@ export default function LoginMenu(){
 
     async function handleSubmitForm(event){
         event.preventDefault();
-        console.log("username: ", username, " password: ", password);
         const loginCredentialModel = new LoginCredentialsModel(username, password);
         try {
             const response = await jwtAuthenticate(loginCredentialModel);

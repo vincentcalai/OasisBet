@@ -1,7 +1,7 @@
 import SharedVarConstants from "./SharedVarConstants.ts";
 
 export class SharedVarMethods {
-    mapBetTypeCd(betType){
+    static mapBetTypeCd(betType){
         switch(betType) {
             case SharedVarConstants.BET_TYPE_CD_H2H: {
                 return SharedVarConstants.BET_TYPE_H2H_NAME;
