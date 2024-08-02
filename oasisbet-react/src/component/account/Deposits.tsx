@@ -6,7 +6,7 @@ import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessio
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, UpdateAccountModel } from "../../constants/MockData.ts";
 import { updateAccDetails, retrieveMtdAmounts } from "../../services/api/ApiService.ts";
-import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 
 export default function Deposits({handleNavToTrxHist}){

@@ -6,7 +6,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { fetchAccountDetails } from '../../services/api/ApiService.ts';
 import { LoginCredentialsModel } from "../../constants/MockData.ts";
 import { jwtAuthenticate } from '../../services/api/ApiService.ts';
-import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 
 export default function AccountLogin(){

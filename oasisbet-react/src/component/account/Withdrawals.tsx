@@ -3,7 +3,7 @@ import './Withdrawals.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
-import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { UpdateAccountModel, AccountModel, LoginCredentialsModel } from "../../constants/MockData.ts";
 import { jwtAuthenticate, updateAccDetails } from "../../services/api/ApiService.ts";
 import { useDispatch } from "react-redux";

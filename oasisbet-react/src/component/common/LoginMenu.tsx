@@ -8,7 +8,7 @@ import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiServ
 import { LoginCredentialsModel } from '../../constants/MockData.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
-import { updateLoginDetails } from '../../actions/LoginAction.ts';
+import { updateLoginDetails } from '../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
 
