@@ -11,6 +11,7 @@ import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { updateLoginDetails } from '../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
+import { openModal } from '../actions/ModalAction.ts';
 
 export default function LoginMenu(){
 
@@ -61,6 +62,10 @@ export default function LoginMenu(){
 
     const getLoggedInDuration = (loginTime: number) => {
         const durationInSeconds = Math.floor((Date.now() - loginTime) / 1000);
+        console.log("durationInSeconds: ", durationInSeconds);
+        if(durationInSeconds > 10){
+            dispatch(openModal('loginExpireModal'));
+        }
         return formatDuration(durationInSeconds);
     };
     

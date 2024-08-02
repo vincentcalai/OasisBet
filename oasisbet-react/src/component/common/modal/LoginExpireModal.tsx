@@ -13,26 +13,31 @@ export const LoginExpireModal = () => {
 
     const dispatch = useDispatch();
     
-    const handleToClose = () => {
+    const handleToClose = (isConfirm: boolean) => {
         dispatch(closeModal('loginExpireModal'));
     };
 
     return (
-        <div>
-            <Dialog open={showLoginExpireModal} onClose={handleToClose}>
-                <DialogTitle>{"How are you?"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        I am Good, Hope the same for you!
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleToClose}
-                        color="primary" autoFocus>
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+        <React.Fragment>
+        <Dialog
+            open={showLoginExpireModal}
+            onClose={handleToClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">
+            {"Extend Login Session?"}
+            </DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                You have been inactive for a while. Do you want to extend your login session?
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={() => handleToClose(false)}>No</Button>
+            <Button onClick={() => handleToClose(true)} autoFocus>Yes</Button>
+            </DialogActions>
+        </Dialog>
+        </React.Fragment>
     );
 }
