@@ -40,6 +40,10 @@ export default function LoginMenu(){
             intervalId = setInterval(() => {
                 setLoginTimer(getLoggedInDuration(userLoginTime));
             }, 1000);
+        } else {
+            setUsername('');
+            setPassword('');
+            setLoginTimer('00:00:00');
         }
         return () => clearInterval(intervalId); // clear interval when unmounting this component 
         // eslint-disable-next-line
@@ -62,10 +66,6 @@ export default function LoginMenu(){
 
     const getLoggedInDuration = (loginTime: number) => {
         const durationInSeconds = Math.floor((Date.now() - loginTime) / 1000);
-        console.log("durationInSeconds: ", durationInSeconds);
-        if(durationInSeconds > 10){
-            dispatch(openModal('loginExpireModal'));
-        }
         return formatDuration(durationInSeconds);
     };
     
@@ -115,15 +115,7 @@ export default function LoginMenu(){
     };
 
     function handleLogout(){
-        if(window.confirm("Are you sure to logout?")) {
-            console.log("logout ok");
-            setUsername('');
-            setPassword('');
-            setLoginTimer('00:00:00');
-            SharedVarMethods.clearSessionStorage();
-            dispatch(updateLoginDetails('isUserLoggedIn', false));
-            navigate('/account', { state: { code: 0, message: '' } });
-        }
+        dispatch(openModal('logoutModal'));
     }
 
     

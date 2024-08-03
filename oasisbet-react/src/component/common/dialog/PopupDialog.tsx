@@ -1,11 +1,11 @@
 import React from "react"
-import { LoginExpireModal } from "../modal/LoginExpireModal.tsx"
+import { LogoutModal } from "../modal/LogoutModal.tsx"
 
 export const PopupDialog = () => {
     
     return (
         <div>
-            <LoginExpireModal></LoginExpireModal>
+            <LogoutModal></LogoutModal>
         </div>
     )
 }

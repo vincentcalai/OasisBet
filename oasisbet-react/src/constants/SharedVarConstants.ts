@@ -51,6 +51,7 @@ const SharedVarConstants = {
     CFM_UPDATE_PW_DIALOG_TITLE: "Confirm Update Password",
     CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE: "Confirm Update Account Details",
     CFM_CHANGE_LIMIT_DIALOG_TITLE: "Confirm Change Limit",
+    LOGOUT_MODAL_TITLE: "User Logout",
 
     CREATE_USER_DIALOG_TYPE: 'CREATE_USER',
     CFM_DEPOSIT_DIALOG_TYPE: 'CFM_DEPOSIT',
@@ -65,11 +66,13 @@ const SharedVarConstants = {
     CFM_CHANGE_LIMIT_DIALOG_MSG: 'Are you sure to change Monthly Deposit and Monthly Betting limit?',
     CFM_UPDATE_PW_DIALOG_MSG: 'Are you sure to update account details?',
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
+    LOGOUT_MODAL_MSG: 'Are you sure to logout?',
 
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
     INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
     INCORRECT_PW_ERR_MSG: 'Incorrect Password. Please enter correct password.',
     USER_NOT_LOGGED_IN: 'Please login to place bet.',
+    LOGIN_SESSION_EXP_ERR_MSG: 'Login session expired. Please login again',
 
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',
