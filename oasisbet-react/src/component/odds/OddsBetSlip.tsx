@@ -114,6 +114,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                 dispatch(updateLoginDetails('balance', response.account?.balance));
             } else if (response.statusCode === 4) {
                 SharedVarMethods.clearSessionStorage();
+                dispatch(updateLoginDetails('isUserLoggedIn', false));
                 navigate('/account', { state: { code: 1, message: response.resultMessage } });
                 return;
             } else {

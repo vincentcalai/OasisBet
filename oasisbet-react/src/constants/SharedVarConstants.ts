@@ -72,7 +72,7 @@ const SharedVarConstants = {
     INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
     INCORRECT_PW_ERR_MSG: 'Incorrect Password. Please enter correct password.',
     USER_NOT_LOGGED_IN: 'Please login to place bet.',
-    LOGIN_SESSION_EXP_ERR_MSG: 'Login session expired. Please login again',
+    UNAUTHORIZED_ERR_MSG: 'Unauthorized response. Please login again.',
 
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',

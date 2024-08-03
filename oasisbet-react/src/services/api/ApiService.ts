@@ -107,6 +107,26 @@ const jwtAuthenticate = async (request) => {
     }
 };
 
+const refreshJwtToken = async () => {
+    try {
+        console.log("calling /user/refreshToken api!");
+        const response = await axiosInstance.get(SharedVarConstants.HOST_NAME_URL + 'user/refreshToken');
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to refresh jwt token!');
+        }
+
+        const data = response.data;
+        console.log("Response data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error refresh jwt token:', error);
+        throw error;
+    }
+};
+
 const createUser = async (request) => {
     try {
         console.log("calling /user/createUser api!");
@@ -247,5 +267,17 @@ const retrieveTrxList = async (accId, selectedTrxType, selectedPeriod) => {
     }   
 }
 
-export { fetchResults, fetchOdds, fetchAccountDetails, createUser, updateAccDetails, updateAccInfo, submitBets, retrieveMtdAmounts, retrieveTrxList, jwtAuthenticate };
+export { 
+    fetchResults, 
+    fetchOdds, 
+    fetchAccountDetails, 
+    createUser, 
+    updateAccDetails, 
+    updateAccInfo, 
+    submitBets, 
+    retrieveMtdAmounts, 
+    retrieveTrxList, 
+    jwtAuthenticate, 
+    refreshJwtToken 
+};
   

@@ -32,8 +32,8 @@ export default function LoginMenu(){
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
 
         const authUser = sessionStorage.getItem(SharedVarConstants.AUTH_USER);
+        
         setLoginUsername(authUser ? authUser : '');
-
         let intervalId;
         if(isUserLoggedIn){
             const userLoginTime = sessionStorage.getItem(SharedVarConstants.LOGIN_TIME) ? Number(sessionStorage.getItem(SharedVarConstants.LOGIN_TIME)) : Date.now();

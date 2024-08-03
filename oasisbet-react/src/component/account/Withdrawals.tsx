@@ -8,6 +8,9 @@ import { UpdateAccountModel, AccountModel, LoginCredentialsModel } from "../../c
 import { jwtAuthenticate, updateAccDetails } from "../../services/api/ApiService.ts";
 import { useDispatch } from "react-redux";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
+import {handleJwtTokenExpireError} from "../../services/AuthService.ts";
+import { useNavigate } from "react-router-dom";
+import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 
 export default function Withdrawals({handleNavToTrxHist}){
     const PASSWORD = 'PASSWORD';
@@ -17,6 +20,7 @@ export default function Withdrawals({handleNavToTrxHist}){
     const [dialogData, setDialogData] = useState({ title: '', type: '' });
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
@@ -129,11 +133,30 @@ export default function Withdrawals({handleNavToTrxHist}){
           request.account = account;
     
           try {
-              const response = await updateAccDetails(request);
-              if(response.statusCode !== 0){
+              await callApiUpdateAccDetails(request);
+          } catch (error) {
+              //Try refresh JWT token if token expired
+              try {
+                await handleJwtTokenExpireError(error, async () => await callApiUpdateAccDetails(request))
+              } catch (error) {
+                console.log("Error when withdrawing after refresh token: ", error);
+                SharedVarMethods.clearSessionStorage();
+                dispatch(updateLoginDetails('isUserLoggedIn', false));
+                navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+              }
+          }
+        } else {
+          console.log('Cancelled!');
+        }
+    };
+
+    async function callApiUpdateAccDetails(request: UpdateAccountModel) {
+        try {
+            const response = await updateAccDetails(request);
+            if (response.statusCode !== 0) {
                 console.log("Error withdraw amount, response:", response);
                 setErrorMsg(response.resultMessage);
-              } else {
+            } else {
                 //withdraw amount success!
                 console.log("Amount withdrew successfully:", response);
                 sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
@@ -142,16 +165,11 @@ export default function Withdrawals({handleNavToTrxHist}){
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
                 setPassword('');
-              }
-          } catch (error) {
-              //TODO to change this error message to a generic error message shown as red banner
-              console.error("Error in handling withdrawal:", error);
-              setErrorMsg("Failed to withdraw. Please try again.");
-          }
-        } else {
-          console.log('Cancelled!');
+            }
+        } catch (error) {
+            throw error;
         }
-    };
+    }
 
     return (
         <div className="container-fluid">
@@ -232,3 +250,5 @@ export default function Withdrawals({handleNavToTrxHist}){
         </div>
     );
 }
+
+
