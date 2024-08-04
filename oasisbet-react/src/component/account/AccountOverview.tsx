@@ -3,23 +3,59 @@ import './AccountOverview.css';
 import { Card } from "react-bootstrap";
 import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
+import SharedVarMethods from "../../constants/SharedVarMethods.ts";
+import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { retrieveYtdAmounts } from "../../services/api/ApiService.ts";
 
 
 export default function AccountOverview(){
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [accountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [balance, setBalance] = useState('NA');
     const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
 
     useEffect(() => {
         console.log("accountDetails in AccountOverview: ", accountDetails);
-        const { balance, ytdDepositAmt, ytdWithdrawalAmt } = accountDetails || {};
-
+        const { accId, balance } = accountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
-        setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
-        setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
-        setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails]);
+
+        retrieveAccDetails(accId);
+    }, [accountDetails]);
+
+    const retrieveAccDetails = async (accId: string) => {
+        try {
+            await callApiRetrieveYtdAmounts(accId);
+        } catch (error) {
+            //Try refresh JWT token if token expired
+            try {
+              await handleJwtTokenExpireError(error, async () => await callApiRetrieveYtdAmounts(accId))
+            } catch (error) {
+              console.log("Error when withdrawing after refresh token: ", error);
+              SharedVarMethods.clearSessionStorage();
+              dispatch(updateLoginDetails('isUserLoggedIn', false));
+              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+            }
+        }
+    } 
+
+    async function callApiRetrieveYtdAmounts(accId: string) {
+        try {
+            const response: any = await retrieveYtdAmounts(accId);
+            const ytdDepositAmt = response.account.ytdDepositAmt;
+            const ytdWithdrawalAmt = response.account.ytdWithdrawalAmt;
+            
+            setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
+            setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
+        } catch (error) {
+            throw error;
+        }
+    }
 
     return (
         <div className="container-fluid">
