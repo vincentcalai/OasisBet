@@ -4,7 +4,7 @@ import { refreshJwtToken } from "./api/ApiService.ts";
 const handleJwtTokenExpireError =  async (error, callback) => {
     if (error && error.response && error.response.status !== 401) {
       console.log("error status code: ", error.response.status);
-      return;
+      return error;
     }
     console.log("Error Message: ", error.error);
     if (error.response && error.response.data && error.response.data.message === "Access Token Expired") {

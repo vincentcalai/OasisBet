@@ -137,7 +137,11 @@ export default function Withdrawals({handleNavToTrxHist}){
           } catch (error) {
               //Try refresh JWT token if token expired
               try {
-                await handleJwtTokenExpireError(error, async () => await callApiUpdateAccDetails(request))
+                const response = await handleJwtTokenExpireError(error, async () => await callApiUpdateAccDetails(request))
+                if(response){
+                    //TODO: Throw general error message here
+                    console.log("General Error: ", error);
+                }
               } catch (error) {
                 console.log("Error when withdrawing after refresh token: ", error);
                 SharedVarMethods.clearSessionStorage();

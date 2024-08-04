@@ -169,9 +169,13 @@ export default function AccountUpdate(){
           } catch (error) {
             //Try refresh JWT token if token expired
             try {
-            await handleJwtTokenExpireError(error, async () => await callApiUpdateAccInfo(request))
+                const response = await handleJwtTokenExpireError(error, async () => await callApiUpdateAccInfo(request))
+                if(response){
+                    //TODO: Throw general error message here
+                    console.log("General Error: ", error);
+                }
             } catch (error) {
-            console.log("Error when withdrawing after refresh token: ", error);
+            console.log("Error when updating account info after refresh token: ", error);
             SharedVarMethods.clearSessionStorage();
             dispatch(updateLoginDetails('isUserLoggedIn', false));
             navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });

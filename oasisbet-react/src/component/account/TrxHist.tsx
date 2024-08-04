@@ -47,7 +47,11 @@ export default function TrxHist(){
         } catch (error) {
             //Try refresh JWT token if token expired
             try {
-              await handleJwtTokenExpireError(error, async () => await callApiRetrieveAccDetails(accId))
+              const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveAccDetails(accId))
+              if(response){
+                //TODO: Throw general error message here
+                console.log("General Error: ", error);
+              }   
             } catch (error) {
               console.log("Error when withdrawing after refresh token: ", error);
               SharedVarMethods.clearSessionStorage();
@@ -64,9 +68,13 @@ export default function TrxHist(){
         } catch (error) {
             //Try refresh JWT token if token expired
             try {
-              await handleJwtTokenExpireError(error, async () => await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod))
+              const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod))
+              if(response){
+                //TODO: Throw general error message here
+                console.log("General Error: ", error);
+              }
             } catch (error) {
-              console.log("Error when withdrawing after refresh token: ", error);
+              console.log("Error when retriving transactions after refresh token: ", error);
               SharedVarMethods.clearSessionStorage();
               dispatch(updateLoginDetails('isUserLoggedIn', false));
               navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
