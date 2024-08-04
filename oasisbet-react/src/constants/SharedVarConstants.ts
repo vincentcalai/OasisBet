@@ -52,6 +52,7 @@ const SharedVarConstants = {
     CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE: "Confirm Update Account Details",
     CFM_CHANGE_LIMIT_DIALOG_TITLE: "Confirm Change Limit",
     LOGOUT_MODAL_TITLE: "User Logout",
+    LOGIN_EXTEND_SESSION_TITLE: "Login Extend Session",
 
     CREATE_USER_DIALOG_TYPE: 'CREATE_USER',
     CFM_DEPOSIT_DIALOG_TYPE: 'CFM_DEPOSIT',
@@ -67,6 +68,8 @@ const SharedVarConstants = {
     CFM_UPDATE_PW_DIALOG_MSG: 'Are you sure to update account details?',
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
     LOGOUT_MODAL_MSG: 'Are you sure to logout?',
+    LOGIN_EXTEND_SESSION_MSG: 'You have been inactive for 15 minutes. Do you want to extend your login session?',
+    AUTO_LOGOUT_MSG: 'You have been inactive for 30 minutes. Please login again.',
 
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
     INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
@@ -85,7 +88,11 @@ const SharedVarConstants = {
     PERSONAL_DETAILS: 'PERSONAL_DETAILS',
     AUTH_USER: 'AUTH_USER',
     AUTHORIZATION: 'AUTHORIZATION',
-    LOGIN_TIME: 'LOGIN_TIME'
+    LOGIN_TIME: 'LOGIN_TIME',
+    LAST_AUTH_TIME: 'LAST_AUTH_TIME',
+
+    LOGIN_EXTEND_PROMPT_TIME: 10,
+    AUTO_LOGOUT_TIME: 20
 
   };
 

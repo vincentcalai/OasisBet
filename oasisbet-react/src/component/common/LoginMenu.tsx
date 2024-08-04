@@ -10,8 +10,8 @@ import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { updateLoginDetails } from '../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
+import { closeModal, openModal } from '../actions/ModalAction.ts';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
-import { openModal } from '../actions/ModalAction.ts';
 
 export default function LoginMenu(){
 
@@ -39,6 +39,7 @@ export default function LoginMenu(){
             const userLoginTime = sessionStorage.getItem(SharedVarConstants.LOGIN_TIME) ? Number(sessionStorage.getItem(SharedVarConstants.LOGIN_TIME)) : Date.now();
             intervalId = setInterval(() => {
                 setLoginTimer(getLoggedInDuration(userLoginTime));
+                checkSessionExpiry();
             }, 1000);
         } else {
             setUsername('');
@@ -55,6 +56,24 @@ export default function LoginMenu(){
             setBalance(updatedBalance !== null ? updatedBalance.toFixed(2).toString() : 'NA');
         }
     }, [updatedBalance]);
+
+    const checkSessionExpiry = () => {
+        const lastAuthTime = sessionStorage.getItem(SharedVarConstants.LAST_AUTH_TIME) ? Number(sessionStorage.getItem(SharedVarConstants.LAST_AUTH_TIME)) : Date.now();
+        const durationInSeconds = Math.floor((Date.now() - lastAuthTime) / 1000);
+        console.log("time: ", durationInSeconds)
+
+        //prompt login extension modal once
+        if(durationInSeconds === SharedVarConstants.LOGIN_EXTEND_PROMPT_TIME) { 
+            dispatch(openModal('loginSessionExtendModal'));
+        }
+
+        if(durationInSeconds > SharedVarConstants.AUTO_LOGOUT_TIME) { 
+            dispatch(closeModal('loginSessionExtendModal'));
+            SharedVarMethods.clearSessionStorage();
+            dispatch(updateLoginDetails('isUserLoggedIn', false));
+            navigate('/account', { state: { code: 2, message: SharedVarConstants.AUTO_LOGOUT_MSG } });
+        }
+    }
 
     const handleLoginInputChange = (event, type) => {
         if(type === 'username'){
@@ -88,6 +107,7 @@ export default function LoginMenu(){
             sessionStorage.setItem(SharedVarConstants.AUTH_USER, username);
             sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
             sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
+            sessionStorage.setItem(SharedVarConstants.LAST_AUTH_TIME, Date.now().toString());
             retrieveAccountDetails(username);
             } else {
                 //navigate to Account Login page and show Invalid Credential error
@@ -117,8 +137,6 @@ export default function LoginMenu(){
     function handleLogout(){
         dispatch(openModal('logoutModal'));
     }
-
-    
 
     function handleClickCreateUser(){
         navigate('/create-user');

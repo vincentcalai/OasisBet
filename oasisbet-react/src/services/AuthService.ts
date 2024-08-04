@@ -14,6 +14,7 @@ const handleJwtTokenExpireError =  async (error, callback) => {
         const response = await refreshJwtToken();
         if (response.token) {
           sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${response.token}`);
+          sessionStorage.setItem(SharedVarConstants.LAST_AUTH_TIME, Date.now().toString());
           await callback();
         } else {
           console.log(error);

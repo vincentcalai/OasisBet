@@ -37,6 +37,7 @@ export default function AccountLogin(){
           sessionStorage.setItem(SharedVarConstants.AUTH_USER, username);
           sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${token}`);
           sessionStorage.setItem(SharedVarConstants.LOGIN_TIME, Date.now().toString());
+          sessionStorage.setItem(SharedVarConstants.LAST_AUTH_TIME, Date.now().toString());
           retrieveAccountDetails(username);
         } else {
           console.log("Invalid Credential!");
