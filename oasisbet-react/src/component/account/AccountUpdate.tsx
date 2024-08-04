@@ -9,6 +9,11 @@ import { validatePassword, validateCfmPassword, validateEmail, validateContactNo
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/MockData.ts";
 import { updateAccInfo } from "../../services/api/ApiService.ts";
+import SharedVarMethods from "../../constants/SharedVarMethods.ts";
+import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
@@ -20,6 +25,9 @@ export default function AccountUpdate(){
     const CURRENT_PASSWORD = 'CURRENT_PASSWORD';
     const NEW_PASSWORD = 'NEW_PASSWORD';
     const CFM_PASSWORD = 'CFM_PASSWORD';
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [personalInfoDetails, setPersonalInfoDetails] = useSessionStorage(SharedVarConstants.PERSONAL_DETAILS, {});
@@ -157,7 +165,26 @@ export default function AccountUpdate(){
 
           request['accountDetails'] = accountDetails;
           try {
-              const response = await updateAccInfo(request);
+            await callApiUpdateAccInfo(request);
+          } catch (error) {
+            //Try refresh JWT token if token expired
+            try {
+            await handleJwtTokenExpireError(error, async () => await callApiUpdateAccInfo(request))
+            } catch (error) {
+            console.log("Error when withdrawing after refresh token: ", error);
+            SharedVarMethods.clearSessionStorage();
+            dispatch(updateLoginDetails('isUserLoggedIn', false));
+            navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+            }
+          }
+        } else {
+          console.log('Cancelled!');
+        }
+    };
+
+    async function callApiUpdateAccInfo(request: UpdateAccountDetailsModel) {
+        try {
+            const response = await updateAccInfo(request);
               if(response.statusCode !== 0){
                 console.log("Error updating account information, response:", response);
                 setErrorMsg(response.resultMessage);
@@ -175,15 +202,10 @@ export default function AccountUpdate(){
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
               }
-          } catch (error) {
-              //TODO to change this error message to a generic error message shown as red banner
-              console.error("Error in handling updating account infomation:", error);
-              setErrorMsg("Failed to update account infomation. Please try again.");
-          }
-        } else {
-          console.log('Cancelled!');
+        } catch (error) {
+            throw error;
         }
-    };
+    }
 
     const handlePasswordInputChange = (event, type) => {
         hasEditPassword.current = true;

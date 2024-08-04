@@ -8,8 +8,15 @@ import { retrieveMtdAmounts, retrieveTrxList } from "../../services/api/ApiServi
 import { TrxHistModel } from "../../model/TrxHistModel.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function TrxHist(){
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [trxHistList, setTrxHistList] = useState([] as TrxHistModel[])
 
@@ -18,8 +25,6 @@ export default function TrxHist(){
     const [mtdPayout, setMtdPayout] = useState('0.00');
     const [selectedTrxType, setSelectedTrxType] = useState('funds');
     const [selectedPeriod, setSelectedPeriod] = useState('today');
-
-    const [errorMsg, setErrorMsg] = useState('');
 
     useEffect(() => {
         console.log("accountDetails in Transaction History: ", accountDetails);
@@ -38,28 +43,36 @@ export default function TrxHist(){
 
     const retrieveAccDetails = async (accId: string) => {
         try {
-            const response: any = await retrieveMtdAmounts(accId);
-            const mtdBetAmount = response.account.mtdBetAmount;
-            const mtdPayout = response.account.mthPayout;
-            setMtdBetAmount(mtdBetAmount != null ? mtdBetAmount.toFixed(2).toString() : '0.00');
-            setMtdPayout(mtdPayout != null ? mtdPayout.toFixed(2).toString() : '0.00');
+            await callApiRetrieveAccDetails(accId);
         } catch (error) {
-            //TODO to change this error message to a generic error message shown as red banner
-            console.error("Error in retrieve MTD amount details:", error);
-            setErrorMsg("Error in retrieving MTD amount Details. Please try again.");
+            //Try refresh JWT token if token expired
+            try {
+              await handleJwtTokenExpireError(error, async () => await callApiRetrieveAccDetails(accId))
+            } catch (error) {
+              console.log("Error when withdrawing after refresh token: ", error);
+              SharedVarMethods.clearSessionStorage();
+              dispatch(updateLoginDetails('isUserLoggedIn', false));
+              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+            }
         }
+
     } 
 
     const retrieveTrx = async (accId: string, selectedTrxType: string, selectedPeriod: string) => {
         try {
-            const response: any = await retrieveTrxList(accId, selectedTrxType, selectedPeriod);
-            const trxHist = response.trxHistList;
-            setTrxHistList(trxHist);
+            await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod);
         } catch (error) {
-            //TODO to change this error message to a generic error message shown as red banner
-            console.error("Error in retrieve Transaction History details:", error);
-            setErrorMsg("Error in retrieving Transaction History Details. Please try again.");
+            //Try refresh JWT token if token expired
+            try {
+              await handleJwtTokenExpireError(error, async () => await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod))
+            } catch (error) {
+              console.log("Error when withdrawing after refresh token: ", error);
+              SharedVarMethods.clearSessionStorage();
+              dispatch(updateLoginDetails('isUserLoggedIn', false));
+              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+            }
         }
+
     } 
 
     const toggleShowDetails = (index) => {
@@ -70,10 +83,31 @@ export default function TrxHist(){
         );
     };
 
+    async function callApiRetrieveAccDetails(accId: string) {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdBetAmount = response.account.mtdBetAmount;
+            const mtdPayout = response.account.mthPayout;
+            setMtdBetAmount(mtdBetAmount != null ? mtdBetAmount.toFixed(2).toString() : '0.00');
+            setMtdPayout(mtdPayout != null ? mtdPayout.toFixed(2).toString() : '0.00');
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async function callApiRetrieveTrx(accId: string, selectedTrxType: string, selectedPeriod: string) {
+        try {
+            const response: any = await retrieveTrxList(accId, selectedTrxType, selectedPeriod);
+            const trxHist = response.trxHistList;
+            setTrxHistList(trxHist);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     return (
         <div className="container-fluid">
             <br />
-            {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
                     <h2>Transaction History</h2>

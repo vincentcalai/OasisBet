@@ -6,10 +6,18 @@ import { jwtAuthenticate, retrieveMtdAmounts, updateAccDetails } from "../../ser
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/MockData.ts";
+import SharedVarMethods from "../../constants/SharedVarMethods.ts";
+import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
+import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function LimitManagement(){
     const DEPOSIT = 'deposit';
     const BET = 'bet';
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
@@ -52,20 +60,17 @@ export default function LimitManagement(){
 
     const retrieveAccDetails = async (depositLimit: number, betLimit: number, accId: string) => {
         try {
-            const response: any = await retrieveMtdAmounts(accId);
-            const mtdDepositAmt = response.account.mtdDepositAmt;
-            const mtdBetAmt = response.account.mtdBetAmount;
-            const depositProgress = mtdDepositAmt ? (mtdDepositAmt/depositLimit) * 100 : 0;
-            const betProgress = mtdBetAmt ? (mtdBetAmt/betLimit) * 100 : 0;
-
-            setMtdDepositAmt(mtdDepositAmt != null ? mtdDepositAmt.toFixed(2).toString() : '0.00');
-            setMtdBetAmt(mtdBetAmt != null ? mtdBetAmt.toFixed(2).toString() : '0.00');
-            setDepositProgress(depositProgress != null ? Number(depositProgress.toFixed(2)) : 0);
-            setBetProgress(betProgress != null ? Number(betProgress.toFixed(2)) : 0);
+            await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId);
         } catch (error) {
-            //TODO to change this error message to a generic error message shown as red banner
-            console.error("Error in retrieve MTD amounts:", error);
-            setErrorMsg("Error in retrieving Account Details. Please try again.");
+            //Try refresh JWT token if token expired
+            try {
+              await handleJwtTokenExpireError(error, async () => await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId))
+            } catch (error) {
+              console.log("Error when withdrawing after refresh token: ", error);
+              SharedVarMethods.clearSessionStorage();
+              dispatch(updateLoginDetails('isUserLoggedIn', false));
+              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+            }
         }
     } 
 
@@ -195,28 +200,59 @@ export default function LimitManagement(){
           request.account = account;
     
           try {
-              const response = await updateAccDetails(request);
-              if(response.statusCode !== 0){
-                console.log("Error setting deposit/bet limit, response:", response);
-                setErrorMsg(response.resultMessage);
-              } else {
-                //set bet and deposit limit success!
-                console.log("Set deposit/bet limit successfully:", response);
-                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
-                setAccountDetails(response.account);
-                setSuccessMsg(response.resultMessage);
-                setErrorMsg('');
-                setPassword('');
-              }
+            await callApiUpdateAccDetails(request);
           } catch (error) {
-              //TODO to change this error message to a generic error message shown as red banner
-              console.error("Error in handling setting bet/deposit limit:", error);
-              setErrorMsg("Failed to set bet/deposit limit. Please try again.");
+          //Try refresh JWT token if token expired
+            try {
+                await handleJwtTokenExpireError(error, async () => await callApiUpdateAccDetails(request))
+            } catch (error) {
+            console.log("Error when withdrawing after refresh token: ", error);
+            SharedVarMethods.clearSessionStorage();
+            dispatch(updateLoginDetails('isUserLoggedIn', false));
+            navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+            }
           }
         } else {
           console.log('Cancelled!');
         }
     };
+
+    async function callApiRetrieveMtdAmounts(depositLimit: number, betLimit: number, accId: string) {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdDepositAmt = response.account.mtdDepositAmt;
+            const mtdBetAmt = response.account.mtdBetAmount;
+            const depositProgress = mtdDepositAmt ? (mtdDepositAmt/depositLimit) * 100 : 0;
+            const betProgress = mtdBetAmt ? (mtdBetAmt/betLimit) * 100 : 0;
+
+            setMtdDepositAmt(mtdDepositAmt != null ? mtdDepositAmt.toFixed(2).toString() : '0.00');
+            setMtdBetAmt(mtdBetAmt != null ? mtdBetAmt.toFixed(2).toString() : '0.00');
+            setDepositProgress(depositProgress != null ? Number(depositProgress.toFixed(2)) : 0);
+            setBetProgress(betProgress != null ? Number(betProgress.toFixed(2)) : 0);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async function callApiUpdateAccDetails(request: UpdateAccountModel) {
+        try {
+            const response = await updateAccDetails(request);
+            if(response.statusCode !== 0){
+            console.log("Error setting deposit/bet limit, response:", response);
+            setErrorMsg(response.resultMessage);
+            } else {
+            //set bet and deposit limit success!
+            console.log("Set deposit/bet limit successfully:", response);
+            sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+            setAccountDetails(response.account);
+            setSuccessMsg(response.resultMessage);
+            setErrorMsg('');
+            setPassword('');
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
     return (
         <div className="container-fluid">
