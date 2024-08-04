@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ConfirmDialog.css';
 import SharedVarConstants from '../../../constants/SharedVarConstants.ts';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 
 interface ConfirmDialogProps {
     isOpen: boolean;
@@ -62,8 +62,8 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ isOpen, onClose, data }) 
                     <br></br>
                     <p>{dialogMessage}</p>
                     <div className="dialog-footer">
-                        <button className="btn btn-success btn-decline" onClick={handleCancelClick}>Cancel</button>
-                        <button className="btn btn-success btn-confirm" onClick={handleConfirmClick}>Confirm</button>
+                        <Button variant="danger" onClick={handleCancelClick}>Cancel</Button>
+                        <Button variant="success" onClick={handleConfirmClick}>Confirm</Button>
                     </div>
                 </Card.Body>
             </Card>

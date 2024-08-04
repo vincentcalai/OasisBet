@@ -25,28 +25,29 @@ export default function AccountOverview(){
         const { accId, balance } = accountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
 
-        retrieveAccDetails(accId);
-    }, [accountDetails]);
-
-    const retrieveAccDetails = async (accId: string) => {
-        try {
-            await callApiRetrieveYtdAmounts(accId);
-        } catch (error) {
-            //Try refresh JWT token if token expired
+        const retrieveAccDetails = async (accId: string) => {
             try {
-              const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveYtdAmounts(accId));
-              if(response){
-                //TODO: Throw general error message here
-                console.log("General Error: ", error);
-              }
+                await callApiRetrieveYtdAmounts(accId);
             } catch (error) {
-              console.log("Error when retrieving account details after refresh token: ", error);
-              SharedVarMethods.clearSessionStorage();
-              dispatch(updateLoginDetails('isUserLoggedIn', false));
-              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                //Try refresh JWT token if token expired
+                try {
+                  const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveYtdAmounts(accId));
+                if(response){
+                    //TODO: Throw general error message here
+                    console.log("General Error: ", error);
+                  }
+                } catch (error) {
+                  console.log("Error when retrieving account details after refresh token: ", error);
+                  SharedVarMethods.clearSessionStorage();
+                  dispatch(updateLoginDetails('isUserLoggedIn', false));
+                  navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                }
             }
-        }
-    } 
+        } 
+
+        retrieveAccDetails(accId);
+        
+    }, [accountDetails, dispatch, navigate]);
 
     async function callApiRetrieveYtdAmounts(accId: string) {
         try {

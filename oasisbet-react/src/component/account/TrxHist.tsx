@@ -30,58 +30,57 @@ export default function TrxHist(){
         console.log("accountDetails in Transaction History: ", accountDetails);
         const { accId } = accountDetails || {};
 
+        const retrieveAccDetails = async (accId: string) => {
+            try {
+                await callApiRetrieveAccDetails(accId);
+            } catch (error) {
+                //Try refresh JWT token if token expired
+                try {
+                  const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveAccDetails(accId))
+                  if(response){
+                    //TODO: Throw general error message here
+                    console.log("General Error: ", error);
+                  }   
+                } catch (error) {
+                  console.log("Error when withdrawing after refresh token: ", error);
+                  SharedVarMethods.clearSessionStorage();
+                  dispatch(updateLoginDetails('isUserLoggedIn', false));
+                  navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                }
+            }
+        } 
+
         retrieveAccDetails(accId);
 
         setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails]);
+    }, [accountDetails, setAccountDetails, dispatch, navigate]);
 
     useEffect(() => {
         const { accId } = accountDetails || {};
         console.log("selectedTrxType: ", selectedTrxType, " selectedPeriod: ", selectedPeriod);
+
+        const retrieveTrx = async (accId: string, selectedTrxType: string, selectedPeriod: string) => {
+            try {
+                await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod);
+            } catch (error) {
+                //Try refresh JWT token if token expired
+                try {
+                  const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod))
+                  if(response){
+                    //TODO: Throw general error message here
+                    console.log("General Error: ", error);
+                  }
+                } catch (error) {
+                  console.log("Error when retriving transactions after refresh token: ", error);
+                  SharedVarMethods.clearSessionStorage();
+                  dispatch(updateLoginDetails('isUserLoggedIn', false));
+                  navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                }
+            }
+        } 
+
         retrieveTrx(accId, selectedTrxType, selectedPeriod);   
-    }, [selectedTrxType, selectedPeriod, accountDetails]);
-
-    const retrieveAccDetails = async (accId: string) => {
-        try {
-            await callApiRetrieveAccDetails(accId);
-        } catch (error) {
-            //Try refresh JWT token if token expired
-            try {
-              const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveAccDetails(accId))
-              if(response){
-                //TODO: Throw general error message here
-                console.log("General Error: ", error);
-              }   
-            } catch (error) {
-              console.log("Error when withdrawing after refresh token: ", error);
-              SharedVarMethods.clearSessionStorage();
-              dispatch(updateLoginDetails('isUserLoggedIn', false));
-              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
-            }
-        }
-
-    } 
-
-    const retrieveTrx = async (accId: string, selectedTrxType: string, selectedPeriod: string) => {
-        try {
-            await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod);
-        } catch (error) {
-            //Try refresh JWT token if token expired
-            try {
-              const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod))
-              if(response){
-                //TODO: Throw general error message here
-                console.log("General Error: ", error);
-              }
-            } catch (error) {
-              console.log("Error when retriving transactions after refresh token: ", error);
-              SharedVarMethods.clearSessionStorage();
-              dispatch(updateLoginDetails('isUserLoggedIn', false));
-              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
-            }
-        }
-
-    } 
+    }, [selectedTrxType, selectedPeriod, accountDetails, dispatch, navigate]);
 
     const toggleShowDetails = (index) => {
         setTrxHistList((prevTrxHistList) =>

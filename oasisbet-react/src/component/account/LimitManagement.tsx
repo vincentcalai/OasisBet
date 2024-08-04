@@ -47,6 +47,26 @@ export default function LimitManagement(){
         console.log("accountDetails in Limit Management: ", accountDetails);
         const { accId, depositLimit, betLimit } = accountDetails || {};
 
+        const retrieveAccDetails = async (depositLimit: number, betLimit: number, accId: string) => {
+            try {
+                await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId);
+            } catch (error) {
+                //Try refresh JWT token if token expired
+                try {
+                    const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId))
+                    if(response){
+                        //TODO: Throw general error message here
+                        console.log("General Error: ", error);
+                    }
+                } catch (error) {
+                  console.log("Error when retriving MTD amounts after refresh token: ", error);
+                  SharedVarMethods.clearSessionStorage();
+                  dispatch(updateLoginDetails('isUserLoggedIn', false));
+                  navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                }
+            }
+        }
+
         retrieveAccDetails(depositLimit, betLimit, accId);
 
         setAccountDetails(accountDetails);
@@ -56,27 +76,7 @@ export default function LimitManagement(){
         setSelectedBetAmt('100');
         setIsDepositAmtInputDisabled(true);
         setIsBetAmtInputDisabled(true);
-    }, [accountDetails, setAccountDetails]);
-
-    const retrieveAccDetails = async (depositLimit: number, betLimit: number, accId: string) => {
-        try {
-            await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId);
-        } catch (error) {
-            //Try refresh JWT token if token expired
-            try {
-                const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId))
-                if(response){
-                    //TODO: Throw general error message here
-                    console.log("General Error: ", error);
-                }
-            } catch (error) {
-              console.log("Error when retriving MTD amounts after refresh token: ", error);
-              SharedVarMethods.clearSessionStorage();
-              dispatch(updateLoginDetails('isUserLoggedIn', false));
-              navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
-            }
-        }
-    } 
+    }, [accountDetails, setAccountDetails, dispatch, navigate]);
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
