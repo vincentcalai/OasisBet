@@ -28,11 +28,6 @@
 }
   
 .dialog-footer {
-    margin-top: 30px;
     display: flex;
     justify-content: flex-end;
-}
-  
-.dialog-footer button {
-    margin-left: 10px;
 }
