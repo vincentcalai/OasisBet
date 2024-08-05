@@ -71,7 +71,7 @@ export default function LoginMenu(){
             dispatch(closeModal('loginSessionExtendModal'));
             SharedVarMethods.clearSessionStorage();
             dispatch(updateLoginDetails('isUserLoggedIn', false));
-            navigate('/account', { state: { code: 2, message: SharedVarConstants.AUTO_LOGOUT_MSG } });
+            navigate('/account', { state: { code: 99, message: SharedVarConstants.AUTO_LOGOUT_MSG } });
         }
     }
 

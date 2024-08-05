@@ -78,7 +78,14 @@ export default function AccountLogin(){
         
         <Card.Body className="card-body d-flex flex-column align-items-center justify-content-center">
         {responseCode === 0 && responseMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{responseMsg}</div>}
-        {responseCode !== 0 && responseMsg && <div className="alert alert-danger align-items-center justify-content-center"><b>Fail: </b>{responseMsg}</div>}
+        {responseCode !== 0 && responseMsg && 
+          <div className="alert alert-danger align-items-center justify-content-center">
+          { 
+            responseCode !== 99 && <b>Fail: </b>
+          } 
+          {responseMsg}
+          </div>
+        }
           <br />
           <form action="">
             <div className="form-group ">

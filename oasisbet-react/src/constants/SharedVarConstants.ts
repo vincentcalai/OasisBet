@@ -69,7 +69,7 @@ const SharedVarConstants = {
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
     LOGOUT_MODAL_MSG: 'Are you sure to logout?',
     LOGIN_EXTEND_SESSION_MSG: 'You have been inactive for 15 minutes. Do you want to extend your login session?',
-    AUTO_LOGOUT_MSG: 'You have been inactive for 30 minutes. Please login again.',
+    AUTO_LOGOUT_MSG: 'Your session has been inactive for 30 minutes. Please login again.',
 
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
     INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
