@@ -60,7 +60,6 @@ export default function LoginMenu(){
     const checkSessionExpiry = () => {
         const lastAuthTime = sessionStorage.getItem(SharedVarConstants.LAST_AUTH_TIME) ? Number(sessionStorage.getItem(SharedVarConstants.LAST_AUTH_TIME)) : Date.now();
         const durationInSeconds = Math.floor((Date.now() - lastAuthTime) / 1000);
-        console.log("time: ", durationInSeconds)
 
         //prompt login extension modal once
         if(durationInSeconds === SharedVarConstants.LOGIN_EXTEND_PROMPT_TIME) { 

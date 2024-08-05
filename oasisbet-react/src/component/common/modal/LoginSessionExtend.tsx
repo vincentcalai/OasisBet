@@ -1,20 +1,31 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../../constants/SharedVarConstants.ts";
 import { closeModal } from "../../actions/ModalAction.ts";
+import { refreshJwtToken } from "../../../services/api/ApiService.ts";
 
 export const LoginSessionExtend = () => {
     const showLoginSessionExtendModal = useSelector((state: boolean) => state['modal']['loginSessionExtendModal']);
   
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     
-    const handleToClose = (isConfirm) => {
+    const handleToClose = async (isConfirm) => {
       if(isConfirm){
         console.log("login session extend ok");
-        
+        //Try refresh JWT token
+        try {
+            const response = await refreshJwtToken();
+            if (response.token) {
+              sessionStorage.setItem(SharedVarConstants.AUTHORIZATION, `Bearer ${response.token}`);
+              sessionStorage.setItem(SharedVarConstants.LAST_AUTH_TIME, Date.now().toString());
+            } else {
+              throw new Error();
+            }
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
       } 
       dispatch(closeModal('loginSessionExtendModal'));
     };
