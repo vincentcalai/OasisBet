@@ -15,8 +15,6 @@ const Spinner = () => {
   return (
     <div>
       <div id="cover-spin" style={{ display: spinme }}></div>
-      <button onClick={showSpinner}>Show Spinner</button>
-      <button onClick={hideSpinner}>Hide Spinner</button>
     </div>
   );
 };
