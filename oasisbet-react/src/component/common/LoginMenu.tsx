@@ -12,6 +12,7 @@ import { updateLoginDetails } from '../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal, openModal } from '../actions/ModalAction.ts';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
+import { setSpinner } from '../actions/SpinnerAction.ts';
 
 export default function LoginMenu(){
 
@@ -98,6 +99,7 @@ export default function LoginMenu(){
         event.preventDefault();
         const loginCredentialModel = new LoginCredentialsModel(username, password);
         try {
+            dispatch(setSpinner(true, ''))
             const response = await jwtAuthenticate(loginCredentialModel);
             console.log("JWT authtentication: ", response);
             if(response){

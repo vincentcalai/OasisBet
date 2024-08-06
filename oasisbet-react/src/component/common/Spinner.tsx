@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Spinner.css';
+import { useSelector } from 'react-redux';
 
 const Spinner = () => {
-  const [spinme, setSpinme] = useState('none'); 
-
-  const showSpinner = () => {
-    setSpinme('block');
-  };
-
-  const hideSpinner = () => {
-    setSpinme('none');
-  };
+  const showSpinner = useSelector((state: any) => state['spinner']) ;
 
   return (
     <div>
-      <div id="cover-spin" style={{ display: spinme }}></div>
+      <div id="cover-spin" style={{ display: showSpinner.loader ? 'block' : 'none' }}></div>
     </div>
   );
 };
