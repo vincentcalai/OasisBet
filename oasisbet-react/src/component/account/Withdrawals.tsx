@@ -111,7 +111,7 @@ export default function Withdrawals({handleNavToTrxHist}){
           }  
           const loginCredentialModel = new LoginCredentialsModel(username, password);
           try {
-            const response = await jwtAuthenticate(loginCredentialModel);
+            const response = await jwtAuthenticate(loginCredentialModel, dispatch);
             if(!response){
                 console.log("Invalid Credential! Response: ", response);
                 setPassword('');

@@ -100,7 +100,7 @@ export default function LoginMenu(){
         const loginCredentialModel = new LoginCredentialsModel(username, password);
         try {
             dispatch(setSpinner(true, ''))
-            const response = await jwtAuthenticate(loginCredentialModel);
+            const response = await jwtAuthenticate(loginCredentialModel, dispatch);
             console.log("JWT authtentication: ", response);
             if(response){
             //login successful

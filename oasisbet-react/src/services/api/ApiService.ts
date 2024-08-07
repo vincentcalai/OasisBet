@@ -1,6 +1,7 @@
 import axios from 'axios';
 import axiosInstance from './InterceptorService.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts'; 
+import { setSpinner } from '../../component/actions/SpinnerAction.ts';
 
 const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
     try {
@@ -85,8 +86,9 @@ const fetchAccountDetails = async (username) => {
     }   
 };
 
-const jwtAuthenticate = async (request) => {
+const jwtAuthenticate = async (request, dispatch) => {
     try {
+        dispatch(setSpinner(true, ''));
         console.log("calling /user/authenticate api!");
         console.log("user authenticate api request: ", request);
 
@@ -104,6 +106,8 @@ const jwtAuthenticate = async (request) => {
     } catch (error) {
         console.error('Error authenticate user:', error);
         throw error;
+    } finally {
+        dispatch(setSpinner(false, ''));
     }
 };
 

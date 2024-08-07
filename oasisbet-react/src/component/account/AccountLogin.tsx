@@ -29,7 +29,7 @@ export default function AccountLogin(){
     e.preventDefault();
     const loginCredentialModel = new LoginCredentialsModel(username, password);
     try {
-        const response = await jwtAuthenticate(loginCredentialModel);
+        const response = await jwtAuthenticate(loginCredentialModel, dispatch);
         console.log("JWT authtentication: ", response);
         if(response){
           //login successful
