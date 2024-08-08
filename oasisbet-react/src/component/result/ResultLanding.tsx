@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ResultEvent } from "../../constants/MockData.ts";
 import { fetchResults } from "../../services/api/ApiService.ts";
 import DateError from "../util/DateError.tsx";
+import AlertError from "../util/AlertError.tsx";
 
 
 export default function ResultLanding(){
@@ -128,6 +129,8 @@ export default function ResultLanding(){
                     </div>
                     <div className="col-10">
                         <div className="container-fluid">
+                            <br />
+                            <AlertError></AlertError>
                             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                                 <Card.Header className="card-header">
                                     <h2>{compTypeHdr}</h2>

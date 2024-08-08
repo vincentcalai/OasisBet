@@ -269,7 +269,6 @@ export default function AccountUpdate(){
 
     return (
         <div className="container-fluid">
-            <br />
             {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
             {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>

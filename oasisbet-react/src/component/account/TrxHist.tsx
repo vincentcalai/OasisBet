@@ -114,7 +114,6 @@ export default function TrxHist(){
 
     return (
         <div className="container-fluid">
-            <br />
             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                 <Card.Header className="card-header">
                     <h2>Transaction History</h2>

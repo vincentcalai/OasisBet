@@ -9,6 +9,7 @@ import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOdds } from '../../services/api/ApiService.ts';
 import { useNavigate } from 'react-router-dom';
+import AlertError from '../util/AlertError.tsx';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();
@@ -212,6 +213,8 @@ export default function OddsLanding(){
                     </div>
                     <div className="col-8">
                         <div className="container-fluid">
+                            <br />
+                            <AlertError></AlertError>
                             <Card className="card" style={{tableLayout: 'fixed', width: '100%', marginLeft: '30px' }}>
                                 <Card.Header className="card-header">
                                     <h2>{compTypeHdr}</h2>

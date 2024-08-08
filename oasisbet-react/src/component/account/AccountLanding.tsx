@@ -10,6 +10,7 @@ import Withdrawals from "./Withdrawals.tsx";
 import Deposits from "./Deposits.tsx";
 import LimitManagement from "./LimitManagement.tsx";
 import { useSelector } from "react-redux";
+import AlertError from "../util/AlertError.tsx";
 
 export default function AccountLanding(){
 
@@ -33,6 +34,8 @@ export default function AccountLanding(){
                         </div>
                         <div className="col-10">
                             <div className="container-fluid">
+                                <br />
+                                <AlertError></AlertError>
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_ACCOUNT_OVERVIEW && <AccountOverview></AccountOverview>}
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_ACCOUNT_UPDATE && <AccountUpdate></AccountUpdate>}
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_TRX_HIST && <TrxHist></TrxHist>}
