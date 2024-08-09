@@ -6,8 +6,9 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { fetchAccountDetails } from '../../services/api/ApiService.ts';
 import { LoginCredentialsModel } from "../../constants/MockData.ts";
 import { jwtAuthenticate } from '../../services/api/ApiService.ts';
-import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { closeAlert, openAlert, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
+import AlertError from "../util/AlertError.tsx";
 
 export default function AccountLogin(){
   
@@ -19,6 +20,10 @@ export default function AccountLogin(){
 
   const [responseCode, setResponseCode] = useState(location.state?.code);
   const [responseMsg, setResponseMsg] = useState(location.state?.message);
+
+  useEffect(() => {
+    dispatch(closeAlert(''));
+  }, [dispatch]);
 
   useEffect(() => {
     setResponseCode(location.state?.code);
@@ -46,8 +51,12 @@ export default function AccountLogin(){
         }
     } catch (error) {
         console.log("Invalid Credential, ", error);
-        setResponseCode(1);
-        setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+        if(error && error.response && error.response.status === 401){
+          setResponseCode(1);
+          setResponseMsg(SharedVarConstants.INVALID_LOGIN_ERR_MSG);
+        } else {
+          dispatch(openAlert(error.message))
+        }
     }
   };
 
@@ -69,54 +78,59 @@ export default function AccountLogin(){
   };
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center">
-      
-      <Card className="card">
-        <Card.Header className="card-header">
-          <h2>Login</h2>
-        </Card.Header>
-        
-        <Card.Body className="card-body d-flex flex-column align-items-center justify-content-center">
-        {responseCode === 0 && responseMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{responseMsg}</div>}
-        {responseCode !== 0 && responseMsg && 
-          <div className="alert alert-danger align-items-center justify-content-center">
-          { 
-            responseCode !== 99 && <b>Fail: </b>
-          } 
-          {responseMsg}
-          </div>
-        }
-          <br />
-          <form action="">
-            <div className="form-group ">
-              <label htmlFor="username">Username:</label>
-              <input 
-                type="text" 
-                id="username" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value.toUpperCase())} 
-              />
+    <>
+      <br />
+      <div className="container-fluid d-flex align-items-center justify-content-center">
+        <AlertError></AlertError>
+      </div>
+      <div className="container-fluid d-flex align-items-center justify-content-center">
+        <Card className="card">
+          <Card.Header className="card-header">
+            <h2>Login</h2>
+          </Card.Header>
+          
+          <Card.Body className="card-body d-flex flex-column align-items-center justify-content-center">
+          {responseCode === 0 && responseMsg && <div className="alert alert-success align-items-center justify-content-center"><b>Success: </b>{responseMsg}</div>}
+          {responseCode !== 0 && responseMsg && 
+            <div className="alert alert-danger align-items-center justify-content-center">
+            { 
+              responseCode !== 99 && <b>Fail: </b>
+            } 
+            {responseMsg}
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
-              <input 
-                type="password" 
-                id="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-              />
-            </div>
+          }
             <br />
-            <div className="form-group button-container">
-              <button type="submit" className="login-btn" onClick={handleLogin}>Login</button>
-            </div>
-            <hr/>
-            <div className="form-group">
-              <p>Don't have an account yet? <button className="signup-link" onClick={handleClickCreateUser}>Sign Up Here</button></p>
-            </div>
-          </form>
-        </Card.Body>    
-      </Card>
-    </div>
+            <form action="">
+              <div className="form-group ">
+                <label htmlFor="username">Username:</label>
+                <input 
+                  type="text" 
+                  id="username" 
+                  value={username} 
+                  onChange={(e) => setUsername(e.target.value.toUpperCase())} 
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input 
+                  type="password" 
+                  id="password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                />
+              </div>
+              <br />
+              <div className="form-group button-container">
+                <button type="submit" className="login-btn" onClick={handleLogin}>Login</button>
+              </div>
+              <hr/>
+              <div className="form-group">
+                <p>Don't have an account yet? <button className="signup-link" onClick={handleClickCreateUser}>Sign Up Here</button></p>
+              </div>
+            </form>
+          </Card.Body>    
+        </Card>
+      </div>
+    </>
   );
 }

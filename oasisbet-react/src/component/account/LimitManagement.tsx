@@ -8,10 +8,10 @@ import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/MockData.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 export default function LimitManagement(){
     const DEPOSIT = 'deposit';

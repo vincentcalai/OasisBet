@@ -11,10 +11,10 @@ import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/
 import { updateAccInfo } from "../../services/api/ApiService.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';

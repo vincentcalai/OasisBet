@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { AccountModel } from "../../constants/MockData.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
-import { updateLoginDetails } from "../actions/LoginAction.ts";
-import { openAlert } from "../actions/SpinnerAction.ts";
+import { updateLoginDetails } from "../actions/ReducerAction.ts";
+import { openAlert } from "../actions/ReducerAction.ts";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();

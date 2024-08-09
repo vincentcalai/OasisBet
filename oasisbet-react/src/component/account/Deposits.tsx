@@ -6,12 +6,12 @@ import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessio
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, UpdateAccountModel } from "../../constants/MockData.ts";
 import { updateAccDetails, retrieveMtdAmounts } from "../../services/api/ApiService.ts";
-import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { useNavigate } from "react-router-dom";
-import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 export default function Deposits({handleNavToTrxHist}){
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});

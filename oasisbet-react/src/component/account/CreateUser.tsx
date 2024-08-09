@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CreateUser.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
@@ -8,7 +8,7 @@ import { UserModel } from '../../model/UserModel.tsx';
 import { CreateUserModel } from '../../model/CreateUserModel.tsx';
 import { useNavigate } from 'react-router-dom';
 import { validateUsername, validatePassword, validateCfmPassword, validateEmail, validateContactNo } from '../util/validation.ts';
-import { openAlert } from '../actions/SpinnerAction.ts';
+import { closeAlert, openAlert } from '../actions/ReducerAction.ts';
 import { useDispatch } from 'react-redux';
 import AlertError from '../util/AlertError.tsx';
 
@@ -30,6 +30,10 @@ const CreateUser = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [dialogData, setDialogData] = useState({ title: '', type: '' });
+
+  useEffect(() => {
+    dispatch(closeAlert(''));
+  }, [dispatch]);
 
   const handleValidation = (inputType) => {
     let validationErrors = {

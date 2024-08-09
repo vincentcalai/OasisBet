@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOdds } from '../../services/api/ApiService.ts';
 import { useNavigate } from 'react-router-dom';
 import AlertError from '../util/AlertError.tsx';
-import { closeAlert } from '../actions/SpinnerAction.ts';
+import { closeAlert } from '../actions/ReducerAction.ts';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();

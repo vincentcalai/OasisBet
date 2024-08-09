@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import SharedVarConstants from "../../../constants/SharedVarConstants.ts";
-import { closeModal } from "../../actions/ModalAction.ts";
+import { closeModal } from "../../actions/ReducerAction.ts";
 import { refreshJwtToken } from "../../../services/api/ApiService.ts";
 
 export const LoginSessionExtend = () => {

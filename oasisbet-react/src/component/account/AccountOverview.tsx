@@ -5,11 +5,11 @@ import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { retrieveYtdAmounts } from "../../services/api/ApiService.ts";
-import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 
 export default function AccountOverview(){

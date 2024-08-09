@@ -8,11 +8,9 @@ import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiServ
 import { LoginCredentialsModel } from '../../constants/MockData.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
-import { updateLoginDetails } from '../actions/LoginAction.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, openModal } from '../actions/ModalAction.ts';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
-import { setSpinner } from '../actions/SpinnerAction.ts';
+import { closeModal, openModal, setSpinner, updateLoginDetails } from '../actions/ReducerAction.ts';
 
 export default function LoginMenu(){
 

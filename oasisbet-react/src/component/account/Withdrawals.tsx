@@ -3,7 +3,7 @@ import './Withdrawals.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
-import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { UpdateAccountModel, AccountModel, LoginCredentialsModel } from "../../constants/MockData.ts";
 import { jwtAuthenticate, updateAccDetails } from "../../services/api/ApiService.ts";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import {handleJwtTokenExpireError} from "../../services/AuthService.ts";
 import { useNavigate } from "react-router-dom";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
-import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 export default function Withdrawals({handleNavToTrxHist}){
     const PASSWORD = 'PASSWORD';

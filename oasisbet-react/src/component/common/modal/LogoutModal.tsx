@@ -1,10 +1,10 @@
 import React from "react"
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../actions/ModalAction.ts";
+import { closeModal } from "../../actions/ReducerAction.ts";
 import SharedVarConstants from "../../../constants/SharedVarConstants.ts";
 import SharedVarMethods from "../../../constants/SharedVarMethods.ts";
-import { updateLoginDetails } from "../../actions/LoginAction.ts";
+import { updateLoginDetails } from "../../actions/ReducerAction.ts";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosInstance from './InterceptorService.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts'; 
-import { setSpinner } from '../../component/actions/SpinnerAction.ts';
+import { setSpinner } from '../../component/actions/ReducerAction.ts';
 
 const fetchResults = async (compType, selectedDate, dateFrom, dateTo) => {
     try {

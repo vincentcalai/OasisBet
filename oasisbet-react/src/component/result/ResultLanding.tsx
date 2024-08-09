@@ -9,7 +9,7 @@ import { ResultEvent } from "../../constants/MockData.ts";
 import { fetchResults } from "../../services/api/ApiService.ts";
 import DateError from "../util/DateError.tsx";
 import AlertError from "../util/AlertError.tsx";
-import { closeAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 
 
