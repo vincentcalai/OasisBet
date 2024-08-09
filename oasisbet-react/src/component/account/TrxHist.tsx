@@ -12,7 +12,7 @@ import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { closeAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
 
 export default function TrxHist(){
 
@@ -40,8 +40,8 @@ export default function TrxHist(){
                 try {
                   const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveAccDetails(accId))
                   if(response){
-                    //TODO: Throw general error message here
                     console.log("General Error: ", error);
+                    dispatch(openAlert(error.message));
                   }   
                 } catch (error) {
                   console.log("Error when withdrawing after refresh token: ", error);
@@ -69,8 +69,8 @@ export default function TrxHist(){
                 try {
                   const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveTrx(accId, selectedTrxType, selectedPeriod))
                   if(response){
-                    //TODO: Throw general error message here
                     console.log("General Error: ", error);
+                    dispatch(openAlert(error.message));
                   }
                 } catch (error) {
                   console.log("Error when retriving transactions after refresh token: ", error);

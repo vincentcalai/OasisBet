@@ -9,7 +9,7 @@ import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { retrieveYtdAmounts } from "../../services/api/ApiService.ts";
-import { closeAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
 
 
 export default function AccountOverview(){
@@ -35,8 +35,8 @@ export default function AccountOverview(){
                 try {
                   const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveYtdAmounts(accId));
                 if(response){
-                    //TODO: Throw general error message here
                     console.log("General Error: ", error);
+                    dispatch(openAlert(error.message));
                   }
                 } catch (error) {
                   console.log("Error when retrieving account details after refresh token: ", error);

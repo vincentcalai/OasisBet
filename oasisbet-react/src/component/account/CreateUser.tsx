@@ -8,8 +8,12 @@ import { UserModel } from '../../model/UserModel.tsx';
 import { CreateUserModel } from '../../model/CreateUserModel.tsx';
 import { useNavigate } from 'react-router-dom';
 import { validateUsername, validatePassword, validateCfmPassword, validateEmail, validateContactNo } from '../util/validation.ts';
+import { openAlert } from '../actions/SpinnerAction.ts';
+import { useDispatch } from 'react-redux';
+import AlertError from '../util/AlertError.tsx';
 
 const CreateUser = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -120,9 +124,8 @@ const CreateUser = () => {
             setErrorMsg('');
           }
       } catch (error) {
-          //TODO to change this error message to a generic error message shown as red banner
           console.error("Error creating user:", error);
-          setErrorMsg("Failed to create user. Please try again.");
+          dispatch(openAlert(error.message));
       }
     } else {
       console.log('Cancelled!');
@@ -154,6 +157,7 @@ const CreateUser = () => {
   return (
     <><div className="container">
       <br />
+      <AlertError></AlertError>
       {errorMsg && <div className="alert alert-danger col-md-6 offset-md-3"><b>Fail: </b>{errorMsg}</div>}
       <Card className="card col-md-6 offset-md-3">
         <Card.Header className="card-header">

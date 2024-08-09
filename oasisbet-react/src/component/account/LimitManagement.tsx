@@ -11,7 +11,7 @@ import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { closeAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
 
 export default function LimitManagement(){
     const DEPOSIT = 'deposit';
@@ -57,8 +57,8 @@ export default function LimitManagement(){
                 try {
                     const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveMtdAmounts(depositLimit, betLimit, accId))
                     if(response){
-                        //TODO: Throw general error message here
                         console.log("General Error: ", error);
+                        dispatch(openAlert(error.message));
                     }
                 } catch (error) {
                   console.log("Error when retriving MTD amounts after refresh token: ", error);
@@ -212,8 +212,8 @@ export default function LimitManagement(){
             try {
                 const response = await handleJwtTokenExpireError(error, async () => await callApiUpdateAccDetails(request))
                 if(response){
-                    //TODO: Throw general error message here
                     console.log("General Error: ", error);
+                    dispatch(openAlert(error.message));
                 }
             } catch (error) {
             console.log("Error when updating account details after refresh token: ", error);

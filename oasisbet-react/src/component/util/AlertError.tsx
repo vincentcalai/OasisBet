@@ -20,7 +20,7 @@ function AlertError() {
                 <FontAwesomeIcon icon={faExclamationTriangle} style={{ marginRight: '8px' }} /> 
                 <b>This system is currently not available. Please try again at a later time.</b>
                 <br />
-                Error: {errorText}
+                {errorText && `Error: ${errorText}`}
             </span>
         </Alert>
     );

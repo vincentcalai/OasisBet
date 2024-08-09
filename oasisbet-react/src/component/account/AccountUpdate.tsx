@@ -14,7 +14,7 @@ import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { closeAlert } from "../actions/SpinnerAction.ts";
+import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
@@ -173,8 +173,8 @@ export default function AccountUpdate(){
             try {
                 const response = await handleJwtTokenExpireError(error, async () => await callApiUpdateAccInfo(request))
                 if(response){
-                    //TODO: Throw general error message here
                     console.log("General Error: ", error);
+                    dispatch(openAlert(error.message));
                 }
             } catch (error) {
             console.log("Error when updating account info after refresh token: ", error);

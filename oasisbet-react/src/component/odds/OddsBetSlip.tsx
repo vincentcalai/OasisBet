@@ -10,6 +10,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { AccountModel } from "../../constants/MockData.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { updateLoginDetails } from "../actions/LoginAction.ts";
+import { openAlert } from "../actions/SpinnerAction.ts";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
     const dispatch = useDispatch();
@@ -121,7 +122,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                 setErrorMsg(response.resultMessage);
             }
         } catch (error) {
-            console.error("Error submitting bet:", error);
+            dispatch(openAlert(error.message));
             setErrorMsg("There is an error with the process");
         }
     };
