@@ -26,7 +26,7 @@ const handleJwtTokenExpireError =  async (error, callback) => {
       }
     } else {
       console.log(error);
-      throw error;
+      return error;
     }
   };
 

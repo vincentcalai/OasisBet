@@ -12,6 +12,7 @@ import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { closeAlert } from "../actions/SpinnerAction.ts";
 
 export default function TrxHist(){
 
@@ -27,6 +28,7 @@ export default function TrxHist(){
     const [selectedPeriod, setSelectedPeriod] = useState('today');
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         console.log("accountDetails in Transaction History: ", accountDetails);
         const { accId } = accountDetails || {};
 

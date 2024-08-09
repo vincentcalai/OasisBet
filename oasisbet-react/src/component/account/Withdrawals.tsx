@@ -11,6 +11,7 @@ import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import {handleJwtTokenExpireError} from "../../services/AuthService.ts";
 import { useNavigate } from "react-router-dom";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
+import { closeAlert } from "../actions/SpinnerAction.ts";
 
 export default function Withdrawals({handleNavToTrxHist}){
     const PASSWORD = 'PASSWORD';
@@ -33,12 +34,13 @@ export default function Withdrawals({handleNavToTrxHist}){
     const isWithdrawalAmtValid = useRef(false);
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         console.log("accountDetails in Withdrawals: ", accountDetails);
         const { balance } = accountDetails || {};
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails]);
+    }, [accountDetails, setAccountDetails, dispatch]);
 
     const onWithdrawalInputChange = (e, type) => {
         if(type === WITHDRAWAL_AMT) {

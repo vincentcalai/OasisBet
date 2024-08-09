@@ -9,6 +9,7 @@ import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { retrieveYtdAmounts } from "../../services/api/ApiService.ts";
+import { closeAlert } from "../actions/SpinnerAction.ts";
 
 
 export default function AccountOverview(){
@@ -21,6 +22,7 @@ export default function AccountOverview(){
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         console.log("accountDetails in AccountOverview: ", accountDetails);
         const { accId, balance } = accountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');

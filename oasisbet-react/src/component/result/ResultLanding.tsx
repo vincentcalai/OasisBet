@@ -9,9 +9,13 @@ import { ResultEvent } from "../../constants/MockData.ts";
 import { fetchResults } from "../../services/api/ApiService.ts";
 import DateError from "../util/DateError.tsx";
 import AlertError from "../util/AlertError.tsx";
+import { closeAlert } from "../actions/SpinnerAction.ts";
+import { useDispatch } from "react-redux";
 
 
 export default function ResultLanding(){
+
+    const dispatch = useDispatch();
 
     const currentDate = new Date();
     const last24Hours = SharedVarConstants.MILLI_SEC_24_HRS;
@@ -31,6 +35,7 @@ export default function ResultLanding(){
 
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [compType]); 
 

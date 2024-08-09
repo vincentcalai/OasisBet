@@ -14,6 +14,7 @@ import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/LoginAction.ts";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { closeAlert } from "../actions/SpinnerAction.ts";
 
 export default function AccountUpdate(){
     const CONTACT_TAB = 'CONTACT';
@@ -59,6 +60,7 @@ export default function AccountUpdate(){
     const hasEditPassword = useRef(false);
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         console.log("accountDetails in AccountUpdate: ", accountDetails);
         console.log("personalInfoDetails in AccountUpdate: ", personalInfoDetails);
         const { accId } = accountDetails || {};
@@ -71,7 +73,7 @@ export default function AccountUpdate(){
         setContactNo(contactNo);
         setAccountDetails(accountDetails);
         setPersonalInfoDetails(personalInfoDetails);
-    }, [accountDetails, setAccountDetails, personalInfoDetails, setPersonalInfoDetails]);
+    }, [accountDetails, setAccountDetails, personalInfoDetails, setPersonalInfoDetails, dispatch]);
 
     const onCancel = ((navigateTab) => {
         if(navigateTab === CONTACT_TAB && !isEmailDisabled){

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOdds } from '../../services/api/ApiService.ts';
 import { useNavigate } from 'react-router-dom';
 import AlertError from '../util/AlertError.tsx';
+import { closeAlert } from '../actions/SpinnerAction.ts';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();
@@ -81,10 +82,9 @@ export default function OddsLanding(){
     }, [compType]);
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         console.log("Destroying OddsLanding Component.. EMPTY BET SELECTION")
-        return () => {
-            dispatch({type: 'EMPTY_BET_SELECTION'});
-        };
+        dispatch({type: 'EMPTY_BET_SELECTION'});
     }, [dispatch]);
 
     useEffect(() => {

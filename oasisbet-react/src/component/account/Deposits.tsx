@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { useNavigate } from "react-router-dom";
+import { closeAlert, openAlert } from "../actions/SpinnerAction.ts";
 
 export default function Deposits({handleNavToTrxHist}){
     const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
@@ -31,6 +32,7 @@ export default function Deposits({handleNavToTrxHist}){
     const navigate = useNavigate();
 
     useEffect(() => {
+        dispatch(closeAlert(''));
         console.log("accountDetails in Deposits: ", accountDetails);
         const { accId, balance, depositLimit } = accountDetails || {};
 
@@ -38,7 +40,7 @@ export default function Deposits({handleNavToTrxHist}){
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails]);
+    }, [accountDetails, setAccountDetails, dispatch]);
     
     const retrieveAccDetails = async (depositLimit: number, accId: string) => {
         try {
@@ -122,14 +124,14 @@ export default function Deposits({handleNavToTrxHist}){
             try {
                 const response = await handleJwtTokenExpireError(error, async () => await callApiUpdateAccDetails(request))
                 if(response){
-                    //TODO: Throw general error message here
                     console.log("General Error: ", error);
+                    dispatch(openAlert(error.message));
                 }
             } catch (error) {
-            console.log("Error when updating account details after refresh token: ", error);
-            SharedVarMethods.clearSessionStorage();
-            dispatch(updateLoginDetails('isUserLoggedIn', false));
-            navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                console.log("Error when updating account details after refresh token: ", error);
+                SharedVarMethods.clearSessionStorage();
+                dispatch(updateLoginDetails('isUserLoggedIn', false));
+                navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
             }
           }
 
