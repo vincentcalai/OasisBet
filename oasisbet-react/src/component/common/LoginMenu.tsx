@@ -10,7 +10,7 @@ import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
-import { closeModal, openModal, setSpinner, updateLoginDetails } from '../actions/ReducerAction.ts';
+import { closeModal, openAlert, openModal, setSpinner, updateLoginDetails } from '../actions/ReducerAction.ts';
 
 export default function LoginMenu(){
 
@@ -115,8 +115,12 @@ export default function LoginMenu(){
             }
         } catch (error) {
             //navigate to Account Login page and show Invalid Credential error
-            console.log("Invalid Credential, ", error);
-            navigate('/account', { state: { code: 1, message: SharedVarConstants.INVALID_LOGIN_ERR_MSG } });
+            if(error && error.response && error.response.status === 401){
+                navigate('/account', { state: { code: 1, message: SharedVarConstants.INVALID_LOGIN_ERR_MSG } });
+            } else {
+                navigate('/account', { state: { code: 2, message: '' } });
+                dispatch(openAlert(error.message))
+            }
         }
     }
 

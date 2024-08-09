@@ -22,13 +22,12 @@ export default function AccountLogin(){
   const [responseMsg, setResponseMsg] = useState(location.state?.message);
 
   useEffect(() => {
-    dispatch(closeAlert(''));
-  }, [dispatch]);
-
-  useEffect(() => {
+    if(location && location.state?.code !== 2) {
+      dispatch(closeAlert(''));
+    }
     setResponseCode(location.state?.code);
     setResponseMsg(location.state?.message);
-  }, [location]);
+  }, [location, dispatch]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
