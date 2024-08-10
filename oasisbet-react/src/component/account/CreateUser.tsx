@@ -32,7 +32,7 @@ const CreateUser = () => {
   const [dialogData, setDialogData] = useState({ title: '', type: '' });
 
   useEffect(() => {
-    dispatch(closeAlert(''));
+    dispatch(closeAlert());
   }, [dispatch]);
 
   const handleValidation = (inputType) => {

@@ -82,7 +82,7 @@ export default function OddsLanding(){
     }, [compType]);
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("Destroying OddsLanding Component.. EMPTY BET SELECTION")
         dispatch({type: 'EMPTY_BET_SELECTION'});
     }, [dispatch]);

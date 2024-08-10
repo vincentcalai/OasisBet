@@ -36,14 +36,14 @@ export const closeModal = modalName => {
 export const openAlert = errorText => {
     return {
         type: 'OPEN_ALERT',
-        payload: errorText
+        payload: {errorText}
     }
 }
 
-export const closeAlert = errorText => {
+export const closeAlert = () => {
     return {
         type: 'CLOSE_ALERT',
-        payload: errorText
+        payload: ''
     }
 }
 

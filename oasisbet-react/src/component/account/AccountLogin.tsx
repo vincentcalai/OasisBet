@@ -23,7 +23,7 @@ export default function AccountLogin(){
 
   useEffect(() => {
     if(location && location.state?.code !== 2) {
-      dispatch(closeAlert(''));
+      dispatch(closeAlert());
     }
     setResponseCode(location.state?.code);
     setResponseMsg(location.state?.message);

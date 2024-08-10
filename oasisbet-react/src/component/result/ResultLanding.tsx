@@ -35,7 +35,7 @@ export default function ResultLanding(){
 
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [compType]); 
 

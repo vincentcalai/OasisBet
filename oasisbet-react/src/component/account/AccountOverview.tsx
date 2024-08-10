@@ -22,7 +22,7 @@ export default function AccountOverview(){
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("accountDetails in AccountOverview: ", accountDetails);
         const { accId, balance } = accountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');

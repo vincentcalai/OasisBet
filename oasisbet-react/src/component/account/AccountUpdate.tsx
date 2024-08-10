@@ -60,7 +60,7 @@ export default function AccountUpdate(){
     const hasEditPassword = useRef(false);
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("accountDetails in AccountUpdate: ", accountDetails);
         console.log("personalInfoDetails in AccountUpdate: ", personalInfoDetails);
         const { accId } = accountDetails || {};

@@ -45,7 +45,7 @@ export default function LimitManagement(){
     const [errorMsg, setErrorMsg] = useState('');
     
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("accountDetails in Limit Management: ", accountDetails);
         const { accId, depositLimit, betLimit } = accountDetails || {};
 

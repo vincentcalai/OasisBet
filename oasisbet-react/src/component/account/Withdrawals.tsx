@@ -34,7 +34,7 @@ export default function Withdrawals({handleNavToTrxHist}){
     const isWithdrawalAmtValid = useRef(false);
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("accountDetails in Withdrawals: ", accountDetails);
         const { balance } = accountDetails || {};
 

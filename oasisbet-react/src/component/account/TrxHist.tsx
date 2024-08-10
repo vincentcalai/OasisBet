@@ -28,7 +28,7 @@ export default function TrxHist(){
     const [selectedPeriod, setSelectedPeriod] = useState('today');
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("accountDetails in Transaction History: ", accountDetails);
         const { accId } = accountDetails || {};
 

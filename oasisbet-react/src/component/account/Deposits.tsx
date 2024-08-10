@@ -32,7 +32,7 @@ export default function Deposits({handleNavToTrxHist}){
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(closeAlert(''));
+        dispatch(closeAlert());
         console.log("accountDetails in Deposits: ", accountDetails);
         const { accId, balance, depositLimit } = accountDetails || {};
 
