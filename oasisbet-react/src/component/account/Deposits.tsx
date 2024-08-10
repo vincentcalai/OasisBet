@@ -36,24 +36,31 @@ export default function Deposits({handleNavToTrxHist}){
         console.log("accountDetails in Deposits: ", accountDetails);
         const { accId, balance, depositLimit } = accountDetails || {};
 
+        const retrieveAccDetails = async (depositLimit: number, accId: string) => {
+            try {
+                await callApiRetrieveMtdAmounts(depositLimit, accId);
+            } catch (error) {
+                //Try refresh JWT token if token expired
+                try {
+                    const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveMtdAmounts(depositLimit, accId))
+                    if(response){
+                        console.log("General Error: ", error);
+                        dispatch(openAlert(error.message));
+                    }
+                } catch (error) {
+                    console.log("Error when retriving MTD amounts after refresh token: ", error);
+                    SharedVarMethods.clearSessionStorage();
+                    dispatch(updateLoginDetails('isUserLoggedIn', false));
+                    navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                }
+            }
+        }
+
         retrieveAccDetails(depositLimit, accId);
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
         setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails, dispatch]);
-    
-    const retrieveAccDetails = async (depositLimit: number, accId: string) => {
-        try {
-            const response: any = await retrieveMtdAmounts(accId);
-            const mtdDepositAmt = response.account.mtdDepositAmt;
-            const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
-            setMtdDepositAmt(displayRemDeposit != null ? displayRemDeposit.toFixed(2).toString() : '0.00');
-        } catch (error) {
-            //TODO to change this error message to a generic error message shown as red banner
-            console.error("Error in retrieve MTD amounts:", error);
-            setErrorMsg("Error in retrieving Account Details. Please try again.");
-        }
-    } 
+    }, [accountDetails, setAccountDetails, dispatch, navigate]);
 
     const onDepositAmtChange = (e) => {
         setDepositAmt(e.target.value);
@@ -139,6 +146,17 @@ export default function Deposits({handleNavToTrxHist}){
           console.log('Cancelled!');
         }
     };
+
+    async function callApiRetrieveMtdAmounts(depositLimit: number, accId: string) {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdDepositAmt = response.account.mtdDepositAmt;
+            const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
+            setMtdDepositAmt(displayRemDeposit != null ? displayRemDeposit.toFixed(2).toString() : '0.00');
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async function callApiUpdateAccDetails(request: UpdateAccountModel) {
         try {
