@@ -6,6 +6,7 @@ public class Constants {
 	public static final boolean FALSE = false;
 	public static final String EMPTY_STRING = "";
 	public static final String NO = "N";
+	public static final String YES = "Y";
 	public static final String SLASH = "/";
 	public static final String SPACE = " ";
 	public static final String DOLLAR_SIGN = "$";
@@ -57,7 +58,7 @@ public class Constants {
 	public static final String CHANGE_LIMIT_ACC_SUCCESS = "Deposit/Bet Limit Change was successful.";
 	public static final String ACC_PW_UPDATE_SUCESSS = "Password has been updated successfully.";
 	public static final String ACC_INFO_UPDATE_SUCESSS = "Contact Info has been updated successfully.";
-
+	public static final String TERMINATE_ACC_SUCCESS = "Account has been terminated successfully.";
 	// General Exceptions
 	public static final String ERR_USER_EXIST = "Username already existed. Please use another username";
 	public static final String ERR_USER_NOT_FOUND = "User not found. Please contact the administrator.";
@@ -68,7 +69,7 @@ public class Constants {
 	public static final String ERR_RETRIEVE_TRX = "There is something wrong while retrieving the transaction history data. Please contact the administrator.";
 	public static final String ERR_USER_DISABLED = "Username is disabled. Please contact the administrator.";
 	public static final String ERR_USER_INVALID_CREDENTIAL = "Old credential is incorrect. Please enter the correct old password";
-
+	public static final String ERR_BALANCE_NOT_ZERO = "There are still funds in your account. Please make sure that you have withdrawn all funds from your Account";
 	// Exception - Betting
 	public static final String ERR_INSUFFICIENT_BAL = "You have insufficient balance in your account. Please top up your account.";
 

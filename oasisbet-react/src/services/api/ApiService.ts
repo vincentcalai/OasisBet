@@ -294,12 +294,12 @@ const retrieveTrxList = async (accId, selectedTrxType, selectedPeriod) => {
     }   
 }
 
-const terminateAccount = async (accId) => {
+const terminateAccount = async (username) => {
     try {
         console.log("calling /account/terminateAcc api!");
-        console.log("terminate account api request accId: ", accId);
+        console.log("terminate account api request accId: ", username);
 
-        const response = await axiosInstance.delete(SharedVarConstants.HOST_NAME_URL + `account/terminateAcc/${accId}`);
+        const response = await axiosInstance.delete(SharedVarConstants.HOST_NAME_URL + `account/terminateAcc/${username}`);
 
         console.log("Response: ", response);
 

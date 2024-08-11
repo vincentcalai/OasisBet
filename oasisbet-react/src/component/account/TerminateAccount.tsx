@@ -34,13 +34,13 @@ export default function TerminateAccount(){
         setDialogOpen(false);
         if (result === 'confirm') {
           //TODO: to change this to user id
-          const id: number = 1;
+          const username: string = "CHOONANN2";
           try {
-              await callApiTerminateAccount(id);
+              await callApiTerminateAccount(username);
           } catch (error) {
               //Try refresh JWT token if token expired
               try {
-                const response = await handleJwtTokenExpireError(error, async () => await callApiTerminateAccount(id))
+                const response = await handleJwtTokenExpireError(error, async () => await callApiTerminateAccount(username))
                 if(response){
                     console.log("General Error: ", error);
                     dispatch(openAlert(error.message));
@@ -57,7 +57,7 @@ export default function TerminateAccount(){
         }
     };
 
-    async function callApiTerminateAccount(request: number) {
+    async function callApiTerminateAccount(request: string) {
         try {
             //TODO: change this to terminate account API
             const response = await terminateAccount(request);

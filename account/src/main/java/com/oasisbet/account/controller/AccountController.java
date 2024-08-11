@@ -106,10 +106,10 @@ public class AccountController {
 		return accountService.updateAccPassword(username, oldPassword, newPassword, response);
 	}
 
-	@DeleteMapping(value = "/terminateAcc/{accId}")
-	public AccountRestResponse terminateAcc(@PathVariable Long accId) {
-		System.out.println(accId);
-		return new AccountRestResponse();
+	@DeleteMapping(value = "/terminateAcc/{username}")
+	public StatusResponse terminateAcc(@PathVariable String username) {
+		StatusResponse response = new StatusResponse();
+		return accountService.deleteAcc(username, response);
 	}
 
 	@PostMapping(value = "/processBet")

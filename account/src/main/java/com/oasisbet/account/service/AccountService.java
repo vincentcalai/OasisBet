@@ -5,14 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -589,4 +582,29 @@ public class AccountService {
 		return response;
 	}
 
+	public StatusResponse deleteAcc(String username, StatusResponse response) {
+		UserView userView = userDao.findByUsername(username);
+		if (userView != null) {
+			Long userId = userView.getId();
+			AccountView accountView = accountDao.findByUsrId(userId);
+			if(accountView != null) {
+				Double balance = accountView.getBalance();
+				if (Objects.equals(balance, 0.0)) {
+					response.setStatusCode(1);
+					response.setResultMessage(Constants.ERR_BALANCE_NOT_ZERO);
+					return response;
+				}
+				Long accId = accountView.getAccId();
+				accountDao.deleteById(accId);
+				userView.setDelInd(Constants.YES);
+				userDao.save(userView);
+				response.setResultMessage(Constants.TERMINATE_ACC_SUCCESS);
+				return response;
+			}
+		}
+		response.setStatusCode(3);
+		response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
+
+		return response;
+	}
 }
