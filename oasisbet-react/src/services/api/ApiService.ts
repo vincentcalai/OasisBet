@@ -294,6 +294,28 @@ const retrieveTrxList = async (accId, selectedTrxType, selectedPeriod) => {
     }   
 }
 
+const terminateAccount = async (accId) => {
+    try {
+        console.log("calling /account/terminateAcc api!");
+        console.log("terminate account api request accId: ", accId);
+
+        const response = await axiosInstance.delete(SharedVarConstants.HOST_NAME_URL + `account/terminateAcc/${accId}`);
+
+        console.log("Response: ", response);
+
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const data = response.data;
+        console.log("Response data: ", data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }   
+}
+
 export { 
     fetchResults, 
     fetchOdds, 
@@ -301,6 +323,7 @@ export {
     createUser, 
     updateAccDetails, 
     updateAccInfo, 
+    terminateAccount,
     submitBets, 
     retrieveMtdAmounts, 
     retrieveYtdAmounts,

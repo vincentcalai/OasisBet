@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import ConfirmDialog from '../common/dialog/ConfirmDialog.tsx';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
-import { updateAccDetails } from '../../services/api/ApiService.ts';
+import { terminateAccount } from '../../services/api/ApiService.ts';
 import { handleJwtTokenExpireError } from '../../services/AuthService.ts';
 import { openAlert, updateLoginDetails } from '../actions/ReducerAction.ts';
 import { useDispatch } from 'react-redux';
@@ -34,7 +34,7 @@ export default function TerminateAccount(){
         setDialogOpen(false);
         if (result === 'confirm') {
           //TODO: to change this to user id
-          const id = 1;
+          const id: number = 1;
           try {
               await callApiTerminateAccount(id);
           } catch (error) {
@@ -60,7 +60,7 @@ export default function TerminateAccount(){
     async function callApiTerminateAccount(request: number) {
         try {
             //TODO: change this to terminate account API
-            const response = await updateAccDetails(request);
+            const response = await terminateAccount(request);
             if (response.statusCode !== 0) {
                 console.log("Error terminating account, response:", response);
                 setErrorMsg(response.resultMessage);

@@ -3,13 +3,7 @@ package com.oasisbet.account.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.oasisbet.account.model.AccountVO;
 import com.oasisbet.account.model.BetSubmissionVO;
@@ -110,7 +104,12 @@ public class AccountController {
 		}
 
 		return accountService.updateAccPassword(username, oldPassword, newPassword, response);
+	}
 
+	@DeleteMapping(value = "/terminateAcc/{accId}")
+	public AccountRestResponse terminateAcc(@PathVariable Long accId) {
+		System.out.println(accId);
+		return new AccountRestResponse();
 	}
 
 	@PostMapping(value = "/processBet")
