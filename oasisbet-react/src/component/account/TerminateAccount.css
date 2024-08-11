@@ -1,3 +1,11 @@
 .terminate-acc-text-block{
     padding-left: 30px;
 }
+
+.terminate-acc-checkbox-input {
+    margin-top: 12px !important;
+}
+
+.terminate-acc-checkbox-label {
+    padding-left: 10px;
+}

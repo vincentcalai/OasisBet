@@ -14,6 +14,8 @@ export default function TerminateAccount(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -74,6 +76,11 @@ export default function TerminateAccount(){
         }
     }
     
+    function handleCheckboxChange(event): void {
+        setIsCheckboxChecked(event.target.checked);
+        setIsConfirmDisabled(!event.target.checked);
+    }
+
     return (
         <div className="container-fluid">
             {successMsg && <div className="alert alert-success col-md-6 offset-md-3"><b>Success: </b>{successMsg}</div>}
@@ -92,8 +99,20 @@ export default function TerminateAccount(){
                         <p>If you have any existing product subscription, live streaming subscription and/or bank link, please note that these services will be terminated along with your Account closure.</p>
                     </div>
                     <hr />
+                    <div className="terminate-acc-text-block">
+                        <input 
+                            className="form-check-input terminate-acc-checkbox-input"
+                            type="checkbox" 
+                            id="agreeTerms" 
+                            onChange={handleCheckboxChange} 
+                            checked={isCheckboxChecked} 
+                        />
+                        <label className="form-check-label terminate-acc-checkbox-label" htmlFor="agreeTerms">
+                            I have read and understood the above and would like to proceed with my Account closure request.
+                        </label>
+                    </div>
                     <div className="dialog-actions">
-                        <button className="btn btn-success btn-confirm-action" type="button" onClick={handleOpenDialog}>
+                        <button className="btn btn-success btn-confirm-action" type="button" onClick={handleOpenDialog} disabled={isConfirmDisabled}>
                             Confirm
                         </button>
                     </div>
@@ -106,8 +125,6 @@ export default function TerminateAccount(){
             onClose={handleCloseDialog}
             data={dialogData} />
         </div>
-
-        
     );
 }
 
