@@ -38,6 +38,8 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ isOpen, onClose, data }) 
         return SharedVarConstants.CFM_UPDATE_PW_DIALOG_MSG;
       case SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE:
         return SharedVarConstants.CFM_UPDATE_ACC_DETAILS_DIALOG_MSG;
+      case SharedVarConstants.CFM_TERMINATE_ACC_TYPE:
+        return SharedVarConstants.CFM_TERMINATE_ACC_DIALOG_MSG;
       default:
         return '';
     }

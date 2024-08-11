@@ -12,6 +12,7 @@ function AccountSideNav({ accountMenuSelect, handleClick }) {
                 <li className={`sidebar-item ${accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_LIMIT_MGMT ? 'highlightSideNav' : ''}`} onClick={() => handleClick(SharedVarConstants.NAV_MENU_SELECT_LIMIT_MGMT)}>{SharedVarConstants.LIMIT_MANAGEMENT_HEADER}</li>
                 <li className={`sidebar-item ${accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_DEPOSITS ? 'highlightSideNav' : ''}`} onClick={() => handleClick(SharedVarConstants.NAV_MENU_SELECT_DEPOSITS)}>{SharedVarConstants.DEPOSIT_HEADER}</li>
                 <li className={`sidebar-item ${accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_WITHDRAWALS ? 'highlightSideNav' : ''}`} onClick={() => handleClick(SharedVarConstants.NAV_MENU_SELECT_WITHDRAWALS)}>{SharedVarConstants.WITHDRAWALS_HEADER}</li>
+                <li className={`sidebar-item ${accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_TERMINATE_ACCOUNT ? 'highlightSideNav' : ''}`} onClick={() => handleClick(SharedVarConstants.NAV_MENU_SELECT_TERMINATE_ACCOUNT)}>{SharedVarConstants.TERMINATE_ACCOUNT_HEADER}</li>
             </ul>
         </div>
     );

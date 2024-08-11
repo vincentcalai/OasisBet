@@ -37,6 +37,7 @@ const SharedVarConstants = {
     LIMIT_MANAGEMENT_HEADER: "Limit Management",
     DEPOSIT_HEADER: "Deposits",
     WITHDRAWALS_HEADER: "Withdrawals",
+    TERMINATE_ACCOUNT_HEADER: "Terminate Account",
 
     NAV_MENU_SELECT_ACCOUNT_OVERVIEW: "account_overview",
     NAV_MENU_SELECT_ACCOUNT_UPDATE: "account_update",
@@ -44,6 +45,7 @@ const SharedVarConstants = {
     NAV_MENU_SELECT_LIMIT_MGMT: 'limit_mgmt',
     NAV_MENU_SELECT_DEPOSITS: "desposits",
     NAV_MENU_SELECT_WITHDRAWALS: "withdrawals",
+    NAV_MENU_SELECT_TERMINATE_ACCOUNT: "terminate_account",
 
     CREATE_USER_DIALOG_TITLE: "Confirm Create User",
     CFM_DEPOSIT_DIALOG_TITLE: "Confirm Deposit",
@@ -51,6 +53,7 @@ const SharedVarConstants = {
     CFM_UPDATE_PW_DIALOG_TITLE: "Confirm Update Password",
     CFM_UPDATE_ACC_DETAILS_DIALOG_TITLE: "Confirm Update Account Details",
     CFM_CHANGE_LIMIT_DIALOG_TITLE: "Confirm Change Limit",
+    CFM_TERMINATE_ACC: "Confirm Terminate Account",
     LOGOUT_MODAL_TITLE: "User Logout",
     LOGIN_EXTEND_SESSION_TITLE: "Login Extend Session",
 
@@ -60,6 +63,7 @@ const SharedVarConstants = {
     CFM_CHANGE_LIMIT_DIALOG_TYPE: 'CFM_CHANGE_LIMIT',
     CFM_UPDATE_PW_DIALOG_TYPE: 'CFM_UPDATE_PW',
     CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE: 'CFM_UPDATE_ACC_DETAILS',
+    CFM_TERMINATE_ACC_TYPE: 'CFM_TERMINATE_ACC',
     
     CREATE_USER_DIALOG_MSG: 'Are you sure to create a new user?',
     CFM_DEPOSIT_DIALOG_MSG: 'Are you sure to deposit?',
@@ -67,6 +71,7 @@ const SharedVarConstants = {
     CFM_CHANGE_LIMIT_DIALOG_MSG: 'Are you sure to change Monthly Deposit and Monthly Betting limit?',
     CFM_UPDATE_PW_DIALOG_MSG: 'Are you sure to update account details?',
     CFM_UPDATE_ACC_DETAILS_DIALOG_MSG: 'Confirm account details update?',
+    CFM_TERMINATE_ACC_DIALOG_MSG: 'Confirm terminate account?',
     LOGOUT_MODAL_MSG: 'Are you sure to logout?',
     LOGIN_EXTEND_SESSION_MSG: 'You have been inactive for 15 minutes. Do you want to extend your login session?',
     AUTO_LOGOUT_MSG: 'For security reasons, you have been locked out as it has been inactive for more than 30 minutes',

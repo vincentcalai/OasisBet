@@ -11,6 +11,7 @@ import Deposits from "./Deposits.tsx";
 import LimitManagement from "./LimitManagement.tsx";
 import { useSelector } from "react-redux";
 import AlertError from "../util/AlertError.tsx";
+import TerminateAccount from "./TerminateAccount.tsx";
 
 export default function AccountLanding(){
 
@@ -42,6 +43,7 @@ export default function AccountLanding(){
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_LIMIT_MGMT && <LimitManagement></LimitManagement>}
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_DEPOSITS && <Deposits handleNavToTrxHist={onHandleAccountMenuSelection}></Deposits>}
                                 {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_WITHDRAWALS && <Withdrawals handleNavToTrxHist={onHandleAccountMenuSelection}></Withdrawals>}
+                                {accountMenuSelect === SharedVarConstants.NAV_MENU_SELECT_TERMINATE_ACCOUNT && <TerminateAccount></TerminateAccount>}
                             </div>
                         </div>
                     </div>
