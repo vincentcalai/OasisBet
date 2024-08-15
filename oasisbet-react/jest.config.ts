@@ -3,19 +3,9 @@
  * https://jestjs.io/docs/configuration
  */
 
-/** @type {import('jest').Config} */
-const config = {
-  transform: {
-    '^.+\\.[t|j]sx?$': 'babel-jest',
-    '^.+\\.css$': 'jest-transform-stub',  // Mock CSS files
-  },
-  moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'jest-transform-stub',  // Mock other style files
-  },
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'], // Include extensions as needed
-  transformIgnorePatterns: [
-    '/node_modules/', // Adjust this if needed to include certain node_modules
-  ],
+import type {Config} from 'jest';
+
+const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -23,10 +13,10 @@ const config = {
   // bail: 0,
 
   // The directory where Jest should store its cached dependency information
-  // cacheDirectory: "C:\\Users\\user\\AppData\\Local\\Temp\\jest",
+  // cacheDirectory: "C:\\Users\\calai\\AppData\\Local\\Temp\\jest",
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  // clearMocks: false,
+  clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
@@ -43,7 +33,7 @@ const config = {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  // coverageProvider: "babel",
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -88,19 +78,18 @@ const config = {
   // ],
 
   // An array of file extensions your modules use
-  // moduleFileExtensions: [
-  //   "js",
-  //   "mjs",
-  //   "cjs",
-  //   "jsx",
-  //   "ts",
-  //   "tsx",
-  //   "json",
-  //   "node"
-  // ],
+  moduleFileExtensions: [
+    "js",
+    "jsx",
+    "ts",
+    "tsx"
+  ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    '\\.(css|less|sass|scss)$': 'jest-transform-stub',
+    // Add other file types as needed, like images, etc.
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -206,4 +195,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = config;
+export default config;

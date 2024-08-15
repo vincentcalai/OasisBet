@@ -30,7 +30,7 @@ export default function TerminateAccount(){
         setDialogOpen(true);
       };
 
-    const handleCloseDialog = async (result) => {
+    const handleCloseDialog = async (result: any) => {
         setDialogOpen(false);
         if (result === 'confirm') {
           //TODO: to change this to user id
