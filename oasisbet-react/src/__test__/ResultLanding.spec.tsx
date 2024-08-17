@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor, within } from '@testing-library/react'
 import ResultLanding from '../component/result/ResultLanding.tsx';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { fetchResults } from '../services/api/ApiService.ts';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -23,14 +24,18 @@ describe('ResultLanding Component', () => {
     jest.clearAllMocks();
   });
 
-  it('should render English Premier League as default Comp Type Header', () => {
-    render(
-      <Provider store={store}>
-        <ResultLanding />
-      </Provider>
-    );
-    const element = screen.getByRole('heading', { name: /English Premier League/i });
-    expect(element).toBeDefined();
+  it('should render English Premier League as default Comp Type Header', async () => {
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <ResultLanding />
+        </Provider>
+      );
+    });
+    const heading = screen.getByRole('heading', { name: /English Premier League/i });
+    const button = screen.getByRole('button', { name: /Filter/i });
+    expect(heading).toBeDefined();
+    expect(button).toBeDefined();
   });
   
   it('should render correct header when user selects comp type', async () => {
@@ -68,26 +73,16 @@ describe('ResultLanding Component', () => {
     expect(eplRole).toBeDefined();
   });
 
-  it('should render No Event Found text if api returns no events', () => {
+  it('should render No Event Found text if api returns no events', async () => {
     mockedFetchResults.mockResolvedValueOnce([]);
 
-    render(
-      <Provider store={store}>
-        <ResultLanding />
-      </Provider>
-    );
-    const element = screen.getByText('No Event(s) Found.');
-    expect(element).toBeDefined();
-  });
-
-  it('should render No Event Found text if api returns no events', () => {
-    mockedFetchResults.mockResolvedValueOnce([]);
-
-    render(
-      <Provider store={store}>
-        <ResultLanding />
-      </Provider>
-    );
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <ResultLanding />
+        </Provider>
+      );
+    });
     const element = screen.getByText('No Event(s) Found.');
     expect(element).toBeDefined();
   });
@@ -95,11 +90,13 @@ describe('ResultLanding Component', () => {
   it('should render correct values if api returns events', async () => {
     mockedFetchResults.mockResolvedValueOnce(getMockedResult());
 
-    render(
-      <Provider store={store}>
-        <ResultLanding />
-      </Provider>
-    );
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <ResultLanding />
+        </Provider>
+      );
+    });
     // Wait for the elements related to the mocked data to be present in the document
     await waitFor(() => {
       expect(screen.queryByText('No Event(s) Found.')).toBeNull();
@@ -107,9 +104,64 @@ describe('ResultLanding Component', () => {
       expect(screen.getByText('Real Betis vs Girona')).toBeDefined();
     });
   });
+
+  it('should show last date values when user change date input in dropdown', async () => {
+    mockedFetchResults.mockResolvedValue(getMockedResult());
+
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <ResultLanding />
+        </Provider>
+      )
+    });
+    const dateFilter = screen.getByRole('combobox', { name: /Date Filter Selection/i });
+    expect(dateFilter).toBeDefined();
+
+    userEvent.selectOptions(
+      screen.getByRole('combobox', { name: /Date Filter Selection/i }),
+      screen.getByRole('option', { name: 'Last 3 Days' }),
+    );
+
+    await waitFor(() => {
+      expect((screen.getByRole('combobox', { name: /Date Filter Selection/i }) as HTMLSelectElement).value).toBe('last3Days');
+      expect(screen.getByRole('option', { name: 'Last 3 Days' }) as HTMLOptionElement).toBeTruthy();
+    });
+  });
+
+  it('should show correct dates when date filter selection is Custom and Date From and Date To are selected', async () => {
+    mockedFetchResults.mockResolvedValue(getMockedResult());
+
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <ResultLanding />
+        </Provider>
+      )
+    });
+    userEvent.selectOptions(
+      screen.getByRole('combobox', { name: /Date Filter Selection/i }),
+      screen.getByRole('option', { name: 'Custom Period (up to 7 days)' }),
+    );
+
+    await waitFor(() => {
+      expect((screen.getByRole('combobox', { name: /Date Filter Selection/i }) as HTMLSelectElement).value).toBe('custom');
+      expect(screen.getByRole('option', { name: 'Custom Period (up to 7 days)' }) as HTMLOptionElement).toBeTruthy();
+    });
+
+    const dateFrom = screen.getByRole('textbox', { name: /Date From/i })
+    expect(dateFrom).toBeDefined();
+    const dateTo = screen.getByRole('textbox', { name: /Date To/i })
+    expect(dateTo).toBeDefined();
+
+    await userEvent.type(dateFrom, '01/01/2024');
+    await userEvent.type(dateTo, '31/12/2024');
+
+    expect(dateFrom).toHaveValue('01/01/2024');
+    expect(dateTo).toHaveValue('31/12/2024');    
+  });
   
 });
-
 
 function getMockedResult(): any {
   return [

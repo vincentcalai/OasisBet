@@ -145,7 +145,8 @@ export default function ResultLanding(){
                                         <div className="col-md-3 offset-md-1">
                                             <label className="control-label dates-section-label-width">Dates</label>
                                             <div className="filter-section">
-                                                <select className="dates-dropdown" value={selectedDate} onChange={handleDateSelectionChange}>
+                                                <select className="dates-dropdown" aria-label="Date Filter Selection"
+                                                     value={selectedDate} onChange={handleDateSelectionChange}>
                                                     <option value="last24Hrs">Last 24 Hours</option>
                                                     <option value="last3Days">Last 3 Days</option>
                                                     <option value="custom">Custom Period (up to 7 days)</option>
@@ -153,10 +154,12 @@ export default function ResultLanding(){
                                             </div>
                                         </div>
                                         <div className="col-md-2 offset-md-1">
-                                            <label className={`control-label dates-section-label-width error-text ${dateErrorMsg ? 'highlightLabel' : ''}`}>
+                                            <label htmlFor="dateFrom" className={`control-label dates-section-label-width error-text ${dateErrorMsg ? 'highlightLabel' : ''}`}>
                                                 Date From</label>
                                             <div className="filter-section">
                                                 <DatePicker
+                                                    id="dateFrom"
+                                                    aria-label="Date From"
                                                     showIcon
                                                     selected={dateFrom}
                                                     onChange={(date: Date | null) => setDateFrom(date)}
@@ -170,10 +173,12 @@ export default function ResultLanding(){
                                             </div>
                                         </div>
                                         <div className="col-md-2">
-                                            <label className={`control-label dates-section-label-width error-text ${dateErrorMsg ? 'highlightLabel' : ''}`}>
+                                            <label htmlFor="dateTo" className={`control-label dates-section-label-width error-text ${dateErrorMsg ? 'highlightLabel' : ''}`}>
                                                 Date To</label>
                                             <div className="filter-section">
                                                 <DatePicker
+                                                    id="dateTo"
+                                                    aria-label="Date To"
                                                     showIcon
                                                     selected={dateTo}
                                                     onChange={(date: Date | null) => setDateTo(date)}
