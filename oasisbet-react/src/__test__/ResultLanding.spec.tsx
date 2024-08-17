@@ -1,9 +1,10 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import ResultLanding from '../component/result/ResultLanding.tsx';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { fetchResults } from '../services/api/ApiService.ts';
+import userEvent from '@testing-library/user-event';
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -32,7 +33,8 @@ describe('ResultLanding Component', () => {
     expect(element).toBeDefined();
   });
   
-  it('should render La Liga header when user selects La Liga comp type', () => {
+  it('should render correct header when user selects comp type', async () => {
+    const user = userEvent.setup();
     mockedFetchResults.mockResolvedValueOnce([]);
 
     render(
@@ -40,9 +42,30 @@ describe('ResultLanding Component', () => {
         <ResultLanding />
       </Provider>
     );
-    fireEvent.click(screen.getByText(/La Liga/i)); 
-    const element = screen.getByRole('heading', { name: /La Liga/i });
-    expect(element).toBeDefined();
+    await user.click(screen.getByText(/La Liga/i)); 
+    const laLigaRole = screen.getByRole('heading', { name: /La Liga/i });
+    expect(laLigaRole).toBeDefined();
+    await user.click(screen.getByText(/Bundesliga/i)); 
+    const bundesligaRole = screen.getByRole('heading', { name: /Bundesliga/i });
+    expect(bundesligaRole).toBeDefined();
+    await user.click(screen.getByText(/Serie A/i)); 
+    const seriaARole = screen.getByRole('heading', { name: /Serie A/i });
+    expect(seriaARole).toBeDefined();
+    await user.click(screen.getByText(/Ligue One/i)); 
+    const ligueOneRole = screen.getByRole('heading', { name: /Ligue One/i });
+    expect(ligueOneRole).toBeDefined();
+    await user.click(screen.getByText(/FA Cup/i)); 
+    const faCupRole = screen.getByRole('heading', { name: /FA Cup/i });
+    expect(faCupRole).toBeDefined();
+    await user.click(screen.getByText(/EFL Cup/i)); 
+    const eflCupRole = screen.getByRole('heading', { name: /EFL Cup/i });
+    expect(eflCupRole).toBeDefined();
+    await user.click(screen.getByText(/UEFA Champions League/i)); 
+    const uefaChampsLeagueRole = screen.getByRole('heading', { name: /UEFA Champions League/i });
+    expect(uefaChampsLeagueRole).toBeDefined();
+    await user.click(screen.getByText(/English Premier League/i)); 
+    const eplRole = screen.getByRole('heading', { name: /English Premier League/i });
+    expect(eplRole).toBeDefined();
   });
 
   it('should render No Event Found text if api returns no events', () => {
