@@ -1,10 +1,11 @@
 import React from 'react';
-import { act, render, screen, waitFor, within } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import ResultLanding from '../component/result/ResultLanding.tsx';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { fetchResults } from '../services/api/ApiService.ts';
 import userEvent from '@testing-library/user-event';
+import { format } from 'date-fns';
 import '@testing-library/jest-dom';
 
 const mockStore = configureMockStore();
@@ -129,7 +130,7 @@ describe('ResultLanding Component', () => {
     });
   });
 
-  it('should show correct dates when date filter selection is Custom and Date From and Date To are selected', async () => {
+  it('should show correct dates and Filter button is not disabled when date filter selection is Custom and Date From and Date To are selected', async () => {
     mockedFetchResults.mockResolvedValue(getMockedResult());
 
     await act(async () => {
@@ -154,11 +155,18 @@ describe('ResultLanding Component', () => {
     const dateTo = screen.getByRole('textbox', { name: /Date To/i })
     expect(dateTo).toBeDefined();
 
-    await userEvent.type(dateFrom, '01/01/2024');
-    await userEvent.type(dateTo, '31/12/2024');
+    const today = new Date();
+    const formattedToday = format(today, 'dd/MM/yyyy');
+    console.log("vincent: ", formattedToday)
 
-    expect(dateFrom).toHaveValue('01/01/2024');
-    expect(dateTo).toHaveValue('31/12/2024');    
+    await userEvent.type(dateFrom, formattedToday );
+    await userEvent.type(dateTo, formattedToday );
+
+    expect(dateFrom).toHaveValue(formattedToday );
+    expect(dateTo).toHaveValue(formattedToday );    
+
+    const filterButton = screen.getByRole('button', { name: /Filter/i });
+    expect(filterButton).not.toBeDisabled();
   });
   
 });
