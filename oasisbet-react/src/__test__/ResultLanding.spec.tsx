@@ -12,11 +12,11 @@ const mockStore = configureMockStore();
 const store = mockStore({
   error: {
     showError: false,
-    errorText: "false"
+    errorText: ""
   }
 });
 
-jest.mock('../services/api/ApiService.ts'); // Mock the module
+jest.mock('../services/api/ApiService.ts');
 const mockedFetchResults = fetchResults as jest.MockedFunction<typeof fetchResults>;
 
 describe('ResultLanding Component', () => {
@@ -157,7 +157,6 @@ describe('ResultLanding Component', () => {
 
     const today = new Date();
     const formattedToday = format(today, 'dd/MM/yyyy');
-    console.log("vincent: ", formattedToday)
 
     await userEvent.type(dateFrom, formattedToday );
     await userEvent.type(dateTo, formattedToday );

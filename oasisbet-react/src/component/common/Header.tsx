@@ -1,8 +1,9 @@
 import './Header.css';
 import React from 'react';
-import logo from '../../assets/images/logo.png';
 
 export default function Header(){
+    const logo =  require("../../assets/images/logo.png");
+
     return (
         <header>
             <div className="title-nav-bar">

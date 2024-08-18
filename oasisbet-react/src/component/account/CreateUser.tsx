@@ -68,20 +68,7 @@ const CreateUser = () => {
   };
 
   const confirmClicked = () => {
-      const validationErrors = {
-        username: '',
-        password: '',
-        cfmPassword: '',
-        email: '',
-        contactNo: ''
-      };
-      validationErrors.username = validateUsername(username);
-      validationErrors.password = validatePassword(password);
-      validationErrors.cfmPassword = validateCfmPassword(cfmPassword, password);
-      validationErrors.email = validateEmail(email);
-      validationErrors.contactNo = validateContactNo(contactNo);
-      setErrors(validationErrors);
-      const checkValidation = Object.values(validationErrors).every(error => error === '');
+      const checkValidation = checkFormIsValid();
     if (checkValidation) {
       console.log('Create User Form is valid, submitting form to backend now');
       handleOpenDialog();
@@ -158,6 +145,24 @@ const CreateUser = () => {
     }));
   }
 
+  function checkFormIsValid() {
+    const validationErrors = {
+      username: '',
+      password: '',
+      cfmPassword: '',
+      email: '',
+      contactNo: ''
+    };
+    validationErrors.username = validateUsername(username);
+    validationErrors.password = validatePassword(password);
+    validationErrors.cfmPassword = validateCfmPassword(cfmPassword, password);
+    validationErrors.email = validateEmail(email);
+    validationErrors.contactNo = validateContactNo(contactNo);
+    setErrors(validationErrors);
+    const checkValidation = Object.values(validationErrors).every(error => error === '');
+    return checkValidation;
+  }  
+
   return (
     <><div className="container">
       <br />
@@ -171,8 +176,8 @@ const CreateUser = () => {
           <div className="container">
             <form>
               <div className="form-group form-row required col-md-8 align_cont_center">
-                <label id="USERNAME_LABEL_1" htmlFor="username_0_Label" className={`control-label ${errors.username ? 'highlightLabel' : ''}`}>
-                  <span id="USERNAME">User Name</span>
+                <label id="USERNAME_LABEL_1" className={`control-label ${errors.username ? 'highlightLabel' : ''}`}>
+                  <span id="username_0">User Name</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
                 <input
@@ -182,7 +187,8 @@ const CreateUser = () => {
                   value={username}
                   onBlur={handleOnBlurInput('username')}
                   onChange={handleOnChangeInput('username')}
-                  name="username" />
+                  name="username" 
+                  aria-label="User Name"/>
                 <label id="username_error_0" className={`error-text ${errors.username ? 'highlightLabel' : ''}`} htmlFor="name_0">
                   {errors.username}
                 </label>
@@ -191,7 +197,7 @@ const CreateUser = () => {
               <br />
 
               <div className="form-group form-row required col-md-8 align_cont_center">
-                <label id="PASSWORD_LABEL_1" htmlFor="password_0_Label" className={`control-label ${errors.password ? 'highlightLabel' : ''}`}>
+                <label id="PASSWORD_LABEL_1" className={`control-label ${errors.password ? 'highlightLabel' : ''}`}>
                   <span id="PASSWORD">Password</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
@@ -202,7 +208,8 @@ const CreateUser = () => {
                   value={password}
                   onBlur={handleOnBlurInput('password')}
                   onChange={handleOnChangeInput('password')}
-                  name="password" />
+                  name="password" 
+                  aria-label="Password"/>
                 <label id="password_error_0" className={`error-text ${errors.password ? 'highlightLabel' : ''}`} htmlFor="password_0">
                   {errors.password}
                 </label>
@@ -211,7 +218,7 @@ const CreateUser = () => {
               <br />
 
               <div className="form-group form-row required col-md-8 align_cont_center">
-                <label id="CFMPASSWORD_LABEL_1" htmlFor="cfmPassword_0_Label" className={`control-label ${errors.cfmPassword ? 'highlightLabel' : ''}`}>
+                <label id="CFMPASSWORD_LABEL_1" className={`control-label ${errors.cfmPassword ? 'highlightLabel' : ''}`}>
                   <span id="CFMPASSWORD">Confirm Password</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
@@ -222,7 +229,8 @@ const CreateUser = () => {
                   value={cfmPassword}
                   onBlur={handleOnBlurInput('cfmPassword')}
                   onChange={handleOnChangeInput('cfmPassword')}
-                  name="cfmPassword" />
+                  name="cfmPassword" 
+                  aria-label="Confirm Password"/>
                 <label id="cfmPassword_error_0" className={`error-text ${errors.cfmPassword ? 'highlightLabel' : ''}`} htmlFor="cfmPassword_0">
                   {errors.cfmPassword}
                 </label>
@@ -231,7 +239,7 @@ const CreateUser = () => {
               <br />
 
               <div className="form-group form-row required col-md-8 align_cont_center">
-                <label id="EMAIL_LABEL_1" htmlFor="email_0_Label" className={`control-label ${errors.email ? 'highlightLabel' : ''}`}>
+                <label id="EMAIL_LABEL_1" className={`control-label ${errors.email ? 'highlightLabel' : ''}`}>
                   <span id="EMAIL">Email</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
@@ -242,7 +250,8 @@ const CreateUser = () => {
                   value={email}
                   onBlur={handleOnBlurInput('email')}
                   onChange={handleOnChangeInput('email')}
-                  name="email" />
+                  name="email" 
+                  aria-label="Email"/>
                 <label id="email_error_0" className={`error-text ${errors.email ? 'highlightLabel' : ''}`} htmlFor="email_0">
                   {errors.email}
                 </label>
@@ -251,7 +260,7 @@ const CreateUser = () => {
               <br />
 
               <div className="form-group form-row required col-md-8 align_cont_center">
-                <label id="CONTACTNO_LABEL_1" htmlFor="contactNo_0_Label" className={`control-label ${errors.contactNo ? 'highlightLabel' : ''}`}>
+                <label id="CONTACTNO_LABEL_1" className={`control-label ${errors.contactNo ? 'highlightLabel' : ''}`}>
                   <span id="CONTACTNO">Contact No</span>
                   <span className="mandatory-label"></span>&nbsp;
                 </label>
@@ -262,7 +271,8 @@ const CreateUser = () => {
                   value={contactNo}
                   onBlur={handleOnBlurInput('contactNo')}
                   onChange={handleOnChangeInput('contactNo')}
-                  name="contactNo" />
+                  name="contactNo" 
+                  aria-label="Contact No"/>
                 <label id="contactNo_error_0" className={`error-text ${errors.contactNo ? 'highlightLabel' : ''}`} htmlFor="contactNo_0">
                   {errors.contactNo}
                 </label>
@@ -289,4 +299,5 @@ const CreateUser = () => {
 };
 
 export default CreateUser;
+
 
