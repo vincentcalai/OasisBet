@@ -26,6 +26,7 @@ jest.mock('../services/api/ApiService.ts', () => ({
 
 const mockResponse = {
   account: {
+    balance: 3000,
     mtdDepositAmt: 1000,
     ytdDepositAmt: 5000,
     ytdWithdrawalAmt: 2000,
@@ -36,7 +37,7 @@ describe('AccountOverview Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    sessionStorage.setItem('key', 'value');
+    sessionStorage.setItem('ACCOUNT_DETAILS', '{"accId":1000022,"usrId":26,"balance":0,"depositLimit":1000,"depositAmt":null,"withdrawalAmt":null,"actionType":null,"ytdDepositAmt":null,"ytdWithdrawalAmt":null,"betLimit":200,"mtdDepositAmt":null,"mtdBetAmount":null,"mthPayout":null}');
   });
 
   afterEach(() => {
@@ -64,6 +65,27 @@ describe('AccountOverview Component', () => {
     expect(depositText).toBeDefined();
     const withdrawText = screen.getByText('Withdrawal');
     expect(withdrawText).toBeDefined();
+  });
+
+  it('should render correct balance, deposit, withdrawal value', async () => {
+    (retrieveYtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountLanding />
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const balance = screen.getByText('$0.00');
+    expect(balance).toBeDefined();
+    const ytdDepositAmt = screen.getByText('$5000.00');
+    expect(ytdDepositAmt).toBeDefined();
+    const ytdWithdrawalAmt = screen.getByText('$2000.00');
+    expect(ytdWithdrawalAmt).toBeDefined();
   });
 
 });
