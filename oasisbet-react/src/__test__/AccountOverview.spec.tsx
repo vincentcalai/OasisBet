@@ -5,8 +5,7 @@ import { screen, render, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import AccountLanding from '../component/account/AccountLanding';
-import userEvent from '@testing-library/user-event';
-import { retrieveMtdAmounts, retrieveYtdAmounts } from '../services/api/ApiService';
+import { retrieveYtdAmounts } from '../services/api/ApiService';
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -37,7 +36,7 @@ describe('AccountOverview Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    sessionStorage.setItem('ACCOUNT_DETAILS', '{"accId":1000022,"usrId":26,"balance":0,"depositLimit":1000,"depositAmt":null,"withdrawalAmt":null,"actionType":null,"ytdDepositAmt":null,"ytdWithdrawalAmt":null,"betLimit":200,"mtdDepositAmt":null,"mtdBetAmount":null,"mthPayout":null}');
+    sessionStorage.setItem('ACCOUNT_DETAILS', '{"accId":1000022,"usrId":26,"balance":0,"depositLimit":1000,"depositAmt":null,"withdrawalAmt":null,"actionType":null,"ytdDepositAmt":5000,"ytdWithdrawalAmt":2000,"betLimit":200,"mtdDepositAmt":null,"mtdBetAmount":null,"mthPayout":null}');
   });
 
   afterEach(() => {
@@ -68,7 +67,7 @@ describe('AccountOverview Component', () => {
   });
 
   it('should render correct balance, deposit, withdrawal value', async () => {
-    (retrieveYtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    (retrieveYtdAmounts as jest.Mock).mockReturnValue(mockResponse);
 
     await act(async () => { 
       render(
@@ -86,6 +85,30 @@ describe('AccountOverview Component', () => {
     expect(ytdDepositAmt).toBeDefined();
     const ytdWithdrawalAmt = screen.getByText('$2000.00');
     expect(ytdWithdrawalAmt).toBeDefined();
+  });
+
+  it('should render default 0 values when call retrieve YTD amounts api fails', async () => {
+    const mockError = new Error('Token expired');
+    (retrieveYtdAmounts as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountLanding />
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const balance = screen.getByLabelText('Account Balance');
+    expect(balance).toHaveTextContent('$0.00');
+    const ytdDepositAmt = screen.getByLabelText('YTD Deposit Amount');
+    expect(ytdDepositAmt).toHaveTextContent('$0.00');
+    const ytdWithdrawalAmt = screen.getByLabelText('YTD Withdrawal Amount');
+    expect(ytdWithdrawalAmt).toHaveTextContent('$0.00');
   });
 
 });

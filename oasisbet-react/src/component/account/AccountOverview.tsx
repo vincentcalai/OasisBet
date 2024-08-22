@@ -34,7 +34,7 @@ export default function AccountOverview(){
                 //Try refresh JWT token if token expired
                 try {
                   const response = await handleJwtTokenExpireError(error, async () => await callApiRetrieveYtdAmounts(accId));
-                if(response){
+                  if(response){
                     console.log("General Error: ", error);
                     dispatch(openAlert(error.message));
                   }
@@ -74,13 +74,13 @@ export default function AccountOverview(){
                 <label className="control-label">
                     Balance
                 </label>
-                <div className="dashboard-sidemenu-value">
+                <div className="dashboard-sidemenu-value" aria-label="Account Balance">
                     ${balance}
                 </div>
                 <label className="control-label">
                     Deposit
                 </label>
-                <div className="dashboard-sidemenu-value">
+                <div className="dashboard-sidemenu-value" aria-label="YTD Deposit Amount">
                     ${ytdDepositAmt}
                 </div>
                 <div className="text_year_to_date">
@@ -89,7 +89,7 @@ export default function AccountOverview(){
                 <label className="control-label">
                     Withdrawal
                 </label>
-                <div className="dashboard-sidemenu-value">
+                <div className="dashboard-sidemenu-value" aria-label="YTD Withdrawal Amount">
                     ${ytdWithdrawalAmt}
                 </div>
                 <div className="text_year_to_date">
