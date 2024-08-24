@@ -7,6 +7,7 @@ import '@testing-library/jest-dom';
 import AccountLanding from '../component/account/AccountLanding';
 import userEvent from '@testing-library/user-event';
 import { retrieveMtdAmounts, retrieveYtdAmounts } from '../services/api/ApiService';
+import Deposits from '../component/account/Deposits';
 
 const mockReducer = {
   login: {
@@ -26,6 +27,8 @@ jest.mock('../services/api/ApiService.ts', () => ({
   retrieveMtdAmounts: jest.fn()
 }));
 
+const mockHandleNavToTrxHist = jest.fn();
+
 const mockResponse = {
   account: {
     mtdDepositAmt: 1000,
@@ -34,22 +37,20 @@ const mockResponse = {
   },
 };
 
-describe('AccountLanding Component', () => {
-
-  
+describe('Deposits Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render AccountOverview elements when user is logged in', async () => {
-    (retrieveYtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
-
+  it('should render Deposits elements when user is logged in', async () => {
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    
     await act(async () => { 
       render(
         <Provider store={store}>
           <MemoryRouter>
-            <AccountLanding />
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist} {}/>
           </MemoryRouter>
         </Provider>
       );
