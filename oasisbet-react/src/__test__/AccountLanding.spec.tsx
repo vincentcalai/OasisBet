@@ -36,8 +36,6 @@ const mockResponse = {
 
 describe('AccountLanding Component', () => {
 
-  
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
