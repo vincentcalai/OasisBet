@@ -41,6 +41,11 @@ describe('Deposits Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    sessionStorage.setItem('ACCOUNT_DETAILS', '{"accId":1000022,"usrId":26,"balance":0,"depositLimit":1000,"depositAmt":null,"withdrawalAmt":null,"actionType":null,"ytdDepositAmt":5000,"ytdWithdrawalAmt":2000,"betLimit":200,"mtdDepositAmt":null,"mtdBetAmount":null,"mthPayout":null}');
+  });
+
+  afterEach(() => {
+    sessionStorage.clear();
   });
 
   it('should render Deposits elements when user is logged in', async () => {
@@ -50,14 +55,20 @@ describe('Deposits Component', () => {
       render(
         <Provider store={store}>
           <MemoryRouter>
-            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist} {}/>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
           </MemoryRouter>
         </Provider>
       );
     });
 
-    const heading = screen.getByRole('heading', { name: /Account Overview/i });
+    const heading = screen.getByRole('heading', { name: /Deposits/i });
+    const cancelButton = screen.getByRole('button', { name: /Cancel/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
     expect(heading).toBeDefined();
+    expect(cancelButton).toBeDefined();
+    expect(confirmButton).toBeDefined();
+    expect(depositInput).toBeDefined();
   });
 
   it('should render Deposits as Header when user selected side nav menu', async () => {
@@ -100,8 +111,32 @@ describe('Deposits Component', () => {
       );
     });
 
-    const heading = screen.getByRole('heading', { name: /Login/i });
-    expect(heading).toBeDefined();
+    const loginHeading = screen.getByRole('heading', { name: /Login/i });
+    expect(loginHeading).toBeDefined();
+    const depositHeading = screen.queryByRole('heading', { name: /Deposits/i });
+    expect(depositHeading).toBeNull();
+  });
+
+  it('should render default 0 values when call retrieve MTD amounts api fails', async () => {
+    const mockError = new Error('Token expired');
+    (retrieveMtdAmounts as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const balance = screen.getByLabelText('Account Balance');
+    expect(balance).toHaveTextContent('$0.00');
+    const depositRemLimit = screen.getByLabelText('Deposit Remaining Limit');
+    expect(depositRemLimit).toHaveTextContent('$0.00');
   });
 
 });

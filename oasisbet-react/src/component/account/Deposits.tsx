@@ -188,11 +188,13 @@ export default function Deposits({handleNavToTrxHist}){
                 </Card.Header>
                 <Card.Body className="card-body">
                     <label className="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Balance:</label>
-                        <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">${balance}</span>
+                        <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width" aria-label="Account Balance">
+                            ${balance}
+                        </span>
                         <br />
                         <br />
                     <label className="control-label col-xs-6 col-sm-3 col-md-3 deposit-section-label-width">Deposit Remaining Limit:</label>
-                    <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width">
+                    <span className="col-xs-6 col-sm-3 col-md-2 deposit-section-selection-width" aria-label="Deposit Remaining Limit">
                         ${mtdDepositAmt}
                     </span>
                     <br />
@@ -205,7 +207,7 @@ export default function Deposits({handleNavToTrxHist}){
                         <div className="form-group row">
                             <label
                                 id="DEPOSIT_LABEL_1"
-                                htmlFor="deposit_0_Label"
+                                htmlFor="depositAmt_0"
                                 className="control-label col-sm-4 deposit-section-label-width deposit-acc-label-text"
                             >
                                 <span id="DEPOSIT">Deposit:</span>
