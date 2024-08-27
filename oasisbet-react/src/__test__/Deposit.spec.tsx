@@ -139,4 +139,74 @@ describe('Deposits Component', () => {
     expect(depositRemLimit).toHaveTextContent('$0.00');
   });
 
+  it('should show Confirm Deposit dialog when user inputs correct value', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '100');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeDefined();
+  });
+
+  it('should not show Confirm Deposit dialog when user inputs maximum deposit amount more than $199999.99', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '200000');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeNull();
+    const inputError = screen.getByText(/Maximum amount to deposit is \$199999\.99/i);
+    expect(inputError).toBeDefined();
+  });
+
+  it('should not show Confirm Deposit dialog when user inputs invalid pattern deposit amount', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '100..');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeNull();
+    const inputError = screen.getByText(/Please enter correct format/i);
+    expect(inputError).toBeDefined();
+  });
+
 });

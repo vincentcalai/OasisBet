@@ -69,7 +69,7 @@ export default function Deposits({handleNavToTrxHist}){
 
     const validateDepositAmt = (amount) => {
         const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
-        if(amount > 200000){
+        if(amount >= 200000){
             setInputErrorMsg('Maximum amount to deposit is $199999.99');
             isDepositAmtValid.current = false;
             return false;
