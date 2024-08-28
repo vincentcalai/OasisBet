@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import { screen, render, act } from '@testing-library/react';
+import { screen, render, act, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import AccountLanding from '../component/account/AccountLanding';
 import userEvent from '@testing-library/user-event';
-import { retrieveMtdAmounts, retrieveYtdAmounts } from '../services/api/ApiService';
+import { retrieveMtdAmounts, retrieveYtdAmounts, updateAccDetails } from '../services/api/ApiService';
 import Deposits from '../component/account/Deposits';
 
 const mockReducer = {
@@ -24,7 +24,8 @@ const store = mockStore(mockReducer);
 
 jest.mock('../services/api/ApiService.ts', () => ({
   retrieveYtdAmounts: jest.fn(),
-  retrieveMtdAmounts: jest.fn()
+  retrieveMtdAmounts: jest.fn(),
+  updateAccDetails: jest.fn()
 }));
 
 const mockHandleNavToTrxHist = jest.fn();
@@ -35,6 +36,16 @@ const mockResponse = {
     ytdDepositAmt: 5000,
     ytdWithdrawalAmt: 2000,
   },
+};
+
+const mockUpdateAccountDetailResponse = {
+  account: {
+    mtdDepositAmt: 1000,
+    ytdDepositAmt: 5000,
+    ytdWithdrawalAmt: 2000,
+  },
+  statusCode: 0,
+  resultMessage: 'Deposit was successful.'
 };
 
 describe('Deposits Component', () => {
@@ -207,6 +218,35 @@ describe('Deposits Component', () => {
     expect(depositHeading).toBeNull();
     const inputError = screen.getByText(/Please enter correct format/i);
     expect(inputError).toBeDefined();
+  });
+
+  it.only('should show deposit success when user enters valid amount and click confirm', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockUpdateAccountDetailResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '100');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const successMessage = screen.getByText(/Deposit was successful./i);
+      expect(successMessage).toBeDefined();
+    });
   });
 
 });

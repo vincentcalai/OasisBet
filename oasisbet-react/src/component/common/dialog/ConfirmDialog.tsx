@@ -65,10 +65,12 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ isOpen, onClose, data }) 
                     <p>{dialogMessage}</p>
                     <div className="dialog-footer">
                         <button className="btn btn-danger btn-cancel" type="button" 
+                            data-testid="dialog-cancel"
                             onClick={handleCancelClick}>
                             Cancel
                         </button>
                         <button className="btn btn-success btn-confirm-action" type="button" 
+                            data-testid="dialog-confirm"
                             onClick={handleConfirmClick}>
                             Confirm
                         </button>
