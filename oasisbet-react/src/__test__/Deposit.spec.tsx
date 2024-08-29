@@ -284,6 +284,38 @@ describe('Deposits Component', () => {
     });
   });
 
+  it('should show token expire dialog when update account details api fails', async () => {
+    const user = userEvent.setup();
+    const mockError = new Error('Token expired');
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    (updateAccDetails as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '100');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const successMessage = screen.queryByText(/Deposit was successful./i);
+      expect(successMessage).toBeNull();
+    });
+  });
+
   it('should show deposit failure when user enters valid amount and click confirm then backend process fails', async () => {
     const user = userEvent.setup();
     (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
@@ -336,6 +368,5 @@ describe('Deposits Component', () => {
     const inputError = screen.getByText(/Minimum amount to deposit is \$1/i);
     expect(inputError).toBeDefined();
   });
-
 
 });
