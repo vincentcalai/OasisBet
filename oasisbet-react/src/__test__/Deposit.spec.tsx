@@ -38,7 +38,7 @@ const mockResponse = {
   },
 };
 
-const mockUpdateAccountDetailResponse = {
+const mockUpdateAccountDetailSuccessResponse = {
   account: {
     mtdDepositAmt: 1000,
     ytdDepositAmt: 5000,
@@ -46,6 +46,16 @@ const mockUpdateAccountDetailResponse = {
   },
   statusCode: 0,
   resultMessage: 'Deposit was successful.'
+};
+
+const mockUpdateAccountDetailFailureResponse = {
+  account: {
+    mtdDepositAmt: 1000,
+    ytdDepositAmt: 5000,
+    ytdWithdrawalAmt: 2000,
+  },
+  statusCode: 2,
+  resultMessage: 'You have reached deposit limit for this month. Please make your deposit from next month onwards'
 };
 
 describe('Deposits Component', () => {
@@ -172,6 +182,31 @@ describe('Deposits Component', () => {
     expect(depositHeading).toBeDefined();
   });
 
+  it('should return to default UI state when user input deposit amount and clicks cancel', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const cancelButton = screen.getByRole('button', { name: /Cancel/i });
+    await user.type(depositInput, '100');
+    await user.click(cancelButton);
+    const successText = screen.queryByText('Success:');
+    const errorText = screen.queryByText('Fail:');
+    expect(successText).toBeNull();
+    expect(errorText).toBeNull();
+    expect(depositInput).toHaveValue('');
+  });
+
   it('should not show Confirm Deposit dialog when user inputs maximum deposit amount more than $199999.99', async () => {
     const user = userEvent.setup();
     (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
@@ -220,10 +255,10 @@ describe('Deposits Component', () => {
     expect(inputError).toBeDefined();
   });
 
-  it.only('should show deposit success when user enters valid amount and click confirm', async () => {
+  it('should show deposit success when user enters valid amount and click confirm', async () => {
     const user = userEvent.setup();
     (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
-    (updateAccDetails as jest.Mock).mockResolvedValue(mockUpdateAccountDetailResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockUpdateAccountDetailSuccessResponse);
     
     await act(async () => { 
       render(
@@ -246,6 +281,35 @@ describe('Deposits Component', () => {
     await waitFor(() => {
       const successMessage = screen.getByText(/Deposit was successful./i);
       expect(successMessage).toBeDefined();
+    });
+  });
+
+  it('should show deposit failure when user enters valid amount and click confirm then backend process fails', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockUpdateAccountDetailFailureResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '100');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const failureMessage = screen.getByText(/You have reached deposit limit for this month. Please make your deposit from next month onwards/i);
+      expect(failureMessage).toBeDefined();
     });
   });
 
