@@ -313,4 +313,29 @@ describe('Deposits Component', () => {
     });
   });
 
+  it('should not show Confirm Deposit dialog when user inputs less than $1', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(depositInput, '0.01');
+    await user.click(confirmButton);
+    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
+    expect(depositHeading).toBeNull();
+    const inputError = screen.getByText(/Minimum amount to deposit is \$1/i);
+    expect(inputError).toBeDefined();
+  });
+
+
 });
