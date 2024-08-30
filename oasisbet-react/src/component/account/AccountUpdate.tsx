@@ -290,24 +290,24 @@ export default function AccountUpdate(){
                                 <div className="form-group row mx-0">
                                     <label
                                     id="ACCOUNT_NO_LABEL"
-                                    htmlFor="account_no_0_Label"
+                                    htmlFor="ACCOUNT_NO"
                                     className="control-label col-sm-4 acc-update-section-label-width acc-update-label-text"
                                     >
                                     <span id="ACCOUNT_NO">ACCOUNT NO.</span>
                                     </label>
                                     <label
                                     id="ACCOUNT_NO_INPUT"
-                                    htmlFor="account_no_0_input"
+                                    htmlFor="ACCOUNT_NO"
                                     className="control-label col-sm-4 acc-update-label-text"
                                     >
-                                    <span id="ACCOUNT_NO">{accId}</span>
+                                    <span id="ACCOUNT_NO" aria-label="Account Number">{accId}</span>
                                     </label>
                                 </div>
                                 <hr />
                                 <div className="form-group row mx-0">
                                     <label
                                     id="EMAIL_LABEL"
-                                    htmlFor="email_0_Label"
+                                    htmlFor="EMAIL"
                                     className="control-label col-sm-4 acc-update-section-label-width acc-update-label-text"
                                     >
                                     <span id="EMAIL">Email:</span>
@@ -318,12 +318,13 @@ export default function AccountUpdate(){
                                             <input
                                             type="text"
                                             className="form-control acc-update-section-selection-width no-spinner"
-                                            id="email_0"
+                                            id="EMAIL"
                                             name="email"
                                             value = {email}
                                             onBlur={handleOnBlurInput(EMAIL)}
                                             onChange={(e) => handleContactInputChange(e, EMAIL)}
                                             disabled = {isEmailDisabled}
+                                            aria-label="Email"
                                             required
                                             />
                                             &nbsp;
@@ -353,12 +354,13 @@ export default function AccountUpdate(){
                                             <input
                                             type="text"
                                             className="form-control acc-update-section-selection-width no-spinner"
-                                            id="contact_no_0"
+                                            id="CONTACT_NO"
                                             name="contactNo"
                                             value = {contactNo}
                                             onBlur={handleOnBlurInput(CONTACT_NO)}
                                             onChange={(e) => handleContactInputChange(e, CONTACT_NO)}
                                             disabled = {isContactNoDisabled}
+                                            aria-label="Contact No"
                                             required
                                             />
                                             &nbsp;
@@ -395,7 +397,7 @@ export default function AccountUpdate(){
                             <div className="form-group row mx-0">
                                 <label
                                 id="OLD_PASSWORD_LABEL"
-                                htmlFor="old_password_0_Label"
+                                htmlFor="OLD_PASSWORD"
                                 className="control-label col-sm-4 acc-update-section-label-width acc-update-label-text"
                                 >
                                 <span id="OLD_PASSWORD">Current Password:</span>
@@ -406,11 +408,12 @@ export default function AccountUpdate(){
                                         <input
                                         type="password"
                                         className="form-control acc-update-section-selection-width no-spinner"
-                                        id="old_password_0"
+                                        id="OLD_PASSWORD"
                                         name="old_password"
                                         onBlur={handleOnBlurInput(CURRENT_PASSWORD)}
                                         onChange={(e) => handlePasswordInputChange(e, CURRENT_PASSWORD)}
                                         value = {currentPassword}
+                                        aria-label="Current Password"
                                         required
                                         />
                                     </div>
@@ -422,7 +425,7 @@ export default function AccountUpdate(){
                             <div className="form-group row mx-0">
                                 <label
                                 id="NEW_PASSWORD_LABEL"
-                                htmlFor="new_password_0_Label"
+                                htmlFor="NEW_PASSWORD"
                                 className="control-label col-sm-4 acc-update-section-label-width acc-update-label-text"
                                 >
                                 <span id="NEW_PASSWORD">New Password:</span>
@@ -433,11 +436,12 @@ export default function AccountUpdate(){
                                         <input
                                         type="password"
                                         className="form-control acc-update-section-selection-width no-spinner"
-                                        id="new_password_0"
+                                        id="NEW_PASSWORD"
                                         name="new_password"
                                         onBlur={handleOnBlurInput(NEW_PASSWORD)}
                                         onChange={(e) => handlePasswordInputChange(e, NEW_PASSWORD)}
                                         value = {newPassword}
+                                        aria-label="New Password"
                                         required
                                         />
                                     </div>
@@ -449,7 +453,7 @@ export default function AccountUpdate(){
                             <div className="form-group row mx-0">
                                 <label
                                 id="CFM_NEW_PASSWORD_LABEL"
-                                htmlFor="cfm_new_password_0_Label"
+                                htmlFor="CFM_NEW_PASSWORD"
                                 className="control-label col-sm-4 acc-update-section-label-width acc-update-label-text"
                                 >
                                 <span id="CFM_NEW_PASSWORD">Confirm New Password:</span>
@@ -460,11 +464,12 @@ export default function AccountUpdate(){
                                         <input
                                         type="password"
                                         className="form-control acc-update-section-selection-width no-spinner"
-                                        id="cfm_new_password_0"
+                                        id="CFM_NEW_PASSWORD"
                                         name="cfm_new_password"
                                         onBlur={handleOnBlurInput(CFM_PASSWORD)}
                                         onChange={(e) => handlePasswordInputChange(e, CFM_PASSWORD)}
                                         value = {cfmPassword}
+                                        aria-label="Confirm Password"
                                         required
                                         />
                                     </div>
