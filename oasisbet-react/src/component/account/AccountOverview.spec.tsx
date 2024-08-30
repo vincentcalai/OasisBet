@@ -18,7 +18,7 @@ const store = mockStore({
   }
 });
 
-jest.mock('../services/api/ApiService.ts', () => ({
+jest.mock('../../services/api/ApiService.ts', () => ({
   retrieveYtdAmounts: jest.fn(),
   retrieveMtdAmounts: jest.fn()
 }));

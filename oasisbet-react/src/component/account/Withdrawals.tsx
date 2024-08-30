@@ -54,7 +54,7 @@ export default function Withdrawals({handleNavToTrxHist}){
 
     const validateWithdrawalAmt = (amount) => {
         const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
-        if(amount > 200000){
+        if(amount >= 200000){
             setInputErrorMsg('Maximum amount to withdraw is $199999.99');
             isWithdrawalAmtValid.current = false;
             return false;
@@ -196,7 +196,7 @@ export default function Withdrawals({handleNavToTrxHist}){
                     <hr />
                     <form>
                         <div className="form-group row">
-                        <label id="WITHDRAWAL_LABEL_1" htmlFor="withdrawal_0_Label" className="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">
+                        <label id="WITHDRAWAL_LABEL_1" htmlFor="withdrawalAmt_0" className="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">
                             <span id="WITHDRAWAL">Withdraw from OasisBet Account:</span>
                         </label>
                         <div className="col-sm-4">
@@ -215,7 +215,7 @@ export default function Withdrawals({handleNavToTrxHist}){
                         </div>
                         <br />
                         <div className="form-group row">
-                        <label id="PASSWORD_LABEL_1" htmlFor="password_0_Label" className="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">
+                        <label id="PASSWORD_LABEL_1" htmlFor="password_0" className="control-label col-sm-4 withdraw-section-label-width withdraw-acc-label-text">
                             <span id="PASSWORD">Enter OasisBet Account password:</span>
                         </label>
                         <div className="col-sm-4">

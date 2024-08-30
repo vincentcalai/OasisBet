@@ -17,7 +17,7 @@ const store = mockStore({
   }
 });
 
-jest.mock('../services/api/ApiService.ts');
+jest.mock('../../services/api/ApiService.ts');
 const mockedCreateUserResult = createUser as jest.MockedFunction<typeof createUser>;
 
 describe('CreateUser Component', () => {

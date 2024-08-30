@@ -21,7 +21,7 @@ const mockReducer = {
 const mockStore = configureMockStore();
 const store = mockStore(mockReducer);
 
-jest.mock('../services/api/ApiService.ts', () => ({
+jest.mock('../../services/api/ApiService.ts', () => ({
   retrieveYtdAmounts: jest.fn(),
   retrieveMtdAmounts: jest.fn()
 }));

@@ -16,7 +16,7 @@ const store = mockStore({
   }
 });
 
-jest.mock('../services/api/ApiService.ts');
+jest.mock('../../services/api/ApiService.ts');
 const mockedFetchResults = fetchResults as jest.MockedFunction<typeof fetchResults>;
 
 describe('ResultLanding Component', () => {
