@@ -300,7 +300,7 @@ export default function AccountUpdate(){
                                     htmlFor="ACCOUNT_NO"
                                     className="control-label col-sm-4 acc-update-label-text"
                                     >
-                                    <span id="ACCOUNT_NO" aria-label="Account Number">{accId}</span>
+                                        <span id="ACCOUNT_NO" aria-label="Account Number">{accId}</span>
                                     </label>
                                 </div>
                                 <hr />
@@ -329,7 +329,7 @@ export default function AccountUpdate(){
                                             />
                                             &nbsp;
                                             <div className="input-group-append">
-                                            <button className="btn btn-outline-secondary btn-pencil" type="button"
+                                            <button className="btn btn-outline-secondary btn-pencil" type="button" aria-label="Email Disabled Button"
                                                 onClick={() => setIsEmailDisabled(!isEmailDisabled)}>
                                                 <FontAwesomeIcon icon={faPencil} className="pencil-icon"/>
                                             </button>
@@ -365,7 +365,7 @@ export default function AccountUpdate(){
                                             />
                                             &nbsp;
                                             <div className="input-group-append">
-                                            <button className="btn btn-outline-secondary btn-pencil" type="button"
+                                            <button className="btn btn-outline-secondary btn-pencil" type="button" aria-label="Contact No Disabled Button"
                                                 onClick={() => setIsContactNoDisabled(!isContactNoDisabled)}>
                                                 <FontAwesomeIcon icon={faPencil}/>
                                             </button>
@@ -380,11 +380,13 @@ export default function AccountUpdate(){
                             <hr />
                             <div className="d-flex justify-content-end">
                             <button className="btn btn-danger btn-cancel" type="button"
+                                aria-label="Contact Tab Cancel Button"
                                 disabled={!hasEditContact.current}
                                 onClick={() => onCancel(CONTACT_TAB)}>
                                 Cancel
                             </button>
                             <button className="btn btn-success btn-confirm-action" type="button"
+                                aria-label="Contact Tab Confirm Button"
                                 disabled={!hasEditContact.current}
                                 onClick={() => onSubmit(CONTACT_TAB)}>
                                 Confirm
@@ -482,11 +484,13 @@ export default function AccountUpdate(){
                             <hr />
                             <div className="d-flex justify-content-end">
                                 <button className="btn btn-danger btn-cancel" type="button"
+                                    aria-label="Login Tab Cancel Button"
                                     disabled={!hasEditPassword.current}
                                     onClick={() => onCancel(LOGIN_TAB)}>
                                     Cancel
                                 </button>
                                 <button className="btn btn-success btn-confirm-action" type="button"
+                                    aria-label="Login Tab Confirm Button"
                                     disabled={!hasEditPassword.current}
                                     onClick={() => onSubmit(LOGIN_TAB)}>
                                     Confirm

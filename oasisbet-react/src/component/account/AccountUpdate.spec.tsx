@@ -86,9 +86,9 @@ describe('AccountUpdate Component', () => {
     expect(heading).toBeDefined();
     const accountNo = screen.getByLabelText(/Account Number/i);
     expect(accountNo).toBeDefined();
-    const email = screen.getByLabelText(/Email/i);
+    const email = screen.getByLabelText('Email');
     expect(email).toBeDefined();
-    const contactNo = screen.getByLabelText(/Contact No/i);
+    const contactNo = screen.getByLabelText('Contact No');
     expect(contactNo).toBeDefined();
   });
 
@@ -113,6 +113,62 @@ describe('AccountUpdate Component', () => {
     expect(cfmPassword).toBeDefined();
   });
 
- 
+  it('should show dialog for Contact Info Tab when user enters contact info and clicks confirm', async () => {
+    const user = userEvent.setup();
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountUpdate/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const email = screen.getByLabelText('Email');
+    const contactNo = screen.getByLabelText('Contact No');
+    const emailDisableButton = screen.getByLabelText(/Email Disabled Button/i);
+    const contactNoDisableButton = screen.getByLabelText(/Contact No Disabled Button/i);
+
+    await user.click(emailDisableButton); 
+    await user.click(contactNoDisableButton); 
+    await user.type(email, 'TEST2@TEST.COM');
+    await user.type(contactNo, '91110000');
+
+    const confirmButton = screen.getByLabelText(/Contact Tab Confirm Button/i);
+    await user.click(confirmButton);
+    const accountUpdateDialogHeading = screen.queryByRole('heading', { name: /Confirm account details update?/i });
+    expect(accountUpdateDialogHeading).toBeDefined();
+  });
+
+  it('should show error texts for Contact Info Tab when user enters invalid contact info', async () => {
+    const user = userEvent.setup();
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountUpdate/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const email = screen.getByLabelText('Email');
+    const contactNo = screen.getByLabelText('Contact No');
+    const emailDisableButton = screen.getByLabelText(/Email Disabled Button/i);
+    const contactNoDisableButton = screen.getByLabelText(/Contact No Disabled Button/i);
+
+    await user.click(emailDisableButton); 
+    await user.click(contactNoDisableButton); 
+    await user.type(email, 'TEST2@@@..COM');
+    await user.type(contactNo, 'abcd');
+
+    const confirmButton = screen.getByLabelText(/Contact Tab Confirm Button/i);
+    await user.click(confirmButton);
+    const emailErrorMessage = screen.getByText(/Please enter a valid email address/i);
+    const contactNoErrorMessage = screen.getByText(/Please enter only numeric characters/i);
+    expect(emailErrorMessage).toBeDefined();
+    expect(contactNoErrorMessage).toBeDefined();
+  });
 
 });
