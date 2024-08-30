@@ -4,9 +4,9 @@ import configureMockStore from 'redux-mock-store';
 import { screen, render, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import AccountLanding from '../component/account/AccountLanding';
+import AccountLanding from './AccountLanding';
 import userEvent from '@testing-library/user-event';
-import { retrieveMtdAmounts, retrieveYtdAmounts } from '../services/api/ApiService';
+import { retrieveMtdAmounts, retrieveYtdAmounts } from '../../services/api/ApiService';
 
 const mockReducer = {
   login: {

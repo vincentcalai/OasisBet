@@ -2,12 +2,12 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import CreateUser from '../component/account/CreateUser';
+import CreateUser from './CreateUser';
 import { screen, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import { createUser } from '../services/api/ApiService';
+import { createUser } from '../../services/api/ApiService';
 
 const mockStore = configureMockStore();
 const store = mockStore({

@@ -4,8 +4,8 @@ import configureMockStore from 'redux-mock-store';
 import { screen, render, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import AccountLanding from '../component/account/AccountLanding';
-import { retrieveYtdAmounts } from '../services/api/ApiService';
+import AccountLanding from './AccountLanding';
+import { retrieveYtdAmounts } from '../../services/api/ApiService';
 
 const mockStore = configureMockStore();
 const store = mockStore({

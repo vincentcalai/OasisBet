@@ -1,9 +1,9 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react'
-import ResultLanding from '../component/result/ResultLanding.tsx';
+import ResultLanding from './ResultLanding.tsx';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { fetchResults } from '../services/api/ApiService.ts';
+import { fetchResults } from '../../services/api/ApiService.ts';
 import userEvent from '@testing-library/user-event';
 import { format } from 'date-fns';
 import '@testing-library/jest-dom';

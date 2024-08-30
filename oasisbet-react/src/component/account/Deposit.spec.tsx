@@ -4,10 +4,10 @@ import configureMockStore from 'redux-mock-store';
 import { screen, render, act, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import AccountLanding from '../component/account/AccountLanding';
+import AccountLanding from './AccountLanding';
 import userEvent from '@testing-library/user-event';
-import { retrieveMtdAmounts, retrieveYtdAmounts, updateAccDetails } from '../services/api/ApiService';
-import Deposits from '../component/account/Deposits';
+import { retrieveMtdAmounts, retrieveYtdAmounts, updateAccDetails } from '../../services/api/ApiService';
+import Deposits from './Deposits';
 
 const mockReducer = {
   login: {
