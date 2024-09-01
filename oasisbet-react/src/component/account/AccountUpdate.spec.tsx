@@ -103,6 +103,9 @@ describe('AccountUpdate Component', () => {
       );
     });
 
+    const loginInfoTab = screen.getByRole('tabpanel', { name: /Login Info/i });
+    await userEvent.click(loginInfoTab);
+
     const heading = screen.getByRole('heading', { name: /Account Update/i });
     expect(heading).toBeDefined();
     const currentPassword = screen.getByLabelText(/Current Password/i);
@@ -198,6 +201,64 @@ describe('AccountUpdate Component', () => {
     await user.click(confirmButton);
     const accountUpdateDialogHeading = screen.queryByRole('heading', { name: /Confirm account details update?/i });
     expect(accountUpdateDialogHeading).toBeDefined();
+  });
+
+  it('should revert back to UI when user enters contact info and clicks cancel', async () => {
+    const user = userEvent.setup();
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountUpdate/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const email = screen.getByLabelText('Email');
+    const contactNo = screen.getByLabelText('Contact No');
+    const emailDisableButton = screen.getByLabelText(/Email Disabled Button/i);
+    const contactNoDisableButton = screen.getByLabelText(/Contact No Disabled Button/i);
+
+    await user.click(emailDisableButton); 
+    await user.click(contactNoDisableButton); 
+    await user.type(email, 'TEST@TEST.COM');
+    await user.type(contactNo, '91112345');
+
+    const cancelButton = screen.getByLabelText(/Contact Tab Cancel Button/i);
+    await user.click(cancelButton);
+    expect(email).toHaveValue('');
+    expect(contactNo).toHaveValue('');
+  });
+
+  it('should revert back to UI when user enters login info and clicks cancel', async () => {
+    const user = userEvent.setup();
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountUpdate/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const loginInfoTab = screen.getByRole('tabpanel', { name: /Login Info/i });
+    await userEvent.click(loginInfoTab);
+
+    const currentPassword = screen.getByLabelText('Current Password');
+    const newPassword = screen.getByLabelText('New Password');
+    const cfmPassword = screen.getByLabelText('Confirm Password');
+
+    await user.type(currentPassword, 'password');
+    await user.type(newPassword, 'password2');
+    await user.type(cfmPassword, 'password2');
+
+    const cancelButton = screen.getByLabelText(/Login Tab Cancel Button/i);
+    await user.click(cancelButton);
+    expect(currentPassword).toHaveValue('');
+    expect(newPassword).toHaveValue('');
+    expect(cfmPassword).toHaveValue('');
   });
 
 });
