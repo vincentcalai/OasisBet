@@ -171,4 +171,33 @@ describe('AccountUpdate Component', () => {
     expect(contactNoErrorMessage).toBeDefined();
   });
 
+  it('should show dialog for Login Info Tab when user enters login info and clicks confirm', async () => {
+    const user = userEvent.setup();
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountUpdate/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const loginInfoTab = screen.getByRole('tabpanel', { name: /Login Info/i });
+    await userEvent.click(loginInfoTab);
+
+    const currentPassword = screen.getByLabelText('Current Password');
+    const newPassword = screen.getByLabelText('New Password');
+    const cfmPassword = screen.getByLabelText('Confirm Password');
+
+    await user.type(currentPassword, 'password');
+    await user.type(newPassword, 'password2');
+    await user.type(cfmPassword, 'password2');
+
+    const confirmButton = screen.getByLabelText(/Login Tab Confirm Button/i);
+    await user.click(confirmButton);
+    const accountUpdateDialogHeading = screen.queryByRole('heading', { name: /Confirm account details update?/i });
+    expect(accountUpdateDialogHeading).toBeDefined();
+  });
+
 });
