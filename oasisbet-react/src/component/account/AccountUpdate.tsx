@@ -177,10 +177,10 @@ export default function AccountUpdate(){
                     dispatch(openAlert(error.message));
                 }
             } catch (error) {
-            console.log("Error when updating account info after refresh token: ", error);
-            SharedVarMethods.clearSessionStorage();
-            dispatch(updateLoginDetails('isUserLoggedIn', false));
-            navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
+                console.log("Error when updating account info after refresh token: ", error);
+                SharedVarMethods.clearSessionStorage();
+                dispatch(updateLoginDetails('isUserLoggedIn', false));
+                navigate('/account', { state: { code: 1, message: SharedVarConstants.UNAUTHORIZED_ERR_MSG } });
             }
           }
         } else {
