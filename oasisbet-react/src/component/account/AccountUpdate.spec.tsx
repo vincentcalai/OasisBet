@@ -317,4 +317,40 @@ describe('AccountUpdate Component', () => {
     });
   });
 
+  it('should show successful message when token expired and retry after token was refreshed', async () => {
+    const user = userEvent.setup();
+    const mockError = new Error('Token expired');
+    (updateAccInfo as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <AccountUpdate/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const contactNo = screen.getByLabelText('Contact No');
+    const emailDisableButton = screen.getByLabelText(/Email Disabled Button/i);
+    const contactNoDisableButton = screen.getByLabelText(/Contact No Disabled Button/i);
+
+    await user.click(emailDisableButton); 
+    await user.click(contactNoDisableButton); 
+    await user.type(contactNo, '91110000');
+
+    const confirmButton = screen.getByLabelText(/Contact Tab Confirm Button/i);
+    await user.click(confirmButton);
+    const accountUpdateDialogHeading = screen.queryByRole('heading', { name: /Confirm account details update?/i });
+    expect(accountUpdateDialogHeading).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm');
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const successMessage = screen.queryByText(/Contact Info has been updated successfully/i);
+      expect(successMessage).toBeNull();
+    });
+  });
+
 });

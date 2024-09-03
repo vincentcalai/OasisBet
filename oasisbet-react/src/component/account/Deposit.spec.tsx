@@ -284,7 +284,7 @@ describe('Deposits Component', () => {
     });
   });
 
-  it('should show token expire dialog when update account details api fails', async () => {
+  it('should not show successful message when token expired', async () => {
     const user = userEvent.setup();
     const mockError = new Error('Token expired');
     (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
