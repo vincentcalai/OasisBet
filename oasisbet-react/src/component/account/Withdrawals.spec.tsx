@@ -35,7 +35,7 @@ const mockJwtTokenResponse = {
   token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTcyNTA1NjkxMSwiaWF0IjoxNzI1MDU2MDExfQ.iGbRbL-PFQnzYNSLrmy8p67NjQrPXpOTkFeF41FyPB8QYxRjzqASmsR9cTrm2C7m30_tc3FFIYFIkAK-FgFsyg"
 };
 
-const mockUpdateAccountDetailSuccessResponse = {
+const mockWithdrawSuccessResponse = {
   account: {
     balance: 227.13,
   },
@@ -43,14 +43,9 @@ const mockUpdateAccountDetailSuccessResponse = {
   resultMessage: 'Withdrawal was successful.'
 };
 
-const mockUpdateAccountDetailFailureResponse = {
-  account: {
-    mtdDepositAmt: 1000,
-    ytdDepositAmt: 5000,
-    ytdWithdrawalAmt: 2000,
-  },
-  statusCode: 2,
-  resultMessage: 'You have reached deposit limit for this month. Please make your deposit from next month onwards'
+const mockWithdrawFailureResponse = {
+  statusCode: 3,
+  resultMessage: 'The withdrawal amount is more than the current account balance'
 };
 
 describe('Withdrawals Component', () => {
@@ -233,7 +228,7 @@ describe('Withdrawals Component', () => {
   it('should show withdrawal success when user enters valid amount and click confirm', async () => {
     const user = userEvent.setup();
     (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
-    (updateAccDetails as jest.Mock).mockResolvedValue(mockUpdateAccountDetailSuccessResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockWithdrawSuccessResponse);
     
     await act(async () => { 
       render(
@@ -251,8 +246,8 @@ describe('Withdrawals Component', () => {
     await user.type(withdrawalInput, '10');
     await user.type(passwordInput, 'password');
     await user.click(confirmButton);
-    const depositHeading = screen.queryByRole('heading', { name: /Are you sure to withdraw?/i });
-    expect(depositHeading).toBeDefined();
+    const withdrawalHeading = screen.queryByRole('heading', { name: /Are you sure to withdraw?/i });
+    expect(withdrawalHeading).toBeDefined();
     const confirmDialogButton = screen.getByTestId('dialog-confirm')
     await user.click(confirmDialogButton);
     await waitFor(() => {
@@ -261,89 +256,161 @@ describe('Withdrawals Component', () => {
     });
   });
 
-  // it('should show token expire dialog when update account details api fails', async () => {
-  //   const user = userEvent.setup();
-  //   const mockError = new Error('Token expired');
-  //   (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
-  //   (updateAccDetails as jest.Mock).mockImplementation(() => {
-  //     throw mockError;
-  //   });
+  it('should not show successful message when token expired', async () => {
+    const user = userEvent.setup();
+    const mockError = new Error('Token expired');
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
+    (updateAccDetails as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
     
-  //   await act(async () => { 
-  //     render(
-  //       <Provider store={store}>
-  //         <MemoryRouter>
-  //           <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
-  //         </MemoryRouter>
-  //       </Provider>
-  //     );
-  //   });
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Withdrawals handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
 
-  //   const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
-  //   const confirmButton = screen.getByRole('button', { name: /Confirm/i });
-  //   await user.type(depositInput, '100');
-  //   await user.click(confirmButton);
-  //   const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
-  //   expect(depositHeading).toBeDefined();
-  //   const confirmDialogButton = screen.getByTestId('dialog-confirm')
-  //   await user.click(confirmDialogButton);
-  //   await waitFor(() => {
-  //     const successMessage = screen.queryByText(/Deposit was successful./i);
-  //     expect(successMessage).toBeNull();
-  //   });
-  // });
+    const withdrawalInput = screen.getByRole('textbox', { name: /Withdraw from OasisBet Account:/i });
+    const passwordInput = screen.getByLabelText(/Enter OasisBet Account password:/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(withdrawalInput, '10');
+    await user.type(passwordInput, 'password');
+    await user.click(confirmButton);
+    const withdrawalHeader = screen.queryByRole('heading', { name: /Are you sure to withdraw?/i });
+    expect(withdrawalHeader).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const successMessage = screen.queryByText(/Withdrawal was successful/i);
+      expect(successMessage).toBeNull();
+    });
+  });
 
-  // it('should show deposit failure when user enters valid amount and click confirm then backend process fails', async () => {
-  //   const user = userEvent.setup();
-  //   (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
-  //   (updateAccDetails as jest.Mock).mockResolvedValue(mockUpdateAccountDetailFailureResponse);
+  it('should show error message when withdraw amount is less than $1', async () => {
+    const user = userEvent.setup();
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockWithdrawSuccessResponse);
     
-  //   await act(async () => { 
-  //     render(
-  //       <Provider store={store}>
-  //         <MemoryRouter>
-  //           <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
-  //         </MemoryRouter>
-  //       </Provider>
-  //     );
-  //   });
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Withdrawals handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
 
-  //   const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
-  //   const confirmButton = screen.getByRole('button', { name: /Confirm/i });
-  //   await user.type(depositInput, '100');
-  //   await user.click(confirmButton);
-  //   const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
-  //   expect(depositHeading).toBeDefined();
-  //   const confirmDialogButton = screen.getByTestId('dialog-confirm')
-  //   await user.click(confirmDialogButton);
-  //   await waitFor(() => {
-  //     const failureMessage = screen.getByText(/You have reached deposit limit for this month. Please make your deposit from next month onwards/i);
-  //     expect(failureMessage).toBeDefined();
-  //   });
-  // });
+    const withdrawalInput = screen.getByRole('textbox', { name: /Withdraw from OasisBet Account:/i });
+    const passwordInput = screen.getByLabelText(/Enter OasisBet Account password:/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(withdrawalInput, '0.05');
+    await user.type(passwordInput, 'password');
+    await user.click(confirmButton);
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/Minimum amount to withdraw is \$1/i);
+      expect(errorMessage).toBeDefined();
+    });
+  });
 
-  // it('should not show Confirm Deposit dialog when user inputs less than $1', async () => {
-  //   const user = userEvent.setup();
-  //   (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+  it('should show incorrect password message when incorrect credentials was entered and throw Error', async () => {
+    const user = userEvent.setup();
+    const mockError = new Error('Invalid Credentials!');
+    (jwtAuthenticate as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
     
-  //   await act(async () => { 
-  //     render(
-  //       <Provider store={store}>
-  //         <MemoryRouter>
-  //           <Deposits handleNavToTrxHist={mockHandleNavToTrxHist}/>
-  //         </MemoryRouter>
-  //       </Provider>
-  //     );
-  //   });
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Withdrawals handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
 
-  //   const depositInput = screen.getByRole('textbox', { name: /Deposit/i });
-  //   const confirmButton = screen.getByRole('button', { name: /Confirm/i });
-  //   await user.type(depositInput, '0.01');
-  //   await user.click(confirmButton);
-  //   const depositHeading = screen.queryByRole('heading', { name: /Are you sure to deposit?/i });
-  //   expect(depositHeading).toBeNull();
-  //   const inputError = screen.getByText(/Minimum amount to deposit is \$1/i);
-  //   expect(inputError).toBeDefined();
-  // });
+    const withdrawalInput = screen.getByRole('textbox', { name: /Withdraw from OasisBet Account:/i });
+    const passwordInput = screen.getByLabelText(/Enter OasisBet Account password:/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(withdrawalInput, '10');
+    await user.type(passwordInput, 'incorrectPassword');
+    await user.click(confirmButton);
+    const withdrawalHeader = screen.queryByRole('heading', { name: /Are you sure to withdraw?/i });
+    expect(withdrawalHeader).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/Incorrect Password\. Please enter correct password\./i);
+      expect(errorMessage).toBeDefined();
+      expect(passwordInput).toHaveValue('');
+    });
+  });
+
+  it('should show incorrect password message when incorrect credentials was entered and response is null', async () => {
+    const user = userEvent.setup();
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(null);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Withdrawals handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const withdrawalInput = screen.getByRole('textbox', { name: /Withdraw from OasisBet Account:/i });
+    const passwordInput = screen.getByLabelText(/Enter OasisBet Account password:/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(withdrawalInput, '10');
+    await user.type(passwordInput, 'incorrectPassword');
+    await user.click(confirmButton);
+    const withdrawalHeader = screen.queryByRole('heading', { name: /Are you sure to withdraw?/i });
+    expect(withdrawalHeader).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/Incorrect Password\. Please enter correct password\./i);
+      expect(errorMessage).toBeDefined();
+      expect(passwordInput).toHaveValue('');
+    });
+  });
+
+  it('should show bank overdraft message when user withdraws amount but has insufficient amount in account', async () => {
+    const user = userEvent.setup();
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockWithdrawFailureResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Withdrawals handleNavToTrxHist={mockHandleNavToTrxHist}/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const withdrawalInput = screen.getByRole('textbox', { name: /Withdraw from OasisBet Account:/i });
+    const passwordInput = screen.getByLabelText(/Enter OasisBet Account password:/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.type(withdrawalInput, '1000');
+    await user.type(passwordInput, 'incorrectPassword');
+    await user.click(confirmButton);
+    const withdrawalHeader = screen.queryByRole('heading', { name: /Are you sure to withdraw?/i });
+    expect(withdrawalHeader).toBeDefined();
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/The withdrawal amount is more than the current account balance/i);
+      expect(errorMessage).toBeDefined();
+    });
+  });
 
 });
