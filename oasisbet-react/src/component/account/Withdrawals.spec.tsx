@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import AccountLanding from './AccountLanding';
 import userEvent from '@testing-library/user-event';
-import { jwtAuthenticate, retrieveMtdAmounts, retrieveYtdAmounts, updateAccDetails } from '../../services/api/ApiService';
+import { jwtAuthenticate, updateAccDetails } from '../../services/api/ApiService';
 import Withdrawals from './Withdrawals';
 
 const mockReducer = {
