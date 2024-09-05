@@ -41,7 +41,7 @@ const mockJwtTokenResponse = {
   token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDSE9PTkFOTiIsImV4cCI6MTcyNTA1NjkxMSwiaWF0IjoxNzI1MDU2MDExfQ.iGbRbL-PFQnzYNSLrmy8p67NjQrPXpOTkFeF41FyPB8QYxRjzqASmsR9cTrm2C7m30_tc3FFIYFIkAK-FgFsyg"
 };
 
-const mockWithdrawSuccessResponse = {
+const mockSetLimitSuccessResponse = {
   account: {
     balance: 227.13,
   },
@@ -49,7 +49,7 @@ const mockWithdrawSuccessResponse = {
   resultMessage: 'Withdrawal was successful.'
 };
 
-const mockWithdrawFailureResponse = {
+const mockSetLimitFailureResponse = {
   statusCode: 3,
   resultMessage: 'The withdrawal amount is more than the current account balance'
 };

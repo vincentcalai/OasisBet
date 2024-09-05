@@ -152,19 +152,6 @@ export default function LimitManagement(){
     }
 
     const confirmSubmit = () => {
-        if (selectedDepositOption === '' && selectedDepositAmt === ''){
-            setDepositErrorMsg('Deposit Limit is required'); 
-            console.log('Form is invalid');
-            return; 
-        } else if (selectedBetOption === '' && selectedBetAmt === ''){
-            setBetErrorMsg('Bet Limit is required');
-            console.log('Form is invalid');
-            return; 
-        }
-        handleOpenDialog();
-    }
-
-    const handleOpenDialog = () => {
         setDialogData({
           title: SharedVarConstants.CFM_CHANGE_LIMIT_DIALOG_TITLE,
           type: SharedVarConstants.CFM_CHANGE_LIMIT_DIALOG_TYPE,
@@ -404,8 +391,7 @@ export default function LimitManagement(){
                         </div>
                         <hr />
                         <div className="dialog-actions">
-                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}
-                                disabled={isDisabled()}>
+                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}>
                                 Cancel
                             </button>
                             <button className="btn btn-success btn-confirm-action" type="button" onClick={confirmSubmit}
