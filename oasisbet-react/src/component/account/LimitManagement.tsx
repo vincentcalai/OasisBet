@@ -108,7 +108,7 @@ export default function LimitManagement(){
         const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
         let errorMsg = '';
     
-        if (amount > 200000) {
+        if (amount >= 200000) {
             errorMsg = 'Maximum amount to set is $199999.99';
         } else if (!pattern.test(amount)) {
             errorMsg = 'Please enter correct format';
