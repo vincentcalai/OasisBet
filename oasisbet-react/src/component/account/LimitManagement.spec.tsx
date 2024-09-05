@@ -46,12 +46,12 @@ const mockSetLimitSuccessResponse = {
     balance: 227.13,
   },
   statusCode: 0,
-  resultMessage: 'Withdrawal was successful.'
+  resultMessage: 'Deposit/Bet Limit Change was successful.'
 };
 
 const mockSetLimitFailureResponse = {
   statusCode: 3,
-  resultMessage: 'The withdrawal amount is more than the current account balance'
+  resultMessage: 'User Account/Betting Account not found. Please contact the administrator.'
 };
 
 describe('LimitManagement Component', () => {
@@ -335,5 +335,212 @@ describe('LimitManagement Component', () => {
       expect(failureMessage).toBeDefined();
     });
   });
+
+  it('should show Confirm Change Limit dialog when user inputs correct value', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockAccountResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LimitManagement/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const mthlyDepositLimitDropdown = screen.getByLabelText(/Monthly Deposit Limit Dropdown/i);
+    const mthlyBetLimitDropdown = screen.getByLabelText(/Monthly Betting Limit Dropdown/i);
+    const password = screen.getByLabelText(/Enter OasisBet Account password/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+
+    await userEvent.selectOptions(mthlyDepositLimitDropdown, '500');
+    await userEvent.selectOptions(mthlyBetLimitDropdown, '500');
+    await userEvent.type(password, 'password');
+    await userEvent.click(confirmButton);
+
+    const changeLimitHeader = screen.queryByRole('heading', { name: /Are you sure to change Monthly Deposit and Monthly Betting limit?/i });
+    expect(changeLimitHeader).toBeDefined();
+  });
+
+  it('should show change limit success when user enters valid amount and click confirm', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockAccountResponse);
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockSetLimitSuccessResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LimitManagement/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const mthlyDepositLimitDropdown = screen.getByLabelText(/Monthly Deposit Limit Dropdown/i);
+    const mthlyBetLimitDropdown = screen.getByLabelText(/Monthly Betting Limit Dropdown/i);
+    const password = screen.getByLabelText(/Enter OasisBet Account password/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+
+    await userEvent.selectOptions(mthlyDepositLimitDropdown, '500');
+    await userEvent.selectOptions(mthlyBetLimitDropdown, '500');
+    await userEvent.type(password, 'password');
+    await userEvent.click(confirmButton);
+
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const successMessage = screen.getByText(/Deposit\/Bet Limit Change was successful\./i);
+      expect(successMessage).toBeDefined();
+    });
+  });
+
+  it('should show account not found error message when user account not found', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockAccountResponse);
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
+    (updateAccDetails as jest.Mock).mockResolvedValue(mockSetLimitFailureResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LimitManagement/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const mthlyDepositLimitDropdown = screen.getByLabelText(/Monthly Deposit Limit Dropdown/i);
+    const mthlyBetLimitDropdown = screen.getByLabelText(/Monthly Betting Limit Dropdown/i);
+    const password = screen.getByLabelText(/Enter OasisBet Account password/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+
+    await userEvent.selectOptions(mthlyDepositLimitDropdown, '500');
+    await userEvent.selectOptions(mthlyBetLimitDropdown, '500');
+    await userEvent.type(password, 'password');
+    await userEvent.click(confirmButton);
+
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const successMessage = screen.getByText(/User Account\/Betting Account not found. Please contact the administrator\./i);
+      expect(successMessage).toBeDefined();
+    });
+  });
+
+  it('should show incorrect password message when incorrect credentials was entered and throw Error', async () => {
+    const user = userEvent.setup();
+    const mockError = new Error('Invalid Credentials!');
+    (jwtAuthenticate as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LimitManagement/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const mthlyDepositLimitDropdown = screen.getByLabelText(/Monthly Deposit Limit Dropdown/i);
+    const mthlyBetLimitDropdown = screen.getByLabelText(/Monthly Betting Limit Dropdown/i);
+    const password = screen.getByLabelText(/Enter OasisBet Account password/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+
+    await userEvent.selectOptions(mthlyDepositLimitDropdown, '500');
+    await userEvent.selectOptions(mthlyBetLimitDropdown, '500');
+    await userEvent.type(password, 'incorrectPassword');
+    await userEvent.click(confirmButton);
+
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/Incorrect Password\. Please enter correct password\./i);
+      expect(errorMessage).toBeDefined();
+      expect(password).toHaveValue('');
+    });
+  });
+
+  it('should show incorrect password message when incorrect credentials was entered and response is null', async () => {
+    const user = userEvent.setup();
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(null);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LimitManagement/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const mthlyDepositLimitDropdown = screen.getByLabelText(/Monthly Deposit Limit Dropdown/i);
+    const mthlyBetLimitDropdown = screen.getByLabelText(/Monthly Betting Limit Dropdown/i);
+    const password = screen.getByLabelText(/Enter OasisBet Account password/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+
+    await userEvent.selectOptions(mthlyDepositLimitDropdown, '500');
+    await userEvent.selectOptions(mthlyBetLimitDropdown, '500');
+    await userEvent.type(password, 'incorrectPassword');
+    await userEvent.click(confirmButton);
+
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/Incorrect Password\. Please enter correct password\./i);
+      expect(errorMessage).toBeDefined();
+      expect(password).toHaveValue('');
+    });
+  });
+
+  it('should show not successful message when call update account details api fails', async () => {
+    const user = userEvent.setup();
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockAccountResponse);
+    (jwtAuthenticate as jest.Mock).mockResolvedValue(mockJwtTokenResponse);
+
+    const mockError = new Error('Token expired');
+    (updateAccDetails as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LimitManagement/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const mthlyDepositLimitDropdown = screen.getByLabelText(/Monthly Deposit Limit Dropdown/i);
+    const mthlyBetLimitDropdown = screen.getByLabelText(/Monthly Betting Limit Dropdown/i);
+    const password = screen.getByLabelText(/Enter OasisBet Account password/i);
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+
+    await userEvent.selectOptions(mthlyDepositLimitDropdown, '500');
+    await userEvent.selectOptions(mthlyBetLimitDropdown, '500');
+    await userEvent.type(password, 'password');
+    await userEvent.click(confirmButton);
+
+    const confirmDialogButton = screen.getByTestId('dialog-confirm')
+    await user.click(confirmDialogButton);
+
+    await waitFor(() => {
+      const successMessage = screen.queryByText(/Deposit\/Bet Limit Change was successful\./i);
+      expect(successMessage).toBeNull();
+    });
+  });
+
 
 });
