@@ -225,4 +225,79 @@ describe('TrxHist Component', () => {
     expect(depositHeading).toBeNull();
   });
 
+  it('should not show account details when calling retrieve account details api fails', async () => {
+    (retrieveTrxList as jest.Mock).mockResolvedValue(mockTrxListResponse);
+
+    const mockError = new Error('Token expired');
+    (retrieveMtdAmounts as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <TrxHist/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const betPlaced = screen.getByLabelText('Bet Placed');
+    const payout = screen.getByLabelText('Payout');
+    expect(betPlaced).toHaveTextContent('$0.00');
+    expect(payout).toHaveTextContent('$0.00');
+  });
+
+  it('should not show transaction history details when calling retrieve transaction history api fails', async () => {
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockTrxListResponse);
+
+    const mockError = new Error('Token expired');
+    (retrieveTrxList as jest.Mock).mockImplementation(() => {
+      throw mockError;
+    });
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <TrxHist/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const withdrawalTrx = screen.queryByText('Withdrawal $1');
+    const depositTrx = screen.queryByText('Deposit $1');
+    const betTrx = screen.queryByText('Manchester United vs Fulham');
+    expect(withdrawalTrx).toBeNull();
+    expect(depositTrx).toBeNull();
+    expect(betTrx).toBeNull();
+  });
+
+  it('should show bet details in bet transaction history when user clicks show details icon in transaction history table', async () => {
+    (retrieveMtdAmounts as jest.Mock).mockResolvedValue(mockResponse);
+    (retrieveTrxList as jest.Mock).mockResolvedValue(mockTrxListResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <TrxHist/>
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const showAllBetTrxDetail = screen.getAllByLabelText(/Show Trx Details/i);
+    const showBetTrxDetail = showAllBetTrxDetail[0];
+    await userEvent.click(showBetTrxDetail);
+
+    const betDetailsText = screen.getByText('Manchester United vs Fulham @ Manchester United 1.59');
+    const betReceiptText = screen.getByText('B/1000016/100194');
+    expect(betDetailsText).toBeDefined();
+    expect(betReceiptText).toBeDefined();
+  });
+
+
 });

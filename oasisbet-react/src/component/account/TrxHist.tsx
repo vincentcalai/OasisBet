@@ -125,10 +125,10 @@ export default function TrxHist(){
                     <label className="trx-section-label-width">Month To Date</label>
                     <br />
                     <label className="trx-section-label-width">Bet Placed:</label>
-                    <span className="col-sm-3 trx-section-selection-width">${mtdBetAmount}</span>
+                    <span className="col-sm-3 trx-section-selection-width" aria-label="Bet Placed">${mtdBetAmount}</span>
                     <br />
                     <label className="trx-section-label-width">Payout:</label>
-                    <span className="col-sm-3 trx-section-selection-width">${mtdPayout}</span>
+                    <span className="col-sm-3 trx-section-selection-width" aria-label="Payout">${mtdPayout}</span>
                     <hr />
                     <div className="row">
                         <div className="col-md-3 offset-md-1">
@@ -186,6 +186,7 @@ export default function TrxHist(){
                                         icon={trx.showDetails ? faAngleDown : faAngleRight}
                                         onClick={() => toggleShowDetails(index)}
                                         style={{ cursor: 'pointer' }}
+                                        aria-label="Show Trx Details"
                                     />
                                     )}
                                 </td>
