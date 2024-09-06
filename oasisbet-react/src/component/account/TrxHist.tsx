@@ -132,7 +132,7 @@ export default function TrxHist(){
                     <hr />
                     <div className="row">
                         <div className="col-md-3 offset-md-1">
-                        <label className="trx-section-label-width">View</label>
+                        <label className="trx-section-label-width" htmlFor="trxViewDropdown">View</label>
                         <div className="dropdown-section">
                             <select id="trxViewDropdown" className="trx-dropdown"
                                 value={selectedTrxType} onChange={(e) => setSelectedTrxType(e.target.value)}>
@@ -144,7 +144,7 @@ export default function TrxHist(){
                         </div>
                         </div>
                         <div className="col-md-3 offset-md-1">
-                        <label className="trx-section-label-width">Time Period</label>
+                        <label className="trx-section-label-width" htmlFor="trxTimePrdDropdown">Time Period</label>
                         <div className="dropdown-section">
                             <select id="trxTimePrdDropdown" className="trx-dropdown"
                                 value={selectedPeriod} onChange={(e) => setSelectedPeriod(e.target.value)}>
