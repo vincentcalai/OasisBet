@@ -10,9 +10,22 @@ import { fetchOdds } from '../../services/api/ApiService.ts';
 import * as router from 'react-router';
 
 const mockStore = configureMockStore();
-const store = mockStore({
+const storeUserNotLoggedIn = mockStore({
   login: {
     isUserLoggedIn: false
+  },
+  betSlip: {
+    betSlip: []
+  }, 
+  error: {
+    showError: false,
+    errorText: ""
+  }
+});
+
+const storeUserLoggedIn = mockStore({
+  login: {
+    isUserLoggedIn: true
   },
   betSlip: {
     betSlip: []
@@ -44,7 +57,7 @@ describe('OddsLanding Component', () => {
     (fetchOdds as jest.Mock).mockResolvedValue(mockFetchOddsResponse);
     await act(async () => {
       render(
-        <Provider store={store}>
+        <Provider store={storeUserNotLoggedIn}>
           <MemoryRouter>
             <OddsLanding />
           </MemoryRouter>
@@ -60,7 +73,7 @@ describe('OddsLanding Component', () => {
     const user = userEvent.setup();
 
     render(
-      <Provider store={store}>
+      <Provider store={storeUserNotLoggedIn}>
         <MemoryRouter>
           <OddsLanding />
         </MemoryRouter>
@@ -97,7 +110,7 @@ describe('OddsLanding Component', () => {
 
     await act(async () => {
       render(
-        <Provider store={store}>
+        <Provider store={storeUserNotLoggedIn}>
           <MemoryRouter>
             <OddsLanding />
           </MemoryRouter>
@@ -115,7 +128,7 @@ describe('OddsLanding Component', () => {
 
     await act(async () => {
       render(
-        <Provider store={store}>
+        <Provider store={storeUserNotLoggedIn}>
           <MemoryRouter>
             <OddsLanding />
           </MemoryRouter>
@@ -134,7 +147,34 @@ describe('OddsLanding Component', () => {
     })
   });
 
-  
+  it('should not redirect to login page if user is logged in and user makes a bet selection', async () => {
+    (fetchOdds as jest.Mock).mockResolvedValue(mockFetchOddsResponse);
+
+    const user = userEvent.setup();
+
+    await act(async () => {
+      render(
+        <Provider store={storeUserLoggedIn}>
+          <MemoryRouter>
+            <OddsLanding />
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+    const allHomeSelectionButton = screen.getAllByRole ("button", { name: /Home Select/i });
+    await user.click(allHomeSelectionButton[0]);
+    const allDrawSelectionButton = screen.getAllByRole ("button", { name: /Draw Select/i });
+    await user.click(allDrawSelectionButton[0]);
+    const allAwaySelectionButton = screen.getAllByRole ("button", { name: /Away Select/i });
+    await user.click(allAwaySelectionButton[0]);
+    await user.click(allAwaySelectionButton[0]);
+    
+
+    await waitFor(() => {
+      expect(navigate).not.toHaveBeenCalledWith('/account', expect.anything());
+    });
+  })
+
 })
 
 function getMockBetEvents() {
@@ -201,154 +241,6 @@ function getMockBetEvents() {
             "drawSelected": false,
             "awaySelected": false
         }
-    },
-    {
-        "eventId": 1000234,
-        "compType": "EPL",
-        "eventDesc": "Crystal Palace vs Leicester City",
-        "startTime": "2024-09-14T14:00:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Crystal Palace",
-            "awayTeam": "Leicester City"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000234,
-            "homeOdds": 1.61,
-            "drawOdds": 4.09,
-            "awayOdds": 5.3
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
-    },
-    {
-        "eventId": 1000235,
-        "compType": "EPL",
-        "eventDesc": "Fulham vs West Ham United",
-        "startTime": "2024-09-14T14:00:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Fulham",
-            "awayTeam": "West Ham United"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000235,
-            "homeOdds": 2.45,
-            "drawOdds": 3.52,
-            "awayOdds": 2.8
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
-    },
-    {
-        "eventId": 1000236,
-        "compType": "EPL",
-        "eventDesc": "Liverpool vs Nottingham Forest",
-        "startTime": "2024-09-14T14:00:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Liverpool",
-            "awayTeam": "Nottingham Forest"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000236,
-            "homeOdds": 1.19,
-            "drawOdds": 7.13,
-            "awayOdds": 11.99
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
-    },
-    {
-        "eventId": 1000237,
-        "compType": "EPL",
-        "eventDesc": "Aston Villa vs Everton",
-        "startTime": "2024-09-14T16:30:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Aston Villa",
-            "awayTeam": "Everton"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000237,
-            "homeOdds": 1.44,
-            "drawOdds": 4.58,
-            "awayOdds": 6.86
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
-    },
-    {
-        "eventId": 1000238,
-        "compType": "EPL",
-        "eventDesc": "Bournemouth vs Chelsea",
-        "startTime": "2024-09-14T19:00:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Bournemouth",
-            "awayTeam": "Chelsea"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000238,
-            "homeOdds": 3.38,
-            "drawOdds": 4.05,
-            "awayOdds": 1.96
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
-    },
-    {
-        "eventId": 1000239,
-        "compType": "EPL",
-        "eventDesc": "Tottenham Hotspur vs Arsenal",
-        "startTime": "2024-09-15T13:00:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Tottenham Hotspur",
-            "awayTeam": "Arsenal"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000239,
-            "homeOdds": 3.56,
-            "drawOdds": 3.7,
-            "awayOdds": 2
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
-    },
-    {
-        "eventId": 1000240,
-        "compType": "EPL",
-        "eventDesc": "Wolverhampton Wanderers vs Newcastle United",
-        "startTime": "2024-09-15T15:30:00.000Z",
-        "teamsDetails": {
-            "homeTeam": "Wolverhampton Wanderers",
-            "awayTeam": "Newcastle United"
-        },
-        "h2hEventOdds": {
-            "eventId": 1000240,
-            "homeOdds": 3.24,
-            "drawOdds": 3.69,
-            "awayOdds": 2.12
-        },
-        "betSelection": {
-            "homeSelected": false,
-            "drawSelected": false,
-            "awaySelected": false
-        }
     }
-  ];
+  ]
 }
-
