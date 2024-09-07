@@ -167,7 +167,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                                                 <div className="col-md-4">
                                                     {placeBetStatus === 'I' && 
                                                         <span className="bet-amount-input">
-                                                            $<input type="text" maxLength={7} inputMode="numeric"
+                                                            $<input type="text" maxLength={7} inputMode="numeric" aria-label="Bet Amount"
                                                                 value={betEvent.betAmount !== null ? betEvent.betAmount : ''}
                                                                 onChange={(event) => handleChangeBetAmount(betEvent, event)}/>
                                                         </span>
