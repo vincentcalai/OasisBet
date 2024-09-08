@@ -80,11 +80,13 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
     function handleClickPlaceBet(): void {
         const betSelectionsWithNoAmt = betSlipSelections.filter(e => e.betAmount === 0 || e.potentialPayout === 0);
         let updateBetEvents = [...betSlipSelections];
+        console.log("vincent betSelectionsWithNoAmt: ", betSelectionsWithNoAmt)
         betSelectionsWithNoAmt.forEach(removeSelection => {
             updateBetEvents = updateBetEvents.filter(e => !(e.eventId === removeSelection.eventId && e.betSelection === removeSelection.betSelection));
             onBetSlipUpdate(removeSelection);
             dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
         });
+        console.log("vincent after: ")
         onPlaceBetStatusUpdate("C");
     }
 
@@ -153,7 +155,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                                                 </div>
                                                 {placeBetStatus !== 'D' &&  
                                                     <div className="col-md-2" onClick={() => handleOnDelete(betEvent)}>
-                                                        <p className="delete-icon">&#10005;</p>
+                                                        <p className="delete-icon" aria-label='Delete Icon'>&#10005;</p>
                                                     </div>
                                                 }
                                             </div>
