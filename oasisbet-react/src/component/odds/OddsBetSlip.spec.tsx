@@ -7,6 +7,7 @@ import * as router from 'react-router';
 import OddsBetSlip from './OddsBetSlip.tsx';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import userEvent from '@testing-library/user-event';
+import { submitBets } from '../../services/api/ApiService.ts';
 
 const mockStore = configureMockStore();
 
@@ -51,8 +52,30 @@ const storeWithMultipleBets = mockStore({
   }
 });
 
+const mockSuccessResponse = {
+  account: {
+    mtdDepositAmt: 1000,
+    ytdDepositAmt: 5000,
+    ytdWithdrawalAmt: 2000,
+  },
+  statusCode: 0,
+  resultMessage: 'Bet placed successfully at 8 Sep 2024, 11:09AM' 
+}
+
+
+const mockFailureResponse = {
+  statusCode: 4,
+  resultMessage: 'Please login to place bet' 
+}
+
+const mockInsufficientBalErrorResponse = {
+  statusCode: 3,
+  resultMessage: 'You have insufficient balance in your account. Please top up your account.'
+}
+
 jest.mock('../../services/api/ApiService.ts', () => ({
-  fetchOdds: jest.fn()
+  fetchOdds: jest.fn(),
+  submitBets: jest.fn()
 }));
 
 const navigate = jest.fn();
@@ -274,6 +297,122 @@ describe('OddsBetSlip Component', () => {
 
     const placeBetBtn = screen.getByRole('button', { name: /Place Bet/i });
     expect(placeBetBtn).toBeDefined();
+  });
+
+  it('should place bet successfully when user input bet amount and click confirm place bet', async () => {
+    (submitBets as jest.Mock).mockResolvedValue(mockSuccessResponse);
+
+    const { rerender } = render(
+      <Provider store={store}>
+        <OddsBetSlip 
+          onBetSlipUpdate={mockHandleBetSlipUpdate} 
+          onPlaceBetStatusUpdate={mockHandlePlaceBetStatusUpdate} 
+          placeBetStatus={mockPlaceBetStatus} 
+        />
+      </Provider>
+    );
+
+    const user = userEvent.setup();
+
+    const betAmountInput = screen.getByLabelText(/Bet Amount/i);
+    await user.type(betAmountInput, '5');
+    const placeBet = screen.getByRole('button', { name: /Place Bet/i });
+    await user.click(placeBet);
+
+    rerender(
+      <Provider store={store}>
+        <OddsBetSlip 
+          onBetSlipUpdate={mockHandleBetSlipUpdate} 
+          onPlaceBetStatusUpdate={mockHandlePlaceBetStatusUpdate} 
+          placeBetStatus={'C'} 
+        />
+      </Provider>
+    );
+
+    const cfmBtn = screen.getByRole('button', { name: /Confirm/i });
+    await user.click(cfmBtn);
+
+    await waitFor(() => {
+      const successMsg = screen.getByText(/Bet placed successfully at/i);
+      expect(successMsg).toBeDefined();
+    })
+  });
+  
+  it('should redirect user to login page when user input bet amount and click confirm place bet and status code is 4', async () => {
+    (submitBets as jest.Mock).mockResolvedValue(mockFailureResponse);
+
+    const { rerender } = render(
+      <Provider store={store}>
+        <OddsBetSlip 
+          onBetSlipUpdate={mockHandleBetSlipUpdate} 
+          onPlaceBetStatusUpdate={mockHandlePlaceBetStatusUpdate} 
+          placeBetStatus={mockPlaceBetStatus} 
+        />
+      </Provider>
+    );
+
+    const user = userEvent.setup();
+
+    const betAmountInput = screen.getByLabelText(/Bet Amount/i);
+    await user.type(betAmountInput, '5');
+    const placeBet = screen.getByRole('button', { name: /Place Bet/i });
+    await user.click(placeBet);
+
+    rerender(
+      <Provider store={store}>
+        <OddsBetSlip 
+          onBetSlipUpdate={mockHandleBetSlipUpdate} 
+          onPlaceBetStatusUpdate={mockHandlePlaceBetStatusUpdate} 
+          placeBetStatus={'C'} 
+        />
+      </Provider>
+    );
+
+    const cfmBtn = screen.getByRole('button', { name: /Confirm/i });
+    await user.click(cfmBtn);
+
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith('/account', expect.anything());
+    })
+  });
+
+  it('should show insufficient balance amount error when user has insufficient balance in account and user place bet', async () => {
+    (submitBets as jest.Mock).mockResolvedValue(mockInsufficientBalErrorResponse);
+
+    const { rerender } = render(
+      <Provider store={store}>
+        <OddsBetSlip 
+          onBetSlipUpdate={mockHandleBetSlipUpdate} 
+          onPlaceBetStatusUpdate={mockHandlePlaceBetStatusUpdate} 
+          placeBetStatus={mockPlaceBetStatus} 
+        />
+      </Provider>
+    );
+
+    const user = userEvent.setup();
+
+    const betAmountInput = screen.getByLabelText(/Bet Amount/i);
+    await user.type(betAmountInput, '5');
+    const placeBet = screen.getByRole('button', { name: /Place Bet/i });
+    await user.click(placeBet);
+
+    rerender(
+      <Provider store={store}>
+        <OddsBetSlip 
+          onBetSlipUpdate={mockHandleBetSlipUpdate} 
+          onPlaceBetStatusUpdate={mockHandlePlaceBetStatusUpdate} 
+          placeBetStatus={'C'} 
+        />
+      </Provider>
+    );
+
+    const cfmBtn = screen.getByRole('button', { name: /Confirm/i });
+    await user.click(cfmBtn);
+
+    await waitFor(() => {
+      const successMsg = screen.getByText(/You have insufficient balance in your account\. Please top up your account\./i);
+      expect(successMsg).toBeDefined();
+    })
   });
 
 })

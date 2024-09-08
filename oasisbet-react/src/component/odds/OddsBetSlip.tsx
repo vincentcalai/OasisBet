@@ -112,7 +112,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             const response = await submitBets(submitBetsModel);
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
-                setResponseMsg("Bet successfully placed!");
+                setResponseMsg(response.resultMessage);
                 sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
                 dispatch(updateLoginDetails('balance', response.account?.balance));
             } else if (response.statusCode === 4) {
