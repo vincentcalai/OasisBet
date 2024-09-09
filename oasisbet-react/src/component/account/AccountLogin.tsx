@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { fetchAccountDetails } from '../../services/api/ApiService.ts';
-import { LoginCredentialsModel } from "../../constants/MockData.ts";
+import { LoginCredentialsModel } from "../../constants/Modal.ts";
 import { jwtAuthenticate } from '../../services/api/ApiService.ts';
 import { closeAlert, openAlert, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";

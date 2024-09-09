@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiService.ts';
-import { LoginCredentialsModel } from '../../constants/MockData.ts';
+import { LoginCredentialsModel } from '../../constants/Modal.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { useDispatch, useSelector } from 'react-redux';

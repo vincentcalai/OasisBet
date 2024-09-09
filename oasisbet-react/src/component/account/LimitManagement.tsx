@@ -5,7 +5,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { jwtAuthenticate, retrieveMtdAmounts, updateAccDetails } from "../../services/api/ApiService.ts";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/MockData.ts";
+import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/Modal.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";

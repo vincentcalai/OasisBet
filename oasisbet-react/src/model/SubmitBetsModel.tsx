@@ -1,4 +1,4 @@
-import { BetSlip } from "../constants/MockData";
+import { BetSlip } from "../constants/Modal";
 
 export class SubmitBetsModel {
     public userId: number;

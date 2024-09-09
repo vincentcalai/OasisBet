@@ -7,7 +7,7 @@ import { submitBets } from "../../services/api/ApiService.ts";
 import { SubmitBetsModel } from "../../model/SubmitBetsModel";
 import { useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
-import { AccountModel } from "../../constants/MockData.ts";
+import { AccountModel } from "../../constants/Modal.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { openAlert } from "../actions/ReducerAction.ts";
