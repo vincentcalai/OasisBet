@@ -9,13 +9,6 @@ export class H2HEventOdds {
     homeOdds;
     drawOdds;
     awayOdds;
-
-    constructor(eventId, homeOdds, drawOdds, awayOdds) {
-        this.eventId = eventId;
-        this.homeOdds = homeOdds;
-        this.drawOdds = drawOdds;
-        this.awayOdds = awayOdds;
-    }
 }
 
 export class BetEvent {
@@ -26,26 +19,11 @@ export class BetEvent {
     teamsDetails;
     h2hEventOdds;
     betSelection;
-
-    constructor(eventId, compType, eventDesc, startTime, teamsDetails, h2hEventOdds, betSelection) {
-        this.eventId = eventId;
-        this.compType = compType;
-        this.eventDesc = eventDesc;
-        this.startTime = startTime;
-        this.teamsDetails = teamsDetails;
-        this.h2hEventOdds = h2hEventOdds;
-        this.betSelection = betSelection;
-    }
 }
 
 export class TeamsDetails {
     homeTeam;
     awayTeam;
-
-    constructor(homeTeam, awayTeam) {
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-    }
 }
 
 export class BetSlip {
@@ -92,17 +70,6 @@ export class AccountModel {
     public depositAmt: number;
     public withdrawalAmt: number;
     public actionType: string;
-
-    constructor(accId?, usrId?, balance?, depositLimit?, betLimit?, depositAmt?, withdrawalAmt?, actionType?) {
-        this.accId = accId;
-        this.usrId = usrId;
-        this.balance = balance;
-        this.depositLimit = depositLimit;
-        this.betLimit = betLimit;
-        this.depositAmt = depositAmt;
-        this.withdrawalAmt = withdrawalAmt;
-        this.actionType = actionType;
-    }
 }
 
 export class UpdateAccountModel {
