@@ -2,19 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import './Deposits.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
-import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, UpdateAccountModel } from "../../constants/Modal.ts";
 import { updateAccDetails, retrieveMtdAmounts } from "../../services/api/ApiService.ts";
-import { updateLoginDetails } from "../actions/ReducerAction.ts";
-import { useDispatch } from "react-redux";
+import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { useDispatch, useSelector } from "react-redux";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 export default function Deposits({handleNavToTrxHist}){
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
     const [balance, setBalance] = useState('NA');
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
     const [depositAmt, setDepositAmt] = useState(0 as number);
@@ -59,8 +58,7 @@ export default function Deposits({handleNavToTrxHist}){
         retrieveAccDetails(depositLimit, accId);
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
-        setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails, dispatch, navigate]);
+    }, [accountDetails, dispatch, navigate]);
 
     const onDepositAmtChange = (e) => {
         setDepositAmt(e.target.value);
@@ -119,7 +117,7 @@ export default function Deposits({handleNavToTrxHist}){
         if (result === 'confirm') {
           console.log('Confirmed!');
           const request: UpdateAccountModel = new UpdateAccountModel();
-          const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+          const account: AccountModel = accountDetails;
           account['depositAmt'] = depositAmt;
           account['actionType'] = 'D';
           request.account = account;
@@ -167,9 +165,8 @@ export default function Deposits({handleNavToTrxHist}){
             } else {
                 //deposit amount success!
                 console.log("Amount deposited successfully:", response);
-                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+                dispatch(updateAccountDetails('accountDetails', response.account))
                 dispatch(updateLoginDetails('balance', response.account?.balance));
-                setAccountDetails(response.account);
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
             }

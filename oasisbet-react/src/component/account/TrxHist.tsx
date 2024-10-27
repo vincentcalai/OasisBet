@@ -3,14 +3,13 @@ import './TrxHist.css';
 import { Card, Table } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
-import { useSessionStorage } from "../util/useSessionStorage.ts";
 import { retrieveMtdAmounts, retrieveTrxList } from "../../services/api/ApiService.ts";
 import { TrxHistModel } from "../../model/TrxHistModel.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
@@ -21,7 +20,7 @@ export default function TrxHist(){
 
     const [trxHistList, setTrxHistList] = useState([] as TrxHistModel[])
 
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
     const [mtdBetAmount, setMtdBetAmount] = useState('0.00');
     const [mtdPayout, setMtdPayout] = useState('0.00');
     const [selectedTrxType, setSelectedTrxType] = useState('funds');
@@ -53,9 +52,7 @@ export default function TrxHist(){
         } 
 
         retrieveAccDetails(accId);
-
-        setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails, dispatch, navigate]);
+    }, [accountDetails, dispatch, navigate]);
 
     useEffect(() => {
         const { accId } = accountDetails || {};

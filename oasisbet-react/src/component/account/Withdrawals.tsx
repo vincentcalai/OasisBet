@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import './Withdrawals.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
-import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
-import { updateLoginDetails } from "../actions/ReducerAction.ts";
+import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { UpdateAccountModel, AccountModel, LoginCredentialsModel } from "../../constants/Modal.ts";
 import { jwtAuthenticate, updateAccDetails } from "../../services/api/ApiService.ts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import {handleJwtTokenExpireError} from "../../services/AuthService.ts";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +22,7 @@ export default function Withdrawals({handleNavToTrxHist}){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
     const [balance, setBalance] = useState('NA');
     const [withdrawalAmt, setWithdrawalAmt] = useState(0 as number);
     const [password, setPassword] = useState('');
@@ -39,8 +38,7 @@ export default function Withdrawals({handleNavToTrxHist}){
         const { balance } = accountDetails || {};
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
-        setAccountDetails(accountDetails);
-    }, [accountDetails, setAccountDetails, dispatch]);
+    }, [accountDetails, dispatch]);
 
     const onWithdrawalInputChange = (e, type) => {
         if(type === WITHDRAWAL_AMT) {
@@ -129,7 +127,7 @@ export default function Withdrawals({handleNavToTrxHist}){
           }
 
           const request: UpdateAccountModel = new UpdateAccountModel();
-          const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+          const account: AccountModel = accountDetails;
           account['withdrawalAmt'] = withdrawalAmt;
           account['actionType'] = 'W';
           request.account = account;
@@ -165,9 +163,8 @@ export default function Withdrawals({handleNavToTrxHist}){
             } else {
                 //withdraw amount success!
                 console.log("Amount withdrew successfully:", response);
-                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+                dispatch(updateAccountDetails('accountDetails', response.account))
                 dispatch(updateLoginDetails('balance', response.account?.balance));
-                setAccountDetails(response.account);
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
                 setPassword('');

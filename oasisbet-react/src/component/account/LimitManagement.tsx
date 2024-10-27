@@ -3,13 +3,12 @@ import './LimitManagement.css';
 import { Card, OverlayTrigger, ProgressBar, Tooltip } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { jwtAuthenticate, retrieveMtdAmounts, updateAccDetails } from "../../services/api/ApiService.ts";
-import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/Modal.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateLoginDetails } from "../actions/ReducerAction.ts";
-import { useDispatch } from "react-redux";
+import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
@@ -20,7 +19,7 @@ export default function LimitManagement(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
     const [mtdBetAmt, setMtdBetAmt] = useState('0.00');
     const [depositProgress, setDepositProgress] = useState(0 as number);
@@ -71,14 +70,13 @@ export default function LimitManagement(){
 
         retrieveAccDetails(depositLimit, betLimit, accId);
 
-        setAccountDetails(accountDetails);
         setSelectedDepositOption('300');
         setSelectedBetOption('100');
         setSelectedDepositAmt('300');
         setSelectedBetAmt('100');
         setIsDepositAmtInputDisabled(true);
         setIsBetAmtInputDisabled(true);
-    }, [accountDetails, setAccountDetails, dispatch, navigate]);
+    }, [accountDetails, dispatch, navigate]);
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -186,7 +184,7 @@ export default function LimitManagement(){
           }
 
           const request: UpdateAccountModel = new UpdateAccountModel();
-          const account: AccountModel = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
+          const account: AccountModel = accountDetails;
           account['betLimit'] = +selectedBetAmt;
           account['depositLimit'] = +selectedDepositAmt;
           account['actionType'] = 'L';
@@ -240,8 +238,7 @@ export default function LimitManagement(){
             } else {
             //set bet and deposit limit success!
             console.log("Set deposit/bet limit successfully:", response);
-            sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
-            setAccountDetails(response.account);
+            dispatch(updateAccountDetails('accountDetails', response.account))
             setSuccessMsg(response.resultMessage);
             setErrorMsg('');
             setPassword('');
