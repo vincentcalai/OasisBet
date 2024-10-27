@@ -5,7 +5,7 @@ import CompSideNav from '../common/CompSideNav.tsx';
 import { Button, Card, Table } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ResultEvent } from "../../constants/MockData.ts";
+import { ResultEvent } from "../../constants/Modal.ts";
 import { fetchResults } from "../../services/api/ApiService.ts";
 import DateError from "../util/DateError.tsx";
 import AlertError from "../util/AlertError.tsx";

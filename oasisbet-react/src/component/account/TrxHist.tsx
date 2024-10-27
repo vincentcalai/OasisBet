@@ -125,14 +125,14 @@ export default function TrxHist(){
                     <label className="trx-section-label-width">Month To Date</label>
                     <br />
                     <label className="trx-section-label-width">Bet Placed:</label>
-                    <span className="col-sm-3 trx-section-selection-width">${mtdBetAmount}</span>
+                    <span className="col-sm-3 trx-section-selection-width" aria-label="Bet Placed">${mtdBetAmount}</span>
                     <br />
                     <label className="trx-section-label-width">Payout:</label>
-                    <span className="col-sm-3 trx-section-selection-width">${mtdPayout}</span>
+                    <span className="col-sm-3 trx-section-selection-width" aria-label="Payout">${mtdPayout}</span>
                     <hr />
                     <div className="row">
                         <div className="col-md-3 offset-md-1">
-                        <label className="trx-section-label-width">View</label>
+                        <label className="trx-section-label-width" htmlFor="trxViewDropdown">View</label>
                         <div className="dropdown-section">
                             <select id="trxViewDropdown" className="trx-dropdown"
                                 value={selectedTrxType} onChange={(e) => setSelectedTrxType(e.target.value)}>
@@ -144,7 +144,7 @@ export default function TrxHist(){
                         </div>
                         </div>
                         <div className="col-md-3 offset-md-1">
-                        <label className="trx-section-label-width">Time Period</label>
+                        <label className="trx-section-label-width" htmlFor="trxTimePrdDropdown">Time Period</label>
                         <div className="dropdown-section">
                             <select id="trxTimePrdDropdown" className="trx-dropdown"
                                 value={selectedPeriod} onChange={(e) => setSelectedPeriod(e.target.value)}>
@@ -186,6 +186,7 @@ export default function TrxHist(){
                                         icon={trx.showDetails ? faAngleDown : faAngleRight}
                                         onClick={() => toggleShowDetails(index)}
                                         style={{ cursor: 'pointer' }}
+                                        aria-label="Show Trx Details"
                                     />
                                     )}
                                 </td>

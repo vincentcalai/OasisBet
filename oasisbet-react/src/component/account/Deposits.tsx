@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountModel, UpdateAccountModel } from "../../constants/MockData.ts";
+import { AccountModel, UpdateAccountModel } from "../../constants/Modal.ts";
 import { updateAccDetails, retrieveMtdAmounts } from "../../services/api/ApiService.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";

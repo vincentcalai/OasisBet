@@ -176,6 +176,13 @@ const config: Config = {
   // A map from regular expressions to paths to transformers
   // transform: undefined,
 
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest", // Use Babel to transpile ES modules and TypeScript
+  },
+  transformIgnorePatterns: [
+    "/node_modules/(?!(react-bootstrap)/)", // Ignore node_modules except react-bootstrap
+  ],
+
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   "\\\\node_modules\\\\",

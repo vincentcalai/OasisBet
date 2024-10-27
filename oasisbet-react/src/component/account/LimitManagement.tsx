@@ -5,7 +5,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { jwtAuthenticate, retrieveMtdAmounts, updateAccDetails } from "../../services/api/ApiService.ts";
 import { getSessionStorageOrDefault, useSessionStorage } from "../util/useSessionStorage.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/MockData.ts";
+import { AccountModel, LoginCredentialsModel, UpdateAccountModel } from "../../constants/Modal.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";
@@ -108,7 +108,7 @@ export default function LimitManagement(){
         const pattern = /^(0(\.\d{1,2})?|[1-9]\d{0,8}(\.\d{1,2})?)$/;
         let errorMsg = '';
     
-        if (amount > 200000) {
+        if (amount >= 200000) {
             errorMsg = 'Maximum amount to set is $199999.99';
         } else if (!pattern.test(amount)) {
             errorMsg = 'Please enter correct format';
@@ -152,19 +152,6 @@ export default function LimitManagement(){
     }
 
     const confirmSubmit = () => {
-        if (selectedDepositOption === '' && selectedDepositAmt === ''){
-            setDepositErrorMsg('Deposit Limit is required'); 
-            console.log('Form is invalid');
-            return; 
-        } else if (selectedBetOption === '' && selectedBetAmt === ''){
-            setBetErrorMsg('Bet Limit is required');
-            console.log('Form is invalid');
-            return; 
-        }
-        handleOpenDialog();
-    }
-
-    const handleOpenDialog = () => {
         setDialogData({
           title: SharedVarConstants.CFM_CHANGE_LIMIT_DIALOG_TITLE,
           type: SharedVarConstants.CFM_CHANGE_LIMIT_DIALOG_TYPE,
@@ -302,7 +289,7 @@ export default function LimitManagement(){
                             <label className="control-label col-sm-3 col-md-3 limit-left-section-label-width">Change Monthly Deposit Limit</label>
                             <div className="col-md-3">
                             <div className="dropdown-section">
-                                <select id="depositLimitDropdown" className="limit-dropdown"
+                                <select id="depositLimitDropdown" className="limit-dropdown" aria-label="Monthly Deposit Limit Dropdown"
                                     value={selectedDepositOption || 'other'} onChange={(e) => handleInputLimitChange(e, DEPOSIT)}>
                                     <option value="300">$300</option>
                                     <option value="500">$500</option>
@@ -317,6 +304,7 @@ export default function LimitManagement(){
                                 <span className="input-group-text">$</span>
                                 </div>
                                 <input type="text" className="form-control limit-left-section-selection-width no-spinner" 
+                                aria-label="Monthly Deposit Limit Input"
                                 id="deposit_limit_0" name="deposit_limit" 
                                 value={selectedDepositAmt}
                                 onChange={(e) => onChangeInputAmount(e, DEPOSIT)}
@@ -358,7 +346,7 @@ export default function LimitManagement(){
                             <label className="control-label col-sm-3 col-md-3 limit-left-section-label-width">Change Monthly Betting Limit</label>
                             <div className="col-md-3">
                             <div className="dropdown-section">
-                                <select id="betLimitDropdown" className="limit-dropdown"
+                                <select id="betLimitDropdown" className="limit-dropdown" aria-label="Monthly Betting Limit Dropdown"
                                     value={selectedBetOption || 'other' } onChange={(e) => handleInputLimitChange(e, BET)}>
                                     <option value="100">$100</option>
                                     <option value="200">$200</option>
@@ -375,6 +363,7 @@ export default function LimitManagement(){
                                     <span className="input-group-text limit-section-selection-width">$</span>
                                     </div>
                                     <input type="text" className="form-control limit-section-selection-width no-spinner" 
+                                    aria-label="Monthly Betting Limit Input"
                                     id="bet_limit_0" name="bet_limit" 
                                     value={selectedBetAmt} 
                                     onChange={(e) => onChangeInputAmount(e, BET)}
@@ -389,7 +378,9 @@ export default function LimitManagement(){
                         <hr />
                         <br />
                         <div className="form-group row">
-                            <label className="control-label col-sm-4 limit-left-section-label-width limit-acc-label-text">Enter OasisBet Account password</label>
+                            <label id="PASSWORD_LABEL_1" htmlFor="password_0" className="control-label col-sm-4 limit-left-section-label-width limit-acc-label-text">
+                                Enter OasisBet Account password
+                            </label>
                             <div className="col-md-3">
                             <input type="password" className="form-control limit-section-selection-width no-spinner" 
                             id="password_0" name="password" 
@@ -400,8 +391,7 @@ export default function LimitManagement(){
                         </div>
                         <hr />
                         <div className="dialog-actions">
-                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}
-                                disabled={isDisabled()}>
+                            <button className="btn btn-danger btn-cancel" type="button" onClick={onCancel}>
                                 Cancel
                             </button>
                             <button className="btn btn-success btn-confirm-action" type="button" onClick={confirmSubmit}

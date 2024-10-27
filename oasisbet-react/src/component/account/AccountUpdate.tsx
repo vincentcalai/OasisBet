@@ -6,7 +6,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { validatePassword, validateCfmPassword, validateEmail, validateContactNo, validateRequiredField } from "../util/validation.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
-import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/MockData.ts";
+import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/Modal.ts";
 import { updateAccInfo } from "../../services/api/ApiService.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";

@@ -3,7 +3,7 @@ import './OddsLanding.css';
 import React, { useEffect, useRef, useState } from 'react';
 import CompSideNav from '../common/CompSideNav.tsx';
 import { Button, Card, Table } from 'react-bootstrap';
-import { BetEvent, BetSlip, H2HBetSelection } from '../../constants/MockData.ts';
+import { BetEvent, BetSlip, H2HBetSelection } from '../../constants/Modal.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts'; 
 import OddsBetSlip from './OddsBetSlip.tsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -247,7 +247,8 @@ export default function OddsLanding(){
                                                                 className={`btn ${event.betSelection.homeSelected ? 'selected' : ''}`}
                                                                 variant="light"
                                                                 onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_HOME)}
-                                                                disabled={placeBetStatus === 'C'}>
+                                                                disabled={placeBetStatus === 'C'}
+                                                                aria-label="Home Select">
                                                                     <span className={`${event.betSelection.homeSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
                                                                     </span>
@@ -258,7 +259,8 @@ export default function OddsLanding(){
                                                                 className={`btn ${event.betSelection.drawSelected ? 'selected' : ''}`}
                                                                 variant="light"
                                                                 onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_DRAW)}
-                                                                disabled={placeBetStatus === 'C'}>
+                                                                disabled={placeBetStatus === 'C'}
+                                                                aria-label="Draw Select">
                                                                     <span className={`${event.betSelection.drawSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
                                                                     </span>
@@ -269,7 +271,8 @@ export default function OddsLanding(){
                                                                 className={`btn ${event.betSelection.awaySelected ? 'selected' : ''}`}
                                                                 variant="light"
                                                                 onClick={() => selectBetSelection(index, date, SharedVarConstants.BET_SELECTION_H2H_AWAY)}
-                                                                disabled={placeBetStatus === 'C'}>
+                                                                disabled={placeBetStatus === 'C'}
+                                                                aria-label="Away Select">
                                                                     <span className={`${event.betSelection.awaySelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
                                                                     </span>

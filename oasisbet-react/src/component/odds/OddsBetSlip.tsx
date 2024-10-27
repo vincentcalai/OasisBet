@@ -7,7 +7,7 @@ import { submitBets } from "../../services/api/ApiService.ts";
 import { SubmitBetsModel } from "../../model/SubmitBetsModel";
 import { useNavigate } from "react-router-dom";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
-import { AccountModel } from "../../constants/MockData.ts";
+import { AccountModel } from "../../constants/Modal.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";
 import { openAlert } from "../actions/ReducerAction.ts";
@@ -80,11 +80,13 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
     function handleClickPlaceBet(): void {
         const betSelectionsWithNoAmt = betSlipSelections.filter(e => e.betAmount === 0 || e.potentialPayout === 0);
         let updateBetEvents = [...betSlipSelections];
+        console.log("vincent betSelectionsWithNoAmt: ", betSelectionsWithNoAmt)
         betSelectionsWithNoAmt.forEach(removeSelection => {
             updateBetEvents = updateBetEvents.filter(e => !(e.eventId === removeSelection.eventId && e.betSelection === removeSelection.betSelection));
             onBetSlipUpdate(removeSelection);
             dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
         });
+        console.log("vincent after: ")
         onPlaceBetStatusUpdate("C");
     }
 
@@ -110,7 +112,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             const response = await submitBets(submitBetsModel);
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
-                setResponseMsg("Bet successfully placed!");
+                setResponseMsg(response.resultMessage);
                 sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
                 dispatch(updateLoginDetails('balance', response.account?.balance));
             } else if (response.statusCode === 4) {
@@ -153,7 +155,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                                                 </div>
                                                 {placeBetStatus !== 'D' &&  
                                                     <div className="col-md-2" onClick={() => handleOnDelete(betEvent)}>
-                                                        <p className="delete-icon">&#10005;</p>
+                                                        <p className="delete-icon" aria-label='Delete Icon'>&#10005;</p>
                                                     </div>
                                                 }
                                             </div>
@@ -167,7 +169,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
                                                 <div className="col-md-4">
                                                     {placeBetStatus === 'I' && 
                                                         <span className="bet-amount-input">
-                                                            $<input type="text" maxLength={7} inputMode="numeric"
+                                                            $<input type="text" maxLength={7} inputMode="numeric" aria-label="Bet Amount"
                                                                 value={betEvent.betAmount !== null ? betEvent.betAmount : ''}
                                                                 onChange={(event) => handleChangeBetAmount(betEvent, event)}/>
                                                         </span>
