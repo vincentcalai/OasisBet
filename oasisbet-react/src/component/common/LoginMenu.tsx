@@ -10,7 +10,7 @@ import SharedVarConstants from '../../constants/SharedVarConstants.ts';
 import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
-import { closeModal, openAlert, openModal, setSpinner, updateLoginDetails } from '../actions/ReducerAction.ts';
+import { closeModal, openAlert, openModal, setSpinner, updateAccountDetails, updateLoginDetails } from '../actions/ReducerAction.ts';
 
 export default function LoginMenu(){
 
@@ -127,10 +127,9 @@ export default function LoginMenu(){
     const retrieveAccountDetails = async (username) => {
         try {
           const accountDetails = await fetchAccountDetails(username);
-          console.log("accountDetails in LoginMenu: ", JSON.stringify(accountDetails.account));
-          console.log("personalInfo in LoginMenu: ", JSON.stringify(accountDetails.personalInfo));
-          sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(accountDetails.account));
-          sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(accountDetails.personalInfo));
+          console.log("Login Menu component, accountDetails : ", accountDetails.account, " personalInfo: ", accountDetails.personalInfo);
+          dispatch(updateAccountDetails('accountDetails', accountDetails.account))
+          dispatch(updateAccountDetails('personalInfo', accountDetails.personalInfo))
           dispatch(updateLoginDetails('isUserLoggedIn', true));
         } catch (error) {
           console.log("Error when retrieving account details!");

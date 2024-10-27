@@ -3,7 +3,6 @@ import './AccountUpdate.css';
 import { Card, Tab, Tabs } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { validatePassword, validateCfmPassword, validateEmail, validateContactNo, validateRequiredField } from "../util/validation.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
@@ -11,8 +10,8 @@ import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/
 import { updateAccInfo } from "../../services/api/ApiService.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateLoginDetails } from "../actions/ReducerAction.ts";
-import { useDispatch } from "react-redux";
+import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
@@ -30,8 +29,8 @@ export default function AccountUpdate(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [accountDetails, setAccountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
-    const [personalInfoDetails, setPersonalInfoDetails] = useSessionStorage(SharedVarConstants.PERSONAL_DETAILS, {});
+    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
+    const personalInfoDetails = useSelector((state: any) => state['account']['personalInfo']) ; 
     const [email, setEmail] = useState('');
     const [contactNo, setContactNo] = useState('');
 
@@ -71,9 +70,7 @@ export default function AccountUpdate(){
         setAccId(accId);
         setEmail(email);
         setContactNo(contactNo);
-        setAccountDetails(accountDetails);
-        setPersonalInfoDetails(personalInfoDetails);
-    }, [accountDetails, setAccountDetails, personalInfoDetails, setPersonalInfoDetails, dispatch]);
+    }, [accountDetails, personalInfoDetails, dispatch]);
 
     const onCancel = ((navigateTab) => {
         if(navigateTab === CONTACT_TAB && !isEmailDisabled){
@@ -202,8 +199,8 @@ export default function AccountUpdate(){
                         "email": email,
                         "contactNo": contactNo
                     };
-                    sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(personalDetails));
-                    setPersonalInfoDetails(personalDetails);
+                    dispatch(updateAccountDetails('accountDetails', accountDetails))
+                    dispatch(updateAccountDetails('personalInfo', personalDetails))
                 }
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');

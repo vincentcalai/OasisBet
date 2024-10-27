@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import './AccountOverview.css';
 import { Card } from "react-bootstrap";
-import { useSessionStorage } from "../util/useSessionStorage.ts";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
 import { updateLoginDetails } from "../actions/ReducerAction.ts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { retrieveYtdAmounts } from "../../services/api/ApiService.ts";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
@@ -16,7 +15,7 @@ export default function AccountOverview(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [accountDetails] = useSessionStorage(SharedVarConstants.ACCOUNT_DETAILS, {});
+    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
     const [balance, setBalance] = useState('NA');
     const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');

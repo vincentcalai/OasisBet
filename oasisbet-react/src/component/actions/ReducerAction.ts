@@ -9,6 +9,16 @@ export const updateLoginDetails = (key, value) => {
     };
 }
 
+//Account details
+export const updateAccountDetails = (key, value) => {
+    return {
+        type: 'UPDATE_ACCOUNT_DETAILS',
+        payload: {
+            [key]: value
+        }      
+    };
+}
+
 //Spinner
 export const setSpinner = (loader, loaderText, textClass: any | null | undefined= null) => {
     return {

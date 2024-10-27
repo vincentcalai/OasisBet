@@ -6,7 +6,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { fetchAccountDetails } from '../../services/api/ApiService.ts';
 import { LoginCredentialsModel } from "../../constants/MockData.ts";
 import { jwtAuthenticate } from '../../services/api/ApiService.ts';
-import { closeAlert, openAlert, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { closeAlert, openAlert, updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 import AlertError from "../util/AlertError.tsx";
 
@@ -66,10 +66,9 @@ export default function AccountLogin(){
   const retrieveAccountDetails = async (username) => {
     try {
       const response = await fetchAccountDetails(username);
-      console.log("accountDetails in AccountLogin: ", JSON.stringify(response.account));
-      console.log("personalInfo in AccountLogin: ", JSON.stringify(response.personalInfo));
-      sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
-      sessionStorage.setItem(SharedVarConstants.PERSONAL_DETAILS, JSON.stringify(response.personalInfo));
+      console.log("AccountLogin component, accountDetails : ", response.account, " personalInfo: ", response.personalInfo);
+      dispatch(updateAccountDetails('accountDetails', response.account))
+      dispatch(updateAccountDetails('personalInfo', response.personalInfo))
       dispatch(updateLoginDetails('isUserLoggedIn', true));
     } catch (error) {
       console.log("Error when retrieving account details!");
