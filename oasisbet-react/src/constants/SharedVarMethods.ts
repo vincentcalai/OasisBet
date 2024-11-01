@@ -15,9 +15,7 @@ export class SharedVarMethods {
     static clearSessionStorage() {
         sessionStorage.removeItem(SharedVarConstants.AUTH_USER);
         sessionStorage.removeItem(SharedVarConstants.AUTHORIZATION);
-        sessionStorage.removeItem(SharedVarConstants.ACCOUNT_DETAILS);
         sessionStorage.removeItem(SharedVarConstants.LOGIN_TIME);
-        sessionStorage.removeItem(SharedVarConstants.PERSONAL_DETAILS);
         sessionStorage.removeItem(SharedVarConstants.LAST_AUTH_TIME);
     }
 }

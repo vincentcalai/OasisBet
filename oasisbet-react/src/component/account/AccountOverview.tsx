@@ -15,7 +15,7 @@ export default function AccountOverview(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [balance, setBalance] = useState('NA');
     const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');

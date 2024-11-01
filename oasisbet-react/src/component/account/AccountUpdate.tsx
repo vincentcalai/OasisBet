@@ -10,7 +10,7 @@ import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/
 import { updateAccInfo } from "../../services/api/ApiService.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { updateAccountDetails, updateAccountDetailsWithApiResp, updateLoginDetails, updatePersonalInfoWithApiResp } from "../actions/ReducerAction.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
@@ -29,8 +29,8 @@ export default function AccountUpdate(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
-    const personalInfoDetails = useSelector((state: any) => state['account']['personalInfo']) ; 
+    const accountDetails = useSelector((state: any) => state['accountDetails']);
+    const personalInfoDetails = useSelector((state: any) => state['personalInfo']); 
     const [email, setEmail] = useState('');
     const [contactNo, setContactNo] = useState('');
 
@@ -199,8 +199,7 @@ export default function AccountUpdate(){
                         "email": email,
                         "contactNo": contactNo
                     };
-                    dispatch(updateAccountDetails('accountDetails', accountDetails))
-                    dispatch(updateAccountDetails('personalInfo', personalDetails))
+                    dispatch(updatePersonalInfoWithApiResp(personalDetails))
                 }
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');

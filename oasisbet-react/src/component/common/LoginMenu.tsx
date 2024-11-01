@@ -7,15 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import { fetchAccountDetails, jwtAuthenticate } from '../../services/api/ApiService.ts';
 import { LoginCredentialsModel } from '../../constants/Modal.ts';
 import SharedVarConstants from '../../constants/SharedVarConstants.ts';
-import { getSessionStorageOrDefault } from '../util/useSessionStorage.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import SharedVarMethods from '../../constants/SharedVarMethods.ts';
-import { closeModal, openAlert, openModal, setSpinner, updateAccountDetails, updateLoginDetails } from '../actions/ReducerAction.ts';
+import { closeModal, openAlert, openModal, setSpinner, updateAccountDetailsWithApiResp, updateLoginDetails, updatePersonalInfoWithApiResp } from '../actions/ReducerAction.ts';
 
 export default function LoginMenu(){
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginUsername, setLoginUsername] = useState('');
@@ -25,9 +26,8 @@ export default function LoginMenu(){
     const updatedBalance = useSelector((state: any) => state['login']['balance']) ;
 
     useEffect(() => {
-        const retrievedAccountDetails: any = getSessionStorageOrDefault(SharedVarConstants.ACCOUNT_DETAILS, {});
-        console.log("retrievedAccountDetails in LoginMenu: ", retrievedAccountDetails);
-        const { balance } = retrievedAccountDetails || {};
+        console.log("retrievedAccountDetails in LoginMenu: ", accountDetails);
+        const { balance } = accountDetails || {};
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
 
         const authUser = sessionStorage.getItem(SharedVarConstants.AUTH_USER);
@@ -126,10 +126,10 @@ export default function LoginMenu(){
 
     const retrieveAccountDetails = async (username) => {
         try {
-          const accountDetails = await fetchAccountDetails(username);
-          console.log("Login Menu component, accountDetails : ", accountDetails.account, " personalInfo: ", accountDetails.personalInfo);
-          dispatch(updateAccountDetails('accountDetails', accountDetails.account))
-          dispatch(updateAccountDetails('personalInfo', accountDetails.personalInfo))
+          const response = await fetchAccountDetails(username);
+          console.log("Login Menu component, accountDetails : ", response.account, " personalInfo: ", response.personalInfo);
+          dispatch(updateAccountDetailsWithApiResp(response.account));
+          dispatch(updatePersonalInfoWithApiResp(response.personalInfo))
           dispatch(updateLoginDetails('isUserLoggedIn', true));
         } catch (error) {
           console.log("Error when retrieving account details!");

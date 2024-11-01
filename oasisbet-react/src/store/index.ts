@@ -5,10 +5,12 @@ import loginReducer from '../reducers/LoginReducer.ts';
 import modalReducer from '../reducers/ModalReducer.ts';
 import spinnerReducer from '../reducers/SpinnerReducer.ts';
 import errorReducer from '../reducers/ErrorReducer.ts';
-import accountReducer from '../reducers/AccountReducer.ts';
+import accountDetailsReducer from '../reducers/AccountDetailsReducer.ts';
+import personalInfoReducer from '../reducers/PersonalInfoReducer.ts';
 
 const rootReducer: any = combineReducers({
-    account: accountReducer,
+    accountDetails: accountDetailsReducer,
+    personalInfo: personalInfoReducer,
     betSlip: betSlipReducer,
     login: loginReducer,
     modal: modalReducer,

@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
 
 export default function Deposits({handleNavToTrxHist}){
-    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [balance, setBalance] = useState('NA');
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
     const [depositAmt, setDepositAmt] = useState(0 as number);

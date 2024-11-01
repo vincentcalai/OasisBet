@@ -22,7 +22,7 @@ export default function Withdrawals({handleNavToTrxHist}){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [balance, setBalance] = useState('NA');
     const [withdrawalAmt, setWithdrawalAmt] = useState(0 as number);
     const [password, setPassword] = useState('');

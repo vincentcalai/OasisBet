@@ -20,7 +20,7 @@ export default function TrxHist(){
 
     const [trxHistList, setTrxHistList] = useState([] as TrxHistModel[])
 
-    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [mtdBetAmount, setMtdBetAmount] = useState('0.00');
     const [mtdPayout, setMtdPayout] = useState('0.00');
     const [selectedTrxType, setSelectedTrxType] = useState('funds');

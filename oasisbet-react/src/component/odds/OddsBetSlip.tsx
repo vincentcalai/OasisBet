@@ -6,10 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { submitBets } from "../../services/api/ApiService.ts";
 import { SubmitBetsModel } from "../../model/SubmitBetsModel";
 import { useNavigate } from "react-router-dom";
-import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { AccountModel } from "../../constants/Modal.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
-import { updateLoginDetails } from "../actions/ReducerAction.ts";
+import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { openAlert } from "../actions/ReducerAction.ts";
 
 export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, placeBetStatus}){
@@ -18,6 +17,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
 
     const betEvents = useSelector((state: any) => state.betSlip.betSlip);
     const reducerAction = useSelector((state: any) => state.betSlip.action);
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [responseMsg, setResponseMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [betSlipSelections, setBetSlipSelections] = useState([]) as any;
@@ -80,13 +80,11 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
     function handleClickPlaceBet(): void {
         const betSelectionsWithNoAmt = betSlipSelections.filter(e => e.betAmount === 0 || e.potentialPayout === 0);
         let updateBetEvents = [...betSlipSelections];
-        console.log("vincent betSelectionsWithNoAmt: ", betSelectionsWithNoAmt)
         betSelectionsWithNoAmt.forEach(removeSelection => {
             updateBetEvents = updateBetEvents.filter(e => !(e.eventId === removeSelection.eventId && e.betSelection === removeSelection.betSelection));
             onBetSlipUpdate(removeSelection);
             dispatch({type: 'REMOVE_BET_SELECTION', payload: updateBetEvents});
         });
-        console.log("vincent after: ")
         onPlaceBetStatusUpdate("C");
     }
 
@@ -99,9 +97,8 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
         onPlaceBetStatusUpdate("D");
         console.log("confirm place bet! betPLaced: ", betEvents);
 
-        const accountDetailsString = sessionStorage.getItem(SharedVarConstants.ACCOUNT_DETAILS);
-        const accountDetails: AccountModel = accountDetailsString ? JSON.parse(accountDetailsString) : {};
-        const { accId } = accountDetails;
+        const accountDetailsModel: AccountModel = accountDetails || {};
+        const { accId } = accountDetailsModel;
         
         const submitBetsModel: SubmitBetsModel = {
             userId: accId,
@@ -113,7 +110,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
                 setResponseMsg(response.resultMessage);
-                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
+                dispatch(updateAccountDetails('accountDetails', response.account));
                 dispatch(updateLoginDetails('balance', response.account?.balance));
             } else if (response.statusCode === 4) {
                 SharedVarMethods.clearSessionStorage();

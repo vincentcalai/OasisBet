@@ -6,7 +6,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import { fetchAccountDetails } from '../../services/api/ApiService.ts';
 import { LoginCredentialsModel } from "../../constants/Modal.ts";
 import { jwtAuthenticate } from '../../services/api/ApiService.ts';
-import { closeAlert, openAlert, updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { closeAlert, openAlert, updateAccountDetailsWithApiResp, updateLoginDetails, updatePersonalInfoWithApiResp } from "../actions/ReducerAction.ts";
 import { useDispatch } from "react-redux";
 import AlertError from "../util/AlertError.tsx";
 
@@ -67,8 +67,8 @@ export default function AccountLogin(){
     try {
       const response = await fetchAccountDetails(username);
       console.log("AccountLogin component, accountDetails : ", response.account, " personalInfo: ", response.personalInfo);
-      dispatch(updateAccountDetails('accountDetails', response.account))
-      dispatch(updateAccountDetails('personalInfo', response.personalInfo))
+      dispatch(updateAccountDetailsWithApiResp(response.account));
+      dispatch(updatePersonalInfoWithApiResp(response.personalInfo))
       dispatch(updateLoginDetails('isUserLoggedIn', true));
     } catch (error) {
       console.log("Error when retrieving account details!");

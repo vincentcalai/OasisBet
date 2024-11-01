@@ -19,7 +19,7 @@ export default function LimitManagement(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const accountDetails = useSelector((state: any) => state['account']['accountDetails']) ;
+    const accountDetails = useSelector((state: any) => state['accountDetails']) ;
     const [mtdDepositAmt, setMtdDepositAmt] = useState('0.00');
     const [mtdBetAmt, setMtdBetAmt] = useState('0.00');
     const [depositProgress, setDepositProgress] = useState(0 as number);

@@ -19,6 +19,30 @@ export const updateAccountDetails = (key, value) => {
     };
 }
 
+export const updateAccountDetailsWithApiResp = (payload) => {
+    return {
+        type: 'UPDATE_ACCOUNT_DETAILS_RESP',
+        payload: payload
+    };
+}
+
+//Personal Info
+export const updatePersonalInfo = (key, value) => {
+    return {
+        type: 'UPDATE_PERSONAL_INFO',
+        payload: {
+            [key]: value
+        }      
+    };
+}
+
+export const updatePersonalInfoWithApiResp = (payload) => {
+    return {
+        type: 'UPDATE_PERSONAL_INFO_RESP',
+        payload: payload
+    };
+}
+
 //Spinner
 export const setSpinner = (loader, loaderText, textClass: any | null | undefined= null) => {
     return {
