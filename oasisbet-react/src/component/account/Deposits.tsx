@@ -5,7 +5,7 @@ import SharedVarConstants from "../../constants/SharedVarConstants.ts";
 import ConfirmDialog from "../common/dialog/ConfirmDialog.tsx";
 import { AccountModel, UpdateAccountModel } from "../../constants/Modal.ts";
 import { updateAccDetails, retrieveMtdAmounts } from "../../services/api/ApiService.ts";
-import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { updateAccountDetailsWithApiResp, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { useDispatch, useSelector } from "react-redux";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
@@ -165,7 +165,7 @@ export default function Deposits({handleNavToTrxHist}){
             } else {
                 //deposit amount success!
                 console.log("Amount deposited successfully:", response);
-                dispatch(updateAccountDetails('accountDetails', response.account))
+                dispatch(updateAccountDetailsWithApiResp(response.account));
                 dispatch(updateLoginDetails('balance', response.account?.balance));
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');

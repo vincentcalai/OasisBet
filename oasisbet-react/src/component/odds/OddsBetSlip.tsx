@@ -110,7 +110,7 @@ export default function OddsBetSlip({onBetSlipUpdate, onPlaceBetStatusUpdate, pl
             console.log("Bet submission response:", response);
             if(response.statusCode === 0){
                 setResponseMsg(response.resultMessage);
-                dispatch(updateAccountDetails('accountDetails', response.account));
+                dispatch(updateAccountDetails('balance', response.account?.balance))
                 dispatch(updateLoginDetails('balance', response.account?.balance));
             } else if (response.statusCode === 4) {
                 SharedVarMethods.clearSessionStorage();

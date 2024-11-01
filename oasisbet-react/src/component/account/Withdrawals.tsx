@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import './Withdrawals.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
-import { updateAccountDetails, updateLoginDetails } from "../actions/ReducerAction.ts";
+import { updateAccountDetailsWithApiResp, updateLoginDetails } from "../actions/ReducerAction.ts";
 import { UpdateAccountModel, AccountModel, LoginCredentialsModel } from "../../constants/Modal.ts";
 import { jwtAuthenticate, updateAccDetails } from "../../services/api/ApiService.ts";
 import { useDispatch, useSelector } from "react-redux";
@@ -163,7 +163,7 @@ export default function Withdrawals({handleNavToTrxHist}){
             } else {
                 //withdraw amount success!
                 console.log("Amount withdrew successfully:", response);
-                dispatch(updateAccountDetails('accountDetails', response.account))
+                dispatch(updateAccountDetailsWithApiResp(response.account));
                 dispatch(updateLoginDetails('balance', response.account?.balance));
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
