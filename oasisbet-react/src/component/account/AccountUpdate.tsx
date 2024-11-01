@@ -10,7 +10,7 @@ import { AccountDetailsModel, UpdateAccountDetailsModel } from "../../constants/
 import { updateAccInfo } from "../../services/api/ApiService.ts";
 import SharedVarMethods from "../../constants/SharedVarMethods.ts";
 import { handleJwtTokenExpireError } from "../../services/AuthService.ts";
-import { updateAccountDetails, updateAccountDetailsWithApiResp, updateLoginDetails, updatePersonalInfoWithApiResp } from "../actions/ReducerAction.ts";
+import { updateLoginDetails, updatePersonalInfoWithApiResp } from "../actions/ReducerAction.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeAlert, openAlert } from "../actions/ReducerAction.ts";
