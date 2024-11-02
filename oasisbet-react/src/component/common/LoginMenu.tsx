@@ -52,7 +52,7 @@ export default function LoginMenu(){
     useEffect(() => {
         console.log("updatedBalance: ", updatedBalance)
         if (updatedBalance !== undefined) {
-            setBalance(updatedBalance !== null ? updatedBalance.toFixed(2).toString() : 'NA');
+            setBalance(updatedBalance ? updatedBalance.toFixed(2).toString() : 'NA');
         }
     }, [updatedBalance]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import './AccountOverview.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
@@ -19,12 +19,27 @@ export default function AccountOverview(){
     const [balance, setBalance] = useState('NA');
     const [ytdDepositAmt, setYtdDepositAmt] = useState('0.00');
     const [ytdWithdrawalAmt, setYtdWithdrawalAmt] = useState('0.00');
+    
+    const callApiRetrieveYtdAmounts = useCallback(async (accId: string) => {
+        try {
+            const response: any = await retrieveYtdAmounts(accId);
+            const balance = response.account.balance;
+            const ytdDepositAmt = response.account.ytdDepositAmt;
+            const ytdWithdrawalAmt = response.account.ytdWithdrawalAmt;
+            
+            setBalance(balance ? balance.toFixed(2).toString() : 'NA');
+            setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
+            setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
+            dispatch(updateLoginDetails('balance', balance));
+        } catch (error) {
+            throw error;
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(closeAlert());
         console.log("accountDetails in AccountOverview: ", accountDetails);
-        const { accId, balance } = accountDetails || {};
-        setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
+        const { accId } = accountDetails || {};
 
         const retrieveAccDetails = async (accId: string) => {
             try {
@@ -48,20 +63,7 @@ export default function AccountOverview(){
 
         retrieveAccDetails(accId);
         
-    }, [accountDetails, dispatch, navigate]);
-
-    async function callApiRetrieveYtdAmounts(accId: string) {
-        try {
-            const response: any = await retrieveYtdAmounts(accId);
-            const ytdDepositAmt = response.account.ytdDepositAmt;
-            const ytdWithdrawalAmt = response.account.ytdWithdrawalAmt;
-            
-            setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
-            setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
-        } catch (error) {
-            throw error;
-        }
-    }
+    }, [accountDetails, dispatch, navigate, callApiRetrieveYtdAmounts]);
 
     return (
         <div className="container-fluid">
