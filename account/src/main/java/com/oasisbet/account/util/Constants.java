@@ -72,5 +72,6 @@ public class Constants {
 	public static final String ERR_BALANCE_NOT_ZERO = "There are still funds in your account. Please make sure that you have withdrawn all funds from your Account";
 	// Exception - Betting
 	public static final String ERR_INSUFFICIENT_BAL = "You have insufficient balance in your account. Please top up your account.";
+	public static final String ERR_BET_LIMIT_EXCEEDED = "Your total betting amount has exceeded the bet limit for this month. Your bet will not be processed.";
 
 }

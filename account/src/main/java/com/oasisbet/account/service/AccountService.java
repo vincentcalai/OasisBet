@@ -255,20 +255,26 @@ public class AccountService {
 		AccountVO account = new AccountVO();
 		account.setAccId(accId);
 		Optional<AccountView> accountViewOptional = this.accountDao.findById(accId);
-		double accountBal = 0.0;
-		if (accountViewOptional.isPresent()) {
-			accountBal = accountViewOptional.get().getBalance();
-		}
-
-		double totalStake = betSubmissionList.stream().mapToDouble(BetSubmissionVO::getBetAmount).reduce(0.0,
-				Double::sum);
 
 		if (!accountViewOptional.isPresent()) {
 			response.setResultMessage(Constants.ERR_USER_ACC_NOT_FOUND);
 			response.setStatusCode(2);
-		} else if (totalStake > accountBal) {
+			return response;
+		}
+		double accountBal = accountViewOptional.get().getBalance();
+		double totalStake = betSubmissionList.stream().mapToDouble(BetSubmissionVO::getBetAmount).reduce(0.0,
+				Double::sum);
+
+		AccountVO accountVo = this.retrieveMtdAmounts(accId);
+		double mtdBetAmount = accountVo.getMtdBetAmount();
+		double betLimit = accountViewOptional.get().getBetLimit();
+
+		if (totalStake > accountBal) {
 			response.setResultMessage(Constants.ERR_INSUFFICIENT_BAL);
 			response.setStatusCode(3);
+		} else if (totalStake + mtdBetAmount > betLimit) {
+			response.setResultMessage(Constants.ERR_BET_LIMIT_EXCEEDED);
+			response.setStatusCode(5);
 		} else {
 			// update account balance
 			AccountView accountView = accountViewOptional.get();
