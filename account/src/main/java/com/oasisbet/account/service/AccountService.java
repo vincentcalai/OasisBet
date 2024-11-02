@@ -132,6 +132,11 @@ public class AccountService {
 		LocalDateTime startOfDay = startOfMonth.atStartOfDay();
 		Date startDate = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
 
+		Optional<AccountView> accountViewOptional = this.accountDao.findById(accId);
+		if(accountViewOptional.isPresent()) {
+			Double balance = accountViewOptional.get().getBalance();
+			accountVo.setBalance(balance);
+		}
 		Double mtdBetAmount = accountBetTrxDao.findMtdBetAmount(accId, startDate);
 		mtdBetAmount = mtdBetAmount == null ? 0.0 : mtdBetAmount;
 		Double mtdDepositAmount = accountOtherTrxDao.findMtdDeposit(accId, startDate);

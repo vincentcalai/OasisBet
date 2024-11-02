@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import './LimitManagement.css';
 import { Card, OverlayTrigger, ProgressBar, Tooltip } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
@@ -42,6 +42,23 @@ export default function LimitManagement(){
 
     const [successMsg, setSuccessMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+
+    const callApiRetrieveMtdAmounts = useCallback(async (depositLimit: number, betLimit: number, accId: string) => {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdDepositAmt = response.account.mtdDepositAmt;
+            const mtdBetAmt = response.account.mtdBetAmount;
+            const depositProgress = mtdDepositAmt ? (mtdDepositAmt/depositLimit) * 100 : 0;
+            const betProgress = mtdBetAmt ? (mtdBetAmt/betLimit) * 100 : 0;
+
+            setMtdDepositAmt(mtdDepositAmt != null ? mtdDepositAmt.toFixed(2).toString() : '0.00');
+            setMtdBetAmt(mtdBetAmt != null ? mtdBetAmt.toFixed(2).toString() : '0.00');
+            setDepositProgress(depositProgress != null ? Number(depositProgress.toFixed(2)) : 0);
+            setBetProgress(betProgress != null ? Number(betProgress.toFixed(2)) : 0);
+        } catch (error) {
+            throw error;
+        }
+    }, []);
     
     useEffect(() => {
         dispatch(closeAlert());
@@ -76,7 +93,7 @@ export default function LimitManagement(){
         setSelectedBetAmt('100');
         setIsDepositAmtInputDisabled(true);
         setIsBetAmtInputDisabled(true);
-    }, [accountDetails, dispatch, navigate]);
+    }, [accountDetails, dispatch, navigate, callApiRetrieveMtdAmounts]);
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -211,23 +228,6 @@ export default function LimitManagement(){
           console.log('Cancelled!');
         }
     };
-
-    async function callApiRetrieveMtdAmounts(depositLimit: number, betLimit: number, accId: string) {
-        try {
-            const response: any = await retrieveMtdAmounts(accId);
-            const mtdDepositAmt = response.account.mtdDepositAmt;
-            const mtdBetAmt = response.account.mtdBetAmount;
-            const depositProgress = mtdDepositAmt ? (mtdDepositAmt/depositLimit) * 100 : 0;
-            const betProgress = mtdBetAmt ? (mtdBetAmt/betLimit) * 100 : 0;
-
-            setMtdDepositAmt(mtdDepositAmt != null ? mtdDepositAmt.toFixed(2).toString() : '0.00');
-            setMtdBetAmt(mtdBetAmt != null ? mtdBetAmt.toFixed(2).toString() : '0.00');
-            setDepositProgress(depositProgress != null ? Number(depositProgress.toFixed(2)) : 0);
-            setBetProgress(betProgress != null ? Number(betProgress.toFixed(2)) : 0);
-        } catch (error) {
-            throw error;
-        }
-    }
 
     async function callApiUpdateAccDetails(request: UpdateAccountModel) {
         try {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import './Deposits.css';
 import { Card } from "react-bootstrap";
 import SharedVarConstants from "../../constants/SharedVarConstants.ts";
@@ -30,6 +30,18 @@ export default function Deposits({handleNavToTrxHist}){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const callApiRetrieveMtdAmounts = useCallback(async (depositLimit: number, accId: string) => {
+        try {
+            const response: any = await retrieveMtdAmounts(accId);
+            const mtdDepositAmt = response.account.mtdDepositAmt;
+            const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
+            setMtdDepositAmt(displayRemDeposit ? displayRemDeposit.toFixed(2).toString() : '0.00');
+            dispatch(updateLoginDetails('balance', response.account?.balance));
+        } catch (error) {
+            throw error;
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         dispatch(closeAlert());
         console.log("accountDetails in Deposits: ", accountDetails);
@@ -58,7 +70,7 @@ export default function Deposits({handleNavToTrxHist}){
         retrieveAccDetails(depositLimit, accId);
 
         setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
-    }, [accountDetails, dispatch, navigate]);
+    }, [accountDetails, dispatch, navigate, callApiRetrieveMtdAmounts]);
 
     const onDepositAmtChange = (e) => {
         setDepositAmt(e.target.value);
@@ -144,17 +156,6 @@ export default function Deposits({handleNavToTrxHist}){
           console.log('Cancelled!');
         }
     };
-
-    async function callApiRetrieveMtdAmounts(depositLimit: number, accId: string) {
-        try {
-            const response: any = await retrieveMtdAmounts(accId);
-            const mtdDepositAmt = response.account.mtdDepositAmt;
-            const displayRemDeposit = depositLimit - (mtdDepositAmt ?? 0);
-            setMtdDepositAmt(displayRemDeposit != null ? displayRemDeposit.toFixed(2).toString() : '0.00');
-        } catch (error) {
-            throw error;
-        }
-    }
 
     async function callApiUpdateAccDetails(request: UpdateAccountModel) {
         try {
