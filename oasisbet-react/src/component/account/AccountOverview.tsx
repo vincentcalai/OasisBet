@@ -76,7 +76,7 @@ export default function AccountOverview(){
                     Balance
                 </label>
                 <div className="dashboard-sidemenu-value" aria-label="Account Balance">
-                    ${balance}
+                    {balance ? `$${balance}` : "NA"}
                 </div>
                 <label className="control-label">
                     Deposit

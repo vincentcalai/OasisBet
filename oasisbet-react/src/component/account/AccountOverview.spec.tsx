@@ -36,7 +36,6 @@ describe('AccountOverview Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    sessionStorage.setItem('ACCOUNT_DETAILS', '{"accId":1000022,"usrId":26,"balance":0,"depositLimit":1000,"depositAmt":null,"withdrawalAmt":null,"actionType":null,"ytdDepositAmt":5000,"ytdWithdrawalAmt":2000,"betLimit":200,"mtdDepositAmt":null,"mtdBetAmount":null,"mthPayout":null}');
   });
 
   afterEach(() => {
@@ -79,7 +78,7 @@ describe('AccountOverview Component', () => {
       );
     });
 
-    const balance = screen.getByText('$0.00');
+    const balance = screen.getByText('$3000.00');
     expect(balance).toBeDefined();
     const ytdDepositAmt = screen.getByText('$5000.00');
     expect(ytdDepositAmt).toBeDefined();
@@ -104,7 +103,7 @@ describe('AccountOverview Component', () => {
     });
 
     const balance = screen.getByLabelText('Account Balance');
-    expect(balance).toHaveTextContent('$0.00');
+    expect(balance).toHaveTextContent('NA');
     const ytdDepositAmt = screen.getByLabelText('YTD Deposit Amount');
     expect(ytdDepositAmt).toHaveTextContent('$0.00');
     const ytdWithdrawalAmt = screen.getByLabelText('YTD Withdrawal Amount');
