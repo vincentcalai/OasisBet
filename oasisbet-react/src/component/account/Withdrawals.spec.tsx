@@ -10,6 +10,9 @@ import { jwtAuthenticate, updateAccDetails } from '../../services/api/ApiService
 import Withdrawals from './Withdrawals';
 
 const mockReducer = {
+  accountDetails: {
+    withdrawalAmt: 100
+  },
   login: {
     isUserLoggedIn: true
   },
