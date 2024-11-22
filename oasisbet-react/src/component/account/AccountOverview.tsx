@@ -27,7 +27,7 @@ export default function AccountOverview(){
             const ytdDepositAmt = response.account.ytdDepositAmt;
             const ytdWithdrawalAmt = response.account.ytdWithdrawalAmt;
             
-            setBalance(balance ? balance.toFixed(2).toString() : 'NA');
+            setBalance(balance != null ? balance.toFixed(2).toString() : 'NA');
             setYtdDepositAmt((ytdDepositAmt ?? 0).toFixed(2));
             setYtdWithdrawalAmt((ytdWithdrawalAmt ?? 0).toFixed(2));
             dispatch(updateLoginDetails('balance', balance));
