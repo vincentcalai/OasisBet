@@ -47,6 +47,7 @@ const SharedVarConstants = {
     NAV_MENU_SELECT_WITHDRAWALS: "withdrawals",
     NAV_MENU_SELECT_TERMINATE_ACCOUNT: "terminate_account",
 
+    //Dialog Headers
     CREATE_USER_DIALOG_TITLE: "Confirm Create User",
     CFM_DEPOSIT_DIALOG_TITLE: "Confirm Deposit",
     CFM_WITHDRAW_DIALOG_TITLE: "Confirm Withdrawal",
@@ -57,6 +58,7 @@ const SharedVarConstants = {
     LOGOUT_MODAL_TITLE: "User Logout",
     LOGIN_EXTEND_SESSION_TITLE: "Login Extend Session",
 
+    //Dialog Types
     CREATE_USER_DIALOG_TYPE: 'CREATE_USER',
     CFM_DEPOSIT_DIALOG_TYPE: 'CFM_DEPOSIT',
     CFM_WITHDRAW_DIALOG_TYPE: 'CFM_WITHDRAW',
@@ -65,6 +67,7 @@ const SharedVarConstants = {
     CFM_UPDATE_ACC_DETAILS_DIALOG_TYPE: 'CFM_UPDATE_ACC_DETAILS',
     CFM_TERMINATE_ACC_TYPE: 'CFM_TERMINATE_ACC',
     
+    //Dialog Messages
     CREATE_USER_DIALOG_MSG: 'Are you sure to create a new user?',
     CFM_DEPOSIT_DIALOG_MSG: 'Are you sure to deposit?',
     CFM_WITHDRAW_DIALOG_MSG: 'Are you sure to withdraw?',
@@ -76,11 +79,13 @@ const SharedVarConstants = {
     LOGIN_EXTEND_SESSION_MSG: 'You have been inactive for 15 minutes. Do you want to extend your login session?',
     AUTO_LOGOUT_MSG: 'For security reasons, you have been locked out as it has been inactive for more than 30 minutes',
 
+    //Error Messages
     INVALID_DATE_FROM_AND_TO_ERR_MSG: '"From" date cannot be later than "To" date.',
     INVALID_LOGIN_ERR_MSG: 'Please enter a valid credential. Login failed.',
     INCORRECT_PW_ERR_MSG: 'Incorrect Password. Please enter correct password.',
     USER_NOT_LOGGED_IN: 'Please login to place bet.',
     UNAUTHORIZED_ERR_MSG: 'Unauthorized response. Please login again.',
+    USERNAME_NOT_FOUND: 'Username is not found',
 
     LAST_24_HRS: 'last24Hrs',
     LAST_3_DAYS: 'last3Days',

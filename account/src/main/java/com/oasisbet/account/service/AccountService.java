@@ -604,8 +604,8 @@ public class AccountService {
 			Long userId = userView.getId();
 			AccountView accountView = accountDao.findByUsrId(userId);
 			if(accountView != null) {
-				Double balance = accountView.getBalance();
-				if (Objects.equals(balance, 0.0)) {
+ 				Double balance = accountView.getBalance();
+				if (!Objects.equals(balance, 0.0)) {
 					response.setStatusCode(1);
 					response.setResultMessage(Constants.ERR_BALANCE_NOT_ZERO);
 					return response;

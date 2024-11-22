@@ -34,7 +34,12 @@ export default function TerminateAccount(){
         setDialogOpen(false);
         if (result === 'confirm') {
           //TODO: to change this to user id
-          const username: string = "CHOONANN2";
+          const username = sessionStorage.getItem(SharedVarConstants.AUTH_USER)
+          if(!username) {
+            console.log("General Error: Username is not found");
+            dispatch(openAlert(SharedVarConstants.USERNAME_NOT_FOUND));
+            return;
+          }
           try {
               await callApiTerminateAccount(username);
           } catch (error) {
@@ -67,7 +72,6 @@ export default function TerminateAccount(){
             } else {
                 //withdraw amount success!
                 console.log("Amount terminated successfully:", response);
-                sessionStorage.setItem(SharedVarConstants.ACCOUNT_DETAILS, JSON.stringify(response.account));
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
             }
