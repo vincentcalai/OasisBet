@@ -64,14 +64,18 @@ export default function TerminateAccount(){
 
     async function callApiTerminateAccount(request: string) {
         try {
-            //TODO: change this to terminate account API
             const response = await terminateAccount(request);
             if (response.statusCode !== 0) {
                 console.log("Error terminating account, response:", response);
+                setIsCheckboxChecked(false);
+                setIsConfirmDisabled(true);
                 setErrorMsg(response.resultMessage);
             } else {
-                //withdraw amount success!
+                //terminate account success!
                 console.log("Amount terminated successfully:", response);
+                SharedVarMethods.clearSessionStorage();
+                dispatch(updateLoginDetails('isUserLoggedIn', false));
+                navigate('/account', { state: { code: 0, message: response.resultMessage } });
                 setSuccessMsg(response.resultMessage);
                 setErrorMsg('');
             }
