@@ -48,6 +48,7 @@ describe('TerminateAccount Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    sessionStorage.setItem('AUTH_USER', 'TESTUSER')
   });
 
   afterEach(() => {
@@ -135,7 +136,7 @@ describe('TerminateAccount Component', () => {
     expect(withdrawalHeader).toBeDefined();
   });
 
-  it('should show terminate account success when user confirm terminate account', async () => {
+  it('should show not show error when user confirm terminate account succeeded', async () => {
     const user = userEvent.setup();
     (terminateAccount as jest.Mock).mockResolvedValue(mockTerminateAccSuccessResponse);
     
@@ -186,6 +187,34 @@ describe('TerminateAccount Component', () => {
       expect(errorMessage).toBeDefined();
     });
   });
+
+  it('should not show success message when user confirms terminate account and username is not found in system', async () => {
+    sessionStorage.clear();
+    const user = userEvent.setup();
+    (terminateAccount as jest.Mock).mockResolvedValue(mockTerminateAccFailureResponse);
+    
+    await act(async () => { 
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <TerminateAccount />
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    const checkbox = screen.getByRole('checkbox', { name: /I have read and understood the above and would like to proceed with my Account closure request/i });
+    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
+    await user.click(checkbox);
+    await user.click(confirmButton);
+    const confirmDialogButton = screen.getByTestId('dialog-confirm');
+    await user.click(confirmDialogButton);
+    await waitFor(() => {
+      const errorMessage = screen.queryByText(/Success:/i);
+      expect(errorMessage).toBeNull();
+    });
+  });
+
 
   it('should not show successful message when token expired', async () => {
     const user = userEvent.setup();

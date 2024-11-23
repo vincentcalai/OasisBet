@@ -33,7 +33,6 @@ export default function TerminateAccount(){
     const handleCloseDialog = async (result: any) => {
         setDialogOpen(false);
         if (result === 'confirm') {
-          //TODO: to change this to user id
           const username = sessionStorage.getItem(SharedVarConstants.AUTH_USER)
           if(!username) {
             console.log("General Error: Username is not found");
