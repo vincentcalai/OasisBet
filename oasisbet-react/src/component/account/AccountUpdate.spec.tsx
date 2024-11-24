@@ -297,12 +297,13 @@ describe('AccountUpdate Component', () => {
     });
 
     const contactNo = screen.getByLabelText('Contact No');
+    const email = screen.getByLabelText('Email');
     const emailDisableButton = screen.getByLabelText(/Email Disabled Button/i);
     const contactNoDisableButton = screen.getByLabelText(/Contact No Disabled Button/i);
 
     await user.click(emailDisableButton); 
     await user.click(contactNoDisableButton); 
-    // await user.type(email, 'TEST3@TEST.COM');
+    await user.type(email, 'TEST3@TEST.COM');
     await user.type(contactNo, '91110000');
 
     const confirmButton = screen.getByLabelText(/Contact Tab Confirm Button/i);
@@ -334,12 +335,14 @@ describe('AccountUpdate Component', () => {
     });
 
     const contactNo = screen.getByLabelText('Contact No');
+    const email = screen.getByLabelText('Email');
     const emailDisableButton = screen.getByLabelText(/Email Disabled Button/i);
     const contactNoDisableButton = screen.getByLabelText(/Contact No Disabled Button/i);
 
     await user.click(emailDisableButton); 
     await user.click(contactNoDisableButton); 
     await user.type(contactNo, '91110000');
+    await user.type(email, 'TEST@TEST.COM');
 
     const confirmButton = screen.getByLabelText(/Contact Tab Confirm Button/i);
     await user.click(confirmButton);
