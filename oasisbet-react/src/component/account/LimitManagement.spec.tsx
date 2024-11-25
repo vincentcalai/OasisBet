@@ -11,6 +11,9 @@ import Withdrawals from './Withdrawals';
 import LimitManagement from './LimitManagement';
 
 const mockReducer = {
+  accountDetails: {
+    depositAmt: 100
+  },
   login: {
     isUserLoggedIn: true
   },
