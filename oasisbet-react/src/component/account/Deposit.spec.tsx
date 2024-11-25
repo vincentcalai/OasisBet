@@ -10,6 +10,9 @@ import { retrieveMtdAmounts, retrieveYtdAmounts, updateAccDetails } from '../../
 import Deposits from './Deposits';
 
 const mockReducer = {
+  accountDetails: {
+    depositAmt: 100
+  },
   login: {
     isUserLoggedIn: true
   },
@@ -155,7 +158,7 @@ describe('Deposits Component', () => {
     });
 
     const balance = screen.getByLabelText('Account Balance');
-    expect(balance).toHaveTextContent('$0.00');
+    expect(balance).toHaveTextContent('$NA');
     const depositRemLimit = screen.getByLabelText('Deposit Remaining Limit');
     expect(depositRemLimit).toHaveTextContent('$0.00');
   });
