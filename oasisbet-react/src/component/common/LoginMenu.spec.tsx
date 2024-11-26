@@ -26,7 +26,6 @@ describe('LoginMenu Component', () => {
     navigateMock = jest.fn();
     (useDispatch as unknown as jest.Mock).mockReturnValue(dispatchMock);
     (useNavigate as jest.Mock).mockReturnValue(navigateMock);
-    sessionStorage.setItem('ACCOUNT_DETAILS', '{"accId":1000022,"usrId":26,"balance":150.55,"depositLimit":1000,"depositAmt":null,"withdrawalAmt":null,"actionType":null,"ytdDepositAmt":5000,"ytdWithdrawalAmt":2000,"betLimit":200,"mtdDepositAmt":null,"mtdBetAmount":null,"mthPayout":null}');
   });
 
   afterEach(() => {
@@ -34,6 +33,10 @@ describe('LoginMenu Component', () => {
   });
 
   it('should render the component with initial values', () => {
+    (useSelector as unknown as jest.Mock).mockReturnValueOnce({
+      accountDetails: { balance: 150.55 }
+    });
+
     (useSelector as unknown as jest.Mock).mockReturnValueOnce({
       login: { isUserLoggedIn: true, balance: 150.55 }
     });
