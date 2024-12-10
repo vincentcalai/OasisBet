@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-12-09T09:25:37.848Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="K-oWuVH-WMefUAUvD15n" version="21.1.2" type="device" pages="8">
+<mxfile host="Electron" modified="2024-12-09T09:31:47.735Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="5WXMGk-9_Vch1XXH24Zk" version="21.1.2" type="device" pages="8">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Use Case Diagram">
-    <mxGraphModel dx="1232" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1232" dy="1195" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -343,7 +343,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="3yRNvgIO_LXvSJmdzNFA" name="Entity-Relationship Diagram">
-    <mxGraphModel dx="1232" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1232" dy="1195" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -418,7 +418,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="rX7CZ6C7idOaKAo0EbVl" name="Microservice Architecture Design">
-    <mxGraphModel dx="1232" dy="1188" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+    <mxGraphModel dx="1232" dy="1195" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -438,6 +438,9 @@
           <mxGeometry x="307" y="201" width="100" height="70" as="geometry" />
         </mxCell>
         <mxCell id="6ecFZeykWCkEMpMDCHju-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="n--Mw3TsR7HPo-DKLm6b-4" target="n--Mw3TsR7HPo-DKLm6b-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DUF6cRKcdebuzfgPIH8w-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="n--Mw3TsR7HPo-DKLm6b-4" target="JHVXrwmy0LOHqUTvBtNm-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="n--Mw3TsR7HPo-DKLm6b-4" value="Front-end Web UI&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
@@ -494,18 +497,15 @@
         <mxCell id="s3ncZgwoo6Pfu3EHYZ56-2" value="MySQL DB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="207.5" y="673" width="89" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="JHVXrwmy0LOHqUTvBtNm-1" value="Web Socket Service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="772" y="479" width="130" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="JHVXrwmy0LOHqUTvBtNm-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="JHVXrwmy0LOHqUTvBtNm-1" target="n--Mw3TsR7HPo-DKLm6b-5">
+        <mxCell id="DUF6cRKcdebuzfgPIH8w-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="JHVXrwmy0LOHqUTvBtNm-1" target="NkveTH0OLbuvpOsbD4DB-1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="837" y="461" />
-              <mxPoint x="480" y="461" />
+              <mxPoint x="837" y="623" />
             </Array>
-            <mxPoint x="652" y="441" as="sourcePoint" />
-            <mxPoint x="652" y="491" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="JHVXrwmy0LOHqUTvBtNm-1" value="Web Socket Service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="772" y="479" width="130" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
