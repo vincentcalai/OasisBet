@@ -1,6 +1,6 @@
 package com.oasisbet.betting.odds.util;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
+import com.oasisbet.betting.odds.model.BetEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;

@@ -10,8 +10,8 @@ public class KafkaMessageProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage(String topic, String message) {
-        kafkaTemplate.send(topic, message);
+    public void sendMessage(String topic, String betEvent) {
+        kafkaTemplate.send(topic, betEvent);
     }
 
 }
