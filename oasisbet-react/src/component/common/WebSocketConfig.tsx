@@ -20,7 +20,7 @@ const WebSocketConfig = () => {
         <div>
         <SockJsClient 
             url='http://localhost:8804/websocket' 
-            topics={['/topic/greetings']}
+            topics={['/topic/odds']}
             onConnect={onConnect}
             onDisconnect={onDisconnect}
             onMessage={msg => onMessageReceived(msg)}
