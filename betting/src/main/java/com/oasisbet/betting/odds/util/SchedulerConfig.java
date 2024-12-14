@@ -82,4 +82,23 @@ public class SchedulerConfig {
 		factoryBean.setDurability(true);
 		return factoryBean;
 	}
+
+	@Bean
+	public CronTriggerFactoryBean kafkaBetEventsJobTrigger(@Qualifier("kafkaBetEventsJobDetail") JobDetail jobDetail) {
+		CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
+		factoryBean.setJobDetail(jobDetail);
+		factoryBean.setStartDelay(0L);
+//		factoryBean.setCronExpression("0 0 9 * * ?");
+		factoryBean.setCronExpression("0 */2 * ? * *");
+		return factoryBean;
+	}
+
+	@Bean
+	public JobDetailFactoryBean kafkaBetEventsJobDetail() {
+		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+		factoryBean.setJobClass(KafkaBetEventsJob.class);
+		factoryBean.setDurability(true);
+		return factoryBean;
+	}
+
 }
