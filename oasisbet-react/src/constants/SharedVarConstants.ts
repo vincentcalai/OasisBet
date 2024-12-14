@@ -18,7 +18,7 @@ const SharedVarConstants = {
     API_SOURCE_COMP_TYPE_SERIE_A: "soccer_italy_serie_a",
     API_SOURCE_COMP_TYPE_LIGUE_ONE: "soccer_france_ligue_one",
     API_SOURCE_COMP_TYPE_FA_CUP: "soccer_fa_cup",
-    API_SOURCE_COMP_TYPE_EFL_CUP: "soccer_efl_cup",
+    API_SOURCE_COMP_TYPE_EFL_CUP: "soccer_england_efl_cup",
     API_SOURCE_COMP_TYPE_UCL: "soccer_uefa_champs_league",
 
     COMP_HEADER_EPL: "English Premier League",

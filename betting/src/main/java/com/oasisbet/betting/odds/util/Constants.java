@@ -45,6 +45,8 @@ public class Constants {
 	public static final String COMP_TYPE_BUNDESLIGA = "BUNDESLIGA";
 	public static final String COMP_TYPE_SERIE_A = "SERIEA";
 	public static final String COMP_TYPE_LIGUE_ONE = "LIGUEONE";
+	public static final String COMP_TYPE_EFL_CUP = "EFLCUP";
+	public static final String COMP_TYPE_UCL = "UCL";
 
 	public static final List<String> API_SOURCE_COMP_TYPE_LIST = Collections
 			.unmodifiableList(Arrays.asList(API_SOURCE_COMP_TYPE_EPL, API_SOURCE_COMP_TYPE_LALIGA,
@@ -82,6 +84,8 @@ public class Constants {
 		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_BUNDESLIGA, COMP_TYPE_BUNDESLIGA);
 		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_SERIE_A, COMP_TYPE_SERIE_A);
 		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_LIGUE_ONE, COMP_TYPE_LIGUE_ONE);
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_EFL_CUP, COMP_TYPE_EFL_CUP);
+		API_SOURCE_COMP_TYPE_MAP.put(API_SOURCE_COMP_TYPE_UCL, COMP_TYPE_UCL);
 	}
 
 }
