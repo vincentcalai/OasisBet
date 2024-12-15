@@ -41,16 +41,14 @@ public class KafkaBetEventsJob implements Job {
 		for(String compType : API_SOURCE_COMP_TYPE_LIST){
 			List<BetEvent> betEventList = oddsService.retrieveBetEventByCompType(compType);
 
-			betEventList.forEach(betEvent -> {
 				try {
-					String betEventJson = objectMapper.writeValueAsString(betEvent);
+					String betEventJson = objectMapper.writeValueAsString(betEventList);
 					log.info("Sending kafka message from Betting microservice: " + betEventJson);
 					messageProducer.sendMessage("odds-topic", betEventJson);
 				} catch (Exception e) {
 					log.error("Error in sending Bet Events to Kafka server: ", e);
 				}
-			});
-		}
+		};
 
 	}
 

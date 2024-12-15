@@ -71,7 +71,6 @@ public class OddsService {
 		betEventList = betEventList.stream().sorted(Comparator.comparing(BetEvent::getStartTime))
 				.collect(Collectors.toList());
 		return betEventList;
-
 	}
 
 	public BigInteger getSequenceValue(String compType) {
