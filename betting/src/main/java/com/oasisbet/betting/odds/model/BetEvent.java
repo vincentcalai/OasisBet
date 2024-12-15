@@ -13,7 +13,7 @@ public class BetEvent {
 	private BigInteger eventId;
 	private String compType;
 	private String eventDesc;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date startTime;
 	private TeamsDetails teamsDetails;
 	private H2HEventOdds h2hEventOdds;
