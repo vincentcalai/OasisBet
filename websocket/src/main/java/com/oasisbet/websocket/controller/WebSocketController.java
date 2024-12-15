@@ -2,7 +2,6 @@ package com.oasisbet.websocket.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasisbet.websocket.model.BetEvent;
-import com.oasisbet.websocket.model.Greeting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
@@ -20,7 +19,6 @@ public class WebSocketController {
         BetEvent betEvent = null;
         try {
             betEvent = objectMapper.readValue(betEventJson, BetEvent.class);
-            log.info("Vincent greeting test succeed!");
         } catch (Exception e) {
             log.error("Error in reading Bet Event Json", e);
         }

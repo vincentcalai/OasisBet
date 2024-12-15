@@ -1,7 +1,5 @@
 package com.oasisbet.websocket.service;
 
-import com.oasisbet.websocket.model.BetEvent;
-import com.oasisbet.websocket.model.Greeting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
