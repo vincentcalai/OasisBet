@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SockJsClient from 'react-stomp';
 
 const WebSocketConfig = () => {
     
     // const dispatch = useDispatch()
+    const [topics, setTopics] = useState([] as String[]) ;
+
     const onConnect = () => {
         console.log("WebSocketConfig :: Connected!!")
+        setTopics(['/topic/odds']);
     }
 
     const onDisconnect = () => {
@@ -20,7 +23,7 @@ const WebSocketConfig = () => {
         <div>
         <SockJsClient 
             url='http://localhost:8804/websocket' 
-            topics={['/topic/odds']}
+            topics={topics}
             onConnect={onConnect}
             onDisconnect={onDisconnect}
             onMessage={msg => onMessageReceived(msg)}
