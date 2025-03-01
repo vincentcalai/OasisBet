@@ -16,7 +16,8 @@ export default function OddsLanding(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const betSlips = useSelector((state: any) => state.betSlip.betSlip);
+    const updatedBetEvents = useSelector((state: any) => state.betEvent?.betEvent);
+    const betSlips = useSelector((state: any) => state.betSlip?.betSlip);
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
     const reducerAction = useSelector((state: any) => state.betSlip.action);
     const [compType, setCompType] = useState(SharedVarConstants.API_SOURCE_COMP_TYPE_EPL);
@@ -26,18 +27,44 @@ export default function OddsLanding(){
     const selectedBetsRef = useRef([] as BetSlip[]);
 
     useEffect(() => {
+        console.log("OddsLanding updatedBetEvents from DB: ", updatedBetEvents)
+        console.log("vincent eventsMap before: ", eventsMap)
+        eventsMap.forEach((betEvents: BetEvent[], key: string) => {
+            betEvents.forEach(event => {
+                console.log("vincent event: ", event)
+                const isEventFound = updatedBetEvents.has(event.eventId)
+                console.log("vincent eventFound: ", isEventFound)
+                if(isEventFound) {
+                    const updatedEventFromMap = updatedBetEvents.get(event.eventId)
+                    if(event.h2hEventOdds?.homeOdds !== updatedEventFromMap?.homeOdds) {
+                        console.log("vincent homeOdds changed! old Odds: ", event.h2hEventOdds?.homeOdds, " new Odds: ", updatedEventFromMap?.homeOdds)
+                        event.h2hEventOdds.homeOdds = updatedEventFromMap?.homeOdds
+                    } else if(event.h2hEventOdds?.drawOdds !== updatedEventFromMap?.drawOdds) {
+                        console.log("vincent drawOdds changed! old Odds: ", event.h2hEventOdds?.drawOdds, " new Odds: ", updatedEventFromMap?.drawOdds)
+                        event.h2hEventOdds.drawOdds = updatedEventFromMap?.drawOdds
+                    } else if(event.h2hEventOdds?.awayOdds !== updatedEventFromMap?.awayOdds) {
+                        console.log("vincent awayOdds changed! old Odds: ", event.h2hEventOdds?.awayOdds, " new Odds: ", updatedEventFromMap?.awayOdds)
+                        event.h2hEventOdds.awayOdds = updatedEventFromMap?.awayOdds
+                    } 
+                }
+            })
+        })
+        console.log("vincent eventsMap after: ", eventsMap)
+    }, [updatedBetEvents])
+
+    useEffect(() => {
         const fetchData = async (compType) => {
             try {
-            const resp = await fetchOdds(compType);
-            
-            const betEvents = resp.betEvent;
-            console.log("betEvents after retriving odds: ", betEvents);
-    
-            // Initialize H2HBetSelection object and save to all events
-            const updatedEvents = betEvents.map(event => {
-              const initBetSelection = new H2HBetSelection();
-              event.betSelection = initBetSelection;
-              return event;
+                const resp = await fetchOdds(compType);
+                
+                const betEvents = resp.betEvent;
+                console.log("betEvents after retriving odds: ", betEvents);
+        
+                // Initialize H2HBetSelection object and save to all events
+                const updatedEvents = betEvents.map(event => {
+                const initBetSelection = new H2HBetSelection();
+                event.betSelection = initBetSelection;
+                return event;
             });
 
             // Convert startTime from string to Date format

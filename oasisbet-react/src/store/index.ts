@@ -7,11 +7,13 @@ import spinnerReducer from '../reducers/SpinnerReducer.ts';
 import errorReducer from '../reducers/ErrorReducer.ts';
 import accountDetailsReducer from '../reducers/AccountDetailsReducer.ts';
 import personalInfoReducer from '../reducers/PersonalInfoReducer.ts';
+import betEventReducer from '../reducers/BetEventReducer.ts';
 
 const rootReducer: any = combineReducers({
     accountDetails: accountDetailsReducer,
     personalInfo: personalInfoReducer,
     betSlip: betSlipReducer,
+    betEvent: betEventReducer,
     login: loginReducer,
     modal: modalReducer,
     spinner: spinnerReducer,
