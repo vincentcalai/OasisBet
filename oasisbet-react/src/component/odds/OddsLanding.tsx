@@ -11,12 +11,14 @@ import { fetchOdds } from '../../services/api/ApiService.ts';
 import { useNavigate } from 'react-router-dom';
 import AlertError from '../util/AlertError.tsx';
 import { closeAlert } from '../actions/ReducerAction.ts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 
 export default function OddsLanding(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const updatedBetEvents = useSelector((state: any) => state.betEvent?.betEvent);
+    const updatedBetEventsFromKafka = useSelector((state: any) => state.betEvent?.betEvent);
     const betSlips = useSelector((state: any) => state.betSlip?.betSlip);
     const isUserLoggedIn = useSelector((state: any) => state['login']['isUserLoggedIn']) ;
     const reducerAction = useSelector((state: any) => state.betSlip.action);
@@ -27,30 +29,38 @@ export default function OddsLanding(){
     const selectedBetsRef = useRef([] as BetSlip[]);
 
     useEffect(() => {
-        console.log("OddsLanding updatedBetEvents from DB: ", updatedBetEvents)
+        console.log("OddsLanding updatedBetEvents from DB: ", updatedBetEventsFromKafka)
         console.log("vincent eventsMap before: ", eventsMap)
         eventsMap.forEach((betEvents: BetEvent[], key: string) => {
             betEvents.forEach(event => {
                 console.log("vincent event: ", event)
-                const isEventFound = updatedBetEvents.has(event.eventId)
+                const isEventFound = updatedBetEventsFromKafka.has(event.eventId)
                 console.log("vincent eventFound: ", isEventFound)
                 if(isEventFound) {
-                    const updatedEventFromMap = updatedBetEvents.get(event.eventId)
+                    const updatedEventFromMap = updatedBetEventsFromKafka.get(event.eventId)
                     if(event.h2hEventOdds?.homeOdds !== updatedEventFromMap?.homeOdds) {
                         console.log("vincent homeOdds changed! old Odds: ", event.h2hEventOdds?.homeOdds, " new Odds: ", updatedEventFromMap?.homeOdds)
+                        const oddsChangeHomeInd = event.h2hEventOdds?.homeOdds < updatedEventFromMap?.homeOdds ? 'GREEN' : 'RED'
+                        event.oddsChangeInd = {home: oddsChangeHomeInd}
                         event.h2hEventOdds.homeOdds = updatedEventFromMap?.homeOdds
-                    } else if(event.h2hEventOdds?.drawOdds !== updatedEventFromMap?.drawOdds) {
+                    } 
+                    if(event.h2hEventOdds?.drawOdds !== updatedEventFromMap?.drawOdds) {
                         console.log("vincent drawOdds changed! old Odds: ", event.h2hEventOdds?.drawOdds, " new Odds: ", updatedEventFromMap?.drawOdds)
+                        const oddsChangeDrawInd = event.h2hEventOdds?.drawOdds < updatedEventFromMap?.drawOdds ? 'GREEN' : 'RED'
+                        event.oddsChangeInd = {draw: oddsChangeDrawInd}
                         event.h2hEventOdds.drawOdds = updatedEventFromMap?.drawOdds
-                    } else if(event.h2hEventOdds?.awayOdds !== updatedEventFromMap?.awayOdds) {
+                    } 
+                    if(event.h2hEventOdds?.awayOdds !== updatedEventFromMap?.awayOdds) {
                         console.log("vincent awayOdds changed! old Odds: ", event.h2hEventOdds?.awayOdds, " new Odds: ", updatedEventFromMap?.awayOdds)
+                        const oddsChangeAwayInd = event.h2hEventOdds?.awayOdds < updatedEventFromMap?.awayOdds ? 'GREEN' : 'RED'
+                        event.oddsChangeInd = {away: oddsChangeAwayInd}
                         event.h2hEventOdds.awayOdds = updatedEventFromMap?.awayOdds
                     } 
                 }
             })
         })
         console.log("vincent eventsMap after: ", eventsMap)
-    }, [updatedBetEvents])
+    }, [updatedBetEventsFromKafka])
 
     useEffect(() => {
         const fetchData = async (compType) => {
@@ -278,6 +288,17 @@ export default function OddsLanding(){
                                                                 aria-label="Home Select">
                                                                     <span className={`${event.betSelection.homeSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         01 | {parseFloat(event.h2hEventOdds.homeOdds).toFixed(2)}
+                                                                        {event.oddsChangeInd?.home === 'GREEN' &&
+                                                                        <FontAwesomeIcon 
+                                                                            icon={faAngleDoubleUp} 
+                                                                            className='odds-change-up-icon'
+                                                                        /> }
+                                                                        {event.oddsChangeInd?.home === 'RED' &&
+                                                                        <FontAwesomeIcon 
+                                                                            icon={faAngleDoubleDown} 
+                                                                            className='odds-change-down-icon'
+                                                                        />
+                                                                        }
                                                                     </span>
                                                                 </Button>
                                                             </td>
@@ -290,6 +311,17 @@ export default function OddsLanding(){
                                                                 aria-label="Draw Select">
                                                                     <span className={`${event.betSelection.drawSelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         02 | {parseFloat(event.h2hEventOdds.drawOdds).toFixed(2)}
+                                                                        {event.oddsChangeInd?.draw === 'GREEN' &&
+                                                                        <FontAwesomeIcon 
+                                                                            icon={faAngleDoubleUp} 
+                                                                            className='odds-change-up-icon'
+                                                                        /> }
+                                                                        {event.oddsChangeInd?.draw === 'RED' &&
+                                                                        <FontAwesomeIcon 
+                                                                            icon={faAngleDoubleDown} 
+                                                                            className='odds-change-down-icon'
+                                                                        />
+                                                                        }
                                                                     </span>
                                                                 </Button>
                                                             </td>
@@ -302,6 +334,17 @@ export default function OddsLanding(){
                                                                 aria-label="Away Select">
                                                                     <span className={`${event.betSelection.awaySelected ? 'selected' : 'bet-selection-text'}`}>
                                                                         03 | {parseFloat(event.h2hEventOdds.awayOdds).toFixed(2)}
+                                                                        {event.oddsChangeInd?.away === 'GREEN' &&
+                                                                        <FontAwesomeIcon 
+                                                                            icon={faAngleDoubleUp} 
+                                                                            className='odds-change-up-icon'
+                                                                        /> }
+                                                                        {event.oddsChangeInd?.away === 'RED' &&
+                                                                        <FontAwesomeIcon 
+                                                                            icon={faAngleDoubleDown} 
+                                                                            className='odds-change-down-icon'
+                                                                        />
+                                                                        }
                                                                     </span>
                                                                 </Button>
                                                             </td>

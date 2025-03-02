@@ -19,6 +19,7 @@ export class BetEvent {
     teamsDetails;
     h2hEventOdds;
     betSelection;
+    oddsChangeInd;
 }
 
 export class TeamsDetails {
