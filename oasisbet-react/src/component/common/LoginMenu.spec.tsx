@@ -1,54 +1,118 @@
-import { render, screen, act } from '@testing-library/react';
-import LoginMenu from './LoginMenu'; // Adjust path if needed
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
-
-jest.mock('react-redux', () => ({
-  useDispatch: jest.fn(),
-  useSelector: jest.fn(),
-}));
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import LoginMenu from './LoginMenu';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { useNavigate } from 'react-router-dom';
 
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
 }));
 
-jest.mock('../util/useSessionStorage.ts', () => ({
-  getSessionStorageOrDefault: jest.fn(),
+jest.mock('../../services/api/ApiService.ts', () => ({
+  jwtAuthenticate: jest.fn(),
+  fetchAccountDetails: jest.fn(),
 }));
 
+const mockStore = configureStore([]);
+
 describe('LoginMenu Component', () => {
-  let dispatchMock: jest.Mock;
-  let navigateMock: jest.Mock;
+  let store;
+  let navigateMock;
 
   beforeEach(() => {
-    dispatchMock = jest.fn();
     navigateMock = jest.fn();
-    (useDispatch as unknown as jest.Mock).mockReturnValue(dispatchMock);
     (useNavigate as jest.Mock).mockReturnValue(navigateMock);
-  });
-
-  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render the component with initial values', () => {
-    (useSelector as unknown as jest.Mock).mockReturnValueOnce({
-      accountDetails: { balance: 150.55 }
+  it('renders login form when user is not logged in', () => {
+    store = mockStore({
+      login: { isUserLoggedIn: false, balance: 0 },
+      accountDetails: { balance: 0 },
     });
 
-    (useSelector as unknown as jest.Mock).mockReturnValueOnce({
-      login: { isUserLoggedIn: true, balance: 150.55 }
-    });
+    render(
+      <Provider store={store}>
+        <LoginMenu />
+      </Provider>
+    );
 
-    render(<LoginMenu />);
-
-    const loginText = screen.getByText(/LOGGED IN/i);
-    const balance = screen.getByText(/Balance:/i);
-    const button = screen.getByRole('button', { name: /Logout/i });
-    expect(loginText).toBeDefined();
-    expect(balance).toBeDefined();
-    expect(button).toBeDefined();
+    expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Login/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Sign Up/i })).toBeInTheDocument();
   });
 
+  it('renders user info and logout button when user is logged in', () => {
+    store = mockStore({
+      login: { isUserLoggedIn: true, balance: 150.55 },
+      accountDetails: { balance: 150.55 },
+    });
+
+    render(
+      <Provider store={store}>
+        <LoginMenu />
+      </Provider>
+    );
+
+    expect(screen.getByText(/LOGGED IN/i)).toBeInTheDocument();
+    expect(screen.getByText(/Balance: \$150.55/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Logout/i })).toBeInTheDocument();
+  });
+
+  it('updates input fields when typing in login form', () => {
+    store = mockStore({
+      login: { isUserLoggedIn: false, balance: 0 },
+      accountDetails: { balance: 0 },
+    });
+
+    render(
+      <Provider store={store}>
+        <LoginMenu />
+      </Provider>
+    );
+
+    const usernameInput = screen.getByPlaceholderText('Username');
+    const passwordInput = screen.getByPlaceholderText('Password');
+
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+
+    expect(usernameInput).toHaveValue('TESTUSER'); // Assuming the input converts to uppercase
+    expect(passwordInput).toHaveValue('password123');
+  });
+
+  it('navigates to create user page when Sign Up button is clicked', () => {
+    store = mockStore({
+      login: { isUserLoggedIn: false, balance: 0 },
+      accountDetails: { balance: 0 },
+    });
+
+    render(
+      <Provider store={store}>
+        <LoginMenu />
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Sign Up/i }));
+    expect(navigateMock).toHaveBeenCalledWith('/create-user');
+  });
+
+  it('opens logout modal when Logout button is clicked', () => {
+    store = mockStore({
+      login: { isUserLoggedIn: true, balance: 150.55 },
+      accountDetails: { balance: 150.55 },
+    });
+
+    render(
+      <Provider store={store}>
+        <LoginMenu />
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Logout/i }));
+    expect(store.getActions()).toContainEqual(expect.objectContaining({ type: 'OPEN_MODAL', payload: 'logoutModal' }));
+  });
 });
